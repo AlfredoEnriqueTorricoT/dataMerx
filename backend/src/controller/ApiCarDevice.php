@@ -4,15 +4,15 @@
 namespace App\controller;
 
 
-use App\cad\bll\DeviceSimBLL;
+use App\cad\bll\CarDeviceBLL;
 
-class ApiDeviceSim
+class ApiCarDevice
 {
 
 
     public static function selectAll() {
         try{
-            $bll = new DeviceSimBLL();
+            $bll = new CarDeviceBLL();
             $obj = $bll->selectAll();
             header('Content-Type: application/json');
             echo json_encode(["status" => 200, "message"=>"se realizo exitosamente la consulta", "data" => $obj]);
@@ -25,7 +25,7 @@ class ApiDeviceSim
         try{
             $json = file_get_contents('php://input');
             $data = json_decode($json);
-            $bll = new DeviceSimBLL();
+            $bll = new CarDeviceBLL();
             $obj = $bll->insert($data);
             header('Content-Type: application/json');
             if($obj == null) {
@@ -39,12 +39,12 @@ class ApiDeviceSim
         
     }
 
-    public static function retirarSim() {
+    public static function retirarCar() {
         try{
             $json = file_get_contents('php://input');
             $data = json_decode($json);
-            $bll = new DeviceSimBLL();
-            $obj = $bll->retirarSim($data);
+            $bll = new CarDeviceBLL();
+            $obj = $bll->retirarDevice($data);
             header('Content-Type: application/json');
             if($obj == null) {
                 echo json_encode(["status" => 500, "message"=>"no se pudo realizar la operacion"]);

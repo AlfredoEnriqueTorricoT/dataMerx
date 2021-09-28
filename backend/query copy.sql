@@ -3,8 +3,6 @@ composer require spatie/laravel-permission
 php artisan passport:install
 php artisan migrate:refresh --seed
 
-create dataBase dataMerxM;
-
 create table users(
   id int not null primary key auto_increment,
   name varchar(20) not null,
@@ -38,15 +36,23 @@ create table devices(
   code varchar(15) not null,
   reception date not null,
   active boolean,
-  simid int,
   markId varchar(7) not null,
   platformId varchar(10),
-  foreign key (simid) references sims(id),
   foreign key (markId) references markModem(id),
   foreign key (platformId) references platform(id)
 );
 
-
+create table device_sim(
+  id int not null primary key auto_increment,
+  deviceid int not null,
+  simid int not null,
+  date_start date,
+  date_end date,
+  userid int not null,
+  foreign key (deviceid) references devices(id),
+  foreign key (simid) references sims(id),
+  foreign key (userid) references users(id)
+);
 
 create table clients(
   id int primary key auto_increment,
@@ -65,12 +71,21 @@ create table cars(
   date_start date not null,
   date_end date,
   clientid int,
-  deviceid int,
-  foreign key (clientid) references clients(id),
-  foreign key (deviceid) references devices(id)
+  foreign key (clientid) references clients(id)
 );
 
 
+create table car_device(
+  id int primary key auto_increment,
+  carid int not null,
+  date_start date not null,
+  date_end date,
+  deviceid int not null,
+  userid int not null,
+  foreign key (carid) references cars(id),
+  foreign key (deviceid) references devices(id),
+  foreign key (userid) references users(id)
+);
 
 create table typeEvents(
   id int primary key auto_increment,
@@ -80,31 +95,16 @@ create table typeEvents(
 
 create table events(
   id int primary key auto_increment,
-  tableAffected varchar(12),
-  rowAffected varchar(12),
+  element varchar(12),
   detail text not null,
-  tablaNewValue varchar(12) not null,
-  rowidNewValue  int null,
+  tabla varchar(12) not null,
+  rowid  int not null,
   date_start date,
   userid int not null,
   typeid int not null,
   foreign key (userid) references users(id),
   foreign key (typeid) references typeEvents(id)
 );
-
-insert into markModem values("GT06N");
-insert into markModem values("X-3");
-
-insert into platform values("30-Marzo");
-insert into platform values("Mmedrano");
-insert into platform values("Plan-3000");
-insert into platform values("Vol-25");
-
-insert into typeEvents values(default, "Info", null);
-insert into typeEvents values(default, "Warning", null);
-
-drop table typeEvents;
-drop table events;
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS sp_user_insert;$$
@@ -127,6 +127,7 @@ begin
   select * from users where id = _id;
 end $$
 
+-- 07-08-2021
 DELIMITER $$
 DROP PROCEDURE IF EXISTS sp_sims_insert;$$
 CREATE PROCEDURE `sp_sims_insert` (_imei text, _number text, _f_reception date, _cod int)  
@@ -150,7 +151,7 @@ DROP PROCEDURE IF EXISTS sp_device_insert;$$
 CREATE PROCEDURE `sp_device_insert` (IN _imei varchar(15), IN _name varchar(10), 
       IN _code varchar(15), IN _reception date, IN _active boolean, IN _markId varchar(7), IN _platformId varchar(10))  
 begin  
-	insert into devices values(default, _imei, _name, _code, _reception, _active,null, _markId, _platformId);
+	insert into devices values(default, _imei, _name, _code, _reception, _active, _markId, _platformId);
     	select * from devices where id = last_insert_id();
 end $$
 
@@ -162,6 +163,65 @@ begin
   
   select * from devices where id = _id;
 end $$
+
+
+  DELIMITER $$
+  DROP PROCEDURE IF EXISTS sp_deviceSim_insert;$$
+  CREATE PROCEDURE `sp_deviceSim_insert` (_deviceid int, _simid int, _userid int, _date_start text)  
+  begin  
+    declare idDeviceSim int;
+    update device_sim set date_end = now() where deviceid = _deviceid and date_end is null;
+    insert into device_sim values(default, _deviceid, _simid, _date_start,null, _userid);
+
+    set idDeviceSim = last_insert_id();
+    insert into events values(default,"device","Se colocó un nuevo sim al dispositivo.","device_sim",last_insert_id(), now(), _userid,1);
+
+
+    select * from device_sim where id = idDeviceSim;
+  end $$
+
+  DELIMITER $$
+  DROP PROCEDURE IF EXISTS sp_cardevice_insert;$$
+  CREATE PROCEDURE `sp_cardevice_insert` (_deviceid int, _carid int, _userid int, _date_start text)  
+  begin  
+    declare idCardDevice int;
+    update car_device set date_end = now() where carid = _carid and date_end is null;
+    insert into car_device values(default, _carid, _date_start, null, _deviceid, _userid);
+
+    set idCardDevice = last_insert_id();
+    insert into events values(default,"car","Se colocó un nuevo modem al vehículo.","car_device",last_insert_id(), now(), _userid,1);
+
+
+    select * from car_device where id = idCardDevice;
+  end $$
+
+    DELIMITER $$
+    DROP PROCEDURE IF EXISTS sp_deviceSim_retirar;$$
+    CREATE PROCEDURE `sp_deviceSim_retirar` (_deviceid int, _userid int)  
+    begin  
+      declare _idDeviceSim  int;
+      select id into _idDeviceSim from device_sim where deviceid = _deviceid and date_end is null;
+      update device_sim set date_end = now() where id = _idDeviceSim;
+
+      insert into events values(default,"device","Se retiro el sim.","device_sim",_idDeviceSim, now(), _userid,1);
+      select * from device_sim where id = _idDeviceSim;
+    end $$
+
+  DELIMITER $$
+  DROP PROCEDURE IF EXISTS sp_carDevice_retirar;$$
+  CREATE PROCEDURE `sp_carDevice_retirar` (_carid int, _userid int)  
+  begin
+    declare _idCardDevice  int;
+    select id into _idCardDevice from car_device where carid = _carid and date_end is null;
+
+    update car_device set date_end = now() where id = _idCardDevice;
+
+    insert into events values(default,"car","Se retiro el dispositivo.","car_device",_idCardDevice, now(), _userid,1);
+    select * from car_device where id = _idCardDevice;
+  end $$
+
+
+
 
 
 
@@ -188,7 +248,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS sp_car_insert;$$
 CREATE PROCEDURE `sp_car_insert` (_placa text, _model text, _mark text, _date_start text, _clientid int)  
 begin  
-	insert into cars values(default, _placa, _model, _mark,_date_start, null, _clientid, null);
+	insert into cars values(default, _placa, _model, _mark,_date_start, null, _clientid );
     	select * from cars where id = last_insert_id();
 end $$
 
@@ -201,18 +261,6 @@ begin
     	select * from cars where id = _id;
 end $$
 
-
-DELIMITER $$
-DROP PROCEDURE IF EXISTS sp_device_retirarSim;$$
-CREATE PROCEDURE `sp_device_retirarSim` (_id int, _userid int)  
-begin  
-  declare _idSim  int;
-  select  simid into  _idSim from devices where id = _id;
-  update devices set simid = null where id = _id;
-
-  insert into events values(default,"device", _id,"Se retiro el sim.","sim",null, now(), _userid,1);
-  select * from devices where id = _id;
-end $$
 
 
 
@@ -234,12 +282,15 @@ call sp_deviceSim_insert(1,3,6);
 
 
 
---sim disponibles
-select s.* from(select * from devices where simid is not null) sd
-right join sims s on sd.simid = s.id
-where sd.simid is null;
+select ds.date_start, d.code, d.name, d.imei as deviceImei, markId, platformId, 
+        s.cod, s.number, s.imei as simImei from device_sim ds
+join devices d on d.id = ds.deviceid
+join sims s on s.id = ds.simid
+where date_end is  null;
 
---device disponibles
-select d.* from(select * from cars where deviceid is not null) dc
-right join devices d on dc.deviceid = d.id
-where dc.deviceid is null;
+
+select c.*, concat(cl.name, " ",cl.last_name, " ", cl.mother_last_name, " (",cl.empresa, ")") as clientName from cars c
+join clients cl on c.clientid = cl.id;
+
+
+

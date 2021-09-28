@@ -12,7 +12,6 @@ use \App\controller\ApiMarkModem;
 use \App\controller\ApiPlatform;
 use \App\controller\ApiSim;
 use \App\controller\ApiDevice;
-use \App\controller\ApiDeviceSim;
 use \App\controller\ApiClient;
 use \App\controller\ApiCar;
 
@@ -31,7 +30,6 @@ use \App\controller\ApiCar;
     $objPlatform = new ApiPlatform();
     $objSim = new ApiSim();
     $objDevice = new ApiDevice();
-    $objDeviceSim = new ApiDeviceSim();
     $objClient = new ApiClient();
     $objCar = new ApiCar();
 
@@ -74,6 +72,9 @@ switch ($controller) {
                     case "selectAll":
                         $objSim::selectAll();
                         break;
+                    case "selectDisponible":
+                        $objSim::selectSimDisponible();
+                        break;
                     case "insert":
                         $objSim::insert();
                         break;
@@ -87,23 +88,18 @@ switch ($controller) {
                     case "selectAll":
                         $objDevice::selectAll();
                         break;
+                    case "selectDisponible":
+                        $objDevice::selectAllDisponible();
+                        break;
+                    case "retirar":
+                        $objDevice::retirarSim();
+                        break;
                     case "insert":
                         $objDevice::insert();
                         break;
                     case "update":
                         $objDevice::update();
                         break;
-                }
-            break;
-            case "deviceSim":
-                switch ($operacion) {
-                    case "selectAll":
-                        $objDeviceSim::selectAll();
-                        break;
-                    case "insert":
-                        $objDeviceSim::insert();
-                        break;
-        
                 }
             break;
             case "client":

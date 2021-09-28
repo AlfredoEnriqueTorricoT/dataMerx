@@ -12,12 +12,17 @@ class ApiSim
 
 
     public static function selectAll() {
-
         $simBLL = new SimBLL();
         $obj = $simBLL->selectAll();
         header('Content-Type: application/json');
         echo json_encode(["status" => 200, "message"=>"se realizo exitosamente la consulta", "data" => $obj]);
+    }
 
+    public static function selectSimDisponible() {
+        $simBLL = new SimBLL();
+        $obj = $simBLL->selectAllDisponibles();
+        header('Content-Type: application/json');
+        echo json_encode(["status" => 200, "message"=>"se realizo exitosamente la consulta", "data" => $obj]);
     }
 
     public static function selectById($usuarioId) {

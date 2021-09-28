@@ -5,10 +5,10 @@ namespace App\cad\bll;
 
 
 use App\cad\dal\Conexion;
-use App\cad\dto\DeviceSim\DeviceSim;
-use App\cad\dto\DeviceSim\DeviceSimData;
+use App\cad\dto\CarDevice\CarDevice;
+use App\cad\dto\CarDevice\CarDeviceData;
 use PDO;
-class DeviceSimBLL
+class CarDeviceBLL
 {
 
   public function selectAll() {
@@ -30,14 +30,14 @@ class DeviceSimBLL
   }
 
     public function insert($data) {
-        $obj = new DeviceSim();
+        $obj = new CarDevice();
         $claseConexion = new Conexion();
-        $sql = "call sp_deviceSim_insert(:_deviceid,:_simid,:_userid, :_date_start);";
+        $sql = "call sp_cardevice_insert(:_deviceid,:_carid,:_userid, :_date_start);";
         try {
                 
             $res = $claseConexion->queryWithParams($sql, array(
                 ":_deviceid" => $data->deviceid,
-                ":_simid" => $data->simid,
+                ":_carid" => $data->carid,
                 ":_userid"=> $data->userid,
                 ":_date_start"=> $data->date_start,
                 
@@ -78,14 +78,14 @@ class DeviceSimBLL
     }
   }
 
-  public function retirarSim($data) {
-    $obj = new DeviceSim();
+  public function retirarDevice($data) {
+    $obj = new CarDevice();
     $claseConexion = new Conexion();
-    $sql = "call sp_deviceSim_retirar(:_deviceid, :_userid);";
+    $sql = "call sp_carDevice_retirar(:_carid, :_userid);";
 
     try {
         $res = $claseConexion->queryWithParams($sql, array(
-            ":_deviceid" => $data->deviceid,
+            ":_carid" => $data->carid,
             ":_userid"=> $data->userid
         ));
         $row = $res->fetch(PDO::FETCH_ASSOC);
@@ -100,12 +100,10 @@ class DeviceSimBLL
 
   public function rowToDto($row)
   {
-      $obj = new DeviceSim();
-      if(isset($row['id'])){
-          $obj ->setId($row['id']);
-        }
+      $obj = new CarDevice();
+        $obj ->setId($row['id']);
         $obj ->setDeviceid($row['deviceid']);
-        $obj ->setSimid($row['simid']);
+        $obj ->setCarid($row['carid']);
         $obj ->setUserid($row['userid']);
         $obj ->setDate_start($row['date_start']);
         $obj ->setDate_end($row['date_end']);
@@ -115,7 +113,7 @@ class DeviceSimBLL
 
   public function rowToDtoData($row)
   {
-      $obj = new DeviceSimData();
+      $obj = new CarDeviceData();
       $obj ->setDate_start($row['date_start']);
       $obj ->setCode($row['code']);
       $obj ->setName($row['name']);

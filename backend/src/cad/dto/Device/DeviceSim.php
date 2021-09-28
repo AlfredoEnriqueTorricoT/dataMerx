@@ -1,54 +1,55 @@
 <?php
 
-namespace App\cad\dto\DeviceSim;
+namespace App\cad\dto\Device;
 
-class DeviceSimData {
-  public $date_start;
-  public $code;
+class DeviceSim {
+  public $id;
+  public $imei;
   public $name;
-  public $deviceImei;
+  public $code;
+  public $reception;
+  public $active;
   public $markId;
   public $platformId;
+
   public $cod;
   public $number;
-  public $simImei;
-
   /**
-   * Get the value of date_start
+   * Get the value of id
    */ 
-  public function getDate_start()
+  public function getId()
   {
-    return $this->date_start;
+    return $this->id;
   }
 
   /**
-   * Set the value of date_start
+   * Set the value of id
    *
    * @return  self
    */ 
-  public function setDate_start($date_start)
+  public function setId($id)
   {
-    $this->date_start = $date_start;
+    $this->id = $id;
 
     return $this;
   }
 
   /**
-   * Get the value of code
+   * Get the value of imei
    */ 
-  public function getCode()
+  public function getImei()
   {
-    return $this->code;
+    return $this->imei;
   }
 
   /**
-   * Set the value of code
+   * Set the value of imei
    *
    * @return  self
    */ 
-  public function setCode($code)
+  public function setImei($imei)
   {
-    $this->code = $code;
+    $this->imei = $imei;
 
     return $this;
   }
@@ -74,21 +75,21 @@ class DeviceSimData {
   }
 
   /**
-   * Get the value of deviceImei
+   * Get the value of code
    */ 
-  public function getDeviceImei()
+  public function getCode()
   {
-    return $this->deviceImei;
+    return $this->code;
   }
 
   /**
-   * Set the value of deviceImei
+   * Set the value of code
    *
    * @return  self
    */ 
-  public function setDeviceImei($deviceImei)
+  public function setCode($code)
   {
-    $this->deviceImei = $deviceImei;
+    $this->code = $code;
 
     return $this;
   }
@@ -134,6 +135,46 @@ class DeviceSimData {
   }
 
   /**
+   * Get the value of reception
+   */ 
+  public function getReception()
+  {
+    return $this->reception;
+  }
+
+  /**
+   * Set the value of reception
+   *
+   * @return  self
+   */ 
+  public function setReception($reception)
+  {
+    $this->reception = $reception;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of active
+   */ 
+  public function getActive()
+  {
+    return $this->active;
+  }
+
+  /**
+   * Set the value of active
+   *
+   * @return  self
+   */ 
+  public function setActive($active)
+  {
+    $this->active = $active;
+
+    return $this;
+  }
+
+  /**
    * Get the value of cod
    */ 
   public function getCod()
@@ -172,25 +213,5 @@ class DeviceSimData {
 
     return $this;
   }
-
-  /**
-   * Get the value of simImei
-   */ 
-  public function getSimImei()
-  {
-    return $this->simImei;
-  }
-
-  /**
-   * Set the value of simImei
-   *
-   * @return  self
-   */ 
-  public function setSimImei($simImei)
-  {
-    $this->simImei = $simImei;
-
-    return $this;
-  } 
 }
 ?>

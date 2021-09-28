@@ -24,6 +24,22 @@ class SimBLL
     return $lista;
   }
 
+  public function selectAllDisponibles() {
+    $claseConexion = new Conexion();
+    $sql = '
+      select s.* from(select * from devices where simid is not null) sd
+      right join sims s on sd.simid = s.id
+      where sd.simid is null;
+    ';
+    $res = $claseConexion->query($sql);
+    $lista = array();
+    while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
+        $obj = $this->rowToDto($row);
+        $lista[] = $obj;
+    }
+    return $lista;
+  }
+
 
   public function selectById($id) {
     $claseConexion = new Conexion();
