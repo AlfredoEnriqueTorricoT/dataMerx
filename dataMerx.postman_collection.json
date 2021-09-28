@@ -1,0 +1,1366 @@
+{
+	"info": {
+		"_postman_id": "7cb15c39-35c9-434f-b014-55e5c3c8a712",
+		"name": "dataMerx",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "userInsert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"user\",\r\n    \"operacion\":\"insert\",\r\n    \"name\":\"Alexander\",\r\n    \"lastName\":\"Tarricalos\",\r\n    \"email\":\"Admin\",\r\n    \"password\":\"12345\",\r\n    \"state\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/?controller=user&operacion=insert",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "controller",
+							"value": "user"
+						},
+						{
+							"key": "operacion",
+							"value": "insert"
+						},
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "userGetAll",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/?controller=user&operacion=selectAll",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "controller",
+							"value": "user"
+						},
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "operacion",
+							"value": "selectAll"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "userGet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":8\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/?controller=user&operacion=selectById",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "controller",
+							"value": "user"
+						},
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "operacion",
+							"value": "selectById"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "userUpdate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"user\",\r\n    \"operacion\":\"update\",\r\n    \"id\":8,\r\n    \"name\":\"Geremias\",\r\n    \"lastName\":\"Tarricalos\",\r\n    \"email\":\"geremias@gmail.com\",\r\n    \"password\":\"492140\",\r\n    \"state\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "userLogin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"user\",\r\n    \"operacion\":\"login\",\r\n    \"email\":\"atorrico@gmail.com\",\r\n    \"password\":\"492140\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/?controller=user&operacion=login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "controller",
+							"value": "user"
+						},
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "operacion",
+							"value": "login"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "markModemSelectAll",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"markModem\",\r\n    \"operacion\":\"selectAll\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/?operacion=selectAll&controller=markModem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "operacion",
+							"value": "selectAll"
+						},
+						{
+							"key": "controller",
+							"value": "markModem"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "platformSelectAll",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"platform\",\r\n    \"operacion\":\"selectAll\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "simSelectAll",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"sim\",\r\n    \"operacion\":\"selectAll\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "simInsert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"sim\",\r\n    \"operacion\":\"insert\",\r\n    \"imei\":\"3544\",\r\n    \"number\":\"76053528\",\r\n    \"f_reception\":\"2021-09-19\",\r\n    \"cod\":\"100\",\r\n    \"active\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "simUpdate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"sim\",\r\n    \"operacion\":\"update\",\r\n    \"id\":\"3\",\r\n    \"imei\":\"3544\",\r\n    \"number\":\"76053528\",\r\n    \"f_reception\":\"2021-09-19\",\r\n    \"cod\":\"100\",\r\n    \"active\":0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deviceGetAll",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"device\",\r\n    \"operacion\":\"selectAll\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deviceInsert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"device\",\r\n    \"operacion\":\"insert\",\r\n    \"imei\":\"34864565\",\r\n    \"name\":\"Interno 15\",\r\n    \"code\":\"90\",\r\n    \"reception\":\"2021-09-19\",\r\n    \"active\":1,\r\n    \"markId\":\"GT06N\",\r\n    \"platformId\":\"Vol-25\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deviceUpdate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"device\",\r\n    \"operacion\":\"update\",\r\n    \"id\":\"1\",\r\n    \"imei\":\"111111111\",\r\n    \"name\":\"Interno 15\",\r\n    \"code\":\"90\",\r\n    \"reception\":\"2021-09-19\",\r\n    \"active\":0,\r\n    \"markId\":\"GT06N\",\r\n    \"platformId\":\"vol25\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deviceSimInsert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"deviceSim\",\r\n    \"operacion\":\"insert\",\r\n    \"deviceid\":1,\r\n    \"simid\":4,\r\n    \"date_start\":\"2021-09-22\",\r\n    \"userid\":6\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deviceSimGetAll",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"device\",\r\n    \"operacion\":\"update\",\r\n    \"id\":\"1\",\r\n    \"imei\":\"111111111\",\r\n    \"name\":\"Interno 15\",\r\n    \"code\":\"90\",\r\n    \"reception\":\"2021-09-19\",\r\n    \"active\":0,\r\n    \"markId\":\"GT06N\",\r\n    \"platformId\":\"vol25\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ClientGetAll",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"client\",\r\n    \"operacion\":\"selectAll\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ClientInsert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"client\",\r\n    \"operacion\":\"insert\",\r\n    \"name\":\"Joes\",\r\n    \"last_name\":\"Gomes\",\r\n    \"mother_last_name\":\"Gonsales\",\r\n    \"telefono\":\"7895445\",\r\n    \"empresa\":\"Arvice\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ClientUpdate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"client\",\r\n    \"operacion\":\"update\",\r\n    \"id\":1,\r\n    \"name\":\"Joes\",\r\n    \"last_name\":\"Gomes\",\r\n    \"mother_last_name\":\"Gonsales\",\r\n    \"telefono\":\"7895445\",\r\n    \"empresa\":\"Arvixxe\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CarGetAll",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"car\",\r\n    \"operacion\":\"selectAll\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CarInsert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"car\",\r\n    \"operacion\":\"insert\",\r\n    \"placa\":\"X45-787\",\r\n    \"model\":\"21\",\r\n    \"mark\":\"Toyota\",\r\n    \"date_start\":\"2021-09-27\",\r\n    \"clientid\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CarUpdate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"car\",\r\n    \"operacion\":\"update\",\r\n    \"id\":1,\r\n    \"placa\":\"Joes\",\r\n    \"model\":\"Gomes\",\r\n    \"mark\":\"Gonsales\",\r\n    \"date_start\":\"7895445\",\r\n    \"date_end\":null,\r\n    \"clientid\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SimDisponibles",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"sim\",\r\n    \"operacion\":\"selectDisponible\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeviceDisponibles",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"device\",\r\n    \"operacion\":\"selectDisponible\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeviceSimRetirar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"device\",\r\n    \"operacion\":\"retirar\",\r\n    \"deviceid\":3,\r\n    \"userid\":1 \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CarDeviceInsert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"deviceSim\",\r\n    \"operacion\":\"insert\",\r\n    \"cardid\":3,\r\n    \"deviceid\":1,\r\n    \"date_start\":\"2021-09-22\",\r\n    \"userid\":6\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CarDeviceRetirar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"controller\":\"carDevice\",\r\n    \"operacion\":\"retirar\",\r\n    \"carid\":2,\r\n    \"userid\":6\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dataMerx/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dataMerx",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alexander",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Torrico",
+							"disabled": true
+						},
+						{
+							"key": "permissions",
+							"value": "Admin",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
