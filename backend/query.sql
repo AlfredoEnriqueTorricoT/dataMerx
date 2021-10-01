@@ -214,6 +214,17 @@ begin
   select * from devices where id = _id;
 end $$
 
+-- 21-09-30
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_addSimToDevice;$$
+CREATE PROCEDURE `sp_addSimToDevice` (_id int, _simId int, _userid int)
+begin  
+	update devices set simid = _simId where id = _id;
+
+  insert into events values(default,"device", _id,"Se agrego el sim.","sim",_simId, now(), _userid,1);
+    	
+  select * from devices where id = _id;
+end $$
 
 
 

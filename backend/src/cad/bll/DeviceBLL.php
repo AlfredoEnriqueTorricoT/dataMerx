@@ -110,6 +110,28 @@ class DeviceBLL
     }
   }
 
+  public function insertSimToDevice($data) {
+    $obj = new Device();
+    $claseConexion = new Conexion();
+    $sql = "call sp_addSimToDevice(:_id, :_simid, :_userid);";
+    try {
+        
+        $res = $claseConexion->queryWithParams($sql, array(
+            ":_id"=> $data->id,
+            ":_simid"=> $data->simid,
+            ":_userid"=> $data->userid
+            
+        ));
+        $row = $res->fetch(PDO::FETCH_ASSOC);
+        $obj = $this->rowToDto($row);
+        
+        
+        return $obj;
+    } catch (\PDOException $e) {
+        return $e;
+    }
+  }
+
   
 
   public function update($data) {

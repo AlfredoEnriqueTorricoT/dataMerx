@@ -20,6 +20,7 @@ use \App\controller\ApiCar;
 
     $controller = "user";
     $operacion = 'selectAll';
+    
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $controller = $data->controller;
         $operacion = $data->operacion;
@@ -96,6 +97,10 @@ switch ($controller) {
                         break;
                     case "insert":
                         $objDevice::insert();
+                        break;
+                    case "addDeviceToSim":
+                        echo "index";
+                        $objDevice::addSimToDevice();
                         break;
                     case "update":
                         $objDevice::update();
