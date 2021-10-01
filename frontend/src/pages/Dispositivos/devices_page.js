@@ -5,17 +5,21 @@ import { connect } from "react-redux"
 import { esTexto, esCorreo } from "regular_expresions"
 import { showToast, clearToast } from "../../components/Toast/toast"
 import {
+  Badge,
+  Button,
   Card,
   CardBody,
   CardTitle,
   Container,
-  Badge,
-  Button,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter,
   Progress,
+  UncontrolledDropdown,
 } from "reactstrap"
 import { Link } from "react-router-dom"
 
@@ -28,7 +32,9 @@ import {
   getDispositivos,
   insertDispositivo,
   updateDispositivo,
-} from "store/dispositivos/actions"
+  getSimsDisponibles,
+  dispositivoRetirarSim,
+} from "store/actions"
 
 class Devices extends Component {
   constructor(props) {
@@ -39,6 +45,7 @@ class Devices extends Component {
       modalType: "add",
       dispositivoData: { id: 0 },
       toastWaiting: false,
+      deletingSim: false,
       formValidation: {
         imeiValid: true,
         nameValid: true,
@@ -49,9 +56,15 @@ class Devices extends Component {
   }
 
   componentDidMount() {
-    const { onGetPlatforms, onGetModems, onGetDispositivos } = this.props
+    const {
+      onGetPlatforms,
+      onGetModems,
+      onGetSimsDisponibles,
+      onGetDispositivos,
+    } = this.props
     onGetPlatforms()
     onGetModems()
+    onGetSimsDisponibles()
     onGetDispositivos()
   }
 
@@ -62,22 +75,39 @@ class Devices extends Component {
           this.setState({ ...this.state, modal: false, toastWaiting: false })
           showToast({
             toastType: "success",
-            message: `El dispositivo ha sido ${
-              this.state.modalType === "add" ? "añadido" : "editado"
+            message: `El ${
+              this.state.deletingSim ? "sim" : "dispositivo"
+            } ha sido ${
+              this.state.deletingSim
+                ? "removido"
+                : this.state.modalType === "add"
+                ? "añadido"
+                : "editado"
             }`,
           })
+          this.setState({ deletingSim: false })
         } else {
           this.setState({ ...this.state, toastWaiting: false })
           showToast({
             toastType: "warning",
             title: this.props.error.message,
             message: `No se ha podido ${
-              this.state.modalType === "add" ? "añadir" : "editar"
-            } al dispositivo`,
+              this.state.deletingSim
+                ? "remover el sim"
+                : this.state.modalType === "add"
+                ? "añadir al dispositivo"
+                : "editar al dispositivo"
+            }`,
           })
+          this.setState({ deletingSim: false })
         }
       }
     }
+  }
+
+  delSimFunc = data => {
+    this.setState({ toastWaiting: true, deletingSim: true })
+    this.props.onRemoveSim(data)
   }
 
   subFunc = async e => {
@@ -134,8 +164,18 @@ class Devices extends Component {
                   <div className="ms-auto">
                     <Button
                       type="button"
-                      color={this.props.error ? "Light" : "success"}
-                      disabled={this.props.error !== null}
+                      color={
+                        (dispositivos.length === 0 &&
+                          this.props.waitingResponse) ||
+                        this.state.toastWaiting
+                          ? "Light"
+                          : "success"
+                      }
+                      disabled={
+                        (dispositivos.length === 0 &&
+                          this.props.waitingResponse) ||
+                        this.state.toastWaiting
+                      }
                       size="sm"
                       className="btn-rounded waves-effect waves-light"
                       // onClick={this.togglemodal}
@@ -166,7 +206,10 @@ class Devices extends Component {
                         className="btn-rounded waves-effect waves-light"
                         // onClick={this.togglemodal}
                         onClick={() => {
-                          this.props.onGetSims()
+                          this.props.onGetPlatforms()
+                          this.props.onGetModems()
+                          this.props.onGetSimsDisponibles()
+                          this.props.onGetDispositivos()
                         }}
                       >
                         reintentar
@@ -181,10 +224,10 @@ class Devices extends Component {
                           <th className="align-middle">Nombre</th>
                           <th className="align-middle">Código</th>
                           <th className="align-middle">Fecha de recepción</th>
+                          <th className="align-middle">Sim</th>
+                          <th className="align-middle">Modem / Platform</th>
                           <th className="align-middle">Estado</th>
-                          <th className="align-middle">Modem id</th>
-                          <th className="align-middle">Platform id</th>
-                          <th className="align-middle">Editar</th>
+                          <th className="align-middle">Acciones</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -195,6 +238,12 @@ class Devices extends Component {
                             <td>{dispositivo.name}</td>
                             <td>{dispositivo.code}</td>
                             <td>{dispositivo.reception}</td>
+                            <td>
+                              {dispositivo.cod === null
+                                ? "Sim no asignada"
+                                : `${dispositivo.cod}/${dispositivo.number}`}
+                            </td>
+                            <td>{`${dispositivo.markId}/${dispositivo.platformId}`}</td>
                             <td>
                               <Badge
                                 className={`font-size-11 badge-soft-${
@@ -207,25 +256,52 @@ class Devices extends Component {
                                 {dispositivo.active ? "ACTIVO" : "INACTIVO"}
                               </Badge>
                             </td>
-                            <td>{dispositivo.markId}</td>
-                            <td>{dispositivo.platformId}</td>
                             <td>
-                              <Button
-                                type="button"
-                                color="link"
-                                size="sm"
-                                className="btn-rounded waves-effect waves-light"
-                                // onClick={this.togglemodal}
-                                onClick={() => {
-                                  this.setState({
-                                    modal: true,
-                                    modalType: "edit",
-                                    dispositivoData: dispositivo,
-                                  })
-                                }}
-                              >
-                                <i className="mdi mdi-dots-horizontal font-size-18" />
-                              </Button>
+                              <UncontrolledDropdown>
+                                <DropdownToggle
+                                  href="#"
+                                  className="card-drop"
+                                  tag="i"
+                                >
+                                  <i className="mdi mdi-dots-horizontal font-size-18" />
+                                </DropdownToggle>
+                                <DropdownMenu className="dropdown-menu-end">
+                                  <DropdownItem
+                                    href="#"
+                                    onClick={() => {
+                                      this.setState({
+                                        modal: true,
+                                        modalType: "edit",
+                                        dispositivoData: dispositivo,
+                                      })
+                                    }}
+                                  >
+                                    Editar
+                                  </DropdownItem>
+                                  <DropdownItem
+                                    href="#"
+                                    onClick={() => {
+                                      this.setState({
+                                        modal: true,
+                                        modalType: "editSim",
+                                        dispositivoData: dispositivo,
+                                      })
+                                    }}
+                                  >
+                                    Editar sim
+                                  </DropdownItem>
+                                  {dispositivo.cod !== null && (
+                                    <DropdownItem
+                                      href="#"
+                                      onClick={() => {
+                                        this.delSimFunc(dispositivo.id)
+                                      }}
+                                    >
+                                      Remover sim
+                                    </DropdownItem>
+                                  )}
+                                </DropdownMenu>
+                              </UncontrolledDropdown>
                             </td>
                           </tr>
                         ))}
@@ -245,125 +321,166 @@ class Devices extends Component {
               <ModalHeader>
                 {this.state.modalType === "add"
                   ? "Añadir dispositivo"
-                  : "Editar dispositivo"}
+                  : this.state.modalType === "edit"
+                  ? "Editar dispositivo"
+                  : "Sims disponibles"}
               </ModalHeader>
               <ModalBody>
-                <form id="modalForm" onSubmit={this.subFunc}>
-                  <label htmlFor="formImei" className="col-md-2 col-form-label">
-                    Imei
-                  </label>
-                  <input
-                    name="formImei"
-                    className={`form-control ${
-                      !this.state.formValidation.imeiValid && "is-invalid"
-                    }`}
-                    type="number"
-                    defaultValue={
-                      this.state.modalType === "edit"
-                        ? this.state.dispositivoData.imei
-                        : ""
-                    }
-                  />
-                  <label
-                    htmlFor="formNumero"
-                    className="col-md-2 col-form-label"
-                  >
-                    Nombre
-                  </label>
-                  <input
-                    name="formNombre"
-                    className={`form-control ${
-                      !this.state.formValidation.nameValid && "is-invalid"
-                    }`}
-                    type="text"
-                    defaultValue={
-                      this.state.modalType === "edit"
-                        ? this.state.dispositivoData.name
-                        : ""
-                    }
-                  />
-                  <label
-                    htmlFor="formNumero"
-                    className="col-md-2 col-form-label"
-                  >
-                    Código
-                  </label>
-                  <input
-                    name="formCodigo"
-                    className={`form-control ${
-                      !this.state.formValidation.codeValid && "is-invalid"
-                    }`}
-                    type="number"
-                    defaultValue={
-                      this.state.modalType === "edit"
-                        ? this.state.dispositivoData.code
-                        : ""
-                    }
-                  />
-                  <label
-                    htmlFor="formReception"
-                    className="col-md-2 col-form-label"
-                  >
-                    Fecha de recepción
-                  </label>
-                  <input
-                    name="formReception"
-                    className={`form-control ${
-                      !this.state.formValidation.receptionValid && "is-invalid"
-                    }`}
-                    type="date"
-                    defaultValue={
-                      this.state.modalType === "edit"
-                        ? this.state.dispositivoData.reception
-                        : ""
-                    }
-                  />
-                  <label className="col-md-2 col-form-label">Estado</label>
-                  <select
-                    className="form-select"
-                    name="formEstado"
-                    defaultValue={
-                      this.state.modalType === "edit"
-                        ? this.state.dispositivoData.active
-                        : 1
-                    }
-                  >
-                    <option value={1}>Activo</option>
-                    <option value={0}>Inactivo</option>
-                  </select>
-                  <label className="col-md-2 col-form-label">Modem id</label>
-                  <select
-                    className="form-select"
-                    name="formMarkId"
-                    defaultValue={
-                      this.state.modalType === "edit"
-                        ? this.state.dispositivoData.markId
-                        : 1
-                    }
-                  >
-                    {this.props.modems.map((modem, idx) => (
-                      <option key={idx} value={modem.id}>
-                        {modem.id}
-                      </option>
-                    ))}
-                  </select>
-                  <label className="col-md-2 col-form-label">Platform id</label>
-                  <select
-                    className="form-select"
-                    name="formPlatformId"
-                    defaultValue={
-                      this.state.modalType === "edit"
-                        ? this.state.dispositivoData.platformId
-                        : 1
-                    }
-                  >
-                    {this.props.platforms.map((platform, idx) => (
-                      <option key={idx} value={platform.id}>
-                        {platform.id}
-                      </option>
-                    ))}
-                  </select>
-                </form>
+                {this.state.modalType === "editSim" ? (
+                  <table className="table align-middle table-nowrap mb-0">
+                    <thead className="table-light">
+                      <tr>
+                        <th className="align-middle">#</th>
+                        <th className="align-middle">Imei</th>
+                        <th className="align-middle">Número</th>
+                        <th className="align-middle">Seleccionar</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {this.props.simsDisponibles.map(sim => (
+                        <tr key={sim.id}>
+                          <td>{sim.id}</td>
+                          <td>{sim.imei}</td>
+                          <td>{sim.number}</td>
+                          <td className="align-middle">
+                            <div className="form-check">
+                              <input
+                                className="form-check-input"
+                                type="radio"
+                                name="simRadios"
+                                id={`simRadios${sim.id}`}
+                                value={sim.id}
+                              />
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <form id="modalForm" onSubmit={this.subFunc}>
+                    <label
+                      htmlFor="formImei"
+                      className="col-md-2 col-form-label"
+                    >
+                      Imei
+                    </label>
+                    <input
+                      name="formImei"
+                      className={`form-control ${
+                        !this.state.formValidation.imeiValid && "is-invalid"
+                      }`}
+                      type="number"
+                      defaultValue={
+                        this.state.modalType === "edit"
+                          ? this.state.dispositivoData.imei
+                          : ""
+                      }
+                    />
+                    <label
+                      htmlFor="formNumero"
+                      className="col-md-2 col-form-label"
+                    >
+                      Nombre
+                    </label>
+                    <input
+                      name="formNombre"
+                      className={`form-control ${
+                        !this.state.formValidation.nameValid && "is-invalid"
+                      }`}
+                      type="text"
+                      defaultValue={
+                        this.state.modalType === "edit"
+                          ? this.state.dispositivoData.name
+                          : ""
+                      }
+                    />
+                    <label
+                      htmlFor="formNumero"
+                      className="col-md-2 col-form-label"
+                    >
+                      Código
+                    </label>
+                    <input
+                      name="formCodigo"
+                      className={`form-control ${
+                        !this.state.formValidation.codeValid && "is-invalid"
+                      }`}
+                      type="number"
+                      defaultValue={
+                        this.state.modalType === "edit"
+                          ? this.state.dispositivoData.code
+                          : ""
+                      }
+                    />
+                    <label
+                      htmlFor="formReception"
+                      className="col-md-2 col-form-label"
+                    >
+                      Fecha de recepción
+                    </label>
+                    <input
+                      name="formReception"
+                      className={`form-control ${
+                        !this.state.formValidation.receptionValid &&
+                        "is-invalid"
+                      }`}
+                      type="date"
+                      defaultValue={
+                        this.state.modalType === "edit"
+                          ? this.state.dispositivoData.reception
+                          : ""
+                      }
+                    />
+                    <label className="col-md-2 col-form-label">Modem id</label>
+                    <select
+                      className="form-select"
+                      name="formMarkId"
+                      defaultValue={
+                        this.state.modalType === "edit"
+                          ? this.state.dispositivoData.markId
+                          : 1
+                      }
+                    >
+                      {this.props.modems.map((modem, idx) => (
+                        <option key={idx} value={modem.id}>
+                          {modem.id}
+                        </option>
+                      ))}
+                    </select>
+                    <label className="col-md-2 col-form-label">
+                      Platform id
+                    </label>
+                    <select
+                      className="form-select"
+                      name="formPlatformId"
+                      defaultValue={
+                        this.state.modalType === "edit"
+                          ? this.state.dispositivoData.platformId
+                          : 1
+                      }
+                    >
+                      {this.props.platforms.map((platform, idx) => (
+                        <option key={idx} value={platform.id}>
+                          {platform.id}
+                        </option>
+                      ))}
+                    </select>
+                    <label className="col-md-2 col-form-label">Estado</label>
+                    <select
+                      className="form-select"
+                      name="formEstado"
+                      defaultValue={
+                        this.state.modalType === "edit"
+                          ? this.state.dispositivoData.active
+                          : 1
+                      }
+                    >
+                      <option value={1}>Activo</option>
+                      <option value={0}>Inactivo</option>
+                    </select>
+                  </form>
+                )}
               </ModalBody>
               <ModalFooter>
                 <Button
@@ -413,6 +530,8 @@ Devices.propTypes = {
 }
 
 const mapStateToProps = state => ({
+  error: state.dispositivos.error,
+  simsDisponibles: state.sims.data,
   platforms: state.platforms.data,
   modems: state.modems.data,
   dispositivos: state.dispositivos.data,
@@ -423,9 +542,11 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onGetPlatforms: () => dispatch(getPlatforms()),
   onGetModems: () => dispatch(getModems()),
+  onGetSimsDisponibles: () => dispatch(getSimsDisponibles()),
   onGetDispositivos: () => dispatch(getDispositivos()),
   onInsertDispositivo: data => dispatch(insertDispositivo(data)),
   onUpdateDispositivo: data => dispatch(updateDispositivo(data)),
+  onRemoveSim: data => dispatch(dispositivoRetirarSim(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Devices)

@@ -1,5 +1,6 @@
 import {
   GET_SIMS,
+  GET_SIMS_DISPONIBLES,
   INSERT_SIM,
   EDIT_SIM,
   WAIT_SIMS,
@@ -12,6 +13,14 @@ export const getSims = () => ({
   payload: {
     controller: "sim",
     operacion: "selectAll",
+  },
+})
+
+export const getSimsDisponibles = () => ({
+  type: GET_SIMS_DISPONIBLES,
+  payload: {
+    controller: "sim",
+    operacion: "selectDisponible",
   },
 })
 

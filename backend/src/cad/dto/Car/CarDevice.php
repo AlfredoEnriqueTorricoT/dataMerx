@@ -13,6 +13,7 @@ class CarDevice {
   public $clientName;
 
   public $code;
+  public $imei;
 
   /**
    * Get the value of id

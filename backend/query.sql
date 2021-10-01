@@ -3,7 +3,7 @@ composer require spatie/laravel-permission
 php artisan passport:install
 php artisan migrate:refresh --seed
 
-create dataBase dataMerxM;
+create dataBase dataMerx;
 
 create table users(
   id int not null primary key auto_increment,

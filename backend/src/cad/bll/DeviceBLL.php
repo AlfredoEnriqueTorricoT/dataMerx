@@ -16,8 +16,8 @@ class DeviceBLL
   public function selectAll() {
     $claseConexion = new Conexion();
     $sql = '
-    select * from devices d
-    join sims s on d.simid = s.id
+    select d.*, s.number, s.cod from devices d
+    left join sims s on d.simid = s.id
     ';
     $res = $claseConexion->query($sql);
     $lista = array();
