@@ -99,7 +99,6 @@ switch ($controller) {
                         $objDevice::insert();
                         break;
                     case "addDeviceToSim":
-                        echo "index";
                         $objDevice::addSimToDevice();
                         break;
                     case "update":
@@ -128,6 +127,9 @@ switch ($controller) {
                         break;
                     case "insert":
                         $objCar::insert();
+                        break;
+                    case "addDeviceToCar":
+                        $objCar::addDeviceToCar();
                         break;
                     case "update":
                         $objCar::update();

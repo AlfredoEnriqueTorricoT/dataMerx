@@ -13,7 +13,7 @@ class CarDevice {
   public $clientName;
 
   public $code;
-  public $imei;
+  public $name;
 
   /**
    * Get the value of id
@@ -171,6 +171,46 @@ class CarDevice {
   public function setClientName($clientName)
   {
     $this->clientName = $clientName;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of name
+   */ 
+  public function getName()
+  {
+    return $this->name;
+  }
+
+  /**
+   * Set the value of name
+   *
+   * @return  self
+   */ 
+  public function setName($name)
+  {
+    $this->name = $name;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of code
+   */ 
+  public function getCode()
+  {
+    return $this->code;
+  }
+
+  /**
+   * Set the value of code
+   *
+   * @return  self
+   */ 
+  public function setCode($code)
+  {
+    $this->code = $code;
 
     return $this;
   }
