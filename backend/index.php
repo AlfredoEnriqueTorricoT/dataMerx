@@ -14,6 +14,7 @@ use \App\controller\ApiSim;
 use \App\controller\ApiDevice;
 use \App\controller\ApiClient;
 use \App\controller\ApiCar;
+use \App\controller\ApiEvent;
 
     $json = file_get_contents('php://input');
     $data = json_decode($json);
@@ -33,6 +34,7 @@ use \App\controller\ApiCar;
     $objDevice = new ApiDevice();
     $objClient = new ApiClient();
     $objCar = new ApiCar();
+    $objEvent = new ApiEvent();
 
 switch ($controller) {
             case "user":
@@ -134,20 +136,22 @@ switch ($controller) {
                     case "update":
                         $objCar::update();
                         break;
-        
                 }
             break;
-            case "imagen":
+            case "event":
                 switch ($operacion) {
                     case "selectAll":
-                        $objImagen::selectAll();
+                        $objEvent::selectAll();
                         break;
-                    case "selectAllXTamano":
-                        $tamaño = $_REQUEST['tamano'];
-                        $objImagen::selectAllXtamano($tamaño);
+                    case "insert":
+                        $objEvent::insert();
+                        break;
+                    case "update":
+                        $objEvent::update();
                         break;
                 }
             break;
+         
           
         }
 

@@ -83,7 +83,7 @@ create table events(
   tableAffected varchar(12),
   rowAffected varchar(12),
   detail text not null,
-  tablaNewValue varchar(12) not null,
+  tableNewValue varchar(12) null,
   rowidNewValue  int null,
   date_start date,
   userid int not null,
@@ -226,6 +226,37 @@ begin
   select * from devices where id = _id;
 end $$
 
+-- 21-10-02
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_addDeviceToCar;$$
+CREATE PROCEDURE `sp_addDeviceToCar` (_id int, _deiviceId int, _userid int)
+begin  
+	update cars set deviceid = _deiviceId where id = _id;
+
+  insert into events values(default,"car", _id,"Se agrego el dispositivo.","device",_deiviceId, now(), _userid,1);
+    	
+  select * from cars where id = _id;
+end $$
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_event_insert;$$
+CREATE PROCEDURE `sp_event_insert` ( _tableAffected text, _rowAffected int, _detail text, _now text, _userid text, _typeevent int)
+begin  
+
+  insert into events values(default,_tableAffected, _rowAffected,_detail,null,null, _now, _userid, _typeevent);    	
+  select * from events where id = last_insert_id();
+end $$
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_event_update;$$
+CREATE PROCEDURE `sp_event_update` (_id int, _tableAffected text, _rowAffected int, _detail text, _now text, _userid text, _typeid int)
+begin  
+
+  update  events set tableAffected =_tableAffected, rowAffected =_rowAffected, detail=_detail, date_start =_now, userid =_userid, typeid =_typeid where id = _id;    	
+  select * from events where id = _id;
+end $$
+
 
 
 
@@ -254,3 +285,16 @@ where sd.simid is null;
 select d.* from(select * from cars where deviceid is not null) dc
 right join devices d on dc.deviceid = d.id
 where dc.deviceid is null;
+
+
+select c.*, concat(cl.name, " ",cl.last_name, " ", cl.mother_last_name, " (",cl.empresa, ")") as clientName, d.code, d.name from cars c
+    join clients cl on c.clientid = cl.id
+    left join devices d on c.deviceid = d.id;
+
+
+
+alter table events change rowidNewValue rowNewValue int;
+alter table events change tablaNewValue tableNewValue int;
+
+
+    alter table tablaNewValue rename to 
