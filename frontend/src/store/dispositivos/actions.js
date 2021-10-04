@@ -5,6 +5,7 @@ import {
   WAIT_DISPOSITIVOS,
   GET_DISPOSITIVOS_FAIL,
   GET_DISPOSITIVOS_SUCCESS,
+  DISPOSITIVO_INSERTAR_SIM,
   DISPOSITIVO_RETIRAR_SIM,
 } from "./actionTypes"
 
@@ -38,6 +39,17 @@ export const getDispositivosSuccess = device => ({
 export const getDispositivosFail = error => ({
   type: GET_DISPOSITIVOS_FAIL,
   payload: error,
+})
+
+export const dispositivoInsertarSim = data => ({
+  type: DISPOSITIVO_INSERTAR_SIM,
+  payload: {
+    ...data,
+    controller: "device",
+    operacion: "addDeviceToSim",
+    date_start: "2021-09-22",
+    userid: 1,
+  },
 })
 
 export const dispositivoRetirarSim = data => ({

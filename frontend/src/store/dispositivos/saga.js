@@ -5,6 +5,7 @@ import {
   GET_DISPOSITIVOS,
   INSERT_DISPOSITIVO,
   EDIT_DISPOSITIVO,
+  DISPOSITIVO_INSERTAR_SIM,
   DISPOSITIVO_RETIRAR_SIM,
 } from "./actionTypes"
 import {
@@ -54,6 +55,18 @@ function* sUpdateDispositivo(action) {
   }
 }
 
+function* insertarSimDispositivo(action) {
+  try {
+    console.log("sagaData: ", action.payload)
+    yield put(waitDispositivos())
+    const response = yield call(AxiosServices.POST, action.payload)
+    yield put(getDispositivos())
+  } catch (error) {
+    yield put(getDispositivosFail(error))
+    console.log("EXTRACT_SIM_FAIL", error)
+  }
+}
+
 function* retirarSimDispositivo(action) {
   try {
     yield put(waitDispositivos())
@@ -69,6 +82,7 @@ function* dispositivosSaga() {
   yield takeEvery(GET_DISPOSITIVOS, fetchDispositivos)
   yield takeEvery(INSERT_DISPOSITIVO, sInsertDispositivo)
   yield takeEvery(EDIT_DISPOSITIVO, sUpdateDispositivo)
+  yield takeEvery(DISPOSITIVO_INSERTAR_SIM, insertarSimDispositivo)
   yield takeEvery(DISPOSITIVO_RETIRAR_SIM, retirarSimDispositivo)
 }
 

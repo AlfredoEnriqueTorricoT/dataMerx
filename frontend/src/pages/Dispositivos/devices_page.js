@@ -34,6 +34,7 @@ import {
   updateDispositivo,
   getSimsDisponibles,
   dispositivoRetirarSim,
+  dispositivoInsertarSim,
 } from "store/actions"
 
 class Devices extends Component {
@@ -42,10 +43,14 @@ class Devices extends Component {
 
     this.state = {
       modal: false,
-      modalType: "add",
+      modalType: "añadi",
       dispositivoData: { id: 0 },
+      formSimSelected: null,
+      searching: "",
       toastWaiting: false,
+      insertSim: false,
       deletingSim: false,
+      simsSearched: [],
       formValidation: {
         imeiValid: true,
         nameValid: true,
@@ -76,11 +81,15 @@ class Devices extends Component {
           showToast({
             toastType: "success",
             message: `El ${
-              this.state.deletingSim ? "sim" : "dispositivo"
+              this.state.deletingSim || this.state.insertSim
+                ? "sim"
+                : "dispositivo"
             } ha sido ${
-              this.state.deletingSim
+              this.state.insertSim
+                ? "enlazado con el dispositivo"
+                : this.state.deletingSim
                 ? "removido"
-                : this.state.modalType === "add"
+                : this.state.modalType === "añadi"
                 ? "añadido"
                 : "editado"
             }`,
@@ -92,9 +101,11 @@ class Devices extends Component {
             toastType: "warning",
             title: this.props.error.message,
             message: `No se ha podido ${
-              this.state.deletingSim
+              this.state.insertSim
+                ? "enlazar el sim"
+                : this.state.deletingSim
                 ? "remover el sim"
-                : this.state.modalType === "add"
+                : this.state.modalType === "añadi"
                 ? "añadir al dispositivo"
                 : "editar al dispositivo"
             }`,
@@ -105,9 +116,33 @@ class Devices extends Component {
     }
   }
 
+  searchFunc = data => {
+    this.setState({
+      ...this.state,
+      simsSearched: this.props.simsDisponibles.filter(
+        sim =>
+          sim.imei.includes(data.target.value) ||
+          sim.number.includes(data.target.value) //data.target.value
+      ),
+    })
+    console.log(this.state.simsSearched)
+  }
+
   delSimFunc = data => {
     this.setState({ toastWaiting: true, deletingSim: true })
     this.props.onRemoveSim(data)
+  }
+
+  insertSimFunc = e => {
+    e.preventDefault()
+    this.setState({ toastWaiting: true, insertSim: true })
+
+    const data = {
+      id: this.state.dispositivoData.id,
+      simid: this.state.formSimSelected,
+    }
+    console.log("enviando: ", data)
+    this.props.onInsertSim(data)
   }
 
   subFunc = async e => {
@@ -129,7 +164,7 @@ class Devices extends Component {
     await this.setState({
       formValidation: {
         imeiValid: data.imei !== "",
-        nameValid: esTexto(data.name),
+        nameValid: data.name !== "",
         codeValid: data.code !== "",
         receptionValid: data.reception !== "",
       },
@@ -138,7 +173,7 @@ class Devices extends Component {
     let fv = this.state.formValidation
 
     if (fv.imeiValid && fv.nameValid && fv.codeValid && fv.receptionValid) {
-      if (this.state.modalType === "add") {
+      if (this.state.modalType === "añadi") {
         this.props.onInsertDispositivo(data)
       } else {
         this.props.onUpdateDispositivo(data)
@@ -180,7 +215,7 @@ class Devices extends Component {
                       className="btn-rounded waves-effect waves-light"
                       // onClick={this.togglemodal}
                       onClick={() => {
-                        this.setState({ modal: true, modalType: "add" })
+                        this.setState({ modal: true, modalType: "añadi" })
                       }}
                     >
                       Añadir
@@ -240,7 +275,7 @@ class Devices extends Component {
                             <td>{dispositivo.reception}</td>
                             <td>
                               {dispositivo.cod === null
-                                ? "Sim no asignada"
+                                ? "- -"
                                 : `${dispositivo.cod}/${dispositivo.number}`}
                             </td>
                             <td>{`${dispositivo.markId}/${dispositivo.platformId}`}</td>
@@ -271,7 +306,7 @@ class Devices extends Component {
                                     onClick={() => {
                                       this.setState({
                                         modal: true,
-                                        modalType: "edit",
+                                        modalType: "edita",
                                         dispositivoData: dispositivo,
                                       })
                                     }}
@@ -282,6 +317,10 @@ class Devices extends Component {
                                     href="#"
                                     onClick={() => {
                                       this.setState({
+                                        ...this.state,
+                                        formSimSelected: null,
+                                        simsSearched: this.props
+                                          .simsDisponibles,
                                         modal: true,
                                         modalType: "editSim",
                                         dispositivoData: dispositivo,
@@ -319,44 +358,70 @@ class Devices extends Component {
               }}
             >
               <ModalHeader>
-                {this.state.modalType === "add"
+                {this.state.modalType === "añadi"
                   ? "Añadir dispositivo"
-                  : this.state.modalType === "edit"
+                  : this.state.modalType === "edita"
                   ? "Editar dispositivo"
                   : "Sims disponibles"}
               </ModalHeader>
               <ModalBody>
                 {this.state.modalType === "editSim" ? (
-                  <table className="table align-middle table-nowrap mb-0">
-                    <thead className="table-light">
-                      <tr>
-                        <th className="align-middle">#</th>
-                        <th className="align-middle">Imei</th>
-                        <th className="align-middle">Número</th>
-                        <th className="align-middle">Seleccionar</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {this.props.simsDisponibles.map(sim => (
-                        <tr key={sim.id}>
-                          <td>{sim.id}</td>
-                          <td>{sim.imei}</td>
-                          <td>{sim.number}</td>
-                          <td className="align-middle">
-                            <div className="form-check">
-                              <input
-                                className="form-check-input"
-                                type="radio"
-                                name="simRadios"
-                                id={`simRadios${sim.id}`}
-                                value={sim.id}
-                              />
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                  <React.Fragment>
+                    <form
+                      id="modalEdit"
+                      onSubmit={this.insertSimFunc}
+                      className="app-search d-none d-lg-block"
+                    >
+                      <div className="position-relative">
+                        <input
+                          type="number"
+                          name="searchInput"
+                          onChange={this.searchFunc}
+                          className="form-control"
+                          placeholder="Search..."
+                        />
+                        <span className="bx bx-search-alt" />
+                      </div>
+                    </form>
+                    {this.state.simsSearched.length === 0 ? (
+                      <center>
+                        <h5>No se han encontrado sims disponibles</h5>
+                      </center>
+                    ) : (
+                      <table className="table align-middle table-nowrap mb-0">
+                        <thead className="table-light">
+                          <tr>
+                            <th className="align-middle">#</th>
+                            <th className="align-middle">Imei</th>
+                            <th className="align-middle">Número</th>
+                            <th className="align-middle">Seleccionar</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {this.state.simsSearched.map(sim => (
+                            <tr key={sim.id}>
+                              <td>{sim.id}</td>
+                              <td>{sim.imei}</td>
+                              <td>{sim.number}</td>
+                              <td className="align-middle">
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="radio"
+                                    name="simRadios"
+                                    onClick={() => {
+                                      this.setState({ formSimSelected: sim.id })
+                                    }}
+                                    value={sim.id}
+                                  />
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    )}
+                  </React.Fragment>
                 ) : (
                   <form id="modalForm" onSubmit={this.subFunc}>
                     <label
@@ -372,7 +437,7 @@ class Devices extends Component {
                       }`}
                       type="number"
                       defaultValue={
-                        this.state.modalType === "edit"
+                        this.state.modalType === "edita"
                           ? this.state.dispositivoData.imei
                           : ""
                       }
@@ -390,7 +455,7 @@ class Devices extends Component {
                       }`}
                       type="text"
                       defaultValue={
-                        this.state.modalType === "edit"
+                        this.state.modalType === "edita"
                           ? this.state.dispositivoData.name
                           : ""
                       }
@@ -408,7 +473,7 @@ class Devices extends Component {
                       }`}
                       type="number"
                       defaultValue={
-                        this.state.modalType === "edit"
+                        this.state.modalType === "edita"
                           ? this.state.dispositivoData.code
                           : ""
                       }
@@ -427,7 +492,7 @@ class Devices extends Component {
                       }`}
                       type="date"
                       defaultValue={
-                        this.state.modalType === "edit"
+                        this.state.modalType === "edita"
                           ? this.state.dispositivoData.reception
                           : ""
                       }
@@ -437,7 +502,7 @@ class Devices extends Component {
                       className="form-select"
                       name="formMarkId"
                       defaultValue={
-                        this.state.modalType === "edit"
+                        this.state.modalType === "edita"
                           ? this.state.dispositivoData.markId
                           : 1
                       }
@@ -455,7 +520,7 @@ class Devices extends Component {
                       className="form-select"
                       name="formPlatformId"
                       defaultValue={
-                        this.state.modalType === "edit"
+                        this.state.modalType === "edita"
                           ? this.state.dispositivoData.platformId
                           : 1
                       }
@@ -471,7 +536,7 @@ class Devices extends Component {
                       className="form-select"
                       name="formEstado"
                       defaultValue={
-                        this.state.modalType === "edit"
+                        this.state.modalType === "edita"
                           ? this.state.dispositivoData.active
                           : 1
                       }
@@ -507,9 +572,17 @@ class Devices extends Component {
                 ) : (
                   <Button
                     type="submit"
-                    form="modalForm"
+                    form={
+                      this.state.modalType === "editSim"
+                        ? "modalEdit"
+                        : "modalForm"
+                    }
                     color="success"
                     size="sm"
+                    disabled={
+                      this.state.modalType === "editSim" &&
+                      this.state.formSimSelected === null
+                    }
                     className="btn-rounded waves-effect waves-light"
                   >
                     Guardar
@@ -546,6 +619,7 @@ const mapDispatchToProps = dispatch => ({
   onGetDispositivos: () => dispatch(getDispositivos()),
   onInsertDispositivo: data => dispatch(insertDispositivo(data)),
   onUpdateDispositivo: data => dispatch(updateDispositivo(data)),
+  onInsertSim: data => dispatch(dispositivoInsertarSim(data)),
   onRemoveSim: data => dispatch(dispositivoRetirarSim(data)),
 })
 
