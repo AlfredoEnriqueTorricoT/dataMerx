@@ -13,6 +13,7 @@ import modemsSaga from "./modems/saga"
 import dispositivosSaga from "./dispositivos/saga"
 import clientesSaga from "./clientes/saga"
 import vehiculosSaga from "./vehiculos/saga"
+import eventosSaga from "./eventos/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -29,5 +30,6 @@ export default function* rootSaga() {
     fork(dispositivosSaga),
     fork(clientesSaga),
     fork(vehiculosSaga),
+    fork(eventosSaga),
   ])
 }

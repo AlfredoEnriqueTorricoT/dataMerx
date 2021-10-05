@@ -5,16 +5,20 @@ import { connect } from "react-redux"
 import { esTexto, esCorreo } from "regular_expresions"
 import { showToast, clearToast } from "../../components/Toast/toast"
 import {
+  Badge,
+  Button,
   Card,
   CardBody,
   CardTitle,
-  Badge,
-  Button,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter,
   Progress,
+  UncontrolledDropdown,
 } from "reactstrap"
 import { Link } from "react-router-dom"
 import { getClientes } from "store/clientes/actions"
@@ -178,6 +182,7 @@ class CarsPage extends Component {
                           <th className="align-middle">Placa</th>
                           <th className="align-middle">Modelo</th>
                           <th className="align-middle">Marca</th>
+                          <th className="align-middle">Modem</th>
                           <th className="align-middle">Fecha inicial</th>
                           <th className="align-middle">Última fecha</th>
                           <th className="align-middle">Cliente</th>
@@ -191,26 +196,67 @@ class CarsPage extends Component {
                             <td>{vehiculo.placa}</td>
                             <td>{vehiculo.model}</td>
                             <td>{vehiculo.mark}</td>
+                            <td>
+                              {vehiculo.code !== null
+                                ? `${vehiculo.code}/${vehiculo.name}`
+                                : "- -"}
+                            </td>
                             <td>{vehiculo.date_start}</td>
-                            <td>{vehiculo.date_end}</td>
+                            <td>
+                              {vehiculo.date_end === null ||
+                              vehiculo.date_end === "0000-00-00"
+                                ? "- - -"
+                                : vehiculo.date_end}
+                            </td>
                             <td>{vehiculo.clientName}</td>
                             <td>
-                              <Button
-                                type="button"
-                                color="link"
-                                size="sm"
-                                className="btn-rounded waves-effect waves-light"
-                                // onClick={this.togglemodal}
-                                onClick={() => {
-                                  this.setState({
-                                    modal: true,
-                                    modalType: "edit",
-                                    vehiculoData: vehiculo,
-                                  })
-                                }}
-                              >
-                                <i className="mdi mdi-dots-horizontal font-size-18" />
-                              </Button>
+                              <UncontrolledDropdown>
+                                <DropdownToggle
+                                  href="#"
+                                  className="card-drop"
+                                  tag="i"
+                                >
+                                  <i className="mdi mdi-dots-horizontal font-size-18" />
+                                </DropdownToggle>
+                                <DropdownMenu>
+                                  <DropdownItem>
+                                    <Button
+                                      type="button"
+                                      color="link"
+                                      size="sm"
+                                      className="btn-rounded waves-effect waves-light"
+                                      // onClick={this.togglemodal}
+                                      onClick={() => {
+                                        this.setState({
+                                          modal: true,
+                                          modalType: "edit",
+                                          vehiculoData: vehiculo,
+                                        })
+                                      }}
+                                    >
+                                      Editar
+                                    </Button>
+                                  </DropdownItem>
+                                  <DropdownItem>
+                                    <Button
+                                      type="button"
+                                      color="link"
+                                      size="sm"
+                                      className="btn-rounded waves-effect waves-light"
+                                      // onClick={this.togglemodal}
+                                      onClick={() => {
+                                        this.setState({
+                                          modal: true,
+                                          modalType: "edit",
+                                          vehiculoData: vehiculo,
+                                        })
+                                      }}
+                                    >
+                                      Editar dispositivo
+                                    </Button>
+                                  </DropdownItem>
+                                </DropdownMenu>
+                              </UncontrolledDropdown>
                             </td>
                           </tr>
                         ))}

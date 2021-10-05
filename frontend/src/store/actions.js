@@ -23,3 +23,6 @@ export * from "./clientes/actions"
 
 //vehiculos
 export * from "./vehiculos/actions"
+
+//eventos
+export * from "./eventos/actions"

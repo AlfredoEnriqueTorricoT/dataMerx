@@ -29,11 +29,12 @@ function* loginUser({ payload: { user, history } }) {
       }
       console.log(dataLogin)
       const response = yield call(AxiosServices.POST, dataLogin)
-      console.log("response")
+      console.log("loginResponse")
       console.log(response)
       if (response.status === 200) {
         yield put(loginSuccess(response))
         localStorage.setItem("authUser", JSON.stringify(response))
+        localStorage.setItem("userId", response.data.id)
         localStorage.setItem(
           "userName",
           response.data.name + " " + response.data.lastName

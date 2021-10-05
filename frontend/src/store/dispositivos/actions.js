@@ -1,5 +1,6 @@
 import {
   GET_DISPOSITIVOS,
+  GET_DISPOSITIVOS_DISPONIBLES,
   INSERT_DISPOSITIVO,
   EDIT_DISPOSITIVO,
   WAIT_DISPOSITIVOS,
@@ -14,6 +15,14 @@ export const getDispositivos = () => ({
   payload: {
     controller: "device",
     operacion: "selectAll",
+  },
+})
+
+export const getDispositivosDisponibles = () => ({
+  type: GET_DISPOSITIVOS_DISPONIBLES,
+  payload: {
+    controller: "device",
+    operacion: "selectDisponible",
   },
 })
 
@@ -48,7 +57,7 @@ export const dispositivoInsertarSim = data => ({
     controller: "device",
     operacion: "addDeviceToSim",
     date_start: "2021-09-22",
-    userid: 1,
+    userid: localStorage.getItem("userId"),
   },
 })
 
@@ -58,6 +67,6 @@ export const dispositivoRetirarSim = data => ({
     controller: "device",
     operacion: "retirar",
     deviceid: data,
-    userid: 1,
+    userid: localStorage.getItem("userId"),
   },
 })

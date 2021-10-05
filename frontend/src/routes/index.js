@@ -19,6 +19,9 @@ import Clientes from "../pages/Clientes/clientes_page"
 //vehiculos
 import Vehiculos from "../pages/Vehiculos/cars_page"
 
+//eventos
+import Eventos from "../pages/Eventos/eventos_page"
+
 //code opt
 import Usuarios from "../pages/Dashboard/COPTM/users"
 
@@ -31,10 +34,11 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword"
 const authProtectedRoutes = [
   { path: "/usuarios", component: Dashboard },
   { path: "/sims", component: SimsPage },
-  { path: "/usuarios", component: Usuarios },
+  { path: "/qwerty", component: Usuarios },
   { path: "/dispositivos", component: Devices },
   { path: "/clientes", component: Clientes },
   { path: "/vehiculos", component: Vehiculos },
+  { path: "/eventos", component: Eventos },
 
   //profile
   { path: "/profile", component: UserProfile },

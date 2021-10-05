@@ -30,6 +30,9 @@ import clientes from "./clientes/reducer"
 //vehiculos
 import vehiculos from "./vehiculos/reducer"
 
+//eventos
+import eventos from "./eventos/reducer"
+
 const rootReducer = combineReducers({
   // public
   Layout,
@@ -44,6 +47,7 @@ const rootReducer = combineReducers({
   dispositivos,
   clientes,
   vehiculos,
+  eventos,
 })
 
 export default rootReducer
