@@ -81,7 +81,7 @@ class Eventos extends Component {
       detail: e.target.formDetalles.value,
       now: e.target.formFecha.value,
       userid: localStorage.getItem("userId"),
-      typeEvent: e.target.formTipoEvento.value,
+      typeevent: e.target.formTipoEvento.value,
     }
 
     await this.setState({
@@ -342,9 +342,8 @@ class Eventos extends Component {
                             : 1
                         }
                       >
-                        <option value="info">Info</option>
-                        <option value="warning">Warning</option>
-                        <option value="danger">Danger</option>
+                        <option value={1}>Info</option>
+                        <option value={2}>Warning</option>
                       </select>
                     </div>
                   </div>
