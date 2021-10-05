@@ -26,6 +26,24 @@ class EventBLL
     return $lista;
   }
 
+
+  public function selectAllByElement($data) {
+    $claseConexion = new Conexion();
+    $sql = '
+    select * from events where tableAffected = :p_obj and rowAffected = :p_id;
+    ';
+    $res = $claseConexion->queryWithParams($sql, array(
+      ":p_obj" => $data->obj,
+      ":p_id" => $data->id,
+    ));
+    $lista = array();
+    while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
+        $obj = $this->rowToDto($row);
+        $lista[] = $obj;
+    }
+    return $lista;
+  }
+
   
 
 

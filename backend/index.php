@@ -15,6 +15,7 @@ use \App\controller\ApiDevice;
 use \App\controller\ApiClient;
 use \App\controller\ApiCar;
 use \App\controller\ApiEvent;
+use \App\controller\ApiTypeEvent;
 
     $json = file_get_contents('php://input');
     $data = json_decode($json);
@@ -35,6 +36,7 @@ use \App\controller\ApiEvent;
     $objClient = new ApiClient();
     $objCar = new ApiCar();
     $objEvent = new ApiEvent();
+    $objTypeEvent = new ApiTypeEvent();
 
 switch ($controller) {
             case "user":
@@ -143,6 +145,9 @@ switch ($controller) {
                     case "selectAll":
                         $objEvent::selectAll();
                         break;
+                    case "selectAllByElement":
+                        $objEvent::selectAllByElement();
+                        break;
                     case "insert":
                         $objEvent::insert();
                         break;
@@ -151,7 +156,13 @@ switch ($controller) {
                         break;
                 }
             break;
-         
+            case "typeEvent":
+                switch ($operacion) {
+                    case "selectAll":
+                        $objTypeEvent::selectAll();
+                        break;
+                }
+            break;
           
         }
 

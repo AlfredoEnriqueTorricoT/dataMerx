@@ -1,6 +1,5 @@
 import axios from "axios"
-//http://localhost:8080/dataMerx/?controller=user&operacion=selectAll
-const DEFAULT_URL = "http://localhost:80/dataMerx/backend/"
+const DEFAULT_URL = "http://localhost:8080/dataMerx/backend/"
 
 const defaultHeaders = new Headers()
 
