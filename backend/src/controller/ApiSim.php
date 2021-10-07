@@ -25,10 +25,12 @@ class ApiSim
         echo json_encode(["status" => 200, "message"=>"se realizo exitosamente la consulta", "data" => $obj]);
     }
 
-    public static function selectById($usuarioId) {
+    public static function selectById() {
 
+        $json = file_get_contents('php://input');
+        $data = json_decode($json);
         $simBLL = new SimBLL();
-        $obj = $simBLL->selectById($usuarioId);
+        $obj = $simBLL->selectById($data->id);
         header('Content-Type: application/json');
         if($obj == null) {
             echo json_encode(["status" => 200, "message"=>"void"]);

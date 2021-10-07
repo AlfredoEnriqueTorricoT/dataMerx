@@ -5,7 +5,8 @@ namespace App\cad\bll;
 
 
 use App\cad\dal\Conexion;
-use App\cad\dto\Event;
+use App\cad\dto\Event\Event;
+use App\cad\dto\Event\EventVinculo;
 use PDO;
 class EventBLL
 {
@@ -28,20 +29,26 @@ class EventBLL
 
 
   public function selectAllByElement($data) {
+
     $claseConexion = new Conexion();
     $sql = '
-    select * from events where tableAffected = :p_obj and rowAffected = :p_id;
+    select t.*, te.name, te.img, case (tableNewValue)
+      when "car" then (select concat("Vehículo ",placa) from cars where id = '.$data->id.')
+      when "device" then (select concat("Dispositivo ",code) from devices where id = '.$data->id.')
+      when "sim" then (select concat("Sim ",cod) from sims where id = '.$data->id.')
+      else 0
+      end as vinculo
+      from(select * from events where tableAffected = "'.$data->obj.'" and rowAffected = '.$data->id.') t
+      join typeEvents te on t.typeid = te.id;
     ';
-    $res = $claseConexion->queryWithParams($sql, array(
-      ":p_obj" => $data->obj,
-      ":p_id" => $data->id,
-    ));
+    $res = $claseConexion->query($sql);
     $lista = array();
     while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
-        $obj = $this->rowToDto($row);
+        $obj = $this->rowToDtoVinculo($row);
         $lista[] = $obj;
     }
     return $lista;
+  
   }
 
   
@@ -126,6 +133,23 @@ class EventBLL
       $obj ->setDate_start($row['date_start']);
       $obj ->setUserid($row['userid']);
       $obj ->setTypeid($row['typeid']);
+
+      return $obj;
+  }
+
+  public function rowToDtoVinculo($row)
+  {
+      $obj = new EventVinculo();
+      $obj ->setId($row['id']);
+      $obj ->setTableAffected($row['tableAffected']);
+      $obj ->setRowAffected($row['rowAffected']);
+      $obj ->setDetail($row['detail']);
+      $obj ->setTableNewValue($row['tableNewValue']);
+      $obj ->setRowNewValue($row['rowNewValue']);
+      $obj ->setDate_start($row['date_start']);
+      $obj ->setUserid($row['userid']);
+      $obj ->setTypeid($row['typeid']);
+      $obj ->setVinculo($row['vinculo']);
 
       return $obj;
   }

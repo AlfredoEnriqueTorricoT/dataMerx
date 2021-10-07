@@ -1,6 +1,6 @@
 <?php
 
-namespace App\cad\dto;
+namespace App\cad\dto\Event;
 
 class Event {
   public $id;

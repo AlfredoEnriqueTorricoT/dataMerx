@@ -258,6 +258,17 @@ begin
 end $$
 
 
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_event_selectAllObj;$$
+CREATE PROCEDURE `sp_event_selectAllObj` (_id int, _obj text)
+begin  
+  if _obj = "car" then
+    select * from events where tableAffected = _obj and rowAffected = _id;
+  end if
+  update  events set tableAffected =_tableAffected, rowAffected =_rowAffected, detail=_detail, date_start =_now, userid =_userid, typeid =_typeid where id = _id;    	
+  select * from events where id = _id;
+end $$
+
 
 
 
@@ -297,4 +308,24 @@ alter table events change rowidNewValue rowNewValue int;
 alter table events change tablaNewValue tableNewValue int;
 
 
-    alter table tablaNewValue rename to 
+select code, markId from devices where id = 1;
+
+select t.*, te.name, te.img, case (tableNewValue)
+  when "car" then (select code from devices where id = 1)
+  when "device" then (select concat("Dispositivo ",code) from devices where id = 1)
+  when "sim" then (select code from devices where id = 1)
+  else 0
+  end as vinculo
+  from(select * from events where tableAffected = "car" and rowAffected = 1) t
+  join typeEvents te on t.typeid = te.id;
+
+
+
+  select t.*, te.name, te.img, case (tableNewValue)
+      when "car" then "carr??"
+      when "device" then (select concat("Dispositivo ",code) from devices where id = 1)
+      when "sim" then "sim??"
+      else 0
+      end as vinculo
+      from(select * from events where tableAffected = "car" and rowAffected = 1) t
+      join typeEvents te on t.typeid = te.id;

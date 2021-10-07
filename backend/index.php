@@ -77,6 +77,9 @@ switch ($controller) {
                     case "selectAll":
                         $objSim::selectAll();
                         break;
+                    case "selectById":
+                        $objSim::selectById();
+                        break;
                     case "selectDisponible":
                         $objSim::selectSimDisponible();
                         break;
@@ -92,6 +95,9 @@ switch ($controller) {
                 switch ($operacion) {
                     case "selectAll":
                         $objDevice::selectAll();
+                        break;
+                    case "selectById":
+                        $objDevice::selectById();
                         break;
                     case "selectDisponible":
                         $objDevice::selectAllDisponible();
@@ -128,6 +134,9 @@ switch ($controller) {
                 switch ($operacion) {
                     case "selectAll":
                         $objCar::selectAll();
+                        break;
+                    case "selectById":
+                        $objCar::selectById();
                         break;
                     case "insert":
                         $objCar::insert();

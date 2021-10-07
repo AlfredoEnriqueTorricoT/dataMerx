@@ -21,6 +21,21 @@ class ApiDevice
         }
     }
 
+    public static function selectById() {
+
+        $json = file_get_contents('php://input');
+        $data = json_decode($json);
+        $bll = new DeviceBLL();
+        $obj = $bll->selectById($data->id);
+        header('Content-Type: application/json');
+        if($obj == null) {
+            echo json_encode(["status" => 200, "message"=>"void"]);
+            return;
+        }
+        echo json_encode(["status" => 200, "message"=>"ok", "data" => $obj]);
+
+    }
+
     public static function selectAllDisponible() {
         try{
             $bll = new DeviceBLL();
