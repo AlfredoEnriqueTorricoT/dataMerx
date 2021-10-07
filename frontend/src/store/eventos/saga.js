@@ -27,6 +27,7 @@ function* fetchEventos(action) {
 
 function* sInsertEvento(action) {
   try {
+    console.log(action.payload)
     yield put(waitEventos())
     const response = yield call(AxiosServices.POST, action.payload)
     yield put(getEventos())
