@@ -8,7 +8,7 @@ import UserProfile from "../pages/Authentication/UserProfile"
 import Dashboard from "../pages/Dashboard/index"
 
 //sims
-import SimsPage from "../pages/Sims/sims_page"
+import SimsPage from "pages/Sims/index.js"
 
 //devices
 import Devices from "../pages/Dispositivos/devices_page"
@@ -22,8 +22,16 @@ import Vehiculos from "../pages/Vehiculos/cars_page"
 //eventos
 import Eventos from "../pages/Eventos/eventos_page"
 
+//invoice
+import invoice from "pages/Eventos/invoice"
+
 //code opt
 import Usuarios from "../pages/Dashboard/COPTM/users"
+import CarsOpt from "../pages/Vehiculos/index"
+import DevicesOpt from "../pages/Dispositivos/index"
+
+//INVOICE
+import EventInvoice from "pages/Eventos/invoice"
 
 // Authentication related pages
 import Login from "../pages/Authentication/Login"
@@ -35,10 +43,12 @@ const authProtectedRoutes = [
   { path: "/usuarios", component: Dashboard },
   { path: "/sims", component: SimsPage },
   { path: "/qwerty", component: Usuarios },
-  { path: "/dispositivos", component: Devices },
+  { path: "/dispositivos", component: DevicesOpt },
   { path: "/clientes", component: Clientes },
-  { path: "/vehiculos", component: Vehiculos },
+  { path: "/vehiculos", component: CarsOpt },
   { path: "/eventos", component: Eventos },
+  { name: "simEventos", path: "/:id", component: invoice },
+  { path: "/invoice", component: EventInvoice },
 
   //profile
   { path: "/profile", component: UserProfile },

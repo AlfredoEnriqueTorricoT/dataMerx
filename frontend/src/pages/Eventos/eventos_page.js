@@ -182,25 +182,6 @@ class Eventos extends Component {
                             <td>{evento.date_start}</td>
                             <td>{evento.userid}</td>
                             <td>{evento.typeid}</td>
-                            <td>
-                              <Button
-                                type="button"
-                                color="link"
-                                size="sm"
-                                className="btn-rounded waves-effect waves-light"
-                                // onClick={this.togglemodal}
-                                onClick={() => {
-                                  console.log("CLICK")
-                                  /*this.setState({
-                                    modal: true,
-                                    modalType: "edit",
-                                    profile: evento,
-                                  })*/
-                                }}
-                              >
-                                <i className="mdi mdi-dots-horizontal font-size-18" />
-                              </Button>
-                            </td>
                           </tr>
                         ))}
                       </tbody>

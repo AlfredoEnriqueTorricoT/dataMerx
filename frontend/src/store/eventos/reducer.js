@@ -20,6 +20,7 @@ const eventos = (state = INIT_STATE, action) => {
 
     case GET_EVENTOS_SUCCESS:
       return {
+        ...state,
         data: action.payload.data,
         error: null,
         waitingResponse: false,

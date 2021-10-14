@@ -3,6 +3,7 @@ import { call, put, takeEvery } from "redux-saga/effects"
 // Crypto Redux States
 import {
   GET_DISPOSITIVOS,
+  GET_DISPOSITIVOS_POR_ID,
   GET_DISPOSITIVOS_DISPONIBLES,
   INSERT_DISPOSITIVO,
   EDIT_DISPOSITIVO,

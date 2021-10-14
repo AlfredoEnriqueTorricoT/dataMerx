@@ -36,12 +36,14 @@ import {
   dispositivoRetirarSim,
   dispositivoInsertarSim,
 } from "store/actions"
+import modalAddEvent from "pages/Eventos/addEvent_modal"
 
 class Devices extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      addEvent: false,
       modal: false,
       modalType: "añadi",
       dispositivoData: { id: 0 },
@@ -327,7 +329,7 @@ class Devices extends Component {
                                       })
                                     }}
                                   >
-                                    Editar sim
+                                    Cambiar sim
                                   </DropdownItem>
                                   {dispositivo.cod !== null && (
                                     <DropdownItem
@@ -339,6 +341,16 @@ class Devices extends Component {
                                       Remover sim
                                     </DropdownItem>
                                   )}
+                                  <DropdownItem
+                                    onClick={() => {
+                                      this.setState({
+                                        ...this.state,
+                                        addEvent: !this.state.addEvent,
+                                      })
+                                    }}
+                                  >
+                                    Añadir evento
+                                  </DropdownItem>
                                 </DropdownMenu>
                               </UncontrolledDropdown>
                             </td>
@@ -590,6 +602,8 @@ class Devices extends Component {
                 )}
               </ModalFooter>
             </Modal>
+
+            <modalAddEvent isOpen={this.state.addEvent} />
           </Container>
         </div>
       </React.Fragment>
