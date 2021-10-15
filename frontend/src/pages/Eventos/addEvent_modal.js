@@ -27,16 +27,18 @@ function ModalAddEvent(props) {
     e.preventDefault()
 
     const data = {
-      tableAffected: e.target.formTabla.value,
-      rowAffected: e.target.formFila.value,
+      tableAffected: tableType,
+      rowAffected: filaData,
       detail: e.target.formDetalles.value,
       now: e.target.formFecha.value,
       userid: localStorage.getItem("userId"),
       typeevent: e.target.formEvento.value,
     }
 
-    onInsertEvento(data, { obj: tableType, id: filaData })
+    //onInsertEvento(data, { obj: tableType, id: filaData })
     setToastWaiting(true)
+
+    console.log(data)
   }
 
   const toastFunc = () => {
@@ -60,39 +62,6 @@ function ModalAddEvent(props) {
       <ModalBody>
         <form id="FormAddEvent" onSubmit={subFunc}>
           <div className="mb-3 row">
-            <label htmlFor="formTabla" className="col-md-2 col-form-label">
-              Tabla
-            </label>
-            <div className="col-md-10">
-              <select
-                className="form-control"
-                name="formTabla"
-                defaultValue={tableType}
-                disabled
-              >
-                <option value="car">Car</option>
-                <option value="device">Device</option>
-                <option value="sim">Sim</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="mb-3 row">
-            <label htmlFor="formFila" className="col-md-2 col-form-label">
-              Fila
-            </label>
-            <div className="col-md-10">
-              <input
-                defaultValue={filaData}
-                type="number"
-                className="form-control"
-                name="formFila"
-                disabled
-              />
-            </div>
-          </div>
-
-          <div className="mb-3 row">
             <label htmlFor="formDetalles" className="col-md-2 col-form-label">
               Detalles
             </label>
@@ -102,7 +71,7 @@ function ModalAddEvent(props) {
                 name="formDetalles"
                 cols="2"
                 required
-                rows="5"
+                rows="4"
               ></textarea>
             </div>
           </div>
@@ -117,21 +86,6 @@ function ModalAddEvent(props) {
                 defaultValue={getToday()}
                 name="formFecha"
                 type="date"
-              />
-            </div>
-          </div>
-
-          <div className="mb-3 row">
-            <label htmlFor="formAdmiId" className="col-md-2 col-form-label">
-              Admin id
-            </label>
-            <div className="col-md-10">
-              <input
-                type="number"
-                name="formAdmiId"
-                className="form-control"
-                defaultValue={localStorage.getItem("userId")}
-                disabled
               />
             </div>
           </div>

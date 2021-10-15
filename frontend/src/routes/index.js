@@ -27,8 +27,10 @@ import invoice from "pages/Eventos/invoice"
 
 //code opt
 import Usuarios from "../pages/Dashboard/COPTM/users"
+import ClientesOpt from "../pages/Clientes/index"
 import CarsOpt from "../pages/Vehiculos/index"
 import DevicesOpt from "../pages/Dispositivos/index"
+import UsersOpt from "../pages/Usuarios/index"
 
 //INVOICE
 import EventInvoice from "pages/Eventos/invoice"
@@ -40,11 +42,11 @@ import Register from "../pages/Authentication/Register"
 import ForgetPwd from "../pages/Authentication/ForgetPassword"
 
 const authProtectedRoutes = [
-  { path: "/usuarios", component: Dashboard },
+  { path: "/usuarios", component: UsersOpt },
   { path: "/sims", component: SimsPage },
   { path: "/qwerty", component: Usuarios },
   { path: "/dispositivos", component: DevicesOpt },
-  { path: "/clientes", component: Clientes },
+  { path: "/clientes", component: ClientesOpt },
   { path: "/vehiculos", component: CarsOpt },
   { path: "/eventos", component: Eventos },
   { name: "simEventos", path: "/:id", component: invoice },
