@@ -87,12 +87,11 @@ class DeviceBLL
   public function insert($data) {
     $obj = new Device();
     $claseConexion = new Conexion();
-    $sql = "call sp_device_insert(:_imei,:_name, :_code, :_reception, :_active, :_markId, :_platformId);";
+    $sql = "call sp_device_insert(:_imei, :_code, :_reception, :_active, :_markId, :_platformId);";
     try {
         
         $res = $claseConexion->queryWithParams($sql, array(
             ":_imei" => $data->imei,
-            ":_name" => $data->name,
             ":_code"=> $data->code,
             ":_reception"=> $data->reception,
             ":_active"=> $data->active,
@@ -137,13 +136,12 @@ class DeviceBLL
   public function update($data) {
     $obj = new Device();
     $claseConexion = new Conexion();
-    $sql = "call sp_device_update(:_id,:_imei,:_name, :_code, :_reception, :_active, :_markId, :_platformId);";
+    $sql = "call sp_device_update(:_id,:_imei, :_code, :_reception, :_active, :_markId, :_platformId);";
 
     try {
         $res = $claseConexion->queryWithParams($sql, array(
             ":_id" => $data->id,
             ":_imei" => $data->imei,
-            ":_name" => $data->name,
             ":_code"=> $data->code,
             ":_reception"=> $data->reception,
             ":_active"=> $data->active,
@@ -165,7 +163,6 @@ class DeviceBLL
       $obj = new Device();
       $obj ->setId($row['id']);
       $obj ->setImei($row['imei']);
-      $obj ->setName($row['name']);
       $obj ->setCode($row['code']);
       $obj ->setReception($row['reception']);
       $obj ->setActive($row['active']);
@@ -180,7 +177,6 @@ class DeviceBLL
       $obj = new DeviceSim();
       $obj ->setId($row['id']);
       $obj ->setImei($row['imei']);
-      $obj ->setName($row['name']);
       $obj ->setCode($row['code']);
       $obj ->setReception($row['reception']);
       $obj ->setActive($row['active']);

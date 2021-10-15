@@ -4,6 +4,7 @@ namespace App\cad\dto;
 
 class Car {
   public $id;
+  public $name;
   public $placa;
   public $model;
   public $mark;
@@ -12,7 +13,26 @@ class Car {
   public $clientid;
   public $clientName;
 
+  /**
+   * Get the value of name
+   */ 
+  public function getName()
+  {
+    return $this->name;
+  }
 
+  /**
+   * Set the value of name
+   *
+   * @return  self
+   */ 
+  public function setName($name)
+  {
+    $this->name = $name;
+
+    return $this;
+  }
+  
   /**
    * Get the value of id
    */ 
@@ -172,5 +192,7 @@ class Car {
 
     return $this;
   }
+
+  
 }
 ?>
