@@ -5,7 +5,6 @@ namespace App\cad\dto;
 class Device {
   public $id;
   public $imei;
-  public $name;
   public $code;
   public $reception;
   public $active;
@@ -48,26 +47,6 @@ class Device {
   public function setImei($imei)
   {
     $this->imei = $imei;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of name
-   */ 
-  public function getName()
-  {
-    return $this->name;
-  }
-
-  /**
-   * Set the value of name
-   *
-   * @return  self
-   */ 
-  public function setName($name)
-  {
-    $this->name = $name;
 
     return $this;
   }

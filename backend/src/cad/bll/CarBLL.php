@@ -15,7 +15,7 @@ class CarBLL
 
   public function selectAll() {
     $claseConexion = new Conexion();
-    $sql = 'select c.*, concat(cl.name, " ",cl.last_name, " ", cl.mother_last_name, " (",cl.empresa, ")") as clientName, d.code, d.name from cars c
+    $sql = 'select c.*, concat(cl.name, " ",cl.last_name, " ", cl.mother_last_name, " (",cl.empresa, ")") as clientName, d.code from cars c
     join clients cl on c.clientid = cl.id
     left join devices d on c.deviceid = d.id;';
     $res = $claseConexion->query($sql);
@@ -48,10 +48,11 @@ class CarBLL
   public function insert($data) {
     $obj = new Car();
     $claseConexion = new Conexion();
-    $sql = "call sp_car_insert(:_placa, :_model, :_mark, :_date_start, :_clientid);";
+    $sql = "call sp_car_insert(:_name, :_placa, :_model, :_mark, :_date_start, :_clientid);";
     try {
         
         $res = $claseConexion->queryWithParams($sql, array(
+            ":_name" => $data->name,
             ":_placa" => $data->placa,
             ":_model"=> $data->model,
             ":_mark"=> $data->mark,
@@ -94,11 +95,12 @@ class CarBLL
   public function update($data) {
     $obj = new Car();
     $claseConexion = new Conexion();
-    $sql = "call sp_car_update(:_id,:_placa, :_model, :_mark, :_date_start, :_date_end, :_clientid);";
+    $sql = "call sp_car_update(:_id,:_name,:_placa, :_model, :_mark, :_date_start, :_date_end, :_clientid);";
 
     try {
         $res = $claseConexion->queryWithParams($sql, array(
             ":_id" => $data->id,
+            ":_name" => $data->name,
             ":_placa" => $data->placa,
             ":_model"=> $data->model,
             ":_mark"=> $data->mark,
@@ -120,6 +122,7 @@ class CarBLL
   {
       $obj = new Car();
       $obj ->setId($row['id']);
+      $obj ->setName($row['name']);
       $obj ->setPlaca($row['placa']);
       $obj ->setModel($row['model']);
       $obj ->setMark($row['mark']);
@@ -132,6 +135,7 @@ class CarBLL
   {
       $obj = new CarDevice();
       $obj ->setId($row['id']);
+      $obj ->setName($row['name']);
       $obj ->setPlaca($row['placa']);
       $obj ->setModel($row['model']);
       $obj ->setMark($row['mark']);
@@ -148,6 +152,7 @@ class CarBLL
   {
       $obj = new CarDevice();
       $obj ->setId($row['id']);
+      $obj ->setName($row['placa']);
       $obj ->setPlaca($row['placa']);
       $obj ->setModel($row['model']);
       $obj ->setMark($row['mark']);
