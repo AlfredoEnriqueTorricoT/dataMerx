@@ -15,9 +15,9 @@ class CarBLL
 
   public function selectAll() {
     $claseConexion = new Conexion();
-    $sql = 'select c.*, concat(cl.name, " ",cl.last_name, " ", cl.mother_last_name, " (",cl.empresa, ")") as clientName, d.code from cars c
+    $sql = 'select c.*, cl.empresa as clientName, d.code from cars c
     join clients cl on c.clientid = cl.id
-    left join devices d on c.deviceid = d.id;';
+    left join devices d on c.deviceid = d.id';
     $res = $claseConexion->query($sql);
     $lista = array();
     while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
