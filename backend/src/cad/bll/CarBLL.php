@@ -91,6 +91,26 @@ class CarBLL
     }
   }
 
+  public function retirarDevice($data) {
+    $obj = new Car();
+    $claseConexion = new Conexion();
+    $sql = "call sp_carDevice_retirar(:_carid, :_userid);";
+
+    try {
+        $res = $claseConexion->queryWithParams($sql, array(
+            ":_carid" => $data->carid,
+            ":_userid"=> $data->userid
+        ));
+        $row = $res->fetch(PDO::FETCH_ASSOC);
+        $obj = $this->rowToDto2($row);
+        
+        
+        return $obj;
+    } catch (\PDOException $e) {
+        return $e;
+    }
+  }
+
 
   public function update($data) {
     $obj = new Car();
@@ -144,6 +164,20 @@ class CarBLL
       $obj ->setClientid($row['clientid']);
       $obj ->setClientName($row['clientName']);
       $obj ->setCode($row['code']);
+      $obj ->setName($row['name']);
+      return $obj;
+  }
+  public function rowToDto2($row)
+  {
+      $obj = new CarDevice();
+      $obj ->setId($row['id']);
+      $obj ->setName($row['name']);
+      $obj ->setPlaca($row['placa']);
+      $obj ->setModel($row['model']);
+      $obj ->setMark($row['mark']);
+      $obj ->setDate_start($row['date_start']);
+      $obj ->setDate_end($row['date_end']);
+      $obj ->setClientid($row['clientid']);
       $obj ->setName($row['name']);
       return $obj;
   }

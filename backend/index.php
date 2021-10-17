@@ -147,6 +147,9 @@ switch ($controller) {
                     case "update":
                         $objCar::update();
                         break;
+                    case "retirar":
+                        $objCar::retirarCar();
+                        break;
                 }
             break;
             case "event":
