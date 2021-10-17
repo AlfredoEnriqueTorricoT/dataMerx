@@ -35,10 +35,8 @@ function ModalAddEvent(props) {
       typeevent: e.target.formEvento.value,
     }
 
-    //onInsertEvento(data, { obj: tableType, id: filaData })
+    onInsertEvento(data, { obj: tableType, id: filaData })
     setToastWaiting(true)
-
-    console.log(data)
   }
 
   const toastFunc = () => {

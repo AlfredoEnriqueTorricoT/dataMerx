@@ -1,19 +1,8 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import { getEventos, insertEvento, updateEvento } from "store/actions"
 import MetaTags from "react-meta-tags"
 import Breadcrumbs from "../../components/Common/Breadcrumb"
-import {
-  dispositivoRetirarSim,
-  dispositivoInsertarSim,
-  getDispositivos,
-  getPlatforms,
-  getSimsDisponibles,
-  insertDispositivo,
-  updateDispositivo,
-} from "store/actions"
-import { getModems } from "store/modems/actions"
-
-//AHORA
 
 import {
   Card,
@@ -23,28 +12,23 @@ import {
   Modal,
   Progress,
 } from "reactstrap"
-import AddSimsModal from "./addSimsModal"
-import ModalDevice from "./modal"
-import DevicesTable from "./table"
+import ModalEvent from "./modal"
+import EventsTable from "./table"
 
-class DispositivosOpt extends Component {
+class EventosOpt extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
       crudState: "loading",
-      simsModalOpen: false,
       modalOpen: false,
       modaType: "add",
-      deviceData: {},
+      eventData: {},
     }
   }
 
   componentDidMount() {
-    this.props.onGetDispositivos()
-    this.props.onGetModems()
-    this.props.onGetPlatforms()
-    this.props.onGetSimsDisponibles()
+    this.props.onGetEventos()
   }
 
   componentDidUpdate() {
@@ -63,18 +47,10 @@ class DispositivosOpt extends Component {
         ...this.state,
         modalOpen: data1,
         modalType: data2,
-        deviceData: data3,
+        eventData: data3,
       })
     } else {
       this.setState({ ...this.state, modalOpen: data1 })
-    }
-  }
-
-  simsModalState = (data, data2) => {
-    if (data2) {
-      this.setState({ ...this.state, simsModalOpen: data, deviceData: data2 })
-    } else {
-      this.setState({ ...this.state, simsModalOpen: data })
     }
   }
 
@@ -83,19 +59,14 @@ class DispositivosOpt extends Component {
       <React.Fragment>
         <div className="page-content">
           <MetaTags>
-            <title>Dispositivos</title>
+            <title>Eventos</title>
           </MetaTags>
           <Container fluid>
-            <Breadcrumbs
-              title="Cuadros de mando"
-              breadcrumbItem="Dispositivos"
-            />
+            <Breadcrumbs title="Cuadros de mando" breadcrumbItem="Eventos" />
             <Card>
               <CardBody>
                 <div className="d-sm-flex flex-wrap">
-                  <CardTitle className="mb-4 h4">
-                    Lista de dispositivos
-                  </CardTitle>
+                  <CardTitle className="mb-4 h4">Lista de eventos</CardTitle>
                   <div className="ms-auto">
                     {
                       //LOADING
@@ -112,10 +83,7 @@ class DispositivosOpt extends Component {
                         <button
                           className="btn btn-sm btn-info btn-rounded waves-effect waves-light"
                           onClick={() => {
-                            this.props.onGetDispositivos()
-                            this.props.onGetModems()
-                            this.props.onGetPlatforms()
-                            this.props.onGetSimsDisponibles()
+                            this.props.onGetEventos()
                             this.setState({
                               ...this.state,
                               crudState: "loading",
@@ -136,7 +104,7 @@ class DispositivosOpt extends Component {
                             })
                           }}
                         >
-                          Añadir dispositivo
+                          Añadir evento
                         </button>
                       )
                     }
@@ -161,14 +129,9 @@ class DispositivosOpt extends Component {
                     </center>
                   ) : (
                     //SUCCESS
-                    <DevicesTable
-                      dispositivos={this.props.dispositivos}
-                      error={this.props.error}
-                      onGetSimsDisponibles={this.props.onGetSimsDisponibles}
-                      onRemoveSim={this.props.onRemoveSim}
+                    <EventsTable
+                      eventos={this.props.eventos}
                       setModalState={this.modalState}
-                      simsModalState={this.simsModalState}
-                      waitingResponse={this.props.waitingResponse}
                     />
                   )
                 }
@@ -183,27 +146,13 @@ class DispositivosOpt extends Component {
             this.setState({ ...this.state, modalOpen: false })
           }}
         >
-          <ModalDevice
-            deviceData={this.state.deviceData}
+          <ModalEvent
             error={this.props.error}
             modalType={this.state.modalType}
-            modems={this.props.modems}
-            onInsertDispositivo={this.props.onInsertDispositivo}
-            onUpdateDispositivo={this.props.onUpdateDispositivo}
-            platforms={this.props.platforms}
+            onInsertEvento={this.props.onInsertEvento}
+            onUpdateEvento={this.props.onUpdateEvento}
             setModalState={this.modalState}
-            waitingResponse={this.props.waitingResponse}
-          />
-        </Modal>
-
-        <Modal isOpen={this.state.simsModalOpen}>
-          <AddSimsModal
-            deviceId={this.state.deviceData.id}
-            error={this.props.error}
-            onGetSimsDisponibles={this.props.onGetSimsDisponibles}
-            onInsertSim={this.props.onInsertSim}
-            simsDisponibles={this.props.simsDisponibles}
-            simsModalState={this.simsModalState}
+            eventData={this.state.eventData}
             waitingResponse={this.props.waitingResponse}
           />
         </Modal>
@@ -214,24 +163,16 @@ class DispositivosOpt extends Component {
 
 const mapStateToProps = state => {
   return {
-    error: state.dispositivos.error,
-    simsDisponibles: state.sims.data,
-    platforms: state.platforms.data,
-    modems: state.modems.data,
-    dispositivos: state.dispositivos.data,
-    waitingResponse: state.dispositivos.waitingResponse,
+    error: state.eventos.error,
+    eventos: state.eventos.data,
+    waitingResponse: state.eventos.waitingResponse,
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  onGetPlatforms: () => dispatch(getPlatforms()),
-  onGetModems: () => dispatch(getModems()),
-  onGetSimsDisponibles: () => dispatch(getSimsDisponibles()),
-  onGetDispositivos: () => dispatch(getDispositivos()),
-  onInsertDispositivo: data => dispatch(insertDispositivo(data)),
-  onUpdateDispositivo: data => dispatch(updateDispositivo(data)),
-  onInsertSim: data => dispatch(dispositivoInsertarSim(data)),
-  onRemoveSim: data => dispatch(dispositivoRetirarSim(data)),
+  onGetEventos: () => dispatch(getEventos()),
+  onInsertEvento: data => dispatch(insertEvento(data)),
+  onUpdateEvento: data => dispatch(updateEvento(data)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(DispositivosOpt)
+export default connect(mapStateToProps, mapDispatchToProps)(EventosOpt)

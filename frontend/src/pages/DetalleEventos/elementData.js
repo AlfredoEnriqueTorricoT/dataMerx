@@ -48,7 +48,7 @@ function ElementData(props) {
                 <th className="align-middle">Modem: </th>
                 <td className="align-middle">
                   {profileData.code !== null
-                    ? `${vehiculo.code}/${vehiculo.name}`
+                    ? `${profileData.code}/${profileData.name}`
                     : "- -"}
                 </td>
               </tr>

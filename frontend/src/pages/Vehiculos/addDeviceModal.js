@@ -3,13 +3,13 @@ import { showToast } from "components/Toast/toast"
 
 import { ModalHeader, ModalBody, ModalFooter } from "reactstrap"
 
-function AddSimsModal(props) {
-  const [simsSearched, setSimsSearched] = useState([])
-  const [simsSelected, setSimsSelected] = useState(null)
+function AddDeviceModal(props) {
+  const [devicesSearched, setDevicesSearched] = useState([])
+  const [devicesSelected, setDevicesSelected] = useState(null)
   const [toastWaiting, setToastWaiting] = useState(false)
 
   useEffect(() => {
-    setSimsSearched(simsDisponibles)
+    setDevicesSearched(dispositivosDisponibles)
   }, [])
 
   useEffect(() => {
@@ -20,31 +20,34 @@ function AddSimsModal(props) {
   })
 
   let {
-    deviceId,
+    carId,
     error,
-    onInsertSim,
-    onGetSimsDisponibles,
-    simsDisponibles,
-    simsModalState,
+    onInsertDevice,
+    dispositivosDisponibles,
+    deviceModalState,
     waitingResponse,
   } = props
 
-  const insertSimFunc = e => {
+  const insertDeviceFunc = e => {
     e.preventDefault()
     setToastWaiting(true)
 
     const data = {
-      id: deviceId,
-      simid: simsSelected,
+      id: carId,
+      deviceid: devicesSelected,
     }
-    onInsertSim(data)
+    onInsertDevice(data)
   }
 
   const searchFunc = data => {
     let obj = data.target.value
-    setSimsSearched(
-      simsDisponibles.filter(
-        sim => sim.imei.includes(obj) || sim.number.includes(obj)
+    setDevicesSearched(
+      dispositivosDisponibles.filter(
+        dispositivo =>
+          dispositivo.imei.includes(obj) ||
+          dispositivo.code.includes(obj) ||
+          dispositivo.markId.includes(obj) ||
+          dispositivo.platformId.includes(obj)
       )
     )
   }
@@ -54,29 +57,28 @@ function AddSimsModal(props) {
       toastType: error ? "warning" : "success",
       title: error ? "Error" : "Éxito",
       message: error
-        ? `No se ha podido enlazar el sim (${error.message})`
-        : `El sim ha sido enlazado`,
+        ? `No se ha podido enlazar el modem (${error.message})`
+        : `El modem ha sido enlazado`,
     })
 
     if (!error && !waitingResponse) {
-      onGetSimsDisponibles()
-      simsModalState(false)
+      deviceModalState(false)
     }
   }
 
   return (
     <React.Fragment>
-      <ModalHeader>Sims disponibles</ModalHeader>
+      <ModalHeader>Dispositivos disponibles</ModalHeader>
       <ModalBody>
         <React.Fragment>
           <form
-            id="formAddSim"
-            onSubmit={insertSimFunc}
+            id="formAddDevice"
+            onSubmit={insertDeviceFunc}
             className="app-search d-none d-lg-block"
           >
             <div className="position-relative">
               <input
-                type="number"
+                type="text"
                 name="searchInput"
                 onChange={searchFunc}
                 className="form-control"
@@ -85,9 +87,9 @@ function AddSimsModal(props) {
               <span className="bx bx-search-alt" />
             </div>
           </form>
-          {simsSearched.length === 0 ? (
+          {devicesSearched.length === 0 ? (
             <center>
-              <h5>No se han encontrado sims disponibles</h5>
+              <h5>No se han encontrado dispositivos disponibles</h5>
             </center>
           ) : (
             <table className="table align-middle table-nowrap mb-0">
@@ -95,26 +97,30 @@ function AddSimsModal(props) {
                 <tr>
                   <th className="align-middle">#</th>
                   <th className="align-middle">Imei</th>
-                  <th className="align-middle">Número</th>
-                  <th className="align-middle">Seleccionar</th>
+                  <th className="align-middle">Código</th>
+                  <th className="align-middle">Marca</th>
+                  <th className="align-middle">Plataforma</th>
+                  <th className="align-middle"></th>
                 </tr>
               </thead>
               <tbody>
-                {simsSearched.map(sim => (
-                  <tr key={sim.id}>
-                    <td>{sim.id}</td>
-                    <td>{sim.imei}</td>
-                    <td>{sim.number}</td>
+                {devicesSearched.map((dispositivo, idx) => (
+                  <tr key={idx + 1}>
+                    <td>{idx + 1}</td>
+                    <td>{dispositivo.imei}</td>
+                    <td>{dispositivo.code}</td>
+                    <td>{dispositivo.markId}</td>
+                    <td>{dispositivo.platformId}</td>
                     <td className="align-middle">
                       <div className="form-check">
                         <input
                           className="form-check-input"
                           type="radio"
-                          name="simRadios"
+                          name="deviceRadios"
                           onClick={() => {
-                            setSimsSelected(sim.id)
+                            setDevicesSelected(dispositivo.id)
                           }}
-                          value={sim.id}
+                          value={dispositivo.id}
                         />
                       </div>
                     </td>
@@ -130,7 +136,7 @@ function AddSimsModal(props) {
           className="btn btn-warning btn-rounded waves-effect waves-light"
           size="sm"
           onClick={() => {
-            simsModalState(false)
+            deviceModalState(false)
           }}
         >
           Cancelar
@@ -140,7 +146,7 @@ function AddSimsModal(props) {
           {!waitingResponse ? (
             <button
               className="btn btn-success btn-rounded waves-effect waves-light"
-              form="formAddSim"
+              form="formAddDevice"
               size="sm"
               type="submit"
             >
@@ -162,4 +168,4 @@ function AddSimsModal(props) {
   )
 }
 
-export default AddSimsModal
+export default AddDeviceModal

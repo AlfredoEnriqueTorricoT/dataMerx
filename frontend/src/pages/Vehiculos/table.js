@@ -10,7 +10,7 @@ import {
 } from "reactstrap"
 
 function CarsTable(props) {
-  let { setModalState, vehiculos } = props
+  let { deviceModalState, setModalState, vehiculos } = props
 
   return (
     <div className="table-responsive">
@@ -18,21 +18,23 @@ function CarsTable(props) {
         <thead className="table-light">
           <tr>
             <th className="aligh-middle">#</th>
+            <th className="aligh-middle">Nombre</th>
             <th className="aligh-middle">Placa</th>
             <th className="aligh-middle">Modelo</th>
             <th className="aligh-middle">Marca</th>
             <th className="aligh-middle">Modem</th>
             <th className="aligh-middle">Inicio</th>
             <th className="aligh-middle">Fin</th>
-            <th className="aligh-middle">Cliente</th>
+            <th className="aligh-middle">Empresa</th>
             <th className="aligh-middle">Acciones</th>
           </tr>
         </thead>
 
         <tbody>
-          {vehiculos.map(vehiculo => (
-            <tr key={"tr-car-" + vehiculo.id}>
-              <td>{vehiculo.id}</td>
+          {vehiculos.map((vehiculo, idx) => (
+            <tr key={"tr-car-" + idx + 1}>
+              <td>{idx + 1}</td>
+              <td>{vehiculo.name}</td>
               <td>{vehiculo.placa}</td>
               <td>{vehiculo.model}</td>
               <td>{vehiculo.mark}</td>
@@ -51,7 +53,7 @@ function CarsTable(props) {
               <td>{vehiculo.clientName}</td>
               <td>
                 <UncontrolledDropdown>
-                  <DropdownToggle href="#" className="card-drop" tag="i">
+                  <DropdownToggle className="card-drop" tag="i">
                     <i className="mdi mdi-dots-horizontal font-size-18" />
                   </DropdownToggle>
                   <DropdownMenu className="dropdown-menu-end">
@@ -61,6 +63,13 @@ function CarsTable(props) {
                       }}
                     >
                       Editar vehiculo
+                    </DropdownItem>
+                    <DropdownItem
+                      onClick={() => {
+                        deviceModalState(true, vehiculo)
+                      }}
+                    >
+                      {`${vehiculo.code !== null ? "Editar" : "Añadir"} modem`}
                     </DropdownItem>
                     <DropdownItem>
                       <Link to={`/vehiculoEventos/?type=car&id=${vehiculo.id}`}>

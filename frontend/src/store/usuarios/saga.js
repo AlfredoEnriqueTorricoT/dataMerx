@@ -18,10 +18,8 @@ function* fetchUsuarios(action) {
     yield put(waitUsuarios())
     const response = yield call(AxiosServices.POST, action.payload)
     yield put(getUsuariosSuccess(response))
-    console.log("GET_SUCCESS: ", response)
   } catch (error) {
     yield put(getUsuariosFail(error))
-    console.log("GET_FAIL: ", error)
   }
 }
 
@@ -30,10 +28,8 @@ function* sInsertUsuario(action) {
     yield put(waitUsuarios())
     const response = yield call(AxiosServices.POST, action.payload)
     yield put(getUsuarios())
-    console.log(response)
   } catch (error) {
     yield put(getUsuariosFail(error))
-    console.log("CONNECT_I_FAIL: ", error)
   }
 }
 
@@ -42,10 +38,8 @@ function* sUpdateUsuario(action) {
     yield put(waitUsuarios())
     const response = yield call(AxiosServices.POST, action.payload)
     yield put(getUsuarios())
-    console.log(response)
   } catch (error) {
     yield put(getUsuariosFail(error))
-    console.log("CONNECT_U_FAIL: ", error)
   }
 }
 

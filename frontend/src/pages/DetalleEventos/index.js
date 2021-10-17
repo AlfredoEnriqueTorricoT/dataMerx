@@ -158,7 +158,7 @@ class EventInvoice extends Component {
           <Modal isOpen={this.state.modalOpen}>
             <ModalAddEvent
               error={this.props.error}
-              filaData={this.valuex("id")}
+              filaData={this.state.profileData.id}
               onInsertEvento={this.props.onInsertEventoAElemento}
               setModalState={this.setModalState}
               tableType={this.valuex("type")}

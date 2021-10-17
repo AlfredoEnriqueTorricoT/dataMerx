@@ -2,7 +2,9 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import {
   getClientes,
+  getDispositivosDisponibles,
   getVehiculos,
+  insertModemAVehiculo,
   insertVehiculo,
   updateVehiculo,
 } from "store/actions"
@@ -19,6 +21,7 @@ import {
   Modal,
   Progress,
 } from "reactstrap"
+import AddDeviceModal from "./addDeviceModal"
 import ModalCar from "./modal"
 import CarsTable from "./table"
 
@@ -28,6 +31,7 @@ class VehiculosOpt extends Component {
 
     this.state = {
       crudState: "loading",
+      devicesModalOpen: false,
       modalOpen: false,
       modaType: "add",
       carData: {},
@@ -36,6 +40,7 @@ class VehiculosOpt extends Component {
 
   componentDidMount() {
     this.props.onGetClientes()
+    this.props.onGetModemsDisp()
     this.props.onGetVehiculos()
   }
 
@@ -59,6 +64,19 @@ class VehiculosOpt extends Component {
       })
     } else {
       this.setState({ ...this.state, modalOpen: data1 })
+    }
+  }
+
+  deviceModalState = (data1, data2) => {
+    console.log("DMS Function")
+    if (data2) {
+      this.setState({
+        ...this.state,
+        devicesModalOpen: data1,
+        carData: data2,
+      })
+    } else {
+      this.setState({ ...this.state, devicesModalOpen: data1 })
     }
   }
 
@@ -139,8 +157,9 @@ class VehiculosOpt extends Component {
                   ) : (
                     //SUCCESS
                     <CarsTable
-                      vehiculos={this.props.vehiculos}
+                      deviceModalState={this.deviceModalState}
                       setModalState={this.modalState}
+                      vehiculos={this.props.vehiculos}
                     />
                   )
                 }
@@ -166,6 +185,22 @@ class VehiculosOpt extends Component {
             waitingResponse={this.props.waitingResponse}
           />
         </Modal>
+
+        <Modal
+          isOpen={this.state.devicesModalOpen}
+          toggle={() => {
+            this.setState({ ...this.state, modalOpen: false })
+          }}
+        >
+          <AddDeviceModal
+            error={this.props.error}
+            carId={this.state.carData.id}
+            deviceModalState={this.deviceModalState}
+            dispositivosDisponibles={this.props.modemsDisponibles}
+            onInsertDevice={this.props.onInsertDevice}
+            waitingResponse={this.props.waitingResponse}
+          />
+        </Modal>
       </React.Fragment>
     )
   }
@@ -175,6 +210,7 @@ const mapStateToProps = state => {
   return {
     clientes: state.clientes.data,
     error: state.vehiculos.error,
+    modemsDisponibles: state.dispositivos.data,
     vehiculos: state.vehiculos.data,
     waitingResponse: state.vehiculos.waitingResponse,
   }
@@ -183,6 +219,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   onGetClientes: () => dispatch(getClientes()),
   onGetVehiculos: () => dispatch(getVehiculos()),
+  onGetModemsDisp: () => dispatch(getDispositivosDisponibles()),
+  onInsertDevice: data => dispatch(insertModemAVehiculo(data)),
   onInsertVehiculo: data => dispatch(insertVehiculo(data)),
   onUpdateVehiculo: data => dispatch(updateVehiculo(data)),
 })

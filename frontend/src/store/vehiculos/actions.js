@@ -5,6 +5,7 @@ import {
   WAIT_VEHICULOS,
   GET_VEHICULOS_FAIL,
   GET_VEHICULOS_SUCCESS,
+  INSERT_MODEM_A_VEHICULO,
 } from "./actionTypes"
 
 export const getVehiculos = () => ({
@@ -18,6 +19,11 @@ export const getVehiculos = () => ({
 export const insertVehiculo = data => ({
   type: INSERT_VEHICULO,
   payload: { ...data, controller: "car", operacion: "insert" },
+})
+
+export const insertModemAVehiculo = data => ({
+  type: INSERT_MODEM_A_VEHICULO,
+  payload: { ...data, controller: "car", operacion: "addDeviceToCar" },
 })
 
 export const updateVehiculo = data => ({

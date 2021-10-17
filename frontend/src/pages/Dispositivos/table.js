@@ -25,6 +25,7 @@ function DevicesTable(props) {
     simsModalState,
     setModalState,
     dispositivos,
+    onGetSimsDisponibles,
     onRemoveSim,
     waitingResponse,
   } = props
@@ -46,7 +47,6 @@ function DevicesTable(props) {
           <tr>
             <th className="aligh-middle">#</th>
             <th className="aligh-middle">Imei</th>
-            <th className="aligh-middle">Nombre</th>
             <th className="aligh-middle">Código</th>
             <th className="aligh-middle">Recepción</th>
             <th className="aligh-middle">Sim</th>
@@ -61,7 +61,6 @@ function DevicesTable(props) {
             <tr key={"tr-dispositivo-" + dispositivo.id}>
               <td>{dispositivo.id}</td>
               <td>{dispositivo.imei}</td>
-              <td>{dispositivo.name}</td>
               <td>{dispositivo.code}</td>
               <td>{dispositivo.reception}</td>
               <td>
@@ -100,13 +99,14 @@ function DevicesTable(props) {
                         simsModalState(true, dispositivo)
                       }}
                     >
-                      Cambiar sim
+                      {`${dispositivo.cod === null ? "Añadir" : "Cambiar"} sim`}
                     </DropdownItem>
                     {dispositivo.cod !== null && (
                       <DropdownItem
                         onClick={() => {
                           onRemoveSim(dispositivo.id)
                           setToastWaiting(true)
+                          onGetSimsDisponibles()
                         }}
                       >
                         Remover sim

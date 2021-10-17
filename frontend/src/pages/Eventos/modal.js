@@ -4,17 +4,16 @@ import { showToast } from "components/Toast/toast"
 
 import { ModalHeader, ModalBody, ModalFooter } from "reactstrap"
 
-function ModalCar(props) {
+function ModalEvent(props) {
   const [toastWaiting, setToastWaiting] = useState(false)
 
   let {
-    clientes,
     error,
+    eventsData,
     modalType,
-    onInsertVehiculo,
-    onUpdateVehiculo,
+    onInsertEvento,
+    onUpdateEvento,
     setModalState,
-    carData,
     waitingResponse,
   } = props
 
@@ -38,8 +37,8 @@ function ModalCar(props) {
       toastType: error ? "warning" : "success",
       title: error ? "Error" : "Éxito",
       message: error
-        ? `No se ha podido ${type}r el vehículo (${error.message})`
-        : `El vehículo ha sido ${type}do`,
+        ? `No se ha podido ${type}r el evento (${error.message})`
+        : `El evento ha sido ${type}do`,
     })
 
     if (!error && !waitingResponse) {
@@ -51,29 +50,27 @@ function ModalCar(props) {
     e.preventDefault()
 
     const data = {
-      id: carData.id,
-      name: e.target.nombreForm.value,
-      placa: e.target.placaForm.value,
-      model: e.target.modeloForm.value,
-      mark: e.target.marcaForm.value,
-      date_start: e.target.inicioForm.value,
-      date_end: e.target.finForm.value,
-      clientid: e.target.clienteForm.value,
+      tableAffected: tableType,
+      rowAffected: e.target.filaForm.value,
+      detail: e.target.detallesForm.value,
+      now: e.target.dechaForm.value,
+      userid: localStorage.getItem("userId"),
+      typeevent: e.target.estadoForm.value,
     }
 
     setToastWaiting(true)
 
     if (modalType === "add") {
-      onInsertVehiculo(data)
+      onInsertEvento(data)
     } else if (modalType === "edit") {
-      onUpdateVehiculo(data)
+      onUpdateEvento(data)
     }
   }
 
   return (
     <React.Fragment>
       <ModalHeader>
-        {`${modalType === "add" ? "Añadir" : "Editar"} vehículo`}
+        {`${modalType === "add" ? "Añadir" : "Editar"} evento`}
         <button
           type="button"
           onClick={() => setModalState(false)}
@@ -85,113 +82,84 @@ function ModalCar(props) {
       </ModalHeader>
 
       <ModalBody>
-        <form id="formCars" onSubmit={submitFunction}>
+        <form id="formEvents" onSubmit={submitFunction}>
           <div className="mb-3 row">
-            <label htmlFor="nombreForm" className="col-md-2 col-form-label">
-              Nombre
+            <div className="mb-3 row">
+              <label htmlFor="tablaForm" className="col-md-2 col-form-label">
+                Tabla
+              </label>
+              <div className="col-md-10">
+                <select
+                  name="tablaForm"
+                  className="form-select"
+                  defaultValue={modalType === "edit" && eventsData.active}
+                >
+                  <option value="car">Car</option>
+                  <option value="device">Device</option>
+                  <option value="sim">Sim</option>
+                </select>
+              </div>
+            </div>
+
+            <label htmlFor="filaForm" className="col-md-2 col-form-label">
+              Fila
             </label>
             <div className="col-md-10">
               <input
                 className="form-control"
-                defaultValue={modalType === "edit" ? carData.name : ""}
-                name="nombreForm"
+                defaultValue={modalType === "edit" && eventsData.imei}
+                name="filaForm"
+                min="1"
+                max="9999"
                 required
-                type="text"
+                type="number"
               />
             </div>
           </div>
 
           <div className="mb-3 row">
-            <label htmlFor="placaForm" className="col-md-2 col-form-label">
-              Placa
+            <label htmlFor="detallesForm" className="col-md-2 col-form-label">
+              Detalles
             </label>
             <div className="col-md-10">
-              <input
+              <textarea
                 className="form-control"
-                defaultValue={modalType === "edit" ? carData.placa : ""}
-                name="placaForm"
+                defaultValue={modalType === "edit" ? eventsData.detail : ""}
+                name="detallesForm"
+                rows="2"
                 required
-                type="text"
               />
             </div>
           </div>
 
           <div className="mb-3 row">
-            <label htmlFor="modeloForm" className="col-md-2 col-form-label">
-              Modelo
-            </label>
-            <div className="col-md-10">
-              <input
-                className="form-control"
-                defaultValue={modalType === "edit" ? carData.model : ""}
-                name="modeloForm"
-                required
-                type="text"
-              />
-            </div>
-          </div>
-
-          <div className="mb-3 row">
-            <label htmlFor="marcaForm" className="col-md-2 col-form-label">
-              Marca
-            </label>
-            <div className="col-md-10">
-              <input
-                className="form-control"
-                defaultValue={modalType === "edit" ? carData.mark : ""}
-                name="marcaForm"
-                required
-                type="text"
-              />
-            </div>
-          </div>
-
-          <div className="mb-3 row">
-            <label htmlFor="inicioForm" className="col-md-2 col-form-label">
-              Inicio
+            <label htmlFor="fechaForm" className="col-md-2 col-form-label">
+              Fecha
             </label>
             <div className="col-md-10">
               <input
                 className="form-control"
                 defaultValue={
-                  modalType === "edit" ? carData.date_start : getToday()
+                  modalType === "edit" ? eventsData.f_reception : getToday()
                 }
-                name="inicioForm"
-                required
+                name="fechaForm"
                 type="date"
               />
             </div>
           </div>
 
           <div className="mb-3 row">
-            <label htmlFor="finForm" className="col-md-2 col-form-label">
-              Fin
-            </label>
-            <div className="col-md-10">
-              <input
-                className="form-control"
-                defaultValue={modalType === "edit" ? carData.date_end : ""}
-                name="finForm"
-                type="date"
-              />
-            </div>
-          </div>
-
-          <div className="mb-3 row">
-            <label htmlFor="clienteForm" className="col-md-2 col-form-label">
-              Cliente
+            <label htmlFor="estadoForm" className="col-md-2 col-form-label">
+              Estado
             </label>
             <div className="col-md-10">
               <select
-                name="clienteForm"
+                name="estadoForm"
                 className="form-select"
-                defaultValue={modalType === "edit" && carData.clientid}
+                defaultValue={modalType === "edit" && eventsData.active}
               >
-                {clientes.map((cliente, idx) => (
-                  <option key={idx} value={cliente.id}>
-                    {`${cliente.name} ${cliente.last_name} ${cliente.mother_last_name} (${cliente.empresa})`}
-                  </option>
-                ))}
+                <option value={1}>Activo</option>
+                <option value={0}>Inactivo</option>
               </select>
             </div>
           </div>
@@ -213,7 +181,7 @@ function ModalCar(props) {
           {!waitingResponse ? (
             <button
               className="btn btn-success btn-rounded waves-effect waves-light"
-              form="formCars"
+              form="formEvents"
               size="sm"
               type="submit"
             >
@@ -235,4 +203,4 @@ function ModalCar(props) {
   )
 }
 
-export default ModalCar
+export default ModalEvent

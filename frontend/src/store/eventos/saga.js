@@ -22,41 +22,31 @@ import AxiosServices from "../api/AxiosServices"
 
 function* fetchEventos(action) {
   try {
-    console.log("GET EVENTOS")
-    console.log(action.payload)
     yield put(waitEventos())
     const response = yield call(AxiosServices.POST, action.payload)
     yield put(getEventosSuccess(response))
-    console.log("GET_SUCCESS: ", response)
   } catch (error) {
     yield put(getEventosFail(error))
-    console.log("GET_FAIL: ", error)
   }
 }
 
 function* sInsertEvento(action) {
   try {
-    console.log(action.payload)
     yield put(waitEventos())
     const response = yield call(AxiosServices.POST, action.payload)
     yield put(getEventos())
-    console.log(response)
   } catch (error) {
     yield put(getEventosFail(error))
-    console.log("CONNECT_I_FAIL: ", error)
   }
 }
 
 function* sInsertEventoAElemento(action) {
   try {
-    console.log(action.payload)
     yield put(waitEventos())
     const response = yield call(AxiosServices.POST, action.payload)
     yield put(getEventosPorElemento(action.payload2))
-    console.log(response)
   } catch (error) {
     yield put(getEventosFail(error))
-    console.log("CONNECT_I_FAIL: ", error)
   }
 }
 
@@ -65,10 +55,8 @@ function* sUpdateEvento(action) {
     yield put(waitEventos())
     const response = yield call(AxiosServices.POST, action.payload)
     yield put(getEventos())
-    console.log(response)
   } catch (error) {
     yield put(getEventosFail(error))
-    console.log("CONNECT_U_FAIL: ", error)
   }
 }
 

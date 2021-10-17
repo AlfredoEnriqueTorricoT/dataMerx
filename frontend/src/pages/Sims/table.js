@@ -58,10 +58,7 @@ function SimsTable(props) {
                       Editar sim
                     </DropdownItem>
                     <DropdownItem>
-                      <Link
-                        to={`/simEventos/?type=sim&id=${sim.id}`}
-                        state={{ from: "pasado" }}
-                      >
+                      <Link to={`/simEventos/?type=sim&id=${sim.id}`}>
                         Ver eventos
                       </Link>
                     </DropdownItem>

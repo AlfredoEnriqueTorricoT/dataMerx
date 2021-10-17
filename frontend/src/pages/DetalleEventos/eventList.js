@@ -1,27 +1,9 @@
-import React, { useEffect } from "react"
-
-import { Card, CardBody } from "reactstrap"
+import React from "react"
 
 function EventList(props) {
   let { eventos } = props
-  useEffect(() => {
-    console.log(props)
-  })
 
-  /*return (
-    <React.Fragment>
-      <h1>Eventos</h1>
-      <button
-        onClick={() => {
-          console.log(props)
-          console.log(eventos)
-        }}
-      >
-        test2
-      </button>
-    </React.Fragment>
-  )*/
-  if (!Array.isArray(eventos)) {
+  if (!Array.isArray(eventos) || eventos.length === 0) {
     return (
       <center>
         <h4>No hay eventos</h4>

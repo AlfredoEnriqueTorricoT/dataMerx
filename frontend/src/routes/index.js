@@ -11,29 +11,22 @@ import Dashboard from "../pages/Dashboard/index"
 import SimsPage from "pages/Sims/index.js"
 
 //devices
-import Devices from "../pages/Dispositivos/devices_page"
+import DevicesPage from "../pages/Dispositivos/index"
 
 //clientes
-import Clientes from "../pages/Clientes/clientes_page"
+import ClientsPage from "../pages/Clientes/index"
 
 //vehiculos
-import Vehiculos from "../pages/Vehiculos/cars_page"
+import CarsPage from "../pages/Vehiculos/index"
 
 //eventos
-import Eventos from "../pages/Eventos/eventos_page"
+import EventosPage from "../pages/Eventos/index"
 
 //invoice
-import invoice from "pages/Eventos/invoice"
+import invoice from "pages/DetalleEventos/index"
 
 //code opt
-import Usuarios from "../pages/Dashboard/COPTM/users"
-import ClientesOpt from "../pages/Clientes/index"
-import CarsOpt from "../pages/Vehiculos/index"
-import DevicesOpt from "../pages/Dispositivos/index"
-import UsersOpt from "../pages/Usuarios/index"
-
-//INVOICE
-import EventInvoice from "pages/Eventos/invoice"
+import UserPage from "../pages/Usuarios/index"
 
 // Authentication related pages
 import Login from "../pages/Authentication/Login"
@@ -42,15 +35,13 @@ import Register from "../pages/Authentication/Register"
 import ForgetPwd from "../pages/Authentication/ForgetPassword"
 
 const authProtectedRoutes = [
-  { path: "/usuarios", component: UsersOpt },
+  { path: "/usuarios", component: UserPage },
   { path: "/sims", component: SimsPage },
-  { path: "/qwerty", component: Usuarios },
-  { path: "/dispositivos", component: DevicesOpt },
-  { path: "/clientes", component: ClientesOpt },
-  { path: "/vehiculos", component: CarsOpt },
-  { path: "/eventos", component: Eventos },
+  { path: "/dispositivos", component: DevicesPage },
+  { path: "/clientes", component: ClientsPage },
+  { path: "/vehiculos", component: CarsPage },
+  { path: "/eventos", component: EventosPage },
   { name: "simEventos", path: "/:id", component: invoice },
-  { path: "/invoice", component: EventInvoice },
 
   //profile
   { path: "/profile", component: UserProfile },

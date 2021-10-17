@@ -18,10 +18,8 @@ function* fetchClientes(action) {
     yield put(waitClientes())
     const response = yield call(AxiosServices.POST, action.payload)
     yield put(getClientesSuccess(response))
-    console.log("GET_SUCCESS: ", response)
   } catch (error) {
     yield put(getClientesFail(error))
-    console.log("GET_FAIL: ", error)
   }
 }
 
@@ -30,10 +28,8 @@ function* sInsertCliente(action) {
     yield put(waitClientes())
     const response = yield call(AxiosServices.POST, action.payload)
     yield put(getClientes())
-    console.log(response)
   } catch (error) {
     yield put(getClientesFail(error))
-    console.log("CONNECT_I_FAIL: ", error)
   }
 }
 
@@ -42,10 +38,8 @@ function* sUpdateCliente(action) {
     yield put(waitClientes())
     const response = yield call(AxiosServices.POST, action.payload)
     yield put(getClientes())
-    console.log(response)
   } catch (error) {
     yield put(getClientesFail(error))
-    console.log("CONNECT_U_FAIL: ", error)
   }
 }
 

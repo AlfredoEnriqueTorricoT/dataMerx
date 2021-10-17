@@ -52,14 +52,13 @@ function ModalDevice(props) {
     e.preventDefault()
 
     const data = {
-      id: this.state.dispositivoData.id,
-      imei: e.target.formImei.value,
-      name: e.target.formNombre.value,
-      code: e.target.formCodigo.value,
-      reception: e.target.formReception.value,
-      active: e.target.formEstado.value,
-      markId: e.target.formMarkId.value,
-      platformId: e.target.formPlatformId.value,
+      id: deviceData.id,
+      imei: e.target.imeiForm.value,
+      code: e.target.codigoForm.value,
+      reception: e.target.recepcionForm.value,
+      active: e.target.estadoForm.value,
+      markId: e.target.modemIdForm.value,
+      platformId: e.target.platformIdForm.value,
     }
 
     setToastWaiting(true)
@@ -86,7 +85,7 @@ function ModalDevice(props) {
       </ModalHeader>
 
       <ModalBody>
-        <form id="formDispositivos" onSubmit={submitFunction}>
+        <form id="formDevices" onSubmit={submitFunction}>
           <div className="mb-3 row">
             <label htmlFor="imeiForm" className="col-md-2 col-form-label">
               Imei
@@ -97,24 +96,9 @@ function ModalDevice(props) {
                 defaultValue={modalType === "edit" && deviceData.imei}
                 name="imeiForm"
                 min="1"
-                max="9999"
+                max="99999999"
                 required
                 type="number"
-              />
-            </div>
-          </div>
-
-          <div className="mb-3 row">
-            <label htmlFor="nombreForm" className="col-md-2 col-form-label">
-              Nombre
-            </label>
-            <div className="col-md-10">
-              <input
-                className="form-control"
-                defaultValue={modalType === "edit" ? deviceData.name : ""}
-                name="nombreForm"
-                required
-                type="text"
               />
             </div>
           </div>

@@ -18,10 +18,8 @@ function* fetchSims(action) {
     yield put(waitSims())
     const response = yield call(AxiosServices.POST, action.payload)
     yield put(getSimsSuccess(response))
-    console.log("GET_SUCCESS: ", response)
   } catch (error) {
     yield put(getSimsFail(error))
-    console.log("GET_FAIL: ", error)
   }
 }
 
@@ -30,10 +28,8 @@ function* fetchSimsDisponibles(action) {
     yield put(waitSims())
     const response = yield call(AxiosServices.POST, action.payload)
     yield put(getSimsSuccess(response))
-    console.log("GET_SUCCESS: ", response)
   } catch (error) {
     yield put(getSimsFail(error))
-    console.log("GET_FAIL: ", error)
   }
 }
 
@@ -42,25 +38,18 @@ function* sInsertSim(action) {
     yield put(waitSims())
     const response = yield call(AxiosServices.POST, action.payload)
     yield put(getSims())
-    console.log(response)
   } catch (error) {
     yield put(getSimsFail(error))
-    console.log("CONNECT_I_FAIL: ", error)
   }
 }
 
 function* sUpdateSim(action) {
   try {
     yield put(waitSims())
-    console.log("ACTION")
-    console.log(action.payload)
     const response = yield call(AxiosServices.POST, action.payload)
-    console.log("RESPONSE")
-    console.log(response)
     yield put(getSims())
   } catch (error) {
     yield put(getSimsFail(error))
-    console.log("CONNECT_U_FAIL: ", error)
   }
 }
 
