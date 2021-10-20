@@ -1,5 +1,5 @@
 import axios from "axios"
-const DEFAULT_URL = "http://localhost:80/dataMerx/backend/"
+const DEFAULT_URL = "http://localhost:8080/dataMerx/backend/"
 
 const defaultHeaders = new Headers()
 

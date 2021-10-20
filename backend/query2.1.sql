@@ -9,6 +9,3 @@ begin
   insert into events values(default,"car", _id,"Se retiro el dispositivo.","device",_idDevice, now(), _userid,1);
   select * from cars where id = _id;
 end $$
-
-
-call sp_carDevice_retirar(1,1);

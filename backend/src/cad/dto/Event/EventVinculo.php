@@ -8,7 +8,7 @@ class EventVinculo {
   public $rowAffected;
   public $detail;
   public $tableNewValue;
-  public $rowNewValue;
+  public $rowidNewValue;
   public $date_start;
   public $userid;
   public $typeid;
@@ -119,9 +119,9 @@ class EventVinculo {
   /**
    * Get the value of rowNewValue
    */ 
-  public function getRowNewValue()
+  public function getRowidNewValue()
   {
-    return $this->rowNewValue;
+    return $this->rowidNewValue;
   }
 
   /**
@@ -129,9 +129,9 @@ class EventVinculo {
    *
    * @return  self
    */ 
-  public function setRowNewValue($rowNewValue)
+  public function setRowidNewValue($rowidNewValue)
   {
-    $this->rowNewValue = $rowNewValue;
+    $this->rowidNewValue = $rowidNewValue;
 
     return $this;
   }

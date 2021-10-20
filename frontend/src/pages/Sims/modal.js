@@ -49,13 +49,16 @@ function ModalSim(props) {
   const submitFunction = e => {
     e.preventDefault()
 
-    const data = {
+    let data = {
       id: simData.id,
       imei: e.target.imeiForm.value,
       number: e.target.numeroForm.value,
       f_reception: e.target.fechaForm.value,
       cod: e.target.codigoForm.value,
-      active: e.target.estadoForm.value,
+    }
+
+    if (modalType === "edit") {
+      data = { ...data, active: e.target.estadoForm.value }
     }
 
     setToastWaiting(true)
@@ -148,21 +151,23 @@ function ModalSim(props) {
             </div>
           </div>
 
-          <div className="mb-3 row">
-            <label htmlFor="estadoForm" className="col-md-2 col-form-label">
-              Estado
-            </label>
-            <div className="col-md-10">
-              <select
-                name="estadoForm"
-                className="form-select"
-                defaultValue={modalType === "edit" && simData.active}
-              >
-                <option value={1}>Activo</option>
-                <option value={0}>Inactivo</option>
-              </select>
+          {modalType === "edit" && (
+            <div className="mb-3 row">
+              <label htmlFor="estadoForm" className="col-md-2 col-form-label">
+                Estado
+              </label>
+              <div className="col-md-10">
+                <select
+                  name="estadoForm"
+                  className="form-select"
+                  defaultValue={modalType === "edit" && simData.active}
+                >
+                  <option value={1}>Activo</option>
+                  <option value={0}>Inactivo</option>
+                </select>
+              </div>
             </div>
-          </div>
+          )}
         </form>
       </ModalBody>
 

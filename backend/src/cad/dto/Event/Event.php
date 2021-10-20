@@ -5,7 +5,7 @@ namespace App\cad\dto\Event;
 class Event {
   public $id;
   public $tableAffected;
-  public $rowAffected;
+  public $rowidAffected;
   public $detail;
   public $tableNewValue;
   public $rowNewValue;
@@ -58,9 +58,9 @@ class Event {
   /**
    * Get the value of rowAffected
    */ 
-  public function getRowAffected()
+  public function getRowidAffected()
   {
-    return $this->rowAffected;
+    return $this->rowidAffected;
   }
 
   /**
@@ -68,9 +68,9 @@ class Event {
    *
    * @return  self
    */ 
-  public function setRowAffected($rowAffected)
+  public function setRowidAffected($rowidAffected)
   {
-    $this->rowAffected = $rowAffected;
+    $this->rowidAffected = $rowidAffected;
 
     return $this;
   }

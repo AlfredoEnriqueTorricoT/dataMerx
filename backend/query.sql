@@ -103,8 +103,7 @@ insert into platform values("Vol-25");
 insert into typeEvents values(default, "Info", null);
 insert into typeEvents values(default, "Warning", null);
 
-drop table typeEvents;
-drop table events;
+
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS sp_user_insert;$$

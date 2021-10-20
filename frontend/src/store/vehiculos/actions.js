@@ -6,6 +6,7 @@ import {
   GET_VEHICULOS_FAIL,
   GET_VEHICULOS_SUCCESS,
   INSERT_MODEM_A_VEHICULO,
+  REMOVE_MODEM,
 } from "./actionTypes"
 
 export const getVehiculos = () => ({
@@ -24,6 +25,16 @@ export const insertVehiculo = data => ({
 export const insertModemAVehiculo = data => ({
   type: INSERT_MODEM_A_VEHICULO,
   payload: { ...data, controller: "car", operacion: "addDeviceToCar" },
+})
+
+export const removeModem = data => ({
+  type: REMOVE_MODEM,
+  payload: {
+    carid: data,
+    userid: localStorage.getItem("userId"),
+    controller: "car",
+    operacion: "retirar",
+  },
 })
 
 export const updateVehiculo = data => ({

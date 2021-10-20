@@ -9,7 +9,14 @@ function AddDeviceModal(props) {
   const [toastWaiting, setToastWaiting] = useState(false)
 
   useEffect(() => {
-    setDevicesSearched(dispositivosDisponibles)
+    if (addDevice) {
+      setDevicesSearched(dispositivosDisponibles)
+    } else {
+      setDevicesSearched([
+        { id: -500, imei: "Retirar dispositivo" },
+        ...dispositivosDisponibles,
+      ])
+    }
   }, [])
 
   useEffect(() => {
@@ -20,9 +27,12 @@ function AddDeviceModal(props) {
   })
 
   let {
+    addDevice,
     carId,
     error,
+    onGetDevices,
     onInsertDevice,
+    onRemoveDevice,
     dispositivosDisponibles,
     deviceModalState,
     waitingResponse,
@@ -36,32 +46,48 @@ function AddDeviceModal(props) {
       id: carId,
       deviceid: devicesSelected,
     }
-    onInsertDevice(data)
+
+    if (devicesSelected === -500) {
+      onRemoveDevice(carId)
+    } else {
+      onInsertDevice(data)
+    }
   }
 
   const searchFunc = data => {
     let obj = data.target.value
-    setDevicesSearched(
-      dispositivosDisponibles.filter(
-        dispositivo =>
-          dispositivo.imei.includes(obj) ||
-          dispositivo.code.includes(obj) ||
-          dispositivo.markId.includes(obj) ||
-          dispositivo.platformId.includes(obj)
+
+    if (obj === "" && !addDevice) {
+      setDevicesSearched([
+        { id: -500, imei: "Retirar dispositivo" },
+        ...dispositivosDisponibles,
+      ])
+    } else {
+      setDevicesSearched(
+        dispositivosDisponibles.filter(
+          dispositivo =>
+            dispositivo.imei.includes(obj) ||
+            dispositivo.code.includes(obj) ||
+            dispositivo.markId.includes(obj) ||
+            dispositivo.platformId.includes(obj)
+        )
       )
-    )
+    }
   }
 
   const toastFunction = () => {
+    let texto = addDevice ? "enlaza" : "cambia"
+
     showToast({
       toastType: error ? "warning" : "success",
       title: error ? "Error" : "Éxito",
       message: error
-        ? `No se ha podido enlazar el modem (${error.message})`
-        : `El modem ha sido enlazado`,
+        ? `No se ha podido ${texto}r el modem (${error.message})`
+        : `El modem ha sido ${texto}do`,
     })
 
     if (!error && !waitingResponse) {
+      onGetDevices()
       deviceModalState(false)
     }
   }
@@ -106,7 +132,7 @@ function AddDeviceModal(props) {
               <tbody>
                 {devicesSearched.map((dispositivo, idx) => (
                   <tr key={idx + 1}>
-                    <td>{idx + 1}</td>
+                    <td>{dispositivo.id === -500 ? "" : idx + 1}</td>
                     <td>{dispositivo.imei}</td>
                     <td>{dispositivo.code}</td>
                     <td>{dispositivo.markId}</td>
@@ -145,7 +171,10 @@ function AddDeviceModal(props) {
         <div className="ms-auto">
           {!waitingResponse ? (
             <button
-              className="btn btn-success btn-rounded waves-effect waves-light"
+              className={`btn btn-${
+                devicesSelected === null ? "light" : "success"
+              } btn-rounded waves-effect waves-light`}
+              disabled={devicesSelected === null}
               form="formAddDevice"
               size="sm"
               type="submit"

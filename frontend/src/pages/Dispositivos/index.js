@@ -165,7 +165,6 @@ class DispositivosOpt extends Component {
                       dispositivos={this.props.dispositivos}
                       error={this.props.error}
                       onGetSimsDisponibles={this.props.onGetSimsDisponibles}
-                      onRemoveSim={this.props.onRemoveSim}
                       setModalState={this.modalState}
                       simsModalState={this.simsModalState}
                       waitingResponse={this.props.waitingResponse}
@@ -198,10 +197,12 @@ class DispositivosOpt extends Component {
 
         <Modal isOpen={this.state.simsModalOpen}>
           <AddSimsModal
+            addSim={this.state.deviceData.cod === null}
             deviceId={this.state.deviceData.id}
             error={this.props.error}
             onGetSimsDisponibles={this.props.onGetSimsDisponibles}
             onInsertSim={this.props.onInsertSim}
+            onRemoveSim={this.props.onRemoveSim}
             simsDisponibles={this.props.simsDisponibles}
             simsModalState={this.simsModalState}
             waitingResponse={this.props.waitingResponse}

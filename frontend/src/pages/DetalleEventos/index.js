@@ -133,25 +133,29 @@ class EventInvoice extends Component {
                   )}
                 </CardBody>
               </Card>
-              {this.state.listState === "success" && (
-                <React.Fragment>
-                  <div className="d-sm-flex flex-wrap">
-                    <h3>Eventos</h3>
-                    <div className="ms-auto">
-                      <button
-                        className="btn btn-info btn-sm"
-                        onClick={() => {
-                          this.setState({ ...this.state, modalOpen: true })
-                        }}
-                      >
-                        Añadir evento
-                      </button>
-                    </div>
-                  </div>
-                  <br />
-                  <EventList eventos={this.props.eventos} />
-                </React.Fragment>
-              )}
+              <Card>
+                <CardBody>
+                  {this.state.listState === "success" && (
+                    <React.Fragment>
+                      <div className="d-sm-flex flex-wrap">
+                        <h3>Eventos</h3>
+                        <div className="ms-auto">
+                          <button
+                            className="btn btn-info btn-sm"
+                            onClick={() => {
+                              this.setState({ ...this.state, modalOpen: true })
+                            }}
+                          >
+                            Añadir evento
+                          </button>
+                        </div>
+                      </div>
+                      <br />
+                      <EventList eventos={this.props.eventos} />
+                    </React.Fragment>
+                  )}
+                </CardBody>
+              </Card>
             </Col>
           </Row>
 

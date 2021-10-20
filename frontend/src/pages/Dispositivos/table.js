@@ -101,17 +101,6 @@ function DevicesTable(props) {
                     >
                       {`${dispositivo.cod === null ? "Añadir" : "Cambiar"} sim`}
                     </DropdownItem>
-                    {dispositivo.cod !== null && (
-                      <DropdownItem
-                        onClick={() => {
-                          onRemoveSim(dispositivo.id)
-                          setToastWaiting(true)
-                          onGetSimsDisponibles()
-                        }}
-                      >
-                        Remover sim
-                      </DropdownItem>
-                    )}
                     <DropdownItem>
                       <Link
                         to={`/dispositivoEventos/?type=device&id=${dispositivo.id}`}

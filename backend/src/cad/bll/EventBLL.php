@@ -129,7 +129,7 @@ class EventBLL
       $obj ->setRowAffected($row['rowAffected']);
       $obj ->setDetail($row['detail']);
       $obj ->setTableNewValue($row['tableNewValue']);
-      $obj ->setRowNewValue($row['rowNewValue']);
+      $obj ->setRowidNewValue($row['rowidNewValue']);
       $obj ->setDate_start($row['date_start']);
       $obj ->setUserid($row['userid']);
       $obj ->setTypeid($row['typeid']);
@@ -145,7 +145,7 @@ class EventBLL
       $obj ->setRowAffected($row['rowAffected']);
       $obj ->setDetail($row['detail']);
       $obj ->setTableNewValue($row['tableNewValue']);
-      $obj ->setRowNewValue($row['rowNewValue']);
+      $obj ->setRowidNewValue($row['rowidNewValue']);
       $obj ->setDate_start($row['date_start']);
       $obj ->setUserid($row['userid']);
       $obj ->setTypeid($row['typeid']);

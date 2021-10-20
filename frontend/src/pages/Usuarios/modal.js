@@ -49,13 +49,16 @@ function ModalUser(props) {
   const submitFunction = e => {
     e.preventDefault()
 
-    const data = {
+    let data = {
       id: userData.id,
       name: e.target.nombreForm.value,
       lastName: e.target.apellidoForm.value,
       email: e.target.emailForm.value,
       password: e.target.contraseñaForm.value,
-      state: e.target.estadoForm.value,
+    }
+
+    if (modalType === "edit") {
+      data = { ...data, state: e.target.estadoForm.value }
     }
 
     setToastWaiting(true)
@@ -142,22 +145,23 @@ function ModalUser(props) {
             </div>
           </div>
 
-          <div className="mb-3 row">
-            <label htmlFor="estadoForm" className="col-md-2 col-form-label">
-              Estado
-            </label>
-            <div className="col-md-10">
-              <select
-                disabled={modalType === "add"}
-                name="estadoForm"
-                className="form-select"
-                defaultValue={modalType === "edit" && userData.state}
-              >
-                <option value={1}>Activo</option>
-                <option value={0}>Inactivo</option>
-              </select>
+          {modalType === "edit" && (
+            <div className="mb-3 row">
+              <label htmlFor="estadoForm" className="col-md-2 col-form-label">
+                Estado
+              </label>
+              <div className="col-md-10">
+                <select
+                  name="estadoForm"
+                  className="form-select"
+                  defaultValue={modalType === "edit" && userData.state}
+                >
+                  <option value={1}>Activo</option>
+                  <option value={0}>Inactivo</option>
+                </select>
+              </div>
             </div>
-          </div>
+          )}
         </form>
       </ModalBody>
 

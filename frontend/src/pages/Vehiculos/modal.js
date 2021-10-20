@@ -50,15 +50,18 @@ function ModalCar(props) {
   const submitFunction = e => {
     e.preventDefault()
 
-    const data = {
+    let data = {
       id: carData.id,
       name: e.target.nombreForm.value,
       placa: e.target.placaForm.value,
       model: e.target.modeloForm.value,
       mark: e.target.marcaForm.value,
       date_start: e.target.inicioForm.value,
-      date_end: e.target.finForm.value,
       clientid: e.target.clienteForm.value,
+    }
+
+    if (modalType === "edit") {
+      data = { ...data, date_end: e.target.finForm.value }
     }
 
     setToastWaiting(true)
@@ -163,19 +166,21 @@ function ModalCar(props) {
             </div>
           </div>
 
-          <div className="mb-3 row">
-            <label htmlFor="finForm" className="col-md-2 col-form-label">
-              Fin
-            </label>
-            <div className="col-md-10">
-              <input
-                className="form-control"
-                defaultValue={modalType === "edit" ? carData.date_end : ""}
-                name="finForm"
-                type="date"
-              />
+          {modalType === "edit" && (
+            <div className="mb-3 row">
+              <label htmlFor="finForm" className="col-md-2 col-form-label">
+                Fin
+              </label>
+              <div className="col-md-10">
+                <input
+                  className="form-control"
+                  defaultValue={modalType === "edit" ? carData.date_end : ""}
+                  name="finForm"
+                  type="date"
+                />
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="mb-3 row">
             <label htmlFor="clienteForm" className="col-md-2 col-form-label">

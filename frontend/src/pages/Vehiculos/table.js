@@ -22,7 +22,7 @@ function CarsTable(props) {
             <th className="aligh-middle">Placa</th>
             <th className="aligh-middle">Modelo</th>
             <th className="aligh-middle">Marca</th>
-            <th className="aligh-middle">Modem</th>
+            <th className="aligh-middle">Dispositivo</th>
             <th className="aligh-middle">Inicio</th>
             <th className="aligh-middle">Fin</th>
             <th className="aligh-middle">Empresa</th>
@@ -69,7 +69,9 @@ function CarsTable(props) {
                         deviceModalState(true, vehiculo)
                       }}
                     >
-                      {`${vehiculo.code !== null ? "Editar" : "Añadir"} modem`}
+                      {`${
+                        vehiculo.code !== null ? "Cambiar" : "Añadir"
+                      } dispositivo`}
                     </DropdownItem>
                     <DropdownItem>
                       <Link to={`/vehiculoEventos/?type=car&id=${vehiculo.id}`}>

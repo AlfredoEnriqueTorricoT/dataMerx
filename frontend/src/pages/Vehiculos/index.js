@@ -6,6 +6,7 @@ import {
   getVehiculos,
   insertModemAVehiculo,
   insertVehiculo,
+  removeModem,
   updateVehiculo,
 } from "store/actions"
 import MetaTags from "react-meta-tags"
@@ -193,11 +194,14 @@ class VehiculosOpt extends Component {
           }}
         >
           <AddDeviceModal
+            addDevice={this.state.carData.code === null}
             error={this.props.error}
             carId={this.state.carData.id}
             deviceModalState={this.deviceModalState}
             dispositivosDisponibles={this.props.modemsDisponibles}
+            onGetDevices={this.props.onGetModemsDisp}
             onInsertDevice={this.props.onInsertDevice}
+            onRemoveDevice={this.props.onRemoveDevice}
             waitingResponse={this.props.waitingResponse}
           />
         </Modal>
@@ -221,6 +225,7 @@ const mapDispatchToProps = dispatch => ({
   onGetVehiculos: () => dispatch(getVehiculos()),
   onGetModemsDisp: () => dispatch(getDispositivosDisponibles()),
   onInsertDevice: data => dispatch(insertModemAVehiculo(data)),
+  onRemoveDevice: data => dispatch(removeModem(data)),
   onInsertVehiculo: data => dispatch(insertVehiculo(data)),
   onUpdateVehiculo: data => dispatch(updateVehiculo(data)),
 })

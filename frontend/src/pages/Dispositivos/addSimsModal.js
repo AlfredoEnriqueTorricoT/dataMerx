@@ -9,7 +9,11 @@ function AddSimsModal(props) {
   const [toastWaiting, setToastWaiting] = useState(false)
 
   useEffect(() => {
-    setSimsSearched(simsDisponibles)
+    if (addSim) {
+      setSimsSearched(simsDisponibles)
+    } else {
+      setSimsSearched([{ id: -500, imei: "Retirar sim" }, ...simsDisponibles])
+    }
   }, [])
 
   useEffect(() => {
@@ -20,10 +24,12 @@ function AddSimsModal(props) {
   })
 
   let {
+    addSim,
     deviceId,
     error,
     onInsertSim,
     onGetSimsDisponibles,
+    onRemoveSim,
     simsDisponibles,
     simsModalState,
     waitingResponse,
@@ -37,25 +43,36 @@ function AddSimsModal(props) {
       id: deviceId,
       simid: simsSelected,
     }
-    onInsertSim(data)
+
+    if (simsSelected === -500) {
+      onRemoveSim(deviceId)
+    } else {
+      onInsertSim(data)
+    }
   }
 
   const searchFunc = data => {
     let obj = data.target.value
-    setSimsSearched(
-      simsDisponibles.filter(
-        sim => sim.imei.includes(obj) || sim.number.includes(obj)
+    if (obj === "" && !addSim) {
+      setSimsSearched([{ id: -500, imei: "Retirar sim" }, ...simsDisponibles])
+    } else {
+      setSimsSearched(
+        simsDisponibles.filter(
+          sim => sim.imei.includes(obj) || sim.number.includes(obj)
+        )
       )
-    )
+    }
   }
 
   const toastFunction = () => {
+    let texto = addSim ? "enlaza" : "cambia"
+
     showToast({
       toastType: error ? "warning" : "success",
       title: error ? "Error" : "Éxito",
       message: error
-        ? `No se ha podido enlazar el sim (${error.message})`
-        : `El sim ha sido enlazado`,
+        ? `No se ha podido ${texto}r el sim (${error.message})`
+        : `Se ha ${texto}do el sim`,
     })
 
     if (!error && !waitingResponse) {
@@ -102,7 +119,7 @@ function AddSimsModal(props) {
               <tbody>
                 {simsSearched.map(sim => (
                   <tr key={sim.id}>
-                    <td>{sim.id}</td>
+                    <td>{sim.id === -500 ? "" : sim.id}</td>
                     <td>{sim.imei}</td>
                     <td>{sim.number}</td>
                     <td className="align-middle">
@@ -139,7 +156,10 @@ function AddSimsModal(props) {
         <div className="ms-auto">
           {!waitingResponse ? (
             <button
-              className="btn btn-success btn-rounded waves-effect waves-light"
+              className={`btn btn-${
+                simsSelected === null ? "light" : "success"
+              } btn-rounded waves-effect waves-light`}
+              disabled={simsSelected === null}
               form="formAddSim"
               size="sm"
               type="submit"
