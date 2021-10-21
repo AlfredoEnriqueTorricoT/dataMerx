@@ -1,6 +1,6 @@
 <?php
 
-namespace App\cad\dto\Device;
+namespace API\MODEL;
 
 class DeviceSim {
   public $id;

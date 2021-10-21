@@ -1,6 +1,6 @@
 <?php
 
-namespace App\cad\dto\Event;
+namespace API\MODEL;
 
 class EventVinculo {
   public $id;

@@ -1,10 +1,11 @@
 <?php
 
 
-namespace App\controller;
+namespace API;
 
+include_once "./src/cad/bll/PlatformBLL.php";
+use API\BLL\PlatformBLL;
 
-use App\cad\bll\PlatformBLL;
 
 class ApiPlatform
 {

@@ -1,12 +1,17 @@
 <?php
 
 
-namespace App\cad\bll;
+namespace API\BLL;
+
+include_once "./src/cad/dal/Conexion.php";
+include_once "./src/cad/dto/Event/Event.php";
+include_once "./src/cad/dto/Event/EventVinculo.php";
+
+use API\CONEXION\Conexion;
+use API\MODEL\Event;
+use API\MODEL\EventVinculo;
 
 
-use App\cad\dal\Conexion;
-use App\cad\dto\Event\Event;
-use App\cad\dto\Event\EventVinculo;
 use PDO;
 class EventBLL
 {

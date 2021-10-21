@@ -1,10 +1,11 @@
 <?php
 
 
-namespace App\controller;
+namespace API;
 
+include_once "./src/cad/bll/MarcaModemBLL.php";
+use API\BLL\MarcaModemBLL;
 
-use App\cad\bll\MarcaModemBLL;
 
 class ApiMarkModem
 {

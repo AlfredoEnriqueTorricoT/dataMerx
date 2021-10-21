@@ -1,12 +1,17 @@
 <?php
 
 
-namespace App\cad\bll;
+namespace API\BLL;
+
+include_once "./src/cad/dal/Conexion.php";
+include_once "./src/cad/dto/DeviceSim.php";
+include_once "./src/cad/dto/DeviceSimData.php";
+
+use API\CONEXION\Conexion;
+use API\MODEL\DeviceSim;
+use API\MODEL\DeviceSimData;
 
 
-use App\cad\dal\Conexion;
-use App\cad\dto\DeviceSim\DeviceSim;
-use App\cad\dto\DeviceSim\DeviceSimData;
 use PDO;
 class DeviceSimBLL
 {

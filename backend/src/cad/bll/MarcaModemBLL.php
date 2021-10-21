@@ -1,11 +1,16 @@
 <?php
 
 
-namespace App\cad\bll;
+namespace API\BLL;
+
+include_once "./src/cad/dal/Conexion.php";
+include_once "./src/cad/dto/MarcaModem.php";
+
+use API\CONEXION\Conexion;
+use API\MODEL\MarcaModem;
 
 
-use App\cad\dal\Conexion;
-use App\cad\dto\MarcaModem;
+
 use PDO;
 class MarcaModemBLL
 {

@@ -1,12 +1,18 @@
 <?php
 
 
-namespace App\cad\bll;
+namespace API\BLL;
+
+include_once "./src/cad/dal/Conexion.php";
+include_once "./src/cad/dto/CarDevice.php";
+include_once "./src/cad/dto/CarDeviceData.php";
+
+use API\CONEXION\Conexion;
+use API\MODEL\CarDevice;
+use API\MODEL\CarDeviceData;
 
 
-use App\cad\dal\Conexion;
-use App\cad\dto\CarDevice\CarDevice;
-use App\cad\dto\CarDevice\CarDeviceData;
+
 use PDO;
 class CarDeviceBLL
 {

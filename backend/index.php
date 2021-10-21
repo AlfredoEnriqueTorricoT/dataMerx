@@ -4,18 +4,26 @@
     header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
 
+    include_once "./src/controller/ApiUser.php";
+    include_once "./src/controller/ApiMarkModem.php";
+    include_once "./src/controller/ApiPlatform.php";
+    include_once "./src/controller/ApiSim.php";
+    include_once "./src/controller/ApiDevice.php";
+    include_once "./src/controller/ApiClient.php";
+    include_once "./src/controller/ApiCar.php";
+    include_once "./src/controller/ApiEvent.php";
+    include_once "./src/controller/ApiTypeEvent.php";
 
-use \App\controller\ApiUsuario;
-use \App\controller\ApiUser;
-use \App\controller\ApiProyecto;
-use \App\controller\ApiMarkModem;
-use \App\controller\ApiPlatform;
-use \App\controller\ApiSim;
-use \App\controller\ApiDevice;
-use \App\controller\ApiClient;
-use \App\controller\ApiCar;
-use \App\controller\ApiEvent;
-use \App\controller\ApiTypeEvent;
+    use \App\controller\ApiUsuario;
+    use \API\ApiUser;
+    use \API\ApiMarkModem;
+    use \API\ApiPlatform;
+    use \API\ApiSim;
+    use \API\ApiDevice;
+    use \API\ApiClient;
+    use \API\ApiCar;
+    use \API\ApiEvent;
+    use \API\ApiTypeEvent;
 
     $json = file_get_contents('php://input');
     $data = json_decode($json);
@@ -38,6 +46,7 @@ use \App\controller\ApiTypeEvent;
     $objEvent = new ApiEvent();
     $objTypeEvent = new ApiTypeEvent();
 
+    
 switch ($controller) {
             case "user":
                 switch ($operacion) {

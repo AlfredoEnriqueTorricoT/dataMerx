@@ -1,10 +1,11 @@
 <?php
 
 
-namespace App\controller;
+namespace API;
 
+include_once "./src/cad/bll/CarDeviceBLL.php";
+use API\BLL\CarDeviceBLL;
 
-use App\cad\bll\CarDeviceBLL;
 
 class ApiCarDevice
 {

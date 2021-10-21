@@ -1,10 +1,12 @@
 <?php
 
 
-namespace App\controller;
+namespace API;
+
+include_once "./src/cad/bll/SimBLL.php";
+use API\BLL\SimBLL;
 
 
-use App\cad\bll\SimBLL;
 
 class ApiSim
 {

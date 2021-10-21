@@ -1,10 +1,11 @@
 <?php
 
 
-namespace App\controller;
+namespace API;
 
+include_once "./src/cad/bll/EventBLL.php";
+use API\BLL\EventBLL;
 
-use App\cad\bll\EventBLL;
 
 class ApiEvent
 {
