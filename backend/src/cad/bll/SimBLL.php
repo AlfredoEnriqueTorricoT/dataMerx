@@ -1,11 +1,15 @@
 <?php
 
 
-namespace App\cad\bll;
+namespace API\BLL;
+
+include_once "./src/cad/dal/Conexion.php";
+include_once "./src/cad/dto/Sim.php";
+
+use API\CONEXION\Conexion;
+use API\MODEL\Sim;
 
 
-use App\cad\dal\Conexion;
-use App\cad\dto\Sim;
 use PDO;
 class SimBLL
 {

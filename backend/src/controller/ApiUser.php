@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\controller;
+namespace API;
 
-
-use App\cad\bll\UserBLL;
+include_once "./src/cad/bll/UserBLL.php";
+use API\BLL\UserBLL;
 
 class ApiUser
 {

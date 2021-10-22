@@ -1,10 +1,11 @@
 <?php
 
 
-namespace App\controller;
+namespace API;
 
+include_once "./src/cad/bll/ClientBLL.php";
+use API\BLL\ClientBLL;
 
-use App\cad\bll\ClientBLL;
 
 class ApiClient
 {

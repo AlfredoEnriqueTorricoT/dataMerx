@@ -1,6 +1,6 @@
 <?php
 
-namespace App\cad\dto\Car;
+namespace API\MODEL;
 
 class CarDevice {
   public $id;

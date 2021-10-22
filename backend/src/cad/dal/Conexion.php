@@ -1,5 +1,5 @@
 <?php
-namespace App\cad\dal;
+namespace API\CONEXION;
 
 use PDO;
 

@@ -1,11 +1,14 @@
 <?php
 
 
-namespace App\cad\bll;
+namespace API\BLL;
 
+include_once "./src/cad/dto/User.php";
+include_once "./src/cad/dal/Conexion.php";
 
-use App\cad\dal\Conexion;
-use App\cad\dto\User;
+use API\CONEXION\Conexion;
+use API\MODEL\User;
+
 use PDO;
 class UserBLL
 {

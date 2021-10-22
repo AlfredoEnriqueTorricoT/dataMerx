@@ -1,10 +1,11 @@
 <?php
 
 
-namespace App\controller;
+namespace API;
 
+include_once "./src/cad/bll/DeviceSimBLL.php";
+use API\BLL\DeviceSimBLL;
 
-use App\cad\bll\DeviceSimBLL;
 
 class ApiDeviceSim
 {
