@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 import React, { Component } from "react"
 import { Alert, Card, CardBody, Col, Container, Row } from "reactstrap"
 
@@ -14,7 +14,7 @@ import { userForgetPassword } from "../../store/actions"
 
 // import images
 import profile from "../../assets/images/profile-img.png"
-import logo from "../../assets/images/logo.svg"
+import logo from "../../assets/images/favicon.png"
 
 class ForgetPasswordPage extends Component {
   constructor(props) {
@@ -98,13 +98,13 @@ class ForgetPasswordPage extends Component {
                           />
                         </div>
                         <div className="text-end">
-                            <button
-                              className="btn btn-primary w-md waves-effect waves-light"
-                              type="submit"
-                            >
-                              Reset
-                            </button>
-                          </div>
+                          <button
+                            className="btn btn-primary w-md waves-effect waves-light"
+                            type="submit"
+                          >
+                            Reset
+                          </button>
+                        </div>
                       </AvForm>
                     </div>
                   </CardBody>
@@ -112,10 +112,7 @@ class ForgetPasswordPage extends Component {
                 <div className="mt-5 text-center">
                   <p>
                     Go back to{" "}
-                    <Link
-                      to="login"
-                      className="fw-medium text-primary"
-                    >
+                    <Link to="login" className="fw-medium text-primary">
                       Login
                     </Link>{" "}
                   </p>
@@ -137,7 +134,7 @@ ForgetPasswordPage.propTypes = {
   forgetError: PropTypes.func,
   forgetSuccessMsg: PropTypes.func,
   history: PropTypes.object,
-  userForgetPassword: PropTypes.any
+  userForgetPassword: PropTypes.any,
 }
 
 const mapStateToProps = state => {

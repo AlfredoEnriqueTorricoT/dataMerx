@@ -1,5 +1,6 @@
-import React, { Component } from "react"
+import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
+import { useLocation } from "react-router"
 import Breadcrumbs from "../../components/Common/Breadcrumb"
 import MetaTags from "react-meta-tags"
 import EventList from "./eventList"
@@ -14,165 +15,138 @@ import {
   Modal,
   Progress,
 } from "reactstrap"
-import {
-  getEventosPorElemento,
-  insertEvento,
-  insertEventoAElemento,
-} from "store/actions"
+import { getEventosPorElemento, insertEventoAElemento } from "store/actions"
 import ElementData from "./elementData"
+import { set } from "lodash"
 
-class EventInvoice extends Component {
-  constructor(props) {
-    super(props)
-    console.log(props)
-    this.state = { listState: "loading", modalOpen: false, profileData: [] }
-  }
+function EventInvoice({
+  dispositivos,
+  sims,
+  vehiculos,
+  eventos,
+  error,
+  waitingResponse,
+  onGetEventsByElement,
+  onInsertEventoAElemento,
+}) {
+  const [listState, setListState] = useState("loading")
+  const [modalOpen, setModalOpen] = useState(false)
+  const [profileData, setProfileData] = useState([])
 
-  componentDidMount() {
-    this.props.onGetEventsByElement({
-      obj: this.valuex("type"),
-      id: this.valuex("id"),
+  //  state = { listState: "loading", modalOpen: false, profileData: [] }
+  const location = useLocation()
+  const query = new URLSearchParams(location.search)
+  const type = query.get("type")
+  const id = query.get("id")
+
+  useEffect(() => {
+    onGetEventsByElement({
+      obj: type,
+      id: id,
     })
 
-    this.selectProfileById()
-  }
+    selectProfileById()
+  }, [])
 
-  selectProfileById = () => {
-    switch (this.valuex("type")) {
+  const selectProfileById = () => {
+    switch (type) {
       case "car":
-        this.setState({
-          ...this.state,
-          profileData: this.props.vehiculos.find(
-            car => car.id == this.valuex("id")
-          ),
-        })
+        setProfileData(vehiculos.find(car => car.id == id))
         break
       case "device":
-        this.setState({
-          ...this.state,
-          profileData: this.props.dispositivos.find(
-            device => device.id == this.valuex("id")
-          ),
-        })
+        setProfileData(dispositivos.find(device => device.id == id))
         break
       case "sim":
-        console.log("switchSIMS")
-        console.log(this.props.sims)
-        this.setState({
-          ...this.state,
-          profileData: this.props.sims.find(sim => sim.id == this.valuex("id")),
-        })
+        setProfileData(sims.find(sim => sim.id == id))
         break
 
       default:
         break
     }
-
-    console.log("PROFILEBYID")
-    console.log(this.state)
   }
 
-  componentDidUpdate() {
-    if (this.state.listState === "loading" && !this.props.waitingResponse) {
-      if (this.state.listState !== "error" && this.props.error) {
-        this.setState({ ...this.state, listState: "error" })
+  useEffect(() => {
+    if (listState === "loading" && !waitingResponse) {
+      if (listState !== "error" && error) {
+        setListState("error")
       } else {
-        this.setState({ ...this.state, listState: "success" })
+        setListState("success")
       }
     }
+  })
+
+  const setModalState = data => {
+    setModalOpen(data)
   }
 
-  setModalState = data => {
-    this.setState({ ...this.state, modalOpen: data })
-  }
-
-  valuex = key => {
-    let location = this.props.location.search
-    location = location.replace("?", "")
-
-    let array = location.split("&")
-    array.forEach(element => {
-      if (element.indexOf(key) == 0) {
-        location = element
-      }
-    })
-
-    return location.replace(key + "=", "")
-  }
-
-  render() {
-    return (
-      <div className="page-content">
-        <MetaTags>
-          <title>Eventos</title>
-        </MetaTags>
-        <Container fluid>
-          <Breadcrumbs title="Eventos" breadcrumbItem="Detalles" />
-          <Row>
-            <Col>
-              <Card>
-                <CardBody>
-                  {this.state.listState === "loading" ? (
-                    <Progress
-                      value={100}
-                      color="primary"
-                      style={{ width: "75%" }}
-                      animated
-                    />
-                  ) : this.state.listState === "error" ? (
-                    <center>
-                      <h3>Ha ocurrido un error inesperado</h3>
-                      <br />
-                      <h5>({this.props.error.message})</h5>
-                    </center>
-                  ) : (
-                    <ElementData
-                      profileData={this.state.profileData}
-                      typeElement={this.valuex("type")}
-                    />
-                  )}
-                </CardBody>
-              </Card>
-              <Card>
-                <CardBody>
-                  {this.state.listState === "success" && (
-                    <React.Fragment>
-                      <div className="d-sm-flex flex-wrap">
-                        <h3>Eventos</h3>
-                        <div className="ms-auto">
-                          <button
-                            className="btn btn-info btn-sm"
-                            onClick={() => {
-                              this.setState({ ...this.state, modalOpen: true })
-                            }}
-                          >
-                            Añadir evento
-                          </button>
-                        </div>
+  return (
+    <div className="page-content">
+      <MetaTags>
+        <title>Eventos</title>
+      </MetaTags>
+      <Container fluid>
+        <Breadcrumbs title="Eventos" breadcrumbItem="Detalles" />
+        <Row>
+          <Col>
+            <Card>
+              <CardBody>
+                {listState === "loading" ? (
+                  <Progress
+                    value={100}
+                    color="primary"
+                    style={{ width: "75%" }}
+                    animated
+                  />
+                ) : listState === "error" ? (
+                  <center>
+                    <h3>Ha ocurrido un error inesperado</h3>
+                    <br />
+                    <h5>({error.message})</h5>
+                  </center>
+                ) : (
+                  <ElementData profileData={profileData} typeElement={type} />
+                )}
+              </CardBody>
+            </Card>
+            <Card>
+              <CardBody>
+                {listState === "success" && (
+                  <React.Fragment>
+                    <div className="d-sm-flex flex-wrap">
+                      <h3>Eventos</h3>
+                      <div className="ms-auto">
+                        <button
+                          className="btn btn-info btn-sm"
+                          onClick={() => {
+                            setModalOpen(true)
+                          }}
+                        >
+                          Añadir evento
+                        </button>
                       </div>
-                      <br />
-                      <EventList eventos={this.props.eventos} />
-                    </React.Fragment>
-                  )}
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
+                    </div>
+                    <br />
+                    <EventList eventos={eventos} />
+                  </React.Fragment>
+                )}
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
 
-          <Modal isOpen={this.state.modalOpen}>
-            <ModalAddEvent
-              error={this.props.error}
-              filaData={this.state.profileData.id}
-              onInsertEvento={this.props.onInsertEventoAElemento}
-              setModalState={this.setModalState}
-              tableType={this.valuex("type")}
-              waitingResponse={this.props.waitingResponse}
-            />
-          </Modal>
-        </Container>
-      </div>
-    )
-  }
+        <Modal isOpen={modalOpen}>
+          <ModalAddEvent
+            error={error}
+            filaData={profileData.id}
+            onInsertEvento={onInsertEventoAElemento}
+            setModalState={setModalState}
+            tableType={type}
+            waitingResponse={waitingResponse}
+          />
+        </Modal>
+      </Container>
+    </div>
+  )
 }
 
 const mapStateToProps = state => {

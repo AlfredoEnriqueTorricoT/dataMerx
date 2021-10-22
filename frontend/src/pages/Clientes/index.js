@@ -61,7 +61,7 @@ class ClientesPage extends Component {
       <React.Fragment>
         <div className="page-content">
           <MetaTags>
-            <title>Clientes</title>
+            <title>Merx - Clientes</title>
           </MetaTags>
           <Container fluid>
             <Breadcrumbs title="Cuadros de mando" breadcrumbItem="Clientes" />

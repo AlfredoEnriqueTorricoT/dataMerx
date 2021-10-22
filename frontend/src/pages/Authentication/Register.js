@@ -14,7 +14,7 @@ import { Link } from "react-router-dom"
 
 // import images
 import profileImg from "../../assets/images/profile-img.png"
-import logoImg from "../../assets/images/logo.svg"
+import logoImg from "../../assets/images/favicon.png"
 
 class Register extends Component {
   constructor(props) {
@@ -148,10 +148,7 @@ class Register extends Component {
                 <div className="mt-5 text-center">
                   <p>
                     Already have an account ?{" "}
-                    <Link
-                      to="/login"
-                      className="fw-medium text-primary"
-                    >
+                    <Link to="/login" className="fw-medium text-primary">
                       {" "}
                       Login
                     </Link>{" "}

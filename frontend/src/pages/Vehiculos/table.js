@@ -74,7 +74,9 @@ function CarsTable(props) {
                       } dispositivo`}
                     </DropdownItem>
                     <DropdownItem>
-                      <Link to={`/vehiculoEventos/?type=car&id=${vehiculo.id}`}>
+                      <Link
+                        to={`/vehiculos/eventos?type=car&id=${vehiculo.id}`}
+                      >
                         Ver eventos
                       </Link>
                     </DropdownItem>

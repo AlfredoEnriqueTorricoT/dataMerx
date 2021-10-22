@@ -103,7 +103,7 @@ function DevicesTable(props) {
                     </DropdownItem>
                     <DropdownItem>
                       <Link
-                        to={`/dispositivoEventos/?type=device&id=${dispositivo.id}`}
+                        to={`/dispositivos/eventos?type=device&id=${dispositivo.id}`}
                       >
                         Ver eventos
                       </Link>

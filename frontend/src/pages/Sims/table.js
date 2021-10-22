@@ -58,7 +58,7 @@ function SimsTable(props) {
                       Editar sim
                     </DropdownItem>
                     <DropdownItem>
-                      <Link to={`/simEventos/?type=sim&id=${sim.id}`}>
+                      <Link to={`/sims/eventos?type=sim&id=${sim.id}`}>
                         Ver eventos
                       </Link>
                     </DropdownItem>

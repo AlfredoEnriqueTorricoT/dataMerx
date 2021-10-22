@@ -110,7 +110,7 @@ class SidebarContent extends Component {
             <ul className="metismenu list-unstyled" id="side-menu">
               <li className="menu-title">{this.props.t("Menu")}</li>
               <li>
-                <Link to="/#" className="waves-effect">
+                <Link to="/#" className="has-arrow waves-effect">
                   <i className="bx bx-home-circle" />
                   {/*<span className="badge rounded-pill bg-info float-end">
                     04

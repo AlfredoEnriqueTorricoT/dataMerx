@@ -61,7 +61,7 @@ class SimsOpt extends Component {
       <React.Fragment>
         <div className="page-content">
           <MetaTags>
-            <title>Sims</title>
+            <title>Merx - Sims</title>
           </MetaTags>
           <Container fluid>
             <Breadcrumbs title="Cuadros de mando" breadcrumbItem="Sims" />

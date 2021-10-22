@@ -86,7 +86,7 @@ class VehiculosOpt extends Component {
       <React.Fragment>
         <div className="page-content">
           <MetaTags>
-            <title>Vehículos</title>
+            <title>Merx - Vehículos</title>
           </MetaTags>
           <Container fluid>
             <Breadcrumbs title="Cuadros de mando" breadcrumbItem="Vehículos" />

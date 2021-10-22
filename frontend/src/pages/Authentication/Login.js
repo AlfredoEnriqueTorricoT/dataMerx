@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 
-import { Alert, Card, CardBody, Col, Container, Row } from "reactstrap"
+import { Alert, Card, CardBody, Col, Container, Label, Row } from "reactstrap"
 
 // Redux
 import { connect } from "react-redux"
@@ -16,15 +16,20 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import { facebook, google } from "../../config"
 
 // availity-reactstrap-validation
-import { AvField, AvForm } from "availity-reactstrap-validation"
+import {
+  AvInput,
+  AvFeedback,
+  AvForm,
+  AvGroup,
+} from "availity-reactstrap-validation"
 
 // actions
 import { apiError, loginUser, socialLogin } from "../../store/actions"
 
 // import images
 import profile from "../../assets/images/profile-img.png"
-import logo from "../../assets/images/logo.svg"
-import lightlogo from "../../assets/images/logo-light.svg"
+import logo from "../../assets/images/favicon.png"
+import lightlogo from "../../assets/images/favicon-light.png"
 
 class Login extends Component {
   constructor(props) {
@@ -83,11 +88,7 @@ class Login extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="home-btn d-none d-sm-block">
-          <Link to="/" className="text-dark">
-            <i className="bx bx-home h2" />
-          </Link>
-        </div>
+        <div className="home-btn d-none d-sm-block"></div>
         <div className="account-pages my-5 pt-sm-5">
           <Container>
             <Row className="justify-content-center">
@@ -97,8 +98,8 @@ class Login extends Component {
                     <Row>
                       <Col className="col-7">
                         <div className="text-primary p-4">
-                          <h5 className="text-primary">Welcome Back !</h5>
-                          <p>Sign in to continue to Skote.</p>
+                          <h5 className="text-primary">¡Bienvenido!</h5>
+                          <p>Inicia sesión para continuar</p>
                         </div>
                       </Col>
                       <Col className="col-5 align-self-end">
@@ -143,113 +144,56 @@ class Login extends Component {
                         ) : null}
 
                         <div className="mb-3">
-                          <AvField
-                            name="email"
-                            label="Email"
-                            value="admin@themesbrand.com"
-                            className="form-control"
-                            placeholder="Enter email"
-                            type="email"
-                            required
-                          />
+                          <AvGroup>
+                            <Label for="login-email">Correo electrónico</Label>
+                            <AvInput
+                              name="email"
+                              id="login-email"
+                              label="Email"
+                              className="form-control"
+                              placeholder="Ingrese su correo"
+                              type="email"
+                              required
+                            />
+                            <AvFeedback>Correo no válido</AvFeedback>
+                          </AvGroup>
                         </div>
 
                         <div className="mb-3">
-                          <AvField
-                            name="password"
-                            label="Password"
-                            value="123456"
-                            type="password"
-                            required
-                            placeholder="Enter Password"
-                          />
-                        </div>
-
-                        <div className="form-check">
-                          <input
-                            type="checkbox"
-                            className="form-check-input"
-                            id="customControlInline"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="customControlInline"
-                          >
-                            Remember me
-                          </label>
+                          <AvGroup>
+                            <Label for="login-password">Contraseña</Label>
+                            <AvInput
+                              name="password"
+                              id="login-password"
+                              label="Contraseña"
+                              type="password"
+                              required
+                              placeholder="Ingrese su contraseña"
+                            />
+                            <AvFeedback>Contraseña no válida</AvFeedback>
+                          </AvGroup>
                         </div>
 
                         <div className="mt-3 d-grid">
                           <button
-                            className="btn btn-primary btn-block waves-effect waves-light"
+                            className="btn btn-success btn-block waves-effect waves-light"
                             type="submit"
                           >
-                            Log In
+                            Iniciar sesión
                           </button>
                         </div>
 
-                        {/*<div className="mt-4 text-center">
-                          <h5 className="font-size-14 mb-3">Sign in with</h5>
-
-                          <ul className="list-inline">
-                            <li className="list-inline-item">
-                              <FacebookLogin
-                                appId={facebook.APP_ID}
-                                autoLoad={false}
-                                callback={this.facebookResponse}
-                                render={renderProps => (
-                                  <Link
-                                    to={""}
-                                    className="social-list-item bg-primary text-white border-primary"
-                                    // onClick={renderProps.onClick}
-                                  >
-                                    <i className="mdi mdi-facebook" />
-                                  </Link>
-                                )}
-                              />
-                            </li>
-                            <li className="list-inline-item">
-                              <GoogleLogin
-                                clientId={google.CLIENT_ID}
-                                render={renderProps => (
-                                  <Link
-                                    to={""}
-                                    className="social-list-item bg-danger text-white border-danger"
-                                    // onClick={renderProps.onClick}
-                                  >
-                                    <i className="mdi mdi-google" />
-                                  </Link>
-                                )}
-                                onSuccess={this.googleResponse}
-                                onFailure={() => {}}
-                              />
-                            </li>
-                          </ul>
-                        </div>*/}
-
                         <div className="mt-4 text-center">
                           <Link to="/forgot-password" className="text-muted">
-                            <i className="mdi mdi-lock me-1" /> Forgot your
-                            password?
+                            <i className="mdi mdi-lock me-1" /> ¿Olvidaste tu
+                            contraseña?
                           </Link>
                         </div>
                       </AvForm>
                     </div>
                   </CardBody>
                 </Card>
-                <div className="mt-5 text-center">
-                  <p>
-                    Don't have an account ?{" "}
-                    <Link to="register" className="fw-medium text-primary">
-                      {" "}
-                      Signup now{" "}
-                    </Link>{" "}
-                  </p>
-                  <p>
-                    © {new Date().getFullYear()} Skote. Crafted with{" "}
-                    <i className="mdi mdi-heart text-danger" /> by Themesbrand
-                  </p>
-                </div>
+                <div className="mt-5 text-center"></div>
               </Col>
             </Row>
           </Container>

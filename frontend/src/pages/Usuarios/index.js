@@ -61,7 +61,7 @@ class UsuariosOpt extends Component {
       <React.Fragment>
         <div className="page-content">
           <MetaTags>
-            <title>Usuarios</title>
+            <title>Merx - Usuarios</title>
           </MetaTags>
           <Container fluid>
             <Breadcrumbs title="Cuadros de mando" breadcrumbItem="Usuarios" />

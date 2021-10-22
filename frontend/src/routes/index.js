@@ -40,8 +40,8 @@ const authProtectedRoutes = [
   { path: "/dispositivos", component: DevicesPage },
   { path: "/clientes", component: ClientsPage },
   { path: "/vehiculos", component: CarsPage },
+  { name: "/eventos/:type:id", component: invoice },
   { path: "/eventos", component: EventosPage },
-  { name: "simEventos", path: "/:id", component: invoice },
 
   //profile
   { path: "/profile", component: UserProfile },

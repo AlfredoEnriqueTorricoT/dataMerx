@@ -83,7 +83,7 @@ class DispositivosOpt extends Component {
       <React.Fragment>
         <div className="page-content">
           <MetaTags>
-            <title>Dispositivos</title>
+            <title>Merx - Dispositivos</title>
           </MetaTags>
           <Container fluid>
             <Breadcrumbs

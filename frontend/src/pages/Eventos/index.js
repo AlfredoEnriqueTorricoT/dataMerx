@@ -59,7 +59,7 @@ class EventosOpt extends Component {
       <React.Fragment>
         <div className="page-content">
           <MetaTags>
-            <title>Eventos</title>
+            <title>Merx - Eventos</title>
           </MetaTags>
           <Container fluid>
             <Breadcrumbs title="Cuadros de mando" breadcrumbItem="Eventos" />
