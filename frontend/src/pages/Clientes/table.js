@@ -29,15 +29,17 @@ function ClientsTable(props) {
         <tbody>
           {clientes.map(cliente => (
             <tr key={"tr-client-" + cliente.id}>
-              <img
-                src={
-                  cliente.id < 6
-                    ? companies[`img${cliente.id}`]
-                    : companies[`img${(cliente.id % 6) + 1}`]
-                }
-                alt=""
-                className="avatar-sm"
-              />
+              <td>
+                <img
+                  src={
+                    cliente.id < 6
+                      ? companies[`img${cliente.id}`]
+                      : companies[`img${(cliente.id % 6) + 1}`]
+                  }
+                  alt=""
+                  className="avatar-sm"
+                />
+              </td>
 
               <td>
                 <h5 className="text-truncate font-size-14">

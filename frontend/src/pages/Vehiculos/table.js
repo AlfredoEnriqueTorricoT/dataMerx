@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 
 import {
   Badge,
@@ -11,6 +11,8 @@ import {
 
 function CarsTable(props) {
   let { deviceModalState, setModalState, vehiculos } = props
+
+  const history = useHistory()
 
   return (
     <div className="table-responsive">
@@ -73,12 +75,14 @@ function CarsTable(props) {
                         vehiculo.code !== null ? "Cambiar" : "Añadir"
                       } dispositivo`}
                     </DropdownItem>
-                    <DropdownItem>
-                      <Link
-                        to={`/vehiculos/eventos?type=car&id=${vehiculo.id}`}
-                      >
-                        Ver eventos
-                      </Link>
+                    <DropdownItem
+                      onClick={() => {
+                        history.push(
+                          `/vehiculos/eventos?type=car&id=${vehiculo.id}`
+                        )
+                      }}
+                    >
+                      Ver eventos
                     </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>

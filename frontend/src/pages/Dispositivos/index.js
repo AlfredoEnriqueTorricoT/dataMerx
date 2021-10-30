@@ -26,6 +26,7 @@ import {
 import AddSimsModal from "./addSimsModal"
 import ModalDevice from "./modal"
 import DevicesTable from "./table"
+import Filter from "./filter"
 
 class DispositivosOpt extends Component {
   constructor(props) {
@@ -37,24 +38,34 @@ class DispositivosOpt extends Component {
       modalOpen: false,
       modaType: "add",
       deviceData: {},
+      platformTF: "Todo",
     }
   }
 
   componentDidMount() {
-    this.props.onGetDispositivos()
     this.props.onGetModems()
+    this.props.onGetDispositivos()
     this.props.onGetPlatforms()
     this.props.onGetSimsDisponibles()
   }
 
   componentDidUpdate() {
-    if (!this.props.waitingResponse && this.state.crudState === "loading") {
+    if (
+      !this.props.waitingResponse &&
+      this.state.crudState === "loading" &&
+      this.props.platforms.length != 0 &&
+      this.props.modems.length != 0
+    ) {
       if (this.props.error && this.state.crudState !== "error") {
         this.setState({ ...this.state, crudState: "error" })
       } else {
         this.setState({ ...this.state, crudState: "success" })
       }
     }
+  }
+
+  setPlatformTF = data => {
+    this.setState({ ...this.state, platformTF: data })
   }
 
   modalState = (data1, data2, data3) => {
@@ -90,6 +101,14 @@ class DispositivosOpt extends Component {
               title="Cuadros de mando"
               breadcrumbItem="Dispositivos"
             />
+
+            {this.state.crudState === "success" && (
+              <Filter
+                dispositivos={this.props.dispositivos}
+                platforms={this.props.platforms}
+                setPlatformTF={this.setPlatformTF}
+              />
+            )}
             <Card>
               <CardBody>
                 <div className="d-sm-flex flex-wrap">
@@ -165,6 +184,7 @@ class DispositivosOpt extends Component {
                       dispositivos={this.props.dispositivos}
                       error={this.props.error}
                       onGetSimsDisponibles={this.props.onGetSimsDisponibles}
+                      platformTF={this.state.platformTF}
                       setModalState={this.modalState}
                       simsModalState={this.simsModalState}
                       waitingResponse={this.props.waitingResponse}

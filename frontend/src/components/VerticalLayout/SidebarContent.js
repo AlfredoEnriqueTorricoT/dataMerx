@@ -30,11 +30,14 @@ class SidebarContent extends Component {
   }
 
   initMenu() {
+    console.log("initMenu")
     new MetisMenu("#side-menu")
 
     let matchingMenuItem = null
     const ul = document.getElementById("side-menu")
+    console.log("ul: ", ul)
     const items = ul.getElementsByTagName("a")
+    console.log("items: ", items)
     for (let i = 0; i < items.length; ++i) {
       if (this.props.location.pathname === items[i].pathname) {
         matchingMenuItem = items[i]
@@ -49,6 +52,7 @@ class SidebarContent extends Component {
   // componentDidUpdate() {}
 
   scrollElement = item => {
+    //console.log("scrollElement: ", item)
     setTimeout(() => {
       if (this.refDiv.current !== null) {
         if (item) {
@@ -64,6 +68,7 @@ class SidebarContent extends Component {
   }
 
   activateParentDropdown = item => {
+    //console.log("APD: ", item)
     item.classList.add("active")
     const parent = item.parentElement
 

@@ -28,6 +28,9 @@ import invoice from "pages/DetalleEventos/index"
 //code opt
 import UserPage from "../pages/Usuarios/index"
 
+//404
+import Pages404 from "pages/404Page/404Page"
+
 // Authentication related pages
 import Login from "../pages/Authentication/Login"
 import Logout from "../pages/Authentication/Logout"
@@ -40,7 +43,9 @@ const authProtectedRoutes = [
   { path: "/dispositivos", component: DevicesPage },
   { path: "/clientes", component: ClientsPage },
   { path: "/vehiculos", component: CarsPage },
-  { name: "/eventos/:type:id", component: invoice },
+  { path: "/dispositivos/eventos/", component: invoice },
+  { path: "/sims/eventos/", component: invoice },
+  { path: "/vehiculos/eventos/", component: invoice },
   { path: "/eventos", component: EventosPage },
 
   //profile
@@ -48,6 +53,7 @@ const authProtectedRoutes = [
 
   // this route should be at the end of all other routes
   { path: "/", exact: true, component: () => <Redirect to="/clientes" /> },
+  { path: "/*", component: Pages404 },
 ]
 
 const publicRoutes = [

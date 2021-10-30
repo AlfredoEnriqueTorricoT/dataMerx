@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 
 import {
   Badge,
@@ -11,6 +11,8 @@ import {
 
 function SimsTable(props) {
   let { setModalState, sims } = props
+
+  const history = useHistory()
 
   return (
     <div className="table-responsive">
@@ -57,10 +59,12 @@ function SimsTable(props) {
                     >
                       Editar sim
                     </DropdownItem>
-                    <DropdownItem>
-                      <Link to={`/sims/eventos?type=sim&id=${sim.id}`}>
-                        Ver eventos
-                      </Link>
+                    <DropdownItem
+                      onClick={() => {
+                        history.push(`/sims/eventos?type=sim&id=${sim.id}`)
+                      }}
+                    >
+                      Ver eventos
                     </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>

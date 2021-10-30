@@ -25,6 +25,7 @@ import {
 import AddDeviceModal from "./addDeviceModal"
 import ModalCar from "./modal"
 import CarsTable from "./table"
+import Filter from "pages/Vehiculos/filter"
 
 class VehiculosOpt extends Component {
   constructor(props) {
@@ -36,6 +37,7 @@ class VehiculosOpt extends Component {
       modalOpen: false,
       modaType: "add",
       carData: {},
+      clienteTF: "Todo",
     }
   }
 
@@ -46,7 +48,11 @@ class VehiculosOpt extends Component {
   }
 
   componentDidUpdate() {
-    if (!this.props.waitingResponse && this.state.crudState === "loading") {
+    if (
+      !this.props.waitingResponse &&
+      this.state.crudState === "loading" &&
+      this.props.clientes.length !== 0
+    ) {
       if (this.props.error && this.state.crudState !== "error") {
         this.setState({ ...this.state, crudState: "error" })
       } else {
@@ -81,6 +87,10 @@ class VehiculosOpt extends Component {
     }
   }
 
+  setClienteTF = data => {
+    this.setState({ ...this.state, clienteTF: data })
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -90,6 +100,13 @@ class VehiculosOpt extends Component {
           </MetaTags>
           <Container fluid>
             <Breadcrumbs title="Cuadros de mando" breadcrumbItem="Vehículos" />
+            {this.state.crudState === "success" && (
+              <Filter
+                clientes={this.props.clientes}
+                vehiculos={this.props.vehiculos}
+                setClienteTF={this.setClienteTF}
+              />
+            )}
             <Card>
               <CardBody>
                 <div className="d-sm-flex flex-wrap">
