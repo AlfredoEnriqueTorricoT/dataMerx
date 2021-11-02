@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react"
-import { Card, CardBody, CardTitle, Col, Row } from "reactstrap"
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  Col,
+  Row,
+  Nav,
+  NavItem,
+  NavLink,
+  TabContent,
+  TabPane,
+} from "reactstrap"
 
 function Filter(props) {
-  const [platSelect, setPlatSelecct] = useState("Todo")
   const [clientCount, setClientCount] = useState([])
+  const [tabs, setTabs] = useState(1)
 
-  let { clientes, setClienteTF, vehiculos } = props
-
-  const setCliente = data => {
-    setPlatSelecct(data)
-    setClienteTF(data)
-  }
+  let { clientes, clientSelect, setClienteData, vehiculos } = props
 
   let count = new Array()
 
@@ -27,74 +33,120 @@ function Filter(props) {
     }
   }, [])
 
+  const searchFunc = data => {
+    let obj = data.target.value
+    setClienteData("clienteTS", obj)
+  }
+
   return (
-    <Card>
-      <CardBody>
-        <CardTitle>Filtrar por empresa</CardTitle>
-        <Col lg="4" className="align-self-center">
-          <div className="text-lg-center mt-4 mt-lg-0">
-            <Row>
-              <Col xl={6}>
-                <div
-                  className="btn-group btn-group-md"
-                  role="group"
-                  aria-label="Basic example"
-                >
-                  {clientes.map((cliente, idx) => (
+    <React.Fragment>
+      <ul className="nav nav-tabs">
+        <li className="nav-item">
+          <a
+            className={`${tabs == 1 && "active"} nav-link`}
+            onClick={() => {
+              setTabs(1)
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            Filtrar por empresa
+          </a>
+        </li>
+        <li className="nav-item">
+          <a
+            className={`${tabs == 2 && "active"} nav-link`}
+            onClick={() => {
+              setTabs(2)
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            Buscar
+          </a>
+        </li>
+      </ul>
+      <Col lg="4" className="align-self-center">
+        <div className="text-lg-center mt-4 mt-lg-0">
+          <TabContent activeTab={tabs}>
+            <TabPane tabId={1}>
+              <Row>
+                <Col xl={6}>
+                  <div
+                    className="btn-group btn-group-md mt-3"
+                    role="group"
+                    aria-label="Basic example"
+                  >
+                    {clientes.map((cliente, idx) => (
+                      <button
+                        key={idx}
+                        className={`btn btn-${
+                          clientSelect == cliente.empresa
+                            ? "secondary"
+                            : "outline-secondary"
+                        }`}
+                        style={{ width: "120px" }}
+                        onClick={() => {
+                          setClienteData("clienteTF", cliente.empresa)
+                        }}
+                      >
+                        {cliente.empresa} <br />{" "}
+                        <span
+                          className={`badge bg-${
+                            clientSelect === "Todo" ? "light" : "secondary"
+                          } sm-1`}
+                        >
+                          {clientCount[idx]}
+                        </span>
+                      </button>
+                    ))}
                     <button
-                      key={idx}
                       className={`btn btn-${
-                        platSelect ==
-                        cliente.name +
-                          cliente.last_name +
-                          cliente.mother_last_name
+                        clientSelect == "Todo"
                           ? "secondary"
                           : "outline-secondary"
                       }`}
                       style={{ width: "120px" }}
                       onClick={() => {
-                        setCliente(
-                          cliente.name +
-                            cliente.last_name +
-                            cliente.mother_last_name
-                        )
+                        setClienteData("clienteTF", "Todo")
                       }}
                     >
-                      {cliente.empresa} <br />{" "}
+                      Ver todo <br />{" "}
                       <span
                         className={`badge bg-${
-                          platSelect === "Todo" ? "light" : "secondary"
+                          clientSelect === "Todo" ? "light" : "secondary"
                         } sm-1`}
                       >
-                        {clientCount[idx]}
+                        {clientCount.reduce((ac, num) => ac + num, 0)}
                       </span>
-                    </button>
-                  ))}
-                  <button
-                    className={`btn btn-${
-                      platSelect == "Todo" ? "secondary" : "outline-secondary"
-                    }`}
-                    style={{ width: "120px" }}
-                    onClick={() => {
-                      setCliente("Todo")
-                    }}
+                    </button>{" "}
+                  </div>
+                </Col>
+              </Row>
+            </TabPane>
+            <TabPane tabId={2}>
+              <Row>
+                <Col>
+                  <form
+                    id="formSearchClient"
+                    onChange={searchFunc}
+                    className="app-search"
                   >
-                    Ver todo <br />{" "}
-                    <span
-                      className={`badge bg-${
-                        platSelect === "Todo" ? "light" : "secondary"
-                      } sm-1`}
-                    >
-                      {clientCount.reduce((ac, num) => ac + num, 0)}
-                    </span>
-                  </button>{" "}
-                </div>
-              </Col>
-            </Row>
-          </div>
-        </Col>
-      </CardBody>
-    </Card>
+                    <div className="position-relative">
+                      <input
+                        type="text"
+                        name="searchInput"
+                        className="form-control"
+                        placeholder="Buscar..."
+                      />
+                      <span className="bx bx-search-alt" />
+                    </div>
+                  </form>
+                </Col>
+              </Row>
+            </TabPane>
+          </TabContent>
+        </div>
+      </Col>
+    </React.Fragment>
   )
 }
 

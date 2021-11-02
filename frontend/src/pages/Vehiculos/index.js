@@ -37,7 +37,9 @@ class VehiculosOpt extends Component {
       modalOpen: false,
       modaType: "add",
       carData: {},
+      clienteTab: 1,
       clienteTF: "Todo",
+      clienteTS: "",
     }
   }
 
@@ -87,8 +89,21 @@ class VehiculosOpt extends Component {
     }
   }
 
-  setClienteTF = data => {
-    this.setState({ ...this.state, clienteTF: data })
+  setClienteData = (obj, data) => {
+    switch (obj) {
+      case "clienteTab":
+        this.setState({ ...this.state, clienteTab: data })
+        break
+      case "clienteTF":
+        this.setState({ ...this.state, clienteTF: data })
+        break
+      case "clienteTS":
+        this.setState({ ...this.state, clienteTS: data })
+        break
+
+      default:
+        break
+    }
   }
 
   render() {
@@ -100,15 +115,20 @@ class VehiculosOpt extends Component {
           </MetaTags>
           <Container fluid>
             <Breadcrumbs title="Cuadros de mando" breadcrumbItem="Vehículos" />
-            {this.state.crudState === "success" && (
-              <Filter
-                clientes={this.props.clientes}
-                vehiculos={this.props.vehiculos}
-                setClienteTF={this.setClienteTF}
-              />
-            )}
             <Card>
               <CardBody>
+                {this.state.crudState === "success" && (
+                  <React.Fragment>
+                    <Filter
+                      clientes={this.props.clientes}
+                      clientSelect={this.state.clienteTF}
+                      vehiculos={this.props.vehiculos}
+                      setClienteData={this.setClienteData}
+                      setClienteData={this.setClienteData}
+                    />
+                    <hr />
+                  </React.Fragment>
+                )}
                 <div className="d-sm-flex flex-wrap">
                   <CardTitle className="mb-4 h4">Lista de vehículos</CardTitle>
                   <div className="ms-auto">
@@ -175,6 +195,9 @@ class VehiculosOpt extends Component {
                   ) : (
                     //SUCCESS
                     <CarsTable
+                      clientTF={this.state.clienteTF}
+                      clientTS={this.state.clienteTS}
+                      tabsTF={this.state.clienteTab}
                       deviceModalState={this.deviceModalState}
                       setModalState={this.modalState}
                       vehiculos={this.props.vehiculos}
