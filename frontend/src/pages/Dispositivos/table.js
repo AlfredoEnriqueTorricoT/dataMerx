@@ -13,26 +13,63 @@ import {
 function DevicesTable(props) {
   const [toastWaiting, setToastWaiting] = useState(false)
   const [devicesFiltered, setDevicesFiltered] = useState([])
+  const [prevTabs, setPrevTabs] = useState(1)
   const [prevPTF, setPrevPTF] = useState("")
+  const [prevPTS, setPrevPTS] = useState("")
 
   useEffect(() => {
     if (toastWaiting && !waitingResponse) {
       toastFunction()
       setToastWaiting(false)
-      console.log("TOast")
+    }
+
+    if (tabsTf !== prevTabs) {
+      if (tabsTf === 1) filterByPlatform()
+      else if (tabsTf === 2) filterBySearch()
+
+      setPrevTabs(tabsTf)
     }
 
     if (platformTF !== prevPTF) {
-      if (platformTF === "Todo") {
-        setDevicesFiltered(dispositivos)
-      } else {
-        setDevicesFiltered(
-          dispositivos.filter(device => device.platformId === platformTF)
-        )
-      }
+      filterByPlatform()
       setPrevPTF(platformTF)
     }
+
+    if (platformTS !== prevPTS) {
+      filterBySearch()
+      setPrevPTS(platformTS)
+    }
   })
+
+  const filterByPlatform = () => {
+    if (platformTF === "Todo") {
+      setDevicesFiltered(dispositivos)
+    } else {
+      setDevicesFiltered(
+        dispositivos.filter(device => device.platformId === platformTF)
+      )
+    }
+  }
+
+  const filterBySearch = () => {
+    if (platformTS === "") {
+      setDevicesFiltered(dispositivos)
+    } else {
+      setDevicesFiltered(
+        dispositivos.filter(
+          device =>
+            device.imei.toLowerCase().includes(platformTS.toLowerCase()) ||
+            device.reception.toLowerCase().includes(platformTS.toLowerCase()) ||
+            device.markId.toLowerCase().includes(platformTS.toLowerCase()) ||
+            device.code.toLowerCase().includes(platformTS.toLowerCase()) ||
+            device.platformId.toLowerCase().includes(platformTS.toLowerCase())
+          /*device.name.includes(platformTS) ||
+            device.cod.includes(platformTS) ||
+            device.number.includes(platformTS)*/
+        )
+      )
+    }
+  }
 
   const history = useHistory()
 
@@ -42,8 +79,10 @@ function DevicesTable(props) {
     setModalState,
     dispositivos,
     platformTF,
+    platformTS,
     onGetSimsDisponibles,
     onRemoveSim,
+    tabsTf,
     waitingResponse,
   } = props
 

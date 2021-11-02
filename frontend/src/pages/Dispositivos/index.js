@@ -38,7 +38,9 @@ class DispositivosOpt extends Component {
       modalOpen: false,
       modaType: "add",
       deviceData: {},
+      platformTab: 1,
       platformTF: "Todo",
+      platformTS: "",
     }
   }
 
@@ -50,6 +52,12 @@ class DispositivosOpt extends Component {
   }
 
   componentDidUpdate() {
+    console.log(
+      "platforms: ",
+      this.state.platformTab,
+      this.state.platformTF,
+      this.state.platformTS
+    )
     if (
       !this.props.waitingResponse &&
       this.state.crudState === "loading" &&
@@ -64,8 +72,20 @@ class DispositivosOpt extends Component {
     }
   }
 
-  setPlatformTF = data => {
-    this.setState({ ...this.state, platformTF: data })
+  setPlatformData = (obj, data) => {
+    switch (obj) {
+      case "platformTab":
+        this.setState({ ...this.state, platformTab: data })
+        break
+      case "platformTF":
+        this.setState({ ...this.state, platformTF: data })
+        break
+      case "platformTS":
+        this.setState({ ...this.state, platformTS: data })
+        break
+      default:
+        break
+    }
   }
 
   modalState = (data1, data2, data3) => {
@@ -102,15 +122,19 @@ class DispositivosOpt extends Component {
               breadcrumbItem="Dispositivos"
             />
 
-            {this.state.crudState === "success" && (
-              <Filter
-                dispositivos={this.props.dispositivos}
-                platforms={this.props.platforms}
-                setPlatformTF={this.setPlatformTF}
-              />
-            )}
             <Card>
               <CardBody>
+                {this.state.crudState === "success" && (
+                  <React.Fragment>
+                    <Filter
+                      dispositivos={this.props.dispositivos}
+                      platforms={this.props.platforms}
+                      platSelect={this.state.platformTF}
+                      setPlatformData={this.setPlatformData}
+                    />
+                    <hr />
+                  </React.Fragment>
+                )}
                 <div className="d-sm-flex flex-wrap">
                   <CardTitle className="mb-4 h4">
                     Lista de dispositivos
@@ -185,8 +209,10 @@ class DispositivosOpt extends Component {
                       error={this.props.error}
                       onGetSimsDisponibles={this.props.onGetSimsDisponibles}
                       platformTF={this.state.platformTF}
+                      platformTS={this.state.platformTS}
                       setModalState={this.modalState}
                       simsModalState={this.simsModalState}
+                      tabsTf={this.state.platformTab}
                       waitingResponse={this.props.waitingResponse}
                     />
                   )
@@ -225,6 +251,7 @@ class DispositivosOpt extends Component {
             onRemoveSim={this.props.onRemoveSim}
             simsDisponibles={this.props.simsDisponibles}
             simsModalState={this.simsModalState}
+            tabsTF={this.state.platformTab}
             waitingResponse={this.props.waitingResponse}
           />
         </Modal>
