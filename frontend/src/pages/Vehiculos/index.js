@@ -77,7 +77,6 @@ class VehiculosOpt extends Component {
   }
 
   deviceModalState = (data1, data2) => {
-    console.log("DMS Function")
     if (data2) {
       this.setState({
         ...this.state,
@@ -124,7 +123,7 @@ class VehiculosOpt extends Component {
                       clientSelect={this.state.clienteTF}
                       vehiculos={this.props.vehiculos}
                       setClienteData={this.setClienteData}
-                      setClienteData={this.setClienteData}
+                      tabs={this.state.clienteTab}
                     />
                     <hr />
                   </React.Fragment>
@@ -197,7 +196,7 @@ class VehiculosOpt extends Component {
                     <CarsTable
                       clientTF={this.state.clienteTF}
                       clientTS={this.state.clienteTS}
-                      tabsTF={this.state.clienteTab}
+                      tabTF={this.state.clienteTab}
                       deviceModalState={this.deviceModalState}
                       setModalState={this.modalState}
                       vehiculos={this.props.vehiculos}

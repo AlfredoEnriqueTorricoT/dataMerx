@@ -99,7 +99,6 @@ function ModalDevice(props) {
                 defaultValue={modalType === "edit" && deviceData.imei}
                 name="imeiForm"
                 min="1"
-                max="99999999"
                 required
                 type="number"
               />

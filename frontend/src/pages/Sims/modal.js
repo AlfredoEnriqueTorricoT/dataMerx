@@ -25,13 +25,7 @@ function ModalSim(props) {
   })
 
   const toastFunction = () => {
-    let type
-
-    if (modalType === "add") {
-      type = "añadi"
-    } else if (modalType === "edit") {
-      type = "edita"
-    }
+    let type = modalType === "add" ? "añadi" : "edita"
 
     showToast({
       toastType: error ? "warning" : "success",
@@ -96,7 +90,6 @@ function ModalSim(props) {
                 defaultValue={modalType === "edit" && simData.imei}
                 name="imeiForm"
                 min="1"
-                max="9999"
                 required
                 type="number"
               />

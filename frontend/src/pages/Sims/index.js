@@ -16,6 +16,7 @@ import {
 } from "reactstrap"
 import ModalSim from "./modal"
 import SimsTable from "./table"
+import Filter from "./filter"
 
 class SimsOpt extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class SimsOpt extends Component {
       crudState: "loading",
       modalOpen: false,
       modaType: "add",
+      simsTS: "",
       simData: {},
     }
   }
@@ -56,6 +58,10 @@ class SimsOpt extends Component {
     }
   }
 
+  setSearchData = data => {
+    this.setState({ ...this.state, simsTS: data })
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -67,6 +73,12 @@ class SimsOpt extends Component {
             <Breadcrumbs title="Cuadros de mando" breadcrumbItem="Sims" />
             <Card>
               <CardBody>
+                {this.state.crudState === "success" && (
+                  <React.Fragment>
+                    <Filter setSearchData={this.setSearchData} />
+                    <hr />
+                  </React.Fragment>
+                )}
                 <div className="d-sm-flex flex-wrap">
                   <CardTitle className="mb-4 h4">Lista de sims</CardTitle>
                   <div className="ms-auto">
@@ -133,6 +145,7 @@ class SimsOpt extends Component {
                     //SUCCESS
                     <SimsTable
                       sims={this.props.sims}
+                      simsTS={this.state.simsTS}
                       setModalState={this.modalState}
                     />
                   )

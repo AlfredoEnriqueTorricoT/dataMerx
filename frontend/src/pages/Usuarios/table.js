@@ -26,9 +26,9 @@ function UsersTable(props) {
         </thead>
 
         <tbody>
-          {usuarios.map(usuario => (
-            <tr key={"tr-usuario-" + usuario.id}>
-              <td>{usuario.id}</td>
+          {usuarios.map((usuario, idx) => (
+            <tr key={"tr-usuario-" + idx + 1}>
+              <td>{idx + 1}</td>
               <td>{usuario.name}</td>
               <td>{usuario.lastName}</td>
               <td>{usuario.email}</td>

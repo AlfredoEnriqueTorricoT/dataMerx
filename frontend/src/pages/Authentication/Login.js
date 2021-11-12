@@ -121,18 +121,7 @@ class Login extends Component {
                           </span>
                         </div>
                       </Link>
-                      <Link to="/" className="auth-logo-dark">
-                        <div className="avatar-md profile-user-wid mb-4">
-                          <span className="avatar-title rounded-circle bg-light">
-                            <img
-                              src={logo}
-                              alt=""
-                              className="rounded-circle"
-                              height="34"
-                            />
-                          </span>
-                        </div>
-                      </Link>
+                      <hr />
                     </div>
                     <div className="p-2">
                       <AvForm
@@ -142,7 +131,6 @@ class Login extends Component {
                         {this.props.error && this.props.error ? (
                           <Alert color="danger">{this.props.error}</Alert>
                         ) : null}
-
                         <div className="mb-3">
                           <AvGroup>
                             <Label for="login-email">Correo electrónico</Label>
@@ -158,7 +146,6 @@ class Login extends Component {
                             <AvFeedback>Correo no válido</AvFeedback>
                           </AvGroup>
                         </div>
-
                         <div className="mb-3">
                           <AvGroup>
                             <Label for="login-password">Contraseña</Label>
@@ -173,22 +160,21 @@ class Login extends Component {
                             <AvFeedback>Contraseña no válida</AvFeedback>
                           </AvGroup>
                         </div>
-
                         <div className="mt-3 d-grid">
                           <button
-                            className="btn btn-success btn-block waves-effect waves-light"
+                            className="btn btn-primary btn-block waves-effect waves-light"
                             type="submit"
                           >
                             Iniciar sesión
                           </button>
                         </div>
-
                         <div className="mt-4 text-center">
-                          <Link to="/forgot-password" className="text-muted">
-                            <i className="mdi mdi-lock me-1" /> ¿Olvidaste tu
-                            contraseña?
+                          <Link to="/" className="text-muted">
+                            <i className="mdi mdi-account-cog-outline me-1" />{" "}
+                            By Merx
                           </Link>
                         </div>
+                        *
                       </AvForm>
                     </div>
                   </CardBody>

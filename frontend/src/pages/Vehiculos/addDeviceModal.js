@@ -40,12 +40,13 @@ function AddDeviceModal(props) {
 
   const insertDeviceFunc = e => {
     e.preventDefault()
-    setToastWaiting(true)
 
     const data = {
       id: carId,
       deviceid: devicesSelected,
     }
+
+    setToastWaiting(true)
 
     if (devicesSelected === -500) {
       onRemoveDevice(carId)
@@ -82,8 +83,8 @@ function AddDeviceModal(props) {
       toastType: error ? "warning" : "success",
       title: error ? "Error" : "Éxito",
       message: error
-        ? `No se ha podido ${texto}r el modem (${error.message})`
-        : `El modem ha sido ${texto}do`,
+        ? `No se ha podido ${texto}r el dispositivo (${error.message})`
+        : `El dispositivo ha sido ${texto}do`,
     })
 
     if (!error && !waitingResponse) {

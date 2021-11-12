@@ -11,23 +11,19 @@ import {
 } from "reactstrap"
 
 function DevicesTable(props) {
-  const [toastWaiting, setToastWaiting] = useState(false)
   const [devicesFiltered, setDevicesFiltered] = useState([])
+  const [prevDevices, setPrevDevices] = useState([])
   const [prevTabs, setPrevTabs] = useState(1)
   const [prevPTF, setPrevPTF] = useState("")
   const [prevPTS, setPrevPTS] = useState("")
 
   useEffect(() => {
-    if (toastWaiting && !waitingResponse) {
-      toastFunction()
-      setToastWaiting(false)
-    }
-
-    if (tabsTf !== prevTabs) {
+    if (tabsTf !== prevTabs || prevDevices !== dispositivos) {
       if (tabsTf === 1) filterByPlatform()
       else if (tabsTf === 2) filterBySearch()
 
       setPrevTabs(tabsTf)
+      setPrevDevices(dispositivos)
     }
 
     if (platformTF !== prevPTF) {
@@ -62,10 +58,12 @@ function DevicesTable(props) {
             device.reception.toLowerCase().includes(platformTS.toLowerCase()) ||
             device.markId.toLowerCase().includes(platformTS.toLowerCase()) ||
             device.code.toLowerCase().includes(platformTS.toLowerCase()) ||
-            device.platformId.toLowerCase().includes(platformTS.toLowerCase())
-          /*device.name.includes(platformTS) ||
-            device.cod.includes(platformTS) ||
-            device.number.includes(platformTS)*/
+            device.platformId
+              .toLowerCase()
+              .includes(platformTS.toLowerCase()) ||
+            (device.cod !== null &&
+              device.cod.toString().includes(platformTS)) ||
+            (device.number !== null && device.number.includes(platformTS))
         )
       )
     }
@@ -86,16 +84,6 @@ function DevicesTable(props) {
     waitingResponse,
   } = props
 
-  const toastFunction = () => {
-    showToast({
-      toastType: error ? "warning" : "success",
-      title: error ? "Error" : "Éxito",
-      message: error
-        ? `No se ha podido remover el sim (${error.message})`
-        : `El sim ha sido removido`,
-    })
-  }
-
   if (devicesFiltered.length === 0)
     return (
       <center>
@@ -112,26 +100,28 @@ function DevicesTable(props) {
               <th className="aligh-middle">Imei</th>
               <th className="aligh-middle">Código</th>
               <th className="aligh-middle">Recepción</th>
+              <th className="aligh-middle">Modem</th>
+              <th className="aligh-middle">Plataforma</th>
               <th className="aligh-middle">Sim</th>
-              <th className="aligh-middle">Modem / Platform</th>
               <th className="aligh-middle">Estado</th>
               <th className="aligh-middle">Acciones</th>
             </tr>
           </thead>
 
           <tbody>
-            {devicesFiltered.map(dispositivo => (
-              <tr key={"tr-dispositivo-" + dispositivo.id}>
-                <td>{dispositivo.id}</td>
+            {devicesFiltered.map((dispositivo, idx) => (
+              <tr key={"tr-dispositivo-" + idx + 1}>
+                <td>{idx + 1}</td>
                 <td>{dispositivo.imei}</td>
                 <td>{dispositivo.code}</td>
                 <td>{dispositivo.reception}</td>
+                <td>{dispositivo.markId}</td>
+                <td>{dispositivo.platformId}</td>
                 <td>
                   {dispositivo.cod === null
                     ? "- -"
-                    : `${dispositivo.cod}/${dispositivo.number}`}
+                    : `${dispositivo.cod} / ${dispositivo.number}`}
                 </td>
-                <td>{`${dispositivo.markId}/${dispositivo.platformId}`}</td>
                 <td>
                   <Badge
                     className={`font-size-11 badge-soft-${

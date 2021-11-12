@@ -14,9 +14,8 @@ import {
 
 function Filter(props) {
   const [clientCount, setClientCount] = useState([])
-  const [tabs, setTabs] = useState(1)
 
-  let { clientes, clientSelect, setClienteData, vehiculos } = props
+  let { clientes, clientSelect, setClienteData, tabs, vehiculos } = props
 
   let count = new Array()
 
@@ -45,7 +44,7 @@ function Filter(props) {
           <a
             className={`${tabs == 1 && "active"} nav-link`}
             onClick={() => {
-              setTabs(1)
+              setClienteData("clienteTab", 1)
             }}
             style={{ cursor: "pointer" }}
           >
@@ -56,7 +55,7 @@ function Filter(props) {
           <a
             className={`${tabs == 2 && "active"} nav-link`}
             onClick={() => {
-              setTabs(2)
+              setClienteData("clienteTab", 2)
             }}
             style={{ cursor: "pointer" }}
           >

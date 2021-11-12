@@ -11,16 +11,18 @@ import {
 
 function CarsTable(props) {
   const [CarsFiltered, setCarsFiltered] = useState([])
+  const [prevCars, setPrevCars] = useState([])
   const [prevTabs, setPrevTabs] = useState(1)
   const [prevCTF, setPrevCTF] = useState("")
   const [prevCTS, setPrevCTS] = useState("")
 
   useEffect(() => {
-    if (tabTF !== prevTabs) {
+    if (tabTF !== prevTabs || prevCars !== vehiculos) {
       if (tabTF === 1) filterByClient()
       else if (tabTF === 2) filterBySearch()
 
       setPrevTabs(tabTF)
+      setPrevCars(vehiculos)
     }
 
     if (clientTF !== prevCTF) {
@@ -39,6 +41,7 @@ function CarsTable(props) {
     clientTS,
     tabTF,
     deviceModalState,
+    setClienteData,
     setModalState,
     vehiculos,
   } = props
@@ -63,7 +66,7 @@ function CarsTable(props) {
             car.mark.toLowerCase().includes(clientTS.toLowerCase()) ||
             car.date_start.toLowerCase().includes(clientTS.toLowerCase()) ||
             car.clientName.toLowerCase().includes(clientTS.toLowerCase()) ||
-            //car.code.includes(clientTS) ||
+            (car.code !== null && car.code.includes(clientTS)) ||
             car.name.toLowerCase().includes(clientTS.toLowerCase())
         )
       )
@@ -105,11 +108,7 @@ function CarsTable(props) {
                 <td>{vehiculo.placa}</td>
                 <td>{vehiculo.model}</td>
                 <td>{vehiculo.mark}</td>
-                <td>
-                  {vehiculo.code !== null
-                    ? `${vehiculo.code}/${vehiculo.name}`
-                    : "- -"}
-                </td>
+                <td>{vehiculo.code !== null ? `${vehiculo.code}` : "- - -"}</td>
                 <td>{vehiculo.date_start}</td>
                 <td>
                   {vehiculo.date_end === null ||

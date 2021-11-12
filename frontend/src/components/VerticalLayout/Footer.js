@@ -7,12 +7,7 @@ const Footer = () => {
       <footer className="footer">
         <div className="container-fluid">
           <Row>
-            <Col sm={6}>{new Date().getFullYear()} © Skote.</Col>
-            <Col sm={6}>
-              <div className="text-sm-end d-none d-sm-block">
-                Design & Develop by Themesbrand
-              </div>
-            </Col>
+            <Col sm={6}>02-10-2021</Col>
           </Row>
         </div>
       </footer>

@@ -26,13 +26,7 @@ function ModalCar(props) {
   })
 
   const toastFunction = () => {
-    let type
-
-    if (modalType === "add") {
-      type = "añadi"
-    } else if (modalType === "edit") {
-      type = "edita"
-    }
+    let type = modalType === "add" ? "añadi" : "edita"
 
     showToast({
       toastType: error ? "warning" : "success",
