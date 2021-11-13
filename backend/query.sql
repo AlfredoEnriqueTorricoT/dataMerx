@@ -102,6 +102,7 @@ insert into platform values("Vol-25");
 
 insert into typeEvents values(default, "Info", null);
 insert into typeEvents values(default, "Warning", null);
+insert into typeEvents values(default, "Danger", null);
 
 
 
@@ -114,7 +115,7 @@ begin
     	select * from users where id = last_insert_id();
 end $$
 
-
+DELIMITER $$
 DROP PROCEDURE IF EXISTS sp_user_update;$$
 CREATE PROCEDURE `sp_user_update` (IN _id int, IN _name varchar(20), IN _lastName varchar(30), 
       IN _email varchar(30), IN _password varchar(50), IN _state boolean)  
@@ -153,6 +154,8 @@ begin
     	select * from devices where id = last_insert_id();
 end $$
 
+
+DELIMITER $$
 DROP PROCEDURE IF EXISTS sp_device_update;$$
 CREATE PROCEDURE `sp_device_update` (IN _id int, IN _imei varchar(15), IN _name varchar(10), 
       IN _code varchar(15), IN _reception date, IN _active boolean, IN _markId varchar(7), IN _platformId varchar(10))  
@@ -257,74 +260,10 @@ begin
 end $$
 
 
-DELIMITER $$
-DROP PROCEDURE IF EXISTS sp_event_selectAllObj;$$
-CREATE PROCEDURE `sp_event_selectAllObj` (_id int, _obj text)
-begin  
-  if _obj = "car" then
-    select * from events where tableAffected = _obj and rowAffected = _id;
-  end if
-  update  events set tableAffected =_tableAffected, rowAffected =_rowAffected, detail=_detail, date_start =_now, userid =_userid, typeid =_typeid where id = _id;    	
-  select * from events where id = _id;
-end $$
-
-
-
-
-
-if _devicesimid <> 0 then
-    update device_sim set date_end = now() where id = _devicesimid;
-  end if;
-
-call sp_user_insert("Alfred","Torrci","a@gmail.com", "123456", true);
-call sp_user_update(8,"Ana","Torrci","a@gmail.com", "123456", true);
-call sp_sims_insert("44564651","76053528","2021-08-07","22");
-
-call sp_deviceSim_insert(1,3,6);
-
-
-
-
-
---sim disponibles
-select s.* from(select * from devices where simid is not null) sd
-right join sims s on sd.simid = s.id
-where sd.simid is null;
-
---device disponibles
-select d.* from(select * from cars where deviceid is not null) dc
-right join devices d on dc.deviceid = d.id
-where dc.deviceid is null;
-
-
-select c.*, concat(cl.name, " ",cl.last_name, " ", cl.mother_last_name, " (",cl.empresa, ")") as clientName, d.code, d.name from cars c
-    join clients cl on c.clientid = cl.id
-    left join devices d on c.deviceid = d.id;
-
-
-
-alter table events change rowidNewValue rowNewValue int;
-alter table events change tablaNewValue tableNewValue int;
-
-
-select code, markId from devices where id = 1;
-
-select t.*, te.name, te.img, case (tableNewValue)
-  when "car" then (select code from devices where id = 1)
-  when "device" then (select concat("Dispositivo ",code) from devices where id = 1)
-  when "sim" then (select code from devices where id = 1)
-  else 0
-  end as vinculo
-  from(select * from events where tableAffected = "car" and rowAffected = 1) t
-  join typeEvents te on t.typeid = te.id;
-
-
-
-  select t.*, te.name, te.img, case (tableNewValue)
-      when "car" then "carr??"
-      when "device" then (select concat("Dispositivo ",code) from devices where id = 1)
-      when "sim" then "sim??"
-      else 0
-      end as vinculo
-      from(select * from events where tableAffected = "car" and rowAffected = 1) t
-      join typeEvents te on t.typeid = te.id;
+-- DELIMITER $$
+-- DROP PROCEDURE IF EXISTS sp_event_selectAllObj;$$
+-- CREATE PROCEDURE `sp_event_selectAllObj` (_id int, _obj text)
+-- begin  
+--   
+--   select * from events where id = _id;
+-- end $$

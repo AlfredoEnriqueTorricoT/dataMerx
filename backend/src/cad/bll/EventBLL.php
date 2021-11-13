@@ -128,7 +128,7 @@ class EventBLL
 
   public function rowToDto($row)
   {
-      $obj = new Event();
+      $obj = new EventVinculo();
       $obj ->setId($row['id']);
       $obj ->setTableAffected($row['tableAffected']);
       $obj ->setRowAffected($row['rowAffected']);
