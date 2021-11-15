@@ -100,7 +100,7 @@ function DevicesTable(props) {
               <th className="aligh-middle">Imei</th>
               <th className="aligh-middle">Código</th>
               <th className="aligh-middle">Recepción</th>
-              <th className="aligh-middle">Modem</th>
+              <th className="aligh-middle">Modelo</th>
               <th className="aligh-middle">Plataforma</th>
               <th className="aligh-middle">Sim</th>
               <th className="aligh-middle">Estado</th>

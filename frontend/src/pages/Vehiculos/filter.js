@@ -13,24 +13,7 @@ import {
 } from "reactstrap"
 
 function Filter(props) {
-  const [clientCount, setClientCount] = useState([])
-
   let { clientes, clientSelect, setClienteData, tabs, vehiculos } = props
-
-  let count = new Array()
-
-  useEffect(() => {
-    if (count !== clientCount) {
-      for (let x = 0; x < clientes.length; x++) {
-        let count2 = 0
-        for (let y = 0; y < vehiculos.length; y++) {
-          if (vehiculos[y].clientName === clientes[x].empresa) count2++
-        }
-        count[x] = count2
-      }
-      setClientCount(count)
-    }
-  }, [])
 
   const searchFunc = data => {
     let obj = data.target.value
@@ -93,7 +76,11 @@ function Filter(props) {
                             clientSelect === "Todo" ? "light" : "secondary"
                           } sm-1`}
                         >
-                          {clientCount[idx]}
+                          {
+                            vehiculos.filter(
+                              car => car.clientName === clientes[idx].empresa
+                            ).length
+                          }
                         </span>
                       </button>
                     ))}
@@ -114,7 +101,7 @@ function Filter(props) {
                           clientSelect === "Todo" ? "light" : "secondary"
                         } sm-1`}
                       >
-                        {clientCount.reduce((ac, num) => ac + num, 0)}
+                        {vehiculos.length}
                       </span>
                     </button>{" "}
                   </div>

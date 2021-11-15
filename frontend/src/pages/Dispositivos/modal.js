@@ -53,6 +53,7 @@ function ModalDevice(props) {
 
     let data = {
       id: deviceData.id,
+      active: 1,
       imei: e.target.imeiForm.value,
       code: e.target.codigoForm.value,
       reception: e.target.recepcionForm.value,
@@ -140,14 +141,18 @@ function ModalDevice(props) {
 
           <div className="mb-3 row">
             <label htmlFor="modemIdForm" className="col-md-2 col-form-label">
-              Dispositivo
+              Modelo
             </label>
             <div className="col-md-10">
               <select
                 name="modemIdForm"
                 className="form-select"
-                defaultValue={modalType === "edit" && deviceData.markId}
+                required
+                defaultValue={modalType === "edit" ? deviceData.markId : ""}
               >
+                <option value="" hidden>
+                  Seleccione un modelo
+                </option>
                 {modems.map((modem, idx) => (
                   <option key={idx} value={modem.id}>
                     {modem.id}
@@ -165,8 +170,12 @@ function ModalDevice(props) {
               <select
                 name="platformIdForm"
                 className="form-select"
-                defaultValue={modalType === "edit" && deviceData.platformId}
+                required
+                defaultValue={modalType === "edit" ? deviceData.platformId : ""}
               >
+                <option value="" hidden>
+                  Seleccione una plataforma
+                </option>
                 {platforms.map((platform, idx) => (
                   <option key={idx} value={platform.id}>
                     {platform.id}

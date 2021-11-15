@@ -20,7 +20,7 @@ function Filter(props) {
         <TabContent activeTab={1}>
           <TabPane tabId={1}>
             <Row>
-              <Col>
+              <Col xl={4}>
                 <form
                   id="formSearchSim"
                   onChange={searchFunc}

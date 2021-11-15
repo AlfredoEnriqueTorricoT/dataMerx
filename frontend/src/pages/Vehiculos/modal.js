@@ -184,8 +184,12 @@ function ModalCar(props) {
               <select
                 name="clienteForm"
                 className="form-select"
-                defaultValue={modalType === "edit" && carData.clientid}
+                required
+                defaultValue={modalType === "edit" ? carData.clientid : ""}
               >
+                <option value="" hidden>
+                  Seleccione un cliente
+                </option>
                 {clientes.map((cliente, idx) => (
                   <option key={idx} value={cliente.id}>
                     {`${cliente.name} ${cliente.last_name} ${cliente.mother_last_name} (${cliente.empresa})`}

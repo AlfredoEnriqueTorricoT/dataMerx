@@ -11,25 +11,9 @@ import {
 } from "reactstrap"
 
 function Filter(props) {
-  const [platCount, setPlatCount] = useState([])
   const [tabs, setTabs] = useState(1)
 
   let { dispositivos, platforms, platSelect, setPlatformData } = props
-
-  let count = new Array()
-
-  useEffect(() => {
-    if (count !== platCount) {
-      for (let x = 0; x < platforms.length; x++) {
-        let count2 = 0
-        for (let y = 0; y < dispositivos.length; y++) {
-          if (dispositivos[y].platformId === platforms[x].id) count2++
-        }
-        count[x] = count2
-      }
-      setPlatCount(count)
-    }
-  }, [])
 
   const searchFunc = data => {
     let obj = data.target.value
@@ -98,7 +82,11 @@ function Filter(props) {
                             platSelect === platform.id ? "light" : "secondary"
                           } sm-1`}
                         >
-                          {platCount[idx]}
+                          {
+                            dispositivos.filter(
+                              disp => disp.platformId === platforms[idx].id
+                            ).length
+                          }
                         </span>
                       </button>
                     ))}
@@ -117,9 +105,7 @@ function Filter(props) {
                           platSelect === "Todo" ? "light" : "secondary"
                         } sm-1`}
                       >
-                        {Array.isArray(platCount)
-                          ? platCount.reduce((ac, num) => ac + num, 0)
-                          : "0"}
+                        {dispositivos.length}
                       </span>
                     </button>{" "}
                   </div>

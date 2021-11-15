@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { showToast } from "components/Toast/toast"
+import "./devices.css"
 
 import { ModalHeader, ModalBody, ModalFooter } from "reactstrap"
 
@@ -13,7 +14,7 @@ function AddDeviceModal(props) {
       setDevicesSearched(dispositivosDisponibles)
     } else {
       setDevicesSearched([
-        { id: -500, imei: "Retirar dispositivo" },
+        { id: -500, code: "Retirar dispositivo" },
         ...dispositivosDisponibles,
       ])
     }
@@ -123,22 +124,20 @@ function AddDeviceModal(props) {
               <thead className="table-light">
                 <tr>
                   <th className="align-middle">#</th>
-                  <th className="align-middle">Imei</th>
                   <th className="align-middle">Código</th>
                   <th className="align-middle">Marca</th>
                   <th className="align-middle">Plataforma</th>
-                  <th className="align-middle"></th>
+                  <th className="align-middle">Seleccionar</th>
                 </tr>
               </thead>
               <tbody>
                 {devicesSearched.map((dispositivo, idx) => (
                   <tr key={idx + 1}>
                     <td>{dispositivo.id === -500 ? "" : idx + 1}</td>
-                    <td>{dispositivo.imei}</td>
                     <td>{dispositivo.code}</td>
                     <td>{dispositivo.markId}</td>
                     <td>{dispositivo.platformId}</td>
-                    <td className="align-middle">
+                    <td className="cppdm">
                       <div className="form-check">
                         <input
                           className="form-check-input"
