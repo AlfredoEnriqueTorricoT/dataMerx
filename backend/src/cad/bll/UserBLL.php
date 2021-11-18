@@ -29,7 +29,7 @@ class UserBLL
             $obj = $this->rowToDto($row);
             return $obj;
         } catch (\PDOException $e) {
-            return null;
+            return $e;
         }
     }
 
