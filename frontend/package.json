@@ -2,7 +2,7 @@
   "name": "skotereact",
   "version": "2.0.0",
   "private": true,
-  "homepage": "https://data.merx.bo/",
+  "homepage": "http://uniservicios.net/",
   "dependencies": {
     "@fullcalendar/bootstrap": "^5.5.0",
     "@fullcalendar/core": "^5.5.0",
