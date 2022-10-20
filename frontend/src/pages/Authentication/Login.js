@@ -99,12 +99,9 @@ class Login extends Component {
                       <Col className="col-7">
                         <div className="text-primary p-4">
                           <h5 className="text-primary">¡Bienvenido!</h5>
-                          <p>Inicia sesión para continuar</p>
                         </div>
                       </Col>
-                      <Col className="col-5 align-self-end">
-                        <img src={profile} alt="" className="img-fluid" />
-                      </Col>
+                    
                     </Row>
                   </div>
                   <CardBody className="pt-0">
