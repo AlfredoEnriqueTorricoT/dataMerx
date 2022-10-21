@@ -15,44 +15,34 @@ import {
 
 const fireBaseBackend = getFirebaseBackend()
 
-function* loginUser({ payload: { user, history } }) {
-  console.log("Login Saga")
-  console.log(process)
+function* loginUser({payload: {user, history}}) {
+
   let errorData = {}
   try {
-    if (process.env.REACT_APP_DEFAULTAUTH === "fake") {
-      const dataLogin = {
-        controller: "user",
-        operacion: "login",
-        email: user.email,
-        password: user.password,
-      }
-      console.log(dataLogin)
-      const response = yield call(AxiosServices.POST, dataLogin)
-      console.log("loginResponse")
+
+    const response = yield call(AxiosServices.axLogin, user)
+
+    if (response.status === 200) {
+      console.log(response);
+      yield put(loginSuccess(response));
+      localStorage.setItem("dmAuth", response.data.token);
+      
+      localStorage.setItem(
+        "userName",
+        response.data.name
+      )
+      history.push("/clientes")
+    } else {
+      errorData = response
+      console.log("LOGIN_FAIL: RESPONSE")
       console.log(response)
-      if (response.status === 200) {
-        yield put(loginSuccess(response))
-        localStorage.setItem("authUser", JSON.stringify(response))
-        localStorage.setItem("userId", response.data.id)
-        localStorage.setItem(
-          "userName",
-          response.data.name + " " + response.data.lastName
-        )
-        history.push("/clientes")
-      } else {
-        errorData = response
-        console.log("LOGIN_FAIL: RESPONSE")
-        console.log(response)
-        yield put(API_ERROR(response))
-      }
+      yield put(API_ERROR(response))
     }
+
   } catch (error) {
     console.log("Login saga error")
-    console.log("errorData")
-    console.log(errorData)
-    console.log("error")
     console.log(error)
+
     if (errorData === {}) {
       yield put(apiError(error))
     } else {

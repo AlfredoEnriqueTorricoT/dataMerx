@@ -43,47 +43,14 @@ class Login extends Component {
   // handleValidSubmit
   handleValidSubmit(event, values) {
     this.props.loginUser(values, this.props.history)
-    console.log("LOGIN DATA")
-    console.log(values, this.props.history)
+    
   }
 
   componentDidMount() {
     this.props.apiError("")
   }
 
-  /*signIn = (res, type) => {
-    const { socialLogin } = this.props
-    if (type === "google" && res) {
-      const postData = {
-        name: res.profileObj.name,
-        email: res.profileObj.email,
-        token: res.tokenObj.access_token,
-        idToken: res.tokenId,
-      }
-      socialLogin(postData, this.props.history, type)
-    } else if (type === "facebook" && res) {
-      const postData = {
-        name: res.name,
-        email: res.email,
-        token: res.accessToken,
-        idToken: res.tokenId,
-      }
-      socialLogin(postData, this.props.history, type)
-    }
-  }
 
-  //handleGoogleLoginResponse
-  googleResponse = response => {
-    this.signIn(response, "google")
-  }
-
-  //handleTwitterLoginResponse
-  twitterResponse = () => {}
-
-  //handleFacebookLoginResponse
-  facebookResponse = response => {
-    this.signIn(response, "facebook")
-  }*/
 
   render() {
     return (

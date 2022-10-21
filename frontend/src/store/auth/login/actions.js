@@ -7,6 +7,7 @@ import {
   SOCIAL_LOGIN,
 } from "./actionTypes"
 
+let url = "user";
 export const loginUser = (user, history) => {
   return {
     type: LOGIN_USER,
