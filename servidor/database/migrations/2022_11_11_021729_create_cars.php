@@ -25,6 +25,9 @@ return new class extends Migration
             $table->bigInteger('modem_id')->nullable()->unsigned();
             $table->bigInteger('platform_id')->nullable()->unsigned();
 
+            $table->timestamps();
+
+
             $table->foreign('modem_id')->references('id')->on('modems')
                 ->onUpdate('cascade');
             $table->foreign('platform_id')->references('id')->on('platforms')

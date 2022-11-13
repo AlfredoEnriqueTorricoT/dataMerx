@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Res;
-use App\Models\Sim;
+use App\Models\Platform;
 use Exception;
 use Illuminate\Http\Request;
 
-class SimController extends Controller
+class PlatformController extends Controller
 {
     //
     public function index()
     {
         try {
-            $list = Sim::all();
+            $list = Platform::all();
             return Res::responseSuccess($list);
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
@@ -26,7 +26,7 @@ class SimController extends Controller
     {
         //echo $request->bearerToken();
         try {
-            $obj = Sim::create($request->all());
+            $obj = Platform::create($request->all());
 
             return Res::responseSuccess($obj);
         } catch (Exception $ex) {
@@ -41,7 +41,7 @@ class SimController extends Controller
                 return Res::responseErrorNoId();
             }
 
-            $obj = Sim::find($request->id);
+            $obj = Platform::find($request->id);
 
             if ($obj == null) {
                 return Res::responseErrorNoData();

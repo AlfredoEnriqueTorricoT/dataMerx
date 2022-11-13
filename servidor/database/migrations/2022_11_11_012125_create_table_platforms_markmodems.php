@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('name',20);
             $table->string('detail')->nullable();
+            $table->string('url')->nullable();
+            $table->string('email')->nullable();
+            $table->string('password')->nullable();
             $table->boolean('active')->default(true);
         });
         Schema::create('modems_marks', function (Blueprint $table) {

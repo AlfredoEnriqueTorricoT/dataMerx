@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ModemsMarkController;
+use App\Http\Controllers\PlatformController;
+use App\Http\Controllers\SimController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,3 +36,11 @@ Route::put('modem-mark', [ModemsMarkController::class,'update']);
 Route::get('user', [UserController::class,'index']);
 Route::post('user', [UserController::class,'store']);
 Route::put('user', [UserController::class,'update']);
+
+Route::get('sim', [SimController::class,'index']);
+Route::post('sim', [SimController::class,'store']);
+Route::put('sim', [SimController::class,'update']);
+
+Route::get('platform', [PlatformController::class,'index']);
+Route::post('platform', [PlatformController::class,'store']);
+Route::put('platform', [PlatformController::class,'update']);

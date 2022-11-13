@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('number', 15);
             $table->string('code', 5);
             $table->string('imei', 30);
-            $table->date('reception');
             $table->boolean('active')->default(true);
 
+            $table->timestamps();
         });
     }
 
