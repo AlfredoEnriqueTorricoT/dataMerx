@@ -134,7 +134,7 @@ class Layout extends Component {
             isMobile={this.state.isMobile}
           />
           <div className="main-content">{this.props.children}</div>
-          <Footer />
+          {/* <Footer /> */}
         </div>
         {this.props.showRightSidebar ? <RightSidebar /> : null}
       </React.Fragment>

@@ -13,6 +13,9 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 // Dashboard
 import Dashboard from "../pages/Dashboard/index";
 
+//newPages
+// import Clientes from "pages/Clientes";
+
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
 
@@ -29,6 +32,8 @@ const publicRoutes = [
   { path: "/login", component: Login },
   { path: "/forgot-password", component: ForgetPwd },
   { path: "/register", component: Register },
+
+  // { path: "/clientes", component: Clientes}
 ];
 
 export { authProtectedRoutes, publicRoutes };

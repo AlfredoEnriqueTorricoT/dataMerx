@@ -317,5 +317,5 @@ const mapStateToProps = state => {
 };
 
 export default withRouter(
-  connect(mapStateToProps, { loginUser, apiError, socialLogin })(Login)
+  connect(mapStateToProps, {loginUser, apiError, socialLogin})(Login)
 );
