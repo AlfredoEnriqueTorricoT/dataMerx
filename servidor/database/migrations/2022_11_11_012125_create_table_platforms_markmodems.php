@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('platforms', function (Blueprint $table) {
             $table->id();
             $table->string('name',20);
-            $table->string('detail');
+            $table->string('detail')->nullable();
             $table->boolean('active')->default(true);
         });
         Schema::create('modems_marks', function (Blueprint $table) {
             $table->id();
             $table->string('name',20);
-            $table->string('detail');
+            $table->string('detail')->nullable();
         });
     }
 
@@ -33,6 +33,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_platforms_markmodems');
+        Schema::dropIfExists('platforms');
+        Schema::dropIfExists('modems_marks');
     }
 };

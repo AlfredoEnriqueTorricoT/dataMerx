@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ModemsMarkController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +25,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/register', 'AuthController@register');
+
+
+Route::get('modem-mark', [ModemsMarkController::class,'index']);
+Route::post('modem-mark', [ModemsMarkController::class,'store']);
+Route::put('modem-mark', [ModemsMarkController::class,'update']);
+
+Route::get('user', [UserController::class,'index']);
+Route::post('user', [UserController::class,'store']);
+Route::put('user', [UserController::class,'update']);
