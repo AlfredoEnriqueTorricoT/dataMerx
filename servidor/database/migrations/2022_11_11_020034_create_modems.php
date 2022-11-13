@@ -26,12 +26,17 @@ return new class extends Migration
             $table->bigInteger('mark_id')->nullable()->unsigned();
             $table->bigInteger('platform_id')->nullable()->unsigned();
 
+            $table->timestamps();
+
             $table->foreign('sim_id')->references('id')->on('sims')
                 ->onUpdate('cascade');
             $table->foreign('mark_id')->references('id')->on('modems_marks')
                 ->onUpdate('cascade');
             $table->foreign('platform_id')->references('id')->on('platforms')
                 ->onUpdate('cascade');
+
+
+
         });
     }
 

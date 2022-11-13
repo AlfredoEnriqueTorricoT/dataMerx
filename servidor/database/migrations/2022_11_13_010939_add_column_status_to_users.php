@@ -13,14 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sims', function (Blueprint $table) {
-            $table->id();
-            $table->string('number', 15);
-            $table->string('code', 5);
-            $table->string('imei', 30);
-            $table->boolean('active')->default(true);
-
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->boolean('active')->default(true)->after('password');
         });
     }
 
@@ -31,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sims');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };
