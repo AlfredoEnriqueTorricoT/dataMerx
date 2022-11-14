@@ -7,18 +7,11 @@ import { Alert, Card, CardBody, Col, Container, Row, Label } from "reactstrap";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 
-//Social Media Imports
-import { GoogleLogin } from "react-google-login";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-
-//Import config
-import { facebook, google } from "../../config";
-
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 // actions
-import { apiError, loginUser, socialLogin } from "../../store/actions";
+import { apiError, loginUser } from "../../store/actions";
 
 // import images
 import profile from "../../assets/images/profile-img.png";
@@ -32,51 +25,17 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    this.props.apiError("");
+    this.props.onApiError("");
   }
-
-  signIn = (res, type) => {
-    const { socialLogin } = this.props;
-    if (type === "google" && res) {
-      const postData = {
-        name: res.profileObj.name,
-        email: res.profileObj.email,
-        token: res.tokenObj.access_token,
-        idToken: res.tokenId,
-      };
-      socialLogin(postData, this.props.history, type);
-    } else if (type === "facebook" && res) {
-      const postData = {
-        name: res.name,
-        email: res.email,
-        token: res.accessToken,
-        idToken: res.tokenId,
-      };
-      socialLogin(postData, this.props.history, type);
-    }
-  };
-
-  //handleGoogleLoginResponse
-  googleResponse = response => {
-    this.signIn(response, "google");
-  };
-
-  //handleTwitterLoginResponse
-  twitterResponse = () => {};
-
-  //handleFacebookLoginResponse
-  facebookResponse = response => {
-    this.signIn(response, "facebook");
-  };
 
   render() {
     return (
       <React.Fragment>
-        <div className="home-btn d-none d-sm-block">
+        {/* <div className="home-btn d-none d-sm-block">
           <Link to="/" className="text-dark">
             <i className="bx bx-home h2" />
           </Link>
-        </div>
+        </div> */}
         <div className="account-pages my-5 pt-sm-5">
           <Container>
             <Row className="justify-content-center">
@@ -144,7 +103,7 @@ class Login extends Component {
                           ),
                         })}
                         onSubmit={values => {
-                          this.props.loginUser(values, this.props.history);
+                          this.props.onLogin(values, this.props.history);
                         }}
                       >
                         {({ errors, status, touched }) => (
@@ -224,58 +183,6 @@ class Login extends Component {
                               </button>
                             </div>
 
-                            <div className="mt-4 text-center">
-                              <h5 className="font-size-14 mb-3">
-                                Sign in with
-                              </h5>
-
-                              <ul className="list-inline">
-                                <li className="list-inline-item">
-                                  <FacebookLogin
-                                    appId={facebook.APP_ID}
-                                    autoLoad={false}
-                                    callback={this.facebookResponse}
-                                    render={renderProps => (
-                                      <Link
-                                        to={""}
-                                        className="social-list-item bg-primary text-white border-primary"
-                                      >
-                                        <i className="mdi mdi-facebook" />
-                                      </Link>
-                                    )}
-                                  />
-                                </li>
-                                <li className="list-inline-item">
-                                  {google.CLIENT_ID === "" ? (
-                                    ""
-                                  ) : (
-                                    <GoogleLogin
-                                      clientId={google.CLIENT_ID}
-                                      render={renderProps => (
-                                        <Link
-                                          to={""}
-                                          className="social-list-item bg-danger text-white border-danger"
-                                        >
-                                          <i className="mdi mdi-google" />
-                                        </Link>
-                                      )}
-                                      onSuccess={this.googleResponse}
-                                      onFailure={() => {}}
-                                    />
-                                  )}
-                                </li>
-                              </ul>
-                            </div>
-
-                            <div className="mt-4 text-center">
-                              <Link
-                                to="/forgot-password"
-                                className="text-muted"
-                              >
-                                <i className="mdi mdi-lock me-1" /> Forgot your
-                                password?
-                              </Link>
-                            </div>
                           </Form>
                         )}
                       </Formik>
@@ -286,12 +193,8 @@ class Login extends Component {
                   <p>
                     Don&apos;t have an account ?
                     <Link to="register" className="fw-medium text-primary">
-                      Signup Now
+                      Register Now
                     </Link>
-                  </p>
-                  <p>
-                    © {new Date().getFullYear()} Skote. Crafted with
-                    <i className="mdi mdi-heart text-danger" /> by Themesbrand
                   </p>
                 </div>
               </Col>
@@ -304,11 +207,10 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  apiError: PropTypes.any,
+  onApiError: PropTypes.any,
   error: PropTypes.any,
   history: PropTypes.object,
-  loginUser: PropTypes.func,
-  socialLogin: PropTypes.func,
+  onLogin: PropTypes.func,
 };
 
 const mapStateToProps = state => {
@@ -316,6 +218,11 @@ const mapStateToProps = state => {
   return { error };
 };
 
+const mapDispatchToProps = dispatch => ({
+  onLogin: (user, history) => dispatch(loginUser(user, history)),
+  onApiError: data => dispatch(apiError(data))
+})
+
 export default withRouter(
-  connect(mapStateToProps, {loginUser, apiError, socialLogin})(Login)
+  connect(mapStateToProps, mapDispatchToProps)(Login)
 );
