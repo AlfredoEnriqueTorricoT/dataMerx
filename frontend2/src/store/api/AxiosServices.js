@@ -96,7 +96,6 @@ class AxiosServices {
   }
 
   async axLogin(data) {
-    console.log(URL + "login", data);
     let response = await axios
       .post(URL + "login", data)
       .then(resp => {
@@ -106,7 +105,6 @@ class AxiosServices {
         return error;
       });
 
-      console.log(response);
     return response;
   }
 

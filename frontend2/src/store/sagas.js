@@ -8,7 +8,7 @@ import ProfileSaga from "./auth/profile/saga"
 import LayoutSaga from "./layout/saga"
 import dashboardSaga from "./dashboard/saga";
 import dashboardSaasSaga from "./dashboard-saas/saga";
-import _datamerxSaga from "./datamerxStorage/saga"
+import mBrandSaga from "./modem-brands/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -20,6 +20,6 @@ export default function* rootSaga() {
     fork(LayoutSaga),
     fork(dashboardSaga),
     fork(dashboardSaasSaga),
-    fork(_datamerxSaga)
+    fork(mBrandSaga)
   ])
 }

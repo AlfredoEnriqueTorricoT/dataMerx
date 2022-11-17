@@ -25,7 +25,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    this.props.onApiError("");
+    this.props.apiError("");
   }
 
   render() {
@@ -103,7 +103,7 @@ class Login extends Component {
                           ),
                         })}
                         onSubmit={values => {
-                          this.props.onLogin(values, this.props.history);
+                          this.props.loginUser(values, this.props.history);
                         }}
                       >
                         {({ errors, status, touched }) => (
@@ -177,9 +177,10 @@ class Login extends Component {
                             <div className="mt-3 d-grid">
                               <button
                                 className="btn btn-primary btn-block"
+                                disabled={this.props.loading}
                                 type="submit"
                               >
-                                Log In
+                                {this.props.loading ? "Loading" : "Log In"}
                               </button>
                             </div>
 
@@ -207,22 +208,18 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  onApiError: PropTypes.any,
+  apiError: PropTypes.any,
   error: PropTypes.any,
+  loading: PropTypes.any,
   history: PropTypes.object,
-  onLogin: PropTypes.func,
+  loginUser: PropTypes.func,
 };
 
 const mapStateToProps = state => {
-  const { error } = state.Login;
-  return { error };
+  const { error, loading } = state.Login;
+  return { error, loading };
 };
 
-const mapDispatchToProps = dispatch => ({
-  onLogin: (user, history) => dispatch(loginUser(user, history)),
-  onApiError: data => dispatch(apiError(data))
-})
-
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Login)
+  connect(mapStateToProps, {loginUser, apiError})(Login)
 );

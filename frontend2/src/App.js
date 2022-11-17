@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 
+import "./style.css"
+
 // Import Routes
 import { authProtectedRoutes, publicRoutes } from "./routes/";
 import AppRoute from "./routes/route";

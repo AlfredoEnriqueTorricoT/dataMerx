@@ -15,7 +15,7 @@ import Dashboard from "./dashboard/reducer";
 //Dasboard saas
 import DashboardSaas from "./dashboard-saas/reducer";
 
-import _datamerxStorage from "./datamerxStorage/reducer"
+import ModemBrands from "./modem-brands/reducer"
 
 const rootReducer = combineReducers({
   // public
@@ -26,7 +26,7 @@ const rootReducer = combineReducers({
   Profile,
   Dashboard,
   DashboardSaas,
-  _datamerxStorage
+  ModemBrands
 })
 
 export default rootReducer
