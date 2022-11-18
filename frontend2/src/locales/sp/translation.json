@@ -3,6 +3,7 @@
   "Add": "Añadir",
 
   "Cancel": "Cancelar",
+  "Code": "Código",
   
   "Details": "Detalles",
 
@@ -15,13 +16,17 @@
   "modem brands": "marcas de módem",
   
   "No modem brands": "No hay marcas de módems",
+  "No sims": "No hay sims",
   "No modem brands found": "No se encontraron marcas de módem",
+  "No sims found": "No se encontraron sims",
   
   "Name": "Nombre",
+  "Number": "Número",
   
   "English": "Inglés",
 
   "List of modem brands": "Lista de marcas de módem",
+  "List of sims": "Lista de sims",
   "Log in": "Iniciar sesión",
   "Logout": "Cerrar sesión",
 
@@ -32,10 +37,16 @@
   "Spanish": "Español",
   "Success": "Éxito",
 
-  "The modem brand could not be added": "El módem no pudo ser añadido",
-  "The modem brand has been added": "El módem ha sido añadido",
-  "The modem brand could not be edited": "El módem no pudo ser editado",
-  "The modem brand has been edited": "El módem ha sido editado",
-  "The modem brand could not be deleted": "El módem no pudo ser eliminado",
-  "The modem brand has been deleted": "El módem ha sido eliminado"
+  "The modem brand could not be added": "La marca de módem no pudo ser añadida",
+  "The modem brand has been added": "La marca de módem ha sido añadida",
+  "The modem brand could not be edited": "La marca de módem no pudo ser editada",
+  "The modem brand has been edited": "La marca de módem ha sido editada",
+  "The modem brand could not be deleted": "La marca de módem no pudo ser eliminada",
+  "The modem brand has been deleted": "La marca de módem ha sido eliminada",
+  "The sim could not be added": "El sim no pudo ser añadido",
+  "The sim has been added": "El sim ha sido añadido",
+  "The sim could not be edited": "El sim no pudo ser editado",
+  "The sim has been edited": "El sim ha sido editado",
+  "The sim could not be deleted": "El sim no pudo ser eliminado",
+  "The sim has been deleted": "El sim ha sido eliminado"
 }

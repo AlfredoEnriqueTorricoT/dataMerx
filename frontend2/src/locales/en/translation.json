@@ -3,6 +3,7 @@
   "Add": "Add",
   
   "Cancel": "Cancel",
+  "Code": "Code",
   
   "Details": "Details",
   
@@ -15,13 +16,16 @@
   "modem brands": "modem brands",
 
   "No modem brands": "No modem brands",
-  "No modem brands found": "No modem brands found",
+  "No sims": "No sims",
+  "No sims found": "No sims found",
+  "Number": "Number",
   
   "Name": "Name",
 
   "English": "English",
 
   "List of modem brands": "List of modem brands",
+  "List of sims": "List of sims",
   "Log in": "Log in",
   "Logout": "Logout",
   
@@ -37,5 +41,11 @@
   "The modem brand could not be edited": "The modem brand could not be edited",
   "The modem brand has been edited": "The modem brand has been edited",
   "The modem brand could not be deleted": "The modem brand could not be deleted",
-  "The modem brand has been deleted": "The modem brand has been deleted"
+  "The modem brand has been deleted": "The modem brand has been deleted",
+  "The sim could not be added": "The sim could not be added",
+  "The sim has been added": "The sim has been added",
+  "The sim could not be edited": "The sim could not be edited",
+  "The sim has been edited": "The sim has been edited",
+  "The sim could not be deleted": "The sim could not be deleted",
+  "The sim has been deleted": "The sim has been deleted"
 }

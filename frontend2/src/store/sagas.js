@@ -9,6 +9,7 @@ import LayoutSaga from "./layout/saga"
 import dashboardSaga from "./dashboard/saga";
 import dashboardSaasSaga from "./dashboard-saas/saga";
 import mBrandSaga from "./modem-brands/saga"
+import simSaga from "./sims/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -20,6 +21,7 @@ export default function* rootSaga() {
     fork(LayoutSaga),
     fork(dashboardSaga),
     fork(dashboardSaasSaga),
-    fork(mBrandSaga)
+    fork(mBrandSaga),
+    fork(simSaga)
   ])
 }

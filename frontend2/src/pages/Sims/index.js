@@ -1,193 +1,113 @@
-import React, { Component } from "react"
+import React, {useEffect, useState} from "react"
+import PropTypes from "prop-types"
+import { withTranslation } from "react-i18next"
 import { connect } from "react-redux"
-import { getSims, insertSim, updateSim } from "store/actions"
-import MetaTags from "react-meta-tags"
+
+import { Modal } from "reactstrap"
+
 import Breadcrumbs from "../../components/Common/Breadcrumb"
 
-//AHORA
-
 import {
-  Card,
-  CardBody,
-  CardTitle,
-  Container,
-  Modal,
-  Progress,
-} from "reactstrap"
-import ModalSim from "./modal"
-import SimsTable from "./table"
-import Filter from "./filter"
+    getSim as petitionGet,
+    postSim as petitionPost,
+    putSim as petitionPut,
+    deleteSim as petitionDelete,
+    postAndGetSim as petitionPostAndGet,
+    putAndGetSim as petitionPutAndGet,
+    deleteAndGetSim as petitionDeleteAndGet,
+} from "store/actions"
+import TableIndex from "./table/tableIndex"
+import ModalIndex from "./Modal/modalIndex"
 
-class SimsOpt extends Component {
-  constructor(props) {
-    super(props)
+const _crudName = {single: "sim", multiple: "sims", cod: "sim"}
 
-    this.state = {
-      crudState: "loading",
-      modalOpen: false,
-      modaType: "add",
-      simsTS: "",
-      simData: {},
+const SimPage = ({
+    localStore,
+    onGet,
+    onPost,
+    onPut,
+    onDelete,
+    onPostAndGet,
+    onPutAndGet,
+    onDeleteAndGet,
+    t
+}) => {
+    const [state, _zetState] = useState({
+            modalOpen: false,
+            modalSize: "md",
+            modalType: "Add",
+            elementSelected: {}
+    })
+
+    const setState = (data) => {
+        _zetState({...state, ...data})
     }
-  }
 
-  componentDidMount() {
-    this.props.onGetSims()
-  }
+    useEffect(()=>{
+        onGet({ saveAs: _crudName.cod + "List", url: "sim" })
+    }, [])
 
-  componentDidUpdate() {
-    if (!this.props.waitingResponse && this.state.crudState === "loading") {
-      if (this.props.error && this.state.crudState !== "error") {
-        this.setState({ ...this.state, crudState: "error" })
-      } else {
-        this.setState({ ...this.state, crudState: "success" })
-      }
+    const QWERTY = data => {
+        console.log("PAG", data);
+        onPostAndGet(data)
     }
-  }
-
-  modalState = (data1, data2, data3) => {
-    if (data2) {
-      this.setState({
-        ...this.state,
-        modalOpen: data1,
-        modalType: data2,
-        simData: data3,
-      })
-    } else {
-      this.setState({ ...this.state, modalOpen: data1 })
+    const ASDFG = data => {
+        console.log("PUAG", data);
+        onPutAndGet(data)
     }
-  }
 
-  setSearchData = data => {
-    this.setState({ ...this.state, simsTS: data })
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-        <div className="page-content">
-          <MetaTags>
-            <title>Merx - Sims</title>
-          </MetaTags>
-          <Container fluid>
-            <Breadcrumbs title="Cuadros de mando" breadcrumbItem="Sims" />
-            <Card>
-              <CardBody>
-                {this.state.crudState === "success" && (
-                  <React.Fragment>
-                    <Filter setSearchData={this.setSearchData} />
-                    <hr />
-                  </React.Fragment>
-                )}
-                <div className="d-sm-flex flex-wrap">
-                  <CardTitle className="mb-4 h4">Lista de sims</CardTitle>
-                  <div className="ms-auto">
-                    {
-                      //LOADING
-                      this.state.crudState === "loading" ? (
-                        <button
-                          className="btn btn-sm btn-light btn-rounded waves-effect waves-light"
-                          disabled
-                        >
-                          <i className="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
-                          Procesando
-                        </button>
-                      ) : //ERROR
-                      this.state.crudState === "error" ? (
-                        <button
-                          className="btn btn-sm btn-info btn-rounded waves-effect waves-light"
-                          onClick={() => {
-                            this.props.onGetSims()
-                            this.setState({
-                              ...this.state,
-                              crudState: "loading",
-                            })
-                          }}
-                        >
-                          Reintentar
-                        </button>
-                      ) : (
-                        //SUCCESS
-                        <button
-                          className="btn btn-sm btn-success btn-rounded waves-effect waves-light"
-                          onClick={() => {
-                            this.setState({
-                              ...this.state,
-                              modalOpen: true,
-                              modalType: "add",
-                            })
-                          }}
-                        >
-                          Añadir sim
-                        </button>
-                      )
-                    }
-                  </div>
+    return(
+        <React.Fragment>
+            <div className="page-content mb-0 pb-0">
+                <div className="container">
+                    <Breadcrumbs title="Cuadros de mando" breadcrumbItem={t(_crudName.multiple)} />
+                    <TableIndex
+                        _crudName={_crudName}
+                        localStore={localStore}
+                        setState={setState}
+                        t={t} />
                 </div>
+            </div>
 
-                {
-                  //LOADING
-                  this.state.crudState === "loading" ? (
-                    <Progress
-                      value={100}
-                      color="primary"
-                      style={{ width: "75%" }}
-                      animated
-                    />
-                  ) : //ERROR
-                  this.state.crudState === "error" ? (
-                    <center>
-                      <h3>Ha ocurrido un error inesperado</h3>
-                      <br />
-                      <h5>({this.props.error.message})</h5>
-                    </center>
-                  ) : (
-                    //SUCCESS
-                    <SimsTable
-                      sims={this.props.sims}
-                      simsTS={this.state.simsTS}
-                      setModalState={this.modalState}
-                    />
-                  )
-                }
-              </CardBody>
-            </Card>
-          </Container>
-        </div>
-
-        <Modal
-          isOpen={this.state.modalOpen}
-          toggle={() => {
-            this.setState({ ...this.state, modalOpen: false })
-          }}
-        >
-          <ModalSim
-            error={this.props.error}
-            modalType={this.state.modalType}
-            onInsertSim={this.props.onInsertSim}
-            onUpdateSim={this.props.onUpdateSim}
-            setModalState={this.modalState}
-            simData={this.state.simData}
-            waitingResponse={this.props.waitingResponse}
-          />
-        </Modal>
-      </React.Fragment>
+            <Modal isOpen={state.modalOpen} size={state.modalSize}>
+                <ModalIndex
+                    _crudName={_crudName}
+                    localStore={localStore}
+                    onPostAndGet={QWERTY}
+                    onPutAndGet={ASDFG}
+                    setState={setState}
+                    state={state}
+                    t={t}
+                />
+            </Modal>
+        </React.Fragment>
     )
-  }
 }
 
-const mapStateToProps = state => {
-  return {
-    error: state.sims.error,
-    sims: state.sims.data,
-    waitingResponse: state.sims.waitingResponse,
-  }
+SimPage.propTypes = {
+    localStore: PropTypes.object,
+    onGet: PropTypes.func,
+    onPost: PropTypes.func,
+    onPut: PropTypes.func,
+    onDelete: PropTypes.func,
+    onPostAndGet: PropTypes.func,
+    onPutAndGet: PropTypes.func,
+    onDeleteAndGet: PropTypes.func,
+    t: PropTypes.func
 }
 
-const mapDispatchToProps = dispatch => ({
-  onGetSims: () => dispatch(getSims()),
-  onInsertSim: data => dispatch(insertSim(data)),
-  onUpdateSim: data => dispatch(updateSim(data)),
+const mapStateToProps = state => ({
+    localStore: state.Sims
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(SimsOpt)
+const mapDispatchToProps = dispatch => ({
+    onGet: data => dispatch(petitionGet(data)),
+    onPost: data => dispatch(petitionPost(data)),
+    onPut: data => dispatch(petitionPut(data)),
+    onDelete: data => dispatch(petitionDelete(data)),
+    onPostAndGet: data => dispatch(petitionPostAndGet(data)),
+    onPutAndGet: data => dispatch(petitionPutAndGet(data)),
+    onDeleteAndGet: data => dispatch(petitionDeleteAndGet(data)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(SimPage))

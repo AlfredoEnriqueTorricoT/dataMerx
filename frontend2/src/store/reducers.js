@@ -16,6 +16,7 @@ import Dashboard from "./dashboard/reducer";
 import DashboardSaas from "./dashboard-saas/reducer";
 
 import ModemBrands from "./modem-brands/reducer"
+import Sims from "./sims/reducer"
 
 const rootReducer = combineReducers({
   // public
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
   Profile,
   Dashboard,
   DashboardSaas,
-  ModemBrands
+  ModemBrands,
+  Sims
 })
 
 export default rootReducer
