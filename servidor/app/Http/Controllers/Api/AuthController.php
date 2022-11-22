@@ -55,4 +55,10 @@ class AuthController extends Controller
 
         return Res::responseSuccess($user);
     }
+
+    public function logout()
+    {
+        auth()->user()->tokens()->delete();
+        return Res::responseSuccess([]);
+    }
 }
