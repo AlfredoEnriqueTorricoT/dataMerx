@@ -7,8 +7,14 @@
   
   "Details": "Detalles",
 
+  "Edit": "Editar",
+  "Enter a email": "Ingrese un email",
   "Enter the modem brand name": "Ingrese el nombre de la marca de módem",
   "Enter the modem brand detail": "Ingrese los detalles de la marca de módem",
+  "Enter the platform email": "Ingrese el email de la plataforma",
+  "Enter the platform name": "Ingrese el nombre de la plataforma",
+  "Enter the platform page web": "Ingrese la página web de la plataforma",
+  "Enter the platform password": "Ingrese la contraseña de la plataforma",
 
   "Modem brand": "Marca de módem",
   "modem brand": "marca de módem",
@@ -21,15 +27,24 @@
   "No sims found": "No se encontraron sims",
   
   "Name": "Nombre",
+  "name": "nombre",
   "Number": "Número",
+  "No ": "Sin ",
   
   "English": "Inglés",
+  "Enter a page web": "Ingrese una página web",
 
+  "List of": "Lista de",
   "List of modem brands": "Lista de marcas de módem",
   "List of sims": "Lista de sims",
   "Log in": "Iniciar sesión",
   "Logout": "Cerrar sesión",
 
+  "Password": "Contraseña",
+  "Platform": "Plataforma",
+  "Platforms": "Plataformas",
+  "platform": "plataforma",
+  "platforms": "plataformas",
   "Profile": "Perfíl",
   
   "Retry": "Reintentar",
