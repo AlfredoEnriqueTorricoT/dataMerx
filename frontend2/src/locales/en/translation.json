@@ -3,6 +3,10 @@
   "Add": "Add",
   
   "Cancel": "Cancel",
+  "Car": "Car",
+  "Cars": "Cars",
+  "car": "car",
+  "cars": "cars",
   "Code": "Code",
   
   "Details": "Details",
@@ -23,6 +27,7 @@
 
   "No modem brands": "No modem brands",
   "No sims": "No sims",
+  "No cars found": "No cars found",
   "No sims found": "No sims found",
   "Number": "Number",
   
