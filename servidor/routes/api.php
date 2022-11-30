@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ModemController;
 use App\Http\Controllers\ModemsMarkController;
 use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\SimController;
@@ -31,6 +32,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', 'AuthController@register');
 
+Route::get('modem', [ModemController::class,'index']);
+Route::post('modem', [ModemController::class,'store']);
+Route::put('modem', [ModemController::class,'update']);
 
 Route::get('modem-mark', [ModemsMarkController::class,'index']);
 Route::post('modem-mark', [ModemsMarkController::class,'store']);

@@ -3,17 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Http\Res;
-use App\Models\Car;
+use App\Models\Modem;
 use Exception;
 use Illuminate\Http\Request;
 
-class CarController extends Controller
+class ModemController extends Controller
 {
+    //
     //
     public function index()
     {
         try {
-            $list = Car::all();
+            $list = Modem::all();
+            foreach ( $list as $moden){
+                $moden["platform"] = $moden->platform;
+                $moden["sim"] = $moden->sim;
+                $moden["modems_mark"] = $moden->modems_mark;
+            }
             return Res::responseSuccess($list);
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
@@ -26,7 +32,7 @@ class CarController extends Controller
     {
         //echo $request->bearerToken();
         try {
-            $obj = Car::create($request->all());
+            $obj = Modem::create($request->all());
 
             return Res::responseSuccess($obj);
         } catch (Exception $ex) {
@@ -41,7 +47,7 @@ class CarController extends Controller
                 return Res::responseErrorNoId();
             }
 
-            $obj = Car::find($request->id);
+            $obj = Modem::find($request->id);
 
             if ($obj == null) {
                 return Res::responseErrorNoData();
@@ -63,7 +69,7 @@ class CarController extends Controller
                 return Res::responseErrorNoId();
             }
 
-            $obj = Car::find($request->id);
+            $obj = Modem::find($request->id);
 
             if ($obj == null) {
                 return Res::responseErrorNoData();
