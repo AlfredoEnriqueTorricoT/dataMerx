@@ -19,7 +19,6 @@ return new class extends Migration
             $table->id();
             $table->string('code', 5);
             $table->string('imei', 30);
-            $table->date('reception');
             $table->boolean('active')->default(true);
 
             $table->bigInteger('sim_id')->nullable()->unsigned();
