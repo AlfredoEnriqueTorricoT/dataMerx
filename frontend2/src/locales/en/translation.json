@@ -17,14 +17,17 @@
 
   "No modem brands": "No modem brands",
   "No sims": "No sims",
+  "No modem brands found": "No modem brands found",
   "No sims found": "No sims found",
-  "Number": "Number",
   
   "Name": "Name",
+  "Number": "Number",
 
+  "Email": "Email",
   "English": "English",
 
   "List of modem brands": "List of modem brands",
+  "List of users": "List of users",
   "List of sims": "List of sims",
   "Log in": "Log in",
   "Logout": "Logout",
@@ -47,5 +50,8 @@
   "The sim could not be edited": "The sim could not be edited",
   "The sim has been edited": "The sim has been edited",
   "The sim could not be deleted": "The sim could not be deleted",
-  "The sim has been deleted": "The sim has been deleted"
+  "The sim has been deleted": "The sim has been deleted",
+
+  "User": "User",
+  "Users": "Users"
 }

@@ -23,9 +23,11 @@
   "Name": "Nombre",
   "Number": "Número",
   
+  "Email": "Correo",
   "English": "Inglés",
 
   "List of modem brands": "Lista de marcas de módem",
+  "List of users": "Lista de usuarios",
   "List of sims": "Lista de sims",
   "Log in": "Iniciar sesión",
   "Logout": "Cerrar sesión",
@@ -48,5 +50,8 @@
   "The sim could not be edited": "El sim no pudo ser editado",
   "The sim has been edited": "El sim ha sido editado",
   "The sim could not be deleted": "El sim no pudo ser eliminado",
-  "The sim has been deleted": "El sim ha sido eliminado"
+  "The sim has been deleted": "El sim ha sido eliminado",
+
+  "User": "Usuario",
+  "Users": "Usuarios"
 }
