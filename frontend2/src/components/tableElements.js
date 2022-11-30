@@ -22,27 +22,43 @@ const SearchBar = props => {
     );
   };
 
-  const showHeader = (name, id) => {
+  const THeaderSorter = props => {
+    const {sorter, setSorter, headerNames} = props
     return (
-      <React.Fragment>
-        <b
-          onClick={() => {
-            setSorter(id);
-          }}
-          style={{ cursor: "pointer" }}
-        >
-          {name}
-        </b>
-        {Math.abs(sorter) === id && (
-          <i
-            className={`fa fa-caret-${sorter < 0 ? "up" : "down"} mx-2`}
-            onClick={() => {
-              setSorter(id);
-            }}
-            style={{ cursor: "pointer" }}
-          />
-        )}
-      </React.Fragment>
+      <thead>
+        <tr>
+          {headerNames.map((item, idx)=>(
+              item.arrow ?
+              (<th key={"t-"+idx}>
+                <b
+                  onClick={() => {
+                    setSorter(idx + 1);
+                    console.log(this);
+                    console.log(this.parentNode);
+                  }}
+                  style={{ cursor: "pointer" }}
+                >
+                  {item.name}
+                </b>
+                {Math.abs(sorter) === idx + 1 && (
+                  <i
+                    className={`fa fa-caret-${sorter < 0 ? "up" : "down"} mx-2`}
+                    onClick={() => {
+                      setSorter(idx + 1);
+                      console.log(this);
+                      console.log(this.parentNode);
+                    }}
+                    style={{ cursor: "pointer" }}
+                  />
+                )}
+              </th>)
+              :
+              <th>
+                <b>{item.name}</b>
+              </th>
+          ))}
+        </tr>
+      </thead>
     );
 };
 
@@ -60,4 +76,4 @@ const ErrorTable = props => {
     )
 }
 
-export {ErrorTable, SearchBar, showHeader}
+export {ErrorTable, SearchBar, THeaderSorter}

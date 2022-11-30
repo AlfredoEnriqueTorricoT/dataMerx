@@ -19,6 +19,7 @@ import ModemBrands from "./modem-brands/reducer"
 import Sims from "./sims/reducer"
 import Users from "./users/reducer"
 
+import Platform from "./platform/reducer"
 
 const rootReducer = combineReducers({
   // public
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   ModemBrands,
   Sims,
   Users,
+  Platform
 })
 
 export default rootReducer

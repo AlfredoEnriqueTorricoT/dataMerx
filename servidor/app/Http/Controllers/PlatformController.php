@@ -46,7 +46,7 @@ class PlatformController extends Controller
             if ($obj == null) {
                 return Res::responseErrorNoData();
             }
-            $obj->fill($request->json()->all());
+            $obj->fill($request->all());
             $obj->save();
 
             return Res::responseSuccess($obj);

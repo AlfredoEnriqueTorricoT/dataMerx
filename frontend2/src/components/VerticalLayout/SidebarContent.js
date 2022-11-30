@@ -130,6 +130,9 @@ class SidebarContent extends Component {
                     <Link to="/users">{this.props.t("Users")}</Link>
                   </li>
                   <li>
+                    <Link to="/platform">{this.props.t("Platforms")}</Link>
+                  </li>
+                  <li>
                     <Link to="#">
                       <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span>
                       {this.props.t("Jobs")}

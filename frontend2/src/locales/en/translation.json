@@ -7,8 +7,14 @@
   
   "Details": "Details",
   
+  "Edit": "Edit",
+  "Enter a email": "Enter a email",
   "Enter the modem brand name": "Enter the modem brand name",
   "Enter the modem brand detail": "Enter the modem brand detail",
+  "Enter the platform email": "Enter the platform email",
+  "Enter the platform name": "Enter the platform name",
+  "Enter the platform page web": "Enter the platform page web",
+  "Enter the platform password": "Enter the platform password",
 
   "Modem brand": "Modem brand",
   "modem brand": "modem brand",
@@ -22,16 +28,25 @@
   
   "Name": "Name",
   "Number": "Number",
+  "name": "name",
+  "No ": "No ",
 
   "Email": "Email",
   "English": "English",
+  "Enter a page web": "Enter a page web",
 
+  "List of": "List of",
   "List of modem brands": "List of modem brands",
   "List of users": "List of users",
   "List of sims": "List of sims",
   "Log in": "Log in",
   "Logout": "Logout",
   
+  "Password": "Password",
+  "Platform": "Platform",
+  "Platforms": "Platforms",
+  "platform": "platform",
+  "platforms": "platforms",
   "Profile": "Profile",
   
   "Retry": "Retry",
