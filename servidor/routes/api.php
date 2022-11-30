@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\ModemsMarkController;
 use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\SimController;
@@ -21,7 +23,7 @@ Route::get('user', [App\Http\Controllers\API\AuthController::class, 'index'])->m
 Route::post('user', [App\Http\Controllers\API\AuthController::class, 'register']);
 Route::put('user', [App\Http\Controllers\API\AuthController::class, 'update'])->middleware("auth:sanctum");
 Route::post('login', [App\Http\Controllers\API\AuthController::class, 'login']);
-Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout'])->middleware("auth:sanctum");;
+Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout'])->middleware("auth:sanctum");
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -39,8 +41,14 @@ Route::post('user', [UserController::class,'store']);
 Route::put('user', [UserController::class,'update']);
 
 Route::get('sim', [SimController::class,'index']);
-Route::post('sim', [SimController::class,'store']);
+Route::post('sim', [SimController::class,'store'])->middleware("auth:sanctum");;
 Route::put('sim', [SimController::class,'update']);
+
+Route::get('car', [CarController::class,'index']);
+Route::post('car', [CarController::class,'store']);
+Route::put('car', [CarController::class,'update']);
+
+Route::get('event', [EventController::class,'index']);
 
 Route::get('platform', [PlatformController::class,'index']);
 Route::post('platform', [PlatformController::class,'store']);

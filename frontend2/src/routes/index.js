@@ -17,6 +17,7 @@ import Dashboard from "../pages/Dashboard/index";
 // import Clientes from "pages/Clientes";
 import MarkModem from "pages/Mark modem";
 import SimPage from "pages/Sims"
+import UserPage from "pages/User"
 import PlatformPage from "pages/Platform"
 import CarPage from "pages/Car"
 
@@ -24,6 +25,7 @@ const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
   { path: "/mark-modem", component: MarkModem },
   { path: "/sims", component: SimPage },
+  { path: "/users", component: UserPage },
   { path: "/platform", component: PlatformPage },
   { path: "/car", component: CarPage },
 

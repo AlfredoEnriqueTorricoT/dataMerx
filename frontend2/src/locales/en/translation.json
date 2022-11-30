@@ -13,6 +13,9 @@
   
   "Edit": "Edit",
   "Enter a email": "Enter a email",
+  "Enter the car code": "Enter the car code",
+  "Enter the car imei": "Enter the car imei",
+  "Enter the car number": "Enter the car number",
   "Enter the modem brand name": "Enter the modem brand name",
   "Enter the modem brand detail": "Enter the modem brand detail",
   "Enter the platform email": "Enter the platform email",
@@ -28,18 +31,21 @@
   "No modem brands": "No modem brands",
   "No sims": "No sims",
   "No cars found": "No cars found",
+  "No modem brands found": "No modem brands found",
   "No sims found": "No sims found",
-  "Number": "Number",
   
   "Name": "Name",
+  "Number": "Number",
   "name": "name",
   "No ": "No ",
 
+  "Email": "Email",
   "English": "English",
   "Enter a page web": "Enter a page web",
 
   "List of": "List of",
   "List of modem brands": "List of modem brands",
+  "List of users": "List of users",
   "List of sims": "List of sims",
   "Log in": "Log in",
   "Logout": "Logout",
@@ -67,5 +73,8 @@
   "The sim could not be edited": "The sim could not be edited",
   "The sim has been edited": "The sim has been edited",
   "The sim could not be deleted": "The sim could not be deleted",
-  "The sim has been deleted": "The sim has been deleted"
+  "The sim has been deleted": "The sim has been deleted",
+
+  "User": "User",
+  "Users": "Users"
 }

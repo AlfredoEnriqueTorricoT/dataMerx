@@ -12,9 +12,9 @@ const ModalEdit = ({_crudName, onPutAndGet, setToastW, state, t}) => {
     const validateFunction = values => {
         let errors = {}
 
-        if (!values.number) errors.name = t("Enter the car number")
-        if (!values.code) errors.url = t("Enter the car code")
-        if (!values.imei) errors.email = t("Enter the car imei")
+        if (!values.number) errors.number = t("Enter the car number")
+        if (!values.code) errors.code = t("Enter the car code")
+        if (!values.imei) errors.imei = t("Enter the car imei")
 
         return errors
     }

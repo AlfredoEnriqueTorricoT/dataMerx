@@ -3,12 +3,10 @@ import PropTypes from "prop-types"
 
 import { SearchBar } from "components/tableElements"
 
-const TableInputs = ({filter, listLength, setFilter, setState, t}) => {
+const TableInputs = ({_crudName, filter, setFilter, setState, t}) => {
     return(
-        <div className="d-flex flex-wrap mb-3">
-          {listLength > 0 ?
+        <div className="d-sm-flex flex-wrap mb-3">
           <SearchBar _onChange={setFilter} _value={filter} />
-          : ""}
         
             <div className="ms-auto">
                 <button
@@ -26,8 +24,8 @@ const TableInputs = ({filter, listLength, setFilter, setState, t}) => {
 
 TableInputs.propTypes = {
     filter: PropTypes.func,
-    listLength: PropTypes.number,
     setFilter: PropTypes.func,
+    _crudName: PropTypes.object,
     setState: PropTypes.func,
     t: PropTypes.func
 }

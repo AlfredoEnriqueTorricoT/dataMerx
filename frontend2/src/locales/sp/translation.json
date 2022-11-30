@@ -13,6 +13,9 @@
 
   "Edit": "Editar",
   "Enter a email": "Ingrese un email",
+  "Enter the car code": "Ingrese el código del vehículo",
+  "Enter the car imei": "Ingrese el imei del vehículo",
+  "Enter the car number": "Ingrese el número del vehículo",
   "Enter the modem brand name": "Ingrese el nombre de la marca de módem",
   "Enter the modem brand detail": "Ingrese los detalles de la marca de módem",
   "Enter the platform email": "Ingrese el email de la plataforma",
@@ -36,11 +39,13 @@
   "Number": "Número",
   "No ": "Sin ",
   
+  "Email": "Correo",
   "English": "Inglés",
   "Enter a page web": "Ingrese una página web",
 
   "List of": "Lista de",
   "List of modem brands": "Lista de marcas de módem",
+  "List of users": "Lista de usuarios",
   "List of sims": "Lista de sims",
   "Log in": "Iniciar sesión",
   "Logout": "Cerrar sesión",
@@ -68,5 +73,8 @@
   "The sim could not be edited": "El sim no pudo ser editado",
   "The sim has been edited": "El sim ha sido editado",
   "The sim could not be deleted": "El sim no pudo ser eliminado",
-  "The sim has been deleted": "El sim ha sido eliminado"
+  "The sim has been deleted": "El sim ha sido eliminado",
+
+  "User": "Usuario",
+  "Users": "Usuarios"
 }

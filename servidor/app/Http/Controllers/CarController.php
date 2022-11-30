@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Res;
-use App\Models\Sim;
+use App\Models\Car;
 use Exception;
 use Illuminate\Http\Request;
 
-class SimController extends Controller
+class CarController extends Controller
 {
     //
     public function index()
     {
         try {
-            $list = Sim::all();
+            $list = Car::all();
             return Res::responseSuccess($list);
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
@@ -26,19 +26,7 @@ class SimController extends Controller
     {
         //echo $request->bearerToken();
         try {
-            $obj = Sim::create($request->all());
-
-            $event = [
-                "title" => "Registro",
-                "detail" => "Sim registrado",
-                "type_id" => 1,
-                "car_id" => null,
-                "moded_id" => null,
-                "sim_id" => $obj->id,
-                "platform_id" => null,
-                "user_id" => auth()->user()->id
-            ];
-            EventController::_store($event);
+            $obj = Car::create($request->all());
 
             return Res::responseSuccess($obj);
         } catch (Exception $ex) {
@@ -53,7 +41,7 @@ class SimController extends Controller
                 return Res::responseErrorNoId();
             }
 
-            $obj = Sim::find($request->id);
+            $obj = Car::find($request->id);
 
             if ($obj == null) {
                 return Res::responseErrorNoData();

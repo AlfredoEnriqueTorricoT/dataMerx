@@ -10,6 +10,7 @@ import dashboardSaga from "./dashboard/saga";
 import dashboardSaasSaga from "./dashboard-saas/saga";
 import mBrandSaga from "./modem-brands/saga"
 import simSaga from "./sims/saga"
+import userSaga from "./users/saga"
 import platformSaga from "./platform/saga"
 import carSaga from "./car/saga"
 
@@ -26,6 +27,7 @@ export default function* rootSaga() {
     fork(mBrandSaga),
     fork(simSaga),
     fork(platformSaga),
-    fork(carSaga)
+    fork(carSaga),
+    fork(userSaga),
   ])
 }
