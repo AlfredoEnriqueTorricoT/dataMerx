@@ -21,6 +21,7 @@ import Users from "./users/reducer"
 
 import Platform from "./platform/reducer"
 import Car from "./car/reducer"
+import Modem from "./modem/reducer"
 
 const rootReducer = combineReducers({
   // public
@@ -35,7 +36,8 @@ const rootReducer = combineReducers({
   Sims,
   Platform,
   Car,
-  Users
+  Users,
+  Modem
 })
 
 export default rootReducer

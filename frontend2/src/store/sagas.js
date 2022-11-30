@@ -13,6 +13,7 @@ import simSaga from "./sims/saga"
 import userSaga from "./users/saga"
 import platformSaga from "./platform/saga"
 import carSaga from "./car/saga"
+import modemSaga from "./modem/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -29,5 +30,6 @@ export default function* rootSaga() {
     fork(platformSaga),
     fork(carSaga),
     fork(userSaga),
+    fork(modemSaga)
   ])
 }

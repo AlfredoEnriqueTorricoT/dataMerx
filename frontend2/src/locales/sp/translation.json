@@ -23,21 +23,24 @@
   "Enter the platform page web": "Ingrese la página web de la plataforma",
   "Enter the platform password": "Ingrese la contraseña de la plataforma",
 
+  "Modem": "Módem",
+  "modem": "módem",
+  "Modems": "Módems",
+  "modems": "módems",
   "Modem brand": "Marca de módem",
   "modem brand": "marca de módem",
   "Modem brands": "Marcas de módem",
   "modem brands": "marcas de módem",
   
+  "Name": "Nombre",
+  "name": "nombre",
+  "Number": "Número",
+  "No ": "Sin ",
   "No modem brands": "No hay marcas de módems",
   "No sims": "No hay sims",
   "No cars found": "No se encontraron vehículos",
   "No modem brands found": "No se encontraron marcas de módem",
   "No sims found": "No se encontraron sims",
-  
-  "Name": "Nombre",
-  "name": "nombre",
-  "Number": "Número",
-  "No ": "Sin ",
   
   "Email": "Correo",
   "English": "Inglés",
@@ -59,6 +62,8 @@
   
   "Retry": "Reintentar",
 
+  "Select a modem brand": "Seleccione una marca de módem",
+  "Select a platform": "Seleccione una plataforma",
   "Spanish": "Español",
   "Success": "Éxito",
 
@@ -74,6 +79,12 @@
   "The sim has been edited": "El sim ha sido editado",
   "The sim could not be deleted": "El sim no pudo ser eliminado",
   "The sim has been deleted": "El sim ha sido eliminado",
+  "The plaform could not be added": "La plataforma no pudo ser añadida",
+  "The plaform has been added": "La plataforma ha sido añadida",
+  "The plaform could not be edited": "La plataforma no pudo ser editada",
+  "The plaform has been edited": "La plataforma ha sido editada",
+  "The plaform could not be deleted": "La plataforma no pudo ser eliminada",
+  "The plaform has been deleted": "La plataforma ha sido eliminada",
 
   "User": "Usuario",
   "Users": "Usuarios"

@@ -20,6 +20,7 @@ import SimPage from "pages/Sims"
 import UserPage from "pages/User"
 import PlatformPage from "pages/Platform"
 import CarPage from "pages/Car"
+import ModemPage from "pages/Modem"
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -28,6 +29,7 @@ const authProtectedRoutes = [
   { path: "/users", component: UserPage },
   { path: "/platform", component: PlatformPage },
   { path: "/car", component: CarPage },
+  { path: "/modem", component: ModemPage },
 
   //profile
   { path: "/profile", component: UserProfile },

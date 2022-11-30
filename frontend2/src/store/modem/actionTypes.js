@@ -1,0 +1,8 @@
+export const GET_MODEM = "GET_MODEM";
+export const POST_MODEM = "POST_MODEM";
+export const PUT_MODEM = "PUT_MODEM";
+export const DELETE_MODEM = "DELETE_MODEM";
+export const POST_AND_GET_MODEM = "POST_AND_GET_MODEM";
+export const PUT_AND_GET_MODEM = "PUT_AND_GET_MODEM";
+export const DELETE_AND_GET_MODEM = "DELETE_AND_GET_MODEM";
+export const UPDATE_MODEM_STORAGE = "UPDATE_MODEM_STORAGE";

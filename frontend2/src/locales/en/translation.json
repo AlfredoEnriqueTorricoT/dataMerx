@@ -16,6 +16,8 @@
   "Enter the car code": "Enter the car code",
   "Enter the car imei": "Enter the car imei",
   "Enter the car number": "Enter the car number",
+  "Enter the modem code": "Enter the modem code",
+  "Enter the modem imei": "Enter the modem imei",
   "Enter the modem brand name": "Enter the modem brand name",
   "Enter the modem brand detail": "Enter the modem brand detail",
   "Enter the platform email": "Enter the platform email",
@@ -23,21 +25,24 @@
   "Enter the platform page web": "Enter the platform page web",
   "Enter the platform password": "Enter the platform password",
 
+  "Modem": "Modem",
+  "modem": "modem",
+  "Modems": "Modems",
+  "modems": "modems",
   "Modem brand": "Modem brand",
   "modem brand": "modem brand",
   "Modem brands": "Modem brands",
   "modem brands": "modem brands",
 
+  "Name": "Name",
+  "Number": "Number",
+  "name": "name",
+  "No ": "No ",
   "No modem brands": "No modem brands",
   "No sims": "No sims",
   "No cars found": "No cars found",
   "No modem brands found": "No modem brands found",
   "No sims found": "No sims found",
-  
-  "Name": "Name",
-  "Number": "Number",
-  "name": "name",
-  "No ": "No ",
 
   "Email": "Email",
   "English": "English",
@@ -59,6 +64,8 @@
   
   "Retry": "Retry",
 
+  "Select a modem brand": "Select a modem brand",
+  "Select a platform": "Select a platform",
   "Spanish": "Spanish",
   "Success": "Success",
 
@@ -74,6 +81,12 @@
   "The sim has been edited": "The sim has been edited",
   "The sim could not be deleted": "The sim could not be deleted",
   "The sim has been deleted": "The sim has been deleted",
+  "The platform could not be added": "The platform could not be added",
+  "The platform has been added": "The platform has been added",
+  "The platform could not be edited": "The platform could not be edited",
+  "The platform has been edited": "The platform has been edited",
+  "The platform could not be deleted": "The platform could not be deleted",
+  "The platform has been deleted": "The platform has been deleted",
 
   "User": "User",
   "Users": "Users"
