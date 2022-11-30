@@ -15,6 +15,11 @@ class ModemController extends Controller
     {
         try {
             $list = Modem::all();
+            foreach ( $list as $moden){
+                $moden["platform"] = $moden->platform;
+                $moden["sim"] = $moden->sim;
+                $moden["modems_mark"] = $moden->modems_mark;
+            }
             return Res::responseSuccess($list);
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
