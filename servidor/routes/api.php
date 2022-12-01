@@ -35,7 +35,7 @@ Route::post('/register', 'AuthController@register');
 Route::get('modem', [ModemController::class,'index']);
 Route::post('modem', [ModemController::class,'store'])->middleware("auth:sanctum");
 Route::put('modem', [ModemController::class,'update']);
-Route::put('modem/sim', [ModemController::class,'update_sim'])->middleware("auth:sanctum");;
+Route::put('modem/update-sim', [ModemController::class,'update_sim'])->middleware("auth:sanctum");;
 
 Route::get('modem-mark', [ModemsMarkController::class,'index']);
 Route::post('modem-mark', [ModemsMarkController::class,'store']);
