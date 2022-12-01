@@ -33,7 +33,7 @@ class SimController extends Controller
                 "detail" => "Sim registrado",
                 "type_id" => 1,
                 "car_id" => null,
-                "moded_id" => null,
+                "modem_id" => null,
                 "sim_id" => $obj->id,
                 "platform_id" => null,
                 "user_id" => auth()->user()->id

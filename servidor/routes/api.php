@@ -33,8 +33,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', 'AuthController@register');
 
 Route::get('modem', [ModemController::class,'index']);
-Route::post('modem', [ModemController::class,'store']);
+Route::post('modem', [ModemController::class,'store'])->middleware("auth:sanctum");
 Route::put('modem', [ModemController::class,'update']);
+Route::put('modem/sim', [ModemController::class,'update_sim'])->middleware("auth:sanctum");;
 
 Route::get('modem-mark', [ModemsMarkController::class,'index']);
 Route::post('modem-mark', [ModemsMarkController::class,'store']);
@@ -45,7 +46,7 @@ Route::post('user', [UserController::class,'store']);
 Route::put('user', [UserController::class,'update']);
 
 Route::get('sim', [SimController::class,'index']);
-Route::post('sim', [SimController::class,'store'])->middleware("auth:sanctum");;
+Route::post('sim', [SimController::class,'store'])->middleware("auth:sanctum");
 Route::put('sim', [SimController::class,'update']);
 
 Route::get('car', [CarController::class,'index']);

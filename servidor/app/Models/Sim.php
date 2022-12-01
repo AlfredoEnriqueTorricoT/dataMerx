@@ -9,6 +9,9 @@ class Sim extends Model
 {
     use HasFactory;
 
+    protected $hidden = [
+        "updated_at"
+    ];
     protected $fillable = [
         "number",
         "code",

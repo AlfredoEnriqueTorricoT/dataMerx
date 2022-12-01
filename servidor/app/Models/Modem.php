@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Modem extends Model
 {
     use HasFactory;
-
+    protected $hidden = [
+        "updated_at"
+    ];
     protected $fillable = [
         "code",
         "imei",
