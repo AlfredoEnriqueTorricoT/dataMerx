@@ -6,6 +6,7 @@ use App\Http\Res;
 use App\Models\Modem;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -65,26 +66,22 @@ class ModemController extends Controller
             $modemWithSimExist = Modem::where("sim_id", $request->sim_id)->get()->first();
 
             if (!empty($modemWithSimExist)) {
+                $number = $modemWithSimExist->sim->number;
                 if (!$request->confirm) {
-                    $number = $modemWithSimExist->sim->number;
                     return Res::responseSuccessConfirm("El sim $number ya se encuenta en el modem $modemWithSimExist->code, deseas quitarlo para agregarlo a este modem,", null);
                 } else {
-                    $modemWithSimExist = Modem::find($request->id);
-                    $newData = [
-                        "sim_id" => null
-                    ];
 
-                    $number = $modemWithSimExist->sim->number;
-
-                    $modemWithSimExist->fill($newData);
-                    $modemWithSimExist->save();
+                    DB::update(
+                        "update modems set sim_id = null where id = ?;",
+                        [$modemWithSimExist->id]
+                    );
 
                     $event = [
-                        "title" => "Retiro del sim",
-                        "detail" => "Se retiro el sim $number para añadirlo al modem  $modemWithSimExist->code",
+                        "title" => "Retiro de SIM",
+                        "detail" => "Se retiro el sim para añadirlo a otro modem",
                         "type_id" => 1,
                         "car_id" => null,
-                        "modem_id" => $obj->id,
+                        "modem_id" => $modemWithSimExist->id,
                         "sim_id" => $request->sim_id,
                         "platform_id" => $modemWithSimExist->platform_id,
                         "user_id" => auth()->user()->id
@@ -99,18 +96,32 @@ class ModemController extends Controller
             if ($obj == null) {
                 return Res::responseErrorNoData();
             }
+
+            if($obj->sim_id != null){
+                $event = [
+                    "title" => "Retiro de SIM",
+                    "detail" => "Otro sim sera asignado a este modem",
+                    "type_id" => 1,
+                    "car_id" => null,
+                    "modem_id" => $obj->id,
+                    "sim_id" => $obj->sim_id,
+                    "platform_id" => $obj->platform_id,
+                    "user_id" => auth()->user()->id
+                ];
+                EventController::_store($event);
+            }
+
             $newData = [
                 "sim_id" => $request->sim_id
             ];
 
             $obj->fill($newData);
             $obj->save();
-
             $number = $obj->sim->number;
 
             $event = [
-                "title" => "Sim añadido al modem",
-                "detail" => "Se añadio el sim $number al modem $obj->code",
+                "title" => "SIM añadido",
+                "detail" => "Se añadio un nuevo sim a este modem",
                 "type_id" => 1,
                 "car_id" => null,
                 "modem_id" => $request->id,
