@@ -49,7 +49,7 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                         listToShow.map((mBrand, idx)=>(
                             <tr key={"mBrandItem-" + idx}>
                                 <td>{mBrand.name}</td>
-                                <td>{mBrand.detail}</td>
+                                <td>{mBrand.detail || "- - -"}</td>
                                 <td>
                                     <button 
                                         className='btn btn-sm btn-primary'

@@ -69,13 +69,11 @@ function* postAndGetModemSaga(action) {
 
 function* putAndGetModemSaga(action) {
   let response;
-  console.log("PAG: ", action);
   try {
     response = yield call(AxiosServices.PUT, {payload: action.payload, url: action.url})
 
     try {
       if (response.data.status == 200) {
-        console.log("SUCCESS: ", response);
         yield put(
           getModem({
             saveAs: action.saveAs,

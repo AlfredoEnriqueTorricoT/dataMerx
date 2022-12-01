@@ -48,7 +48,7 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
 
 TableMobile.propTypes = {
     _crudName: PropTypes.object,
-    listToShow: PropTypes.object,
+    listToShow: PropTypes.array,
     setSorterer: PropTypes.func,
     setState: PropTypes.func,
     sorterer: PropTypes.number,

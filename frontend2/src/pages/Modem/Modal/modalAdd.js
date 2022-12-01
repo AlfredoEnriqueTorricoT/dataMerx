@@ -22,16 +22,10 @@ const ModalAdd = ({_crudName, formName, localStore, onPostAndGet, setToastW, t})
     
     const submitFunc = values => {
       setToastW(true)
-
-      const {password, ...rest} = values
-      
-      let formData = {...rest}
-      
-      if (password) {formData = {...formData, password: password}}
-
+    
       onPostAndGet({
         saveAs: _crudName.cod + "List",
-        payload: formData,
+        payload: values,
         url: "modem"})
     }
 

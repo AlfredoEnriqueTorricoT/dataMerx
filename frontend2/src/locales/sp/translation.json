@@ -1,5 +1,8 @@
 {
   "Actions": "Acciones",
+  "ACTIVE": "ACTIVO",
+  "Active": "Activo",
+  "active": "activo",
   "Add": "Añadir",
 
   "Cancel": "Cancelar",
@@ -22,6 +25,9 @@
   "Enter the platform name": "Ingrese el nombre de la plataforma",
   "Enter the platform page web": "Ingrese la página web de la plataforma",
   "Enter the platform password": "Ingrese la contraseña de la plataforma",
+
+  "INACTIVE": "INACTIVO",
+  "inactive": "inactivo",
 
   "Modem": "Módem",
   "modem": "módem",
@@ -65,8 +71,15 @@
   "Select a modem brand": "Seleccione una marca de módem",
   "Select a platform": "Seleccione una plataforma",
   "Spanish": "Español",
+  "State": "Estado",
   "Success": "Éxito",
 
+  "The modem could not be added": "El módem no pudo ser añadido",
+  "The modem has been added": "El módem ha sido añadido",
+  "The modem could not be edited": "El módem no pudo ser editado",
+  "The modem has been edited": "El módem ha sido editado",
+  "The modem could not be deleted": "El módem no pudo ser eliminado",
+  "The modem has been deleted": "El módem ha sido eliminado",
   "The modem brand could not be added": "La marca de módem no pudo ser añadida",
   "The modem brand has been added": "La marca de módem ha sido añadida",
   "The modem brand could not be edited": "La marca de módem no pudo ser editada",

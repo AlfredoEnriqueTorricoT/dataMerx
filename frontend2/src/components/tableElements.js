@@ -29,7 +29,7 @@ const SearchBar = props => {
         <tr>
           {headerNames.map((item, idx)=>(
               item.arrow ?
-              (<th key={"t-"+idx}>
+              (<th key={"t-"+idx+"-"+item.name}>
                 <b
                   onClick={() => {
                     setSorter(idx + 1);

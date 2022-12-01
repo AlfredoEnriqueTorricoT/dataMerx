@@ -9,13 +9,14 @@ import { useMediaQuery } from "react-responsive"
 
 import { tableFilter, tableSorter } from "components/tableFilter"
 
-const keysToSort = ["imei", "code", "mark_id", "platform_id"]
+const keysToSort = ["code", "imei", "active", "platform_name", "mBrand_name"]
 
 const TableIndex = ({_crudName, localStore, setState, t}) => {
     const [filter, setFilter] = useState("")
+    const [mList, setMList] = useState([])
     const [sorter, zetSorter] = useState(1)
     
-    const [tableFiltered, setTableFiltered] = useState(localStore[_crudName.cod + "List"])
+    const [tableFiltered, setTableFiltered] = useState([])
 
     const isTabletOrMobile = useMediaQuery({ query: "(max-width: 760px)" });
 
@@ -24,16 +25,43 @@ const TableIndex = ({_crudName, localStore, setState, t}) => {
     }
 
     useEffect(()=>{
+        const newList = 
+            localStore.modemList.map(modem => ({
+                id: modem.id,
+                code: modem.code,
+                imei: modem.imei,
+                active: modem.active ? t("active") : t("inactive"),
+                platform_id: modem.platform.id,
+                platform_name: modem.platform.name,
+                mark_id: modem.modems_mark.id,
+                mBrand_name: modem.modems_mark.name,
+            }))
+            
+        if (localStore.modemList.length)
+            setMList(newList)
+
         if (filter == "")
-            setTableFiltered(localStore[_crudName.cod + "List"])
+            setTableFiltered(newList)
         else
-        setTableFiltered(tableFilter(localStore[_crudName.cod + "List"], filter, keysToSort))
-    }, [filter, localStore[_crudName.cod + "List"]])
+            setTableFiltered(tableFilter(newList, filter, keysToSort))
+        // XPSSDMQNA(!PSSDMQNA)
+    }, [localStore.modemList])
 
     useEffect(()=>{
-        let _keys = keysToSort[Math.abs(sorter) -1]
-        let _multiplier = (sorter / Math.abs(sorter))
-        setTableFiltered(tableSorter(tableFiltered, _keys, _multiplier))
+        if (mList.length) {
+            if (filter == "")
+                setTableFiltered(mList)
+            else
+            setTableFiltered(tableFilter(mList, filter, keysToSort))
+        }
+    }, [filter])
+
+    useEffect(()=>{
+        if (mList.length) {
+            let _keys = keysToSort[Math.abs(sorter) -1]
+            let _multiplier = (sorter / Math.abs(sorter))
+            setTableFiltered(tableSorter(tableFiltered, _keys, _multiplier))
+        }
     }, [sorter])
 
     return(
@@ -45,13 +73,13 @@ const TableIndex = ({_crudName, localStore, setState, t}) => {
                 <TableInputs
                     _crudName={_crudName}
                     filter={filter}
-                    listLength={localStore[_crudName.cod + "List"].length}
+                    listLength={mList.length}
                     setFilter={setFilter}
                     setState={setState}
                     t={t}
                 />
                 {
-                localStore[_crudName.cod + "List"].length == 0 ?
+                mList.length == 0 ?
                     <center>
                         <h4 className="text-secondary my-5">
                             {t("No ") + " " + t(_crudName.multiple)}

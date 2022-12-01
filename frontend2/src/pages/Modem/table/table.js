@@ -11,16 +11,18 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                       sorter={sorter}
                       setSorter={setSorter}
                       headerNames={[
-                        {name: t("Number"), arrow: true},
                         {name: t("Code"), arrow: true},
                         {name: "Imei", arrow: true},
+                        {name: t("State"), arrow: true},
+                        {name: t("Platform"), arrow: true},
+                        {name: t("Modem brand"), arrow: true},
                         {name: t("Actions"), arrow: false}
                       ]}
                      />
                     <tbody>
                         {listToShow.length == 0 ?
                           <tr>
-                            <td colSpan="4">
+                            <td colSpan="6">
                               <h4 className="text-secondary">
                                 {t("No " + _crudName.multiple + " found")}
                               </h4>
@@ -28,9 +30,19 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                           </tr> :
                         listToShow.map((listItem, idx)=>(
                             <tr key={_crudName.cod + "Item-" + idx}>
-                                <td>{listItem.number}</td>
                                 <td>{listItem.code}</td>
                                 <td>{listItem.imei}</td>
+                                <td>
+                                <span
+                                  className={`badge font-size-11 rounded-pill badge-soft-${
+                                    listItem.active[0] == "a" ? "primary" : "dark"
+                                  } text-uppercase`}
+                                >
+                                  {listItem.active}
+                                </span>
+                                </td>
+                                <td>{listItem.platform_name}</td>
+                                <td>{listItem.mBrand_name}</td>
                                 <td>
                                     <button 
                                         className='btn btn-sm btn-primary'
@@ -55,7 +67,7 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
 
 Table.propTypes = {
     _crudName: PropTypes.object,
-    listToShow: PropTypes.object,
+    listToShow: PropTypes.array,
     setSorterer: PropTypes.func,
     setState: PropTypes.func,
     sorterer: PropTypes.number,

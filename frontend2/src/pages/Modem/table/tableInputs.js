@@ -25,7 +25,7 @@ const TableInputs = ({filter, listLength, setFilter, setState, t}) => {
 }
 
 TableInputs.propTypes = {
-    filter: PropTypes.func,
+    filter: PropTypes.string,
     listLength: PropTypes.number,
     setFilter: PropTypes.func,
     setState: PropTypes.func,

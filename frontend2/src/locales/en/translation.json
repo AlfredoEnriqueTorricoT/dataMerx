@@ -1,5 +1,8 @@
 {
   "Actions": "Actions",
+  "ACTIVE": "ACTIVE",
+  "Active": "Active",
+  "active": "active",
   "Add": "Add",
   
   "Cancel": "Cancel",
@@ -24,6 +27,9 @@
   "Enter the platform name": "Enter the platform name",
   "Enter the platform page web": "Enter the platform page web",
   "Enter the platform password": "Enter the platform password",
+  
+  "INACTIVE": "INACTIVE",
+  "inactive": "inactive",
 
   "Modem": "Modem",
   "modem": "modem",
@@ -67,8 +73,15 @@
   "Select a modem brand": "Select a modem brand",
   "Select a platform": "Select a platform",
   "Spanish": "Spanish",
+  "State": "State",
   "Success": "Success",
 
+  "The modem could not be added": "The modem could not be added",
+  "The modem has been added": "The modem has been added",
+  "The modem could not be edited": "The modem could not be edited",
+  "The modem has been edited": "The modem has been edited",
+  "The modem could not be deleted": "The modem could not be deleted",
+  "The modem has been deleted": "The modem has been deleted",
   "The modem brand could not be added": "The modem brand could not be added",
   "The modem brand has been added": "The modem brand has been added",
   "The modem brand could not be edited": "The modem brand could not be edited",
