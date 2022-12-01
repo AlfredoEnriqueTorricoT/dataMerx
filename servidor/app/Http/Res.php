@@ -17,6 +17,14 @@ class Res
         ], 200);
     }
 
+    public static function responseSuccessConfirm($message, $data){
+        return response()->json([
+            "status" => 232,
+            "message" => $message,
+            "data" => $data,
+        ], 200);
+    }
+
     public static function responseSuccessCreated($data){
         return response()->json([
             "status" => 200,
