@@ -11,7 +11,9 @@ import {
 
 const INITIAL_MODEM = {
     status: "waiting response",
-    modemList: []
+    message: "",
+    modemList: [],
+    simList: []
 }
 
 const Modem = (state = INITIAL_MODEM, action) => {
@@ -62,7 +64,8 @@ const Modem = (state = INITIAL_MODEM, action) => {
             return {
                 ...state,
                 [action.saveAs]: action.payload,
-                status: action.status
+                status: action.status,
+                message: action.message
             }
 
         default:

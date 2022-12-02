@@ -53,7 +53,7 @@ const SearchBar = props => {
                 )}
               </th>)
               :
-              <th>
+              <th key={"t-"+idx+"-"+item.name}>
                 <b>{item.name}</b>
               </th>
           ))}

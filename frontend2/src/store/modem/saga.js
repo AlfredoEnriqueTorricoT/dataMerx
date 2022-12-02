@@ -30,13 +30,39 @@ function* getModemSaga(action) {
         yield put(updateModemStorage({status: response.data.status}))
       }  
     } catch (error) {
-      yield put(updateModemStorage({status: response.response.status}))
+      yield put(updateModemStorage({status: response.response.status, message: (response.data.message || "")}))
     }
     
 } catch (error) {
   console.log("resp:", response);
   console.log("error:", error);
   yield put(updateModemStorage({status: "Unexpected error"}))
+  }
+}
+
+function* putModemSaga(action) {
+  let response;
+  try {
+    response = yield call(AxiosServices.PUT, {payload: action.payload, url: action.url})
+
+    try {
+      if (response.data.status == 200) {
+        yield put(updateModemStorage({
+          payload: response.data.data,
+          saveAs: action.saveAs,
+          status: response.data.status})
+        )
+      } else {
+        yield put(updateModemStorage({status: response.data.status, message: (response.data.message || "")}))
+      }  
+    } catch (error) {
+      yield put(updateModemStorage({status: response.response.status}))
+    }
+    
+  } catch (error) {
+    console.log("resp:", response);
+    console.log("error:", error);
+    yield put(updateModemStorage({status: "Unexpected error"}))
   }
 }
 
@@ -54,7 +80,7 @@ function* postAndGetModemSaga(action) {
           })
         )
       } else {
-        yield put(updateModemStorage({status: response.status}))
+        yield put(updateModemStorage({status: response.status, message: (response.data.message || "")}))
       }
     } catch (error) {
       yield put(updateModemStorage({status: response.response.status}))
@@ -81,7 +107,7 @@ function* putAndGetModemSaga(action) {
           })
         )
       } else {
-        yield put(updateModemStorage({status: response.data.status}))
+        yield put(updateModemStorage({status: response.data.status, message: (response.data.message || "")}))
       }  
     } catch (error) {
       yield put(updateModemStorage({status: response.response.status}))
@@ -96,6 +122,7 @@ function* putAndGetModemSaga(action) {
 
 function* modemSaga() {
   yield takeEvery(GET_MODEM, getModemSaga)
+  yield takeEvery(PUT_MODEM, putModemSaga)
   yield takeEvery(POST_AND_GET_MODEM, postAndGetModemSaga)
   yield takeEvery(PUT_AND_GET_MODEM, putAndGetModemSaga)
 }

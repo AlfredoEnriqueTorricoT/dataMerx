@@ -11,22 +11,32 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                   <div className="col-10">
                     <div className="row">
                       <div className="col-4">
-                        <b>{t("Name")}</b><br />
-                        <b>{t("Detail")}</b><br />
-                        <b>{t("Page web")}</b><br />
-                        <b>{"Email"}</b><br />
+                        <b>{t("Code")}</b><br />
+                        <b>{"Imei"}</b><br />
+                        <b>{t("State")}</b><br />
+                        <b>{"Platform"}</b><br />
+                        <b>{"Modem brand"}</b><br />
                       </div>
                       <div className="col-8">
-                        <b>{listItem.name}</b><br />
-                        <b>{listItem.detail || "- - -"}</b><br />
-                        <b>{listItem.url}</b><br />
-                        <b>{listItem.email}</b><br />
+                        {listItem.code}<br />
+                        {listItem.imei}<br />
+                          <span
+                              className={`badge font-size-11 rounded-pill badge-soft-${
+                                listItem.active[0] == "a" ? "primary" : "dark"
+                              } text-uppercase`}
+                            >
+                              {listItem.active}
+                          </span>  
+                        <br />
+                        {listItem.platform_name}<br />
+                        {listItem.mBrand_name}<br />
                       </div>
                     </div>
                   </div>
                   <div className="col-2">
+                    <center>
                     <button
-                        className='btn btn-sm btn-primary'
+                        className='btn btn-sm btn-primary mb-3'
                         onClick={()=>{
                             setState({
                                 modalOpen: true,
@@ -37,6 +47,19 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                         >
                         <i className="fas fa-edit"></i>
                     </button>
+                    <button 
+                        className='btn btn-sm btn-secondary'
+                        onClick={()=>{
+                            setState({
+                                modalOpen: true,
+                                modalType: "Sim",
+                                elementSelected: listItem
+                            })
+                        }}
+                        >
+                        <i className="fas fa-sim-card"></i>
+                    </button>
+                    </center>
                   </div>
                 </div>
               </div>

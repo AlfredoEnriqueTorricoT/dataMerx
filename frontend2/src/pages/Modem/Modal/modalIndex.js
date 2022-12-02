@@ -3,21 +3,39 @@ import PropTypes from 'prop-types'
 import ModalAdd from './modalAdd';
 import ModalEdit from './modalEdit';
 import { showToast } from 'components/toast';
+import ModalSim from './modalSim';
+import {Modal} from "reactstrap"
 
-const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState, state, t}) => {
+const ModalIndex = ({_crudName, localStore, onPostAndGet, onPut, onPutAndGet, setState, state, t}) => {
     const [toastWaiting, setToastW] = useState(false)
+    const [secondModal, setSecondModal] = useState({open: false})
 
     useEffect(()=>{
         if (toastWaiting && localStore.status !== "waiting response"){
-            setToastW(false)
-            toastFunction()
+            if (localStore.status == 232)
+                setSecondModal({open: true});
+            else {
+                setToastW(false)
+                toastFunction()
+            }
         }
     }, [localStore.status])
 
+    const toastSuccessMessages = {
+        Add: "The modem has been added",
+        Edit: "The modem has been edited",
+        Sim: "The sim has been assigned"
+    }
+    const toastFailMessages = {
+        Add: "The modem could not be added",
+        Edit: "The modem could not be edited",
+        Sim: "The sim could not be assigned"
+    }
+
     const toastFunction = () => {
         const itsOk = localStore.status == 200
-        const okMessage = "The " + _crudName.single + " has been " + state.modalType.toLowerCase() + (state.modalType != "delete" ? "ed" : "d")
-        const failMessage = "The " + _crudName.single + " could not be " + state.modalType.toLowerCase() + (state.modalType != "delete" ? "ed" : "d")
+        const okMessage = toastSuccessMessages[state.modalType]
+        const failMessage = toastFailMessages[state.modalType]
 
         showToast({
             type: itsOk ? "success" : "warning",
@@ -25,10 +43,14 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
             message: t(itsOk ? okMessage : failMessage)
         })
 
-        if (itsOk) setState({modalOpen: false})
+        if (itsOk) {
+            setState({modalOpen: false});
+            setSecondModal({open: false})
+        }
     }
 
-    const modalIcon = {Add: "plus", Edit: "edit"}
+    const buttonIcon = {Add: "plus", Edit: "edit", Sim: "plus"}
+    const buttonText = {Add: "Add", Edit: "Edit", Sim: "Add"}
 
     const modalToShow = () => {
         switch (state.modalType) {
@@ -57,6 +79,18 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
                         t={t}
                     />
                 )
+            case "Sim":
+                return(
+                    <ModalSim
+                        _crudName={_crudName}
+                        localStore={localStore}
+                        onPutAndGet={onPutAndGet}
+                        secondModal={secondModal}
+                        setToastW={setToastW}
+                        state={state}
+                        t={t}
+                    />
+                )
                 
             default:
                 break;
@@ -66,7 +100,10 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
     return(
         <React.Fragment>
             <div className="modal-header">
-                <h4>{t(state.modalType) + " " + t(_crudName.single)}</h4>
+                {state.modalType != "Sim" ?
+                    <h4>{t(state.modalType) + " " + t(_crudName.single)}</h4> :
+                    <h4>{t("Modem sim")}</h4>
+                }
                 <button
                     type="button"
                     onClick={()=>{
@@ -98,12 +135,55 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
                         {
                             toastWaiting ?
                             <i className="bx bx-loader bx-spin font-size-16 align-middle me-2"></i> :
-                            <i className={`fas fa-${modalIcon[state.modalType]} label-icon`}></i>
+                            <i className={`fas fa-${buttonIcon[state.modalType]} label-icon`}></i>
                         }
-                        {t(state.modalType)}
+                        {t(buttonText[state.modalType])}
                     </button>
                 </div>
             </div>
+
+            <Modal isOpen={secondModal.open} size="sm">
+                        <div className="modal-header">
+                            <h4>{t("Sim already assigned")}</h4>
+                            <button
+                                type="button"
+                                onClick={()=>{
+                                    setSecondModal({open: false});
+                                    setToastW(false)
+                                  }}
+                                className="close"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                        <div className="modal-body">
+                            {localStore.message}
+                        </div>
+                        <div className="modal-footer">
+                            <button
+                                className="btn btn-secondary"
+                                onClick={()=>{
+                                    setSecondModal({open: false})
+                                    setToastW(false)
+                                }}
+                            >
+                                {t("Cancel")}
+                            </button>
+                            <div className="ms-auto">
+                                <button
+                                    className={`btn btn-${localStore.status == "waiting response" ? "light" : "primary btn-label"}`}
+                                    disabled={localStore.status == "waiting response"}
+                                    form={_crudName.cod + "_" + state.modalType}
+                                >
+                                    {
+                                        localStore.status == "waiting response" ?
+                                        <i className="bx bx-loader bx-spin font-size-16 align-middle me-2"></i> :
+                                        <i className="fas fa-plus label-icon"></i>
+                                    }
+                                    {t("Assign")}
+                                </button>
+                            </div>
+                        </div>
+            </Modal>
         </React.Fragment>
     )
 }
@@ -112,6 +192,7 @@ ModalIndex.propTypes = {
     _crudName: PropTypes.object,
     localStore: PropTypes.object,
     onPostAndGet: PropTypes.func,
+    onPut: PropTypes.func,
     onPutAndGet: PropTypes.func,
     setState: PropTypes.func,
     state: PropTypes.object,

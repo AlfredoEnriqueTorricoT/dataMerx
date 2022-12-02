@@ -4,6 +4,7 @@
   "Active": "Activo",
   "active": "activo",
   "Add": "Añadir",
+  "Assign": "Asignar",
 
   "Cancel": "Cancelar",
   "Car": "Vehículo",
@@ -16,9 +17,10 @@
 
   "Edit": "Editar",
   "Enter a email": "Ingrese un email",
-  "Enter the car code": "Ingrese el código del vehículo",
-  "Enter the car imei": "Ingrese el imei del vehículo",
-  "Enter the car number": "Ingrese el número del vehículo",
+  "Enter the car license plate": "Ingrese la placa del vehículo",
+  "Enter the car mark": "Ingrese la marca del vehículo",
+  "Enter the car model": "Ingrese el modelo del vehículo",
+  "Enter the car owner name": "Ingrese el nombre del propietario",
   "Enter the modem brand name": "Ingrese el nombre de la marca de módem",
   "Enter the modem brand detail": "Ingrese los detalles de la marca de módem",
   "Enter the platform email": "Ingrese el email de la plataforma",
@@ -29,6 +31,8 @@
   "INACTIVE": "INACTIVO",
   "inactive": "inactivo",
 
+  "Mark": "Marca",
+  "Model": "Modelo",
   "Modem": "Módem",
   "modem": "módem",
   "Modems": "Módems",
@@ -37,6 +41,7 @@
   "modem brand": "marca de módem",
   "Modem brands": "Marcas de módem",
   "modem brands": "marcas de módem",
+  "Modem sim": "Sim del módem",
   
   "Name": "Nombre",
   "name": "nombre",
@@ -48,10 +53,13 @@
   "No modem brands found": "No se encontraron marcas de módem",
   "No sims found": "No se encontraron sims",
   
+  "Owner": "Propietario",
+  
   "Email": "Correo",
   "English": "Inglés",
   "Enter a page web": "Ingrese una página web",
 
+  "License plate": "Placa",
   "List of": "Lista de",
   "List of modem brands": "Lista de marcas de módem",
   "List of users": "Lista de usuarios",
@@ -70,6 +78,10 @@
 
   "Select a modem brand": "Seleccione una marca de módem",
   "Select a platform": "Seleccione una plataforma",
+  "Select a sim": "Seleccione un sim",
+  "Select the car modem": "Seleccione el módem del vehículo",
+  "Select the car platform": "Seleccione la plataforma del vehículo",
+  "Sim already assigned": "Sim ya asignado",
   "Spanish": "Español",
   "State": "Estado",
   "Success": "Éxito",
@@ -87,7 +99,9 @@
   "The modem brand could not be deleted": "La marca de módem no pudo ser eliminada",
   "The modem brand has been deleted": "La marca de módem ha sido eliminada",
   "The sim could not be added": "El sim no pudo ser añadido",
+  "The sim could not be assigned": "El sim no pudo ser asignado",
   "The sim has been added": "El sim ha sido añadido",
+  "The sim has been assigned": "El sim ha sido asignado",
   "The sim could not be edited": "El sim no pudo ser editado",
   "The sim has been edited": "El sim ha sido editado",
   "The sim could not be deleted": "El sim no pudo ser eliminado",

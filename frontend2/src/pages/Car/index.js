@@ -48,6 +48,8 @@ const CarPage = ({
 
     useEffect(()=>{
         onGet({ saveAs: _crudName.cod + "List", url: "car" })
+        onGet({ saveAs: "modemList", url: "modem" })
+        onGet({ saveAs: "platformList", url: "platform" })
     }, [])
 
     useEffect(()=>{

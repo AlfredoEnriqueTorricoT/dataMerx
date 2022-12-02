@@ -4,6 +4,7 @@
   "Active": "Active",
   "active": "active",
   "Add": "Add",
+  "Assign": "Assign",
   
   "Cancel": "Cancel",
   "Car": "Car",
@@ -16,9 +17,10 @@
   
   "Edit": "Edit",
   "Enter a email": "Enter a email",
-  "Enter the car code": "Enter the car code",
-  "Enter the car imei": "Enter the car imei",
-  "Enter the car number": "Enter the car number",
+  "Enter the car license plate": "Enter the car license plate",
+  "Enter the car mark": "Enter the car mark",
+  "Enter the car model": "Enter the car model",
+  "Enter the car owner name": "Enter the car owner name",
   "Enter the modem code": "Enter the modem code",
   "Enter the modem imei": "Enter the modem imei",
   "Enter the modem brand name": "Enter the modem brand name",
@@ -31,6 +33,8 @@
   "INACTIVE": "INACTIVE",
   "inactive": "inactive",
 
+  "Mark": "Mark",
+  "Model": "Model",
   "Modem": "Modem",
   "modem": "modem",
   "Modems": "Modems",
@@ -39,6 +43,7 @@
   "modem brand": "modem brand",
   "Modem brands": "Modem brands",
   "modem brands": "modem brands",
+  "Modem sim": "Modem sim",
 
   "Name": "Name",
   "Number": "Number",
@@ -49,11 +54,14 @@
   "No cars found": "No cars found",
   "No modem brands found": "No modem brands found",
   "No sims found": "No sims found",
+  
+  "Owner": "Owner",
 
   "Email": "Email",
   "English": "English",
   "Enter a page web": "Enter a page web",
 
+  "License plate": "License plate",
   "List of": "List of",
   "List of modem brands": "List of modem brands",
   "List of users": "List of users",
@@ -72,6 +80,10 @@
 
   "Select a modem brand": "Select a modem brand",
   "Select a platform": "Select a platform",
+  "Select a sim": "Select a sim",
+  "Select the car modem": "Select the car modem",
+  "Select the car platform": "Select the car platform",
+  "Sim already assigned": "Sim already assigned",
   "Spanish": "Spanish",
   "State": "State",
   "Success": "Success",
@@ -89,7 +101,9 @@
   "The modem brand could not be deleted": "The modem brand could not be deleted",
   "The modem brand has been deleted": "The modem brand has been deleted",
   "The sim could not be added": "The sim could not be added",
+  "The sim could not be assigned": "The sim could not be assigned",
   "The sim has been added": "The sim has been added",
+  "The sim has been assigned": "The sim has been assigned",
   "The sim could not be edited": "The sim could not be edited",
   "The sim has been edited": "The sim has been edited",
   "The sim could not be deleted": "The sim could not be deleted",

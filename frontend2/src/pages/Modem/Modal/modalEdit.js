@@ -109,11 +109,11 @@ const ModalEdit = ({_crudName, localStore, onPutAndGet, setToastW, state, t}) =>
 }
 
 ModalEdit.propTypes = {
-    _crudName: PropTypes.func,
+    _crudName: PropTypes.object,
     localStore: PropTypes.object,
     onPutAndGet: PropTypes.func,
     setToastW: PropTypes.func,
-    state: PropTypes.func,
+    state: PropTypes.object,
     t: PropTypes.func,
 }
 

@@ -45,7 +45,7 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                 <td>{listItem.mBrand_name}</td>
                                 <td>
                                     <button 
-                                        className='btn btn-sm btn-primary'
+                                        className='btn btn-sm btn-primary me-2'
                                         onClick={()=>{
                                             setState({
                                                 modalOpen: true,
@@ -55,6 +55,18 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                         }}
                                         >
                                         <i className="fas fa-edit"></i>
+                                    </button>
+                                    <button 
+                                        className='btn btn-sm btn-secondary'
+                                        onClick={()=>{
+                                            setState({
+                                                modalOpen: true,
+                                                modalType: "Sim",
+                                                elementSelected: listItem
+                                            })
+                                        }}
+                                        >
+                                        <i className="fas fa-sim-card"></i>
                                     </button>
                                 </td>
                             </tr>

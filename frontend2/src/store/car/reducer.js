@@ -11,7 +11,9 @@ import {
 
 const INITIAL_CAR = {
     status: "waiting response",
-    carList: []
+    carList: [],
+    modemList: [],
+    platformList: [],
 }
 
 const Car = (state = INITIAL_CAR, action) => {

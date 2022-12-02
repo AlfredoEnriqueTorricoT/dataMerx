@@ -37,6 +37,7 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
                     <ModalAdd
                         _crudName={_crudName}
                         formName={state.modalType}
+                        localStore={localStore}
                         onPostAndGet={onPostAndGet}
                         setState={setState}
                         setToastW={setToastW}
@@ -48,6 +49,7 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
                     <ModalEdit
                         _crudName={_crudName}
                         formName={state.modalType}
+                        localStore={localStore}
                         onPutAndGet={onPutAndGet}
                         setState={setState}
                         setToastW={setToastW}

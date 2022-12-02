@@ -35,6 +35,7 @@ const TableIndex = ({_crudName, localStore, setState, t}) => {
                 platform_name: modem.platform.name,
                 mark_id: modem.modems_mark.id,
                 mBrand_name: modem.modems_mark.name,
+                sim_id: modem.sim ? modem.sim.id : ""
             }))
             
         if (localStore.modemList.length)
