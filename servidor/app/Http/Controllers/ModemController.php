@@ -121,7 +121,7 @@ class ModemController extends Controller
 
             $event = [
                 "title" => "SIM añadido",
-                "detail" => "Se añadio un nuevo sim a este modem",
+                "detail" => "Se añadio un nuevo sim a este modemi",
                 "type_id" => 1,
                 "car_id" => null,
                 "modem_id" => $request->id,
