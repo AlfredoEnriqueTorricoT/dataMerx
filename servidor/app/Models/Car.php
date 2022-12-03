@@ -19,4 +19,12 @@ class Car extends Model
         "modem_id",
         "platform_id"
     ];
+
+    public function platform(){
+        return $this->hasOne(Platform::class, "id", "platform_id");
+    }
+
+    public function modem(){
+        return $this->hasOne(Modem::class, "id", "modem_id");
+    }
 }

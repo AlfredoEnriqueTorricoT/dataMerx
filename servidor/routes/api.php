@@ -50,8 +50,9 @@ Route::post('sim', [SimController::class,'store'])->middleware("auth:sanctum");
 Route::put('sim', [SimController::class,'update']);
 
 Route::get('car', [CarController::class,'index']);
-Route::post('car', [CarController::class,'store']);
+Route::post('car', [CarController::class,'store'])->middleware("auth:sanctum");;
 Route::put('car', [CarController::class,'update']);
+Route::put('car/update-modem', [CarController::class,'update_modem'])->middleware("auth:sanctum");
 
 Route::get('event', [EventController::class,'index']);
 
