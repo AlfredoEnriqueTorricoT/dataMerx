@@ -11,16 +11,19 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                       sorter={sorter}
                       setSorter={setSorter}
                       headerNames={[
-                        {name: t("Number"), arrow: true},
-                        {name: t("Code"), arrow: true},
-                        {name: "Imei", arrow: true},
+                        {name: t("Name"), arrow: true},
+                        {name: t("Model"), arrow: true},
+                        {name: t("Mark"), arrow: true},
+                        {name: t("License plate"), arrow: true},
+                        {name: t("Platform"), arrow: true},
+                        {name: t("Modem"), arrow: true},
                         {name: t("Actions"), arrow: false}
                       ]}
                      />
                     <tbody>
                         {listToShow.length == 0 ?
                           <tr>
-                            <td colSpan="4">
+                            <td colSpan="7">
                               <h4 className="text-secondary">
                                 {t("No " + _crudName.multiple + " found")}
                               </h4>
@@ -28,12 +31,15 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                           </tr> :
                         listToShow.map((listItem, idx)=>(
                             <tr key={_crudName.cod + "Item-" + idx}>
-                                <td>{listItem.number}</td>
-                                <td>{listItem.code}</td>
-                                <td>{listItem.imei}</td>
+                                <td>{listItem.name}</td>
+                                <td>{listItem.model}</td>
+                                <td>{listItem.mark}</td>
+                                <td>{listItem.placa}</td>
+                                <td>{listItem.platform_name || "- - -"}</td>
+                                <td>{listItem.modem_code || "- - -"}</td>
                                 <td>
                                     <button 
-                                        className='btn btn-sm btn-primary'
+                                        className='btn btn-sm btn-primary me-2'
                                         onClick={()=>{
                                             setState({
                                                 modalOpen: true,
@@ -43,6 +49,18 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                         }}
                                         >
                                         <i className="fas fa-edit"></i>
+                                    </button>
+                                    <button 
+                                        className='btn btn-sm btn-secondary'
+                                        onClick={()=>{
+                                            setState({
+                                                modalOpen: true,
+                                                modalType: "Modem",
+                                                elementSelected: listItem
+                                            })
+                                        }}
+                                        >
+                                        <i className="fas fa-digital-tachograph"></i>
                                     </button>
                                 </td>
                             </tr>

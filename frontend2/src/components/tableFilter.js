@@ -2,8 +2,15 @@ export const tableSorter = (_list, _sorter, _multiplier) => {
     let listSortered = [..._list]
     
     listSortered.sort(((dataA,dataB) => {
-        let a = (dataA[_sorter] + "").toLowerCase()
-        let b = (dataB[_sorter] + "").toLowerCase()
+        let a, b
+
+        if ((Number(dataA[_sorter]) + "") == "NaN" || (Number(dataB[_sorter]) + "") == "NaN") {
+            a = (dataA[_sorter] + "").toLowerCase()
+            b = (dataB[_sorter] + "").toLowerCase()
+        } else {
+            a = Number(dataA[_sorter])
+            b = Number(dataB[_sorter])
+        }
 
         if (a == b) {
             return 0

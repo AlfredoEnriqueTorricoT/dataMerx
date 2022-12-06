@@ -57,7 +57,7 @@ function* postAndGetCarSaga(action) {
         yield put(updateCarStorage({status: response.status}))
       }
     } catch (error) {
-      yield put(updateCarStorage({status: response.response.status}))
+      yield put(updateCarStorage({status: response.data.status}))
     }
 
   } catch (error) {
@@ -69,7 +69,7 @@ function* postAndGetCarSaga(action) {
 
 function* putAndGetCarSaga(action) {
   let response;
-  console.log("PAG: ", action);
+
   try {
     response = yield call(AxiosServices.PUT, {payload: action.payload, url: action.url})
 
@@ -83,7 +83,7 @@ function* putAndGetCarSaga(action) {
           })
         )
       } else {
-        yield put(updateCarStorage({status: response.data.status}))
+        yield put(updateCarStorage({status: response.data.status, message: (response.data.message || "")}))
       }  
     } catch (error) {
       yield put(updateCarStorage({status: response.response.status}))

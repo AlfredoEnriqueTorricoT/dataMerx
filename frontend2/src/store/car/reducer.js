@@ -11,6 +11,7 @@ import {
 
 const INITIAL_CAR = {
     status: "waiting response",
+    message: "",
     carList: [],
     modemList: [],
     platformList: [],
@@ -64,7 +65,8 @@ const Car = (state = INITIAL_CAR, action) => {
             return {
                 ...state,
                 [action.saveAs]: action.payload,
-                status: action.status
+                status: action.status,
+                message: action.message || ""
             }
 
         default:

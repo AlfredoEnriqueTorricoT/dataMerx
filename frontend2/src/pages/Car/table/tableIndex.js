@@ -9,13 +9,14 @@ import { useMediaQuery } from "react-responsive"
 
 import { tableFilter, tableSorter } from "components/tableFilter"
 
-const keysToSort = ["number", "code", "imei"]
+const keysToSort = ["name", "model", "mark", "placa", "platform_name", "modem_code"]
 
 const TableIndex = ({_crudName, localStore, setState, t}) => {
+    const [cList, setCList] = useState([])
     const [filter, setFilter] = useState("")
     const [sorter, zetSorter] = useState(1)
     
-    const [tableFiltered, setTableFiltered] = useState(localStore[_crudName.cod + "List"])
+    const [tableFiltered, setTableFiltered] = useState([])
 
     const isTabletOrMobile = useMediaQuery({ query: "(max-width: 760px)" });
 
@@ -24,16 +25,46 @@ const TableIndex = ({_crudName, localStore, setState, t}) => {
     }
 
     useEffect(()=>{
+        const newList = 
+            localStore.carList.map(car => ({
+                id: car.id,
+                name: car.name,
+                mark: car.mark,
+                model: car.model,
+                placa: car.placa,
+                modem_id: car.modem_id,
+                platform_id: car.platform_id,
+                modem_code: car.modem ? car.modem.code : "",
+                platform_name: car.platform ? car.platform.name : ""
+            }))
+            
+        if (localStore.carList.length)
+            setCList(newList)
+
         if (filter == "")
-            setTableFiltered(localStore[_crudName.cod + "List"])
+            setTableFiltered(newList)
         else
-        setTableFiltered(tableFilter(localStore[_crudName.cod + "List"], filter, keysToSort))
-    }, [filter, localStore[_crudName.cod + "List"]])
+            setTableFiltered(tableFilter(newList, filter, keysToSort))
+    }, [localStore.carList])
 
     useEffect(()=>{
-        let _keys = keysToSort[Math.abs(sorter) -1]
-        let _multiplier = (sorter / Math.abs(sorter))
-        setTableFiltered(tableSorter(tableFiltered, _keys, _multiplier))
+        console.log("ASDASDASD", filter);
+        if (cList.length) {
+            if (filter == "")
+                setTableFiltered(cList)
+            else
+            setTableFiltered(tableFilter(cList, filter, keysToSort))
+        }
+    }, [filter])
+
+    useEffect(()=>{
+        console.log(cList);
+        console.log(cList.length);
+        if (cList.length) {
+            let _keys = keysToSort[Math.abs(sorter) -1]
+            let _multiplier = (sorter / Math.abs(sorter))
+            setTableFiltered(tableSorter(tableFiltered, _keys, _multiplier))
+        }
     }, [sorter])
 
     return(

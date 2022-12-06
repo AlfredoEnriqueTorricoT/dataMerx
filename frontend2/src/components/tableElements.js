@@ -33,8 +33,6 @@ const SearchBar = props => {
                 <b
                   onClick={() => {
                     setSorter(idx + 1);
-                    console.log(this);
-                    console.log(this.parentNode);
                   }}
                   style={{ cursor: "pointer" }}
                 >
@@ -45,8 +43,6 @@ const SearchBar = props => {
                     className={`fa fa-caret-${sorter < 0 ? "up" : "down"} mx-2`}
                     onClick={() => {
                       setSorter(idx + 1);
-                      console.log(this);
-                      console.log(this.parentNode);
                     }}
                     style={{ cursor: "pointer" }}
                   />
