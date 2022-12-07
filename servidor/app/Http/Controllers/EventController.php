@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Res;
+use App\Models\Car;
 use App\Models\Event;
 use Exception;
 use Illuminate\Http\Request;
@@ -88,6 +89,7 @@ class EventController extends Controller
     {
         //echo $request->bearerToken();
         try {
+
             $obj = Event::create($request->all());
 
             return Res::responseSuccess($obj);

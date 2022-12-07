@@ -58,6 +58,7 @@ Route::get('event', [EventController::class,'index']);
 Route::get('event/car/{id}', [EventController::class,'car']);
 Route::get('event/modem/{id}', [EventController::class,'modem']);
 Route::get('event/sim/{id}', [EventController::class,'sim']);
+Route::post('event', [EventController::class,'store']);
 
 Route::get('platform', [PlatformController::class,'index']);
 Route::post('platform', [PlatformController::class,'store']);
