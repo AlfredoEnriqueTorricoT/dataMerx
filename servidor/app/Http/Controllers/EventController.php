@@ -14,6 +14,68 @@ class EventController extends Controller
     {
         try {
             $list = Event::all();
+
+            foreach($list as $event){
+                $event["platform"] = $event->platform;
+                $event["car"] = $event->car;
+                $event["modem"] = $event->modem;
+                $event["sim"] = $event->sim;
+            }
+
+            return Res::responseSuccess($list);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
+    public function car($id)
+    {
+        try {
+            $list = Event::where("car_id", $id)->get();
+
+            foreach($list as $event){
+                $event["platform"] = $event->platform;
+                $event["car"] = $event->car;
+                $event["modem"] = $event->modem;
+                $event["sim"] = $event->sim;
+            }
+
+            return Res::responseSuccess($list);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
+    public function modem($id)
+    {
+        try {
+            $list = Event::where("modem_id", $id)->get();
+
+            foreach($list as $event){
+                $event["platform"] = $event->platform;
+                $event["car"] = $event->car;
+                $event["modem"] = $event->modem;
+                $event["sim"] = $event->sim;
+            }
+
+            return Res::responseSuccess($list);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
+    public function sim($id)
+    {
+        try {
+            $list = Event::where("sim_id", $id)->get();
+
+            foreach($list as $event){
+                $event["platform"] = $event->platform;
+                $event["car"] = $event->car;
+                $event["modem"] = $event->modem;
+                $event["sim"] = $event->sim;
+            }
+
             return Res::responseSuccess($list);
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
