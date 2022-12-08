@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Res;
+use App\Models\Car;
 use App\Models\Event;
 use Exception;
 use Illuminate\Http\Request;
@@ -14,6 +15,68 @@ class EventController extends Controller
     {
         try {
             $list = Event::all();
+
+            foreach($list as $event){
+                $event["platform"] = $event->platform;
+                $event["car"] = $event->car;
+                $event["modem"] = $event->modem;
+                $event["sim"] = $event->sim;
+            }
+
+            return Res::responseSuccess($list);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
+    public function car($id)
+    {
+        try {
+            $list = Event::where("car_id", $id)->get();
+
+            foreach($list as $event){
+                $event["platform"] = $event->platform;
+                $event["car"] = $event->car;
+                $event["modem"] = $event->modem;
+                $event["sim"] = $event->sim;
+            }
+
+            return Res::responseSuccess($list);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
+    public function modem($id)
+    {
+        try {
+            $list = Event::where("modem_id", $id)->get();
+
+            foreach($list as $event){
+                $event["platform"] = $event->platform;
+                $event["car"] = $event->car;
+                $event["modem"] = $event->modem;
+                $event["sim"] = $event->sim;
+            }
+
+            return Res::responseSuccess($list);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
+    public function sim($id)
+    {
+        try {
+            $list = Event::where("sim_id", $id)->get();
+
+            foreach($list as $event){
+                $event["platform"] = $event->platform;
+                $event["car"] = $event->car;
+                $event["modem"] = $event->modem;
+                $event["sim"] = $event->sim;
+            }
+
             return Res::responseSuccess($list);
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
@@ -26,6 +89,7 @@ class EventController extends Controller
     {
         //echo $request->bearerToken();
         try {
+
             $obj = Event::create($request->all());
 
             return Res::responseSuccess($obj);
