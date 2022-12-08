@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 const TableMobile = ({_crudName, listToShow, setState, t}) => {
     return(
       <React.Fragment>
-        <hr />
         {listToShow.length ?
         listToShow.map((listItem, idx)=>(
             // <div className="card" key={_crudName.cod + "Item-" + idx}>

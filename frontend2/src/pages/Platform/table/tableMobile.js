@@ -1,28 +1,31 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { MobileDataShow } from 'components/tableElements'
 
 const TableMobile = ({_crudName, listToShow, setState, t}) => {
+
     return(
       <React.Fragment>
-        {listToShow.map((listItem, idx)=>(
-            <div className="card" key={_crudName.cod + "Item-" + idx}>
-              <div className="card-body">
-                <div className="row">
+        {listToShow.length ?
+        listToShow.map((listItem, idx)=>(
+                <div className="row" key={_crudName.cod + "Item-" + idx}>
                   <div className="col-10">
-                    <div className="row">
-                      <div className="col-4">
-                        <b>{t("Name")}</b><br />
-                        <b>{t("Detail")}</b><br />
-                        <b>{t("Page web")}</b><br />
-                        <b>{"Email"}</b><br />
-                      </div>
-                      <div className="col-8">
-                        <b>{listItem.name}</b><br />
-                        <b>{listItem.detail || "- - -"}</b><br />
-                        <b>{listItem.url}</b><br />
-                        <b>{listItem.email}</b><br />
-                      </div>
-                    </div>
+                    <MobileDataShow
+                      title={t("Name")}
+                      desc={listItem.name}
+                    />
+                    <MobileDataShow
+                      title={t("Detail")}
+                      desc={listItem.detail || "- - -"}
+                    />
+                    <MobileDataShow
+                      title={t("Page web")}
+                      desc={listItem.url}
+                    />
+                    <MobileDataShow
+                      title="Email"
+                      desc={listItem.email}
+                    />
                   </div>
                   <div className="col-2">
                     <button
@@ -38,10 +41,27 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                         <i className="fas fa-edit"></i>
                     </button>
                   </div>
+                  {
+                    listToShow.length -1 > idx ?
+                    <hr
+                      style={{
+                        marginTop: "5px",
+                        border: "0",
+                        clear:"both",
+                        display:"block",
+                        width: "96%",
+                        backgroundColor:"#909090",
+                        height: "1px"
+                      }}
+                    />
+                    : ""
+                  }
                 </div>
-              </div>
-            </div>
-        ))}
+        )) : 
+        <center>
+          <h4 className="text-secondary my-5">{t("No " + _crudName.multple + " found")}</h4>
+        </center>
+        }
       </React.Fragment>
     )
 }

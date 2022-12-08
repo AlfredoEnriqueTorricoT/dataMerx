@@ -58,6 +58,15 @@ const SearchBar = props => {
     );
 };
 
+const MobileDataShow = ({title, desc}) => {
+  return(
+    <div className="row mb-1">
+      <div className="col-4"><b>{title}</b></div>
+      <div className="col-8">{desc}</div>
+    </div>
+  )
+}
+
 const ErrorTable = props => {
     const {retryFunction, cod} = props
 
@@ -72,4 +81,4 @@ const ErrorTable = props => {
     )
 }
 
-export {ErrorTable, SearchBar, THeaderSorter}
+export {ErrorTable, SearchBar, MobileDataShow, THeaderSorter}

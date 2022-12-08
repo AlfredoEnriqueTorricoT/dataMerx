@@ -87,6 +87,10 @@
   "State": "Estado",
   "Success": "Éxito",
 
+  "The car could not be added": "El vehículo no pudo ser añadido",
+  "The car could not be edited": "El vehículo no pudo ser editado",
+  "The car has been added": "El vehículo ha sido añadido",
+  "The car has been edited": "El vehículo ha sido editado",
   "The modem could not be added": "El módem no pudo ser añadido",
   "The modem does not have a sim added, you need to add a sim to the modem or find another modem": "El módem no tiene un sim agregado, necesita agregar un sim al módem o encontrar otro módem",
   "The modem has been added": "El módem ha sido añadido",

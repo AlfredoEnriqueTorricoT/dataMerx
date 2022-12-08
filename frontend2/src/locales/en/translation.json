@@ -89,6 +89,10 @@
   "State": "State",
   "Success": "Success",
 
+  "The car could not be added": "The car has been added",
+  "The car could not be edited": "The car has been added",
+  "The car has been added": "The car has been added",
+  "The car has been edited": "The car has been edited",
   "The modem could not be added": "The modem could not be added",
   "The modem does not have a sim added, you need to add a sim to the modem or find another modem": "The modem does not have a sim added, you need to add a sim to the modem or find another modem",
   "The modem has been added": "The modem has been added",
