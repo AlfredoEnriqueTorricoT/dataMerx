@@ -23,7 +23,7 @@ const TableInputs = ({_crudName, filter, setFilter, setState, t}) => {
 }
 
 TableInputs.propTypes = {
-    filter: PropTypes.func,
+    filter: PropTypes.string,
     setFilter: PropTypes.func,
     _crudName: PropTypes.object,
     setState: PropTypes.func,

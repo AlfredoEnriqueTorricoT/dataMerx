@@ -15,7 +15,6 @@ const ModalEdit = ({_crudName, localStore, onPutAndGet, setToastW, state, t}) =>
         if (!values.imei) errors.imei = t("Enter the modem imei")
         if (!values.code) errors.code = t("Enter the modem code")
         if (!values.mark_id) errors.mark_id = t("Select a modem brand")
-        if (!values.platform_id) errors.platform_id = t("Select a platform")
 
         return errors
     }
@@ -40,7 +39,6 @@ const ModalEdit = ({_crudName, localStore, onPutAndGet, setToastW, state, t}) =>
                   code: state.elementSelected.code,
                   imei: state.elementSelected.imei,
                   mark_id: state.elementSelected.mark_id,
-                  platform_id: state.elementSelected.platform_id,
                   active: state.elementSelected.active
                 }}
                 validate={validateFunction}
@@ -74,22 +72,6 @@ const ModalEdit = ({_crudName, localStore, onPutAndGet, setToastW, state, t}) =>
                                 :
                                 localStore.modemBrandList.map((mBrand, idx) => (
                                     <option key={"mBO-" + idx} value={mBrand.id}>{mBrand.name}</option>
-                                ))
-                            }
-                        </FormikSelect>
-                        <FormikSelect
-                          label={t("Platform")}
-                          inputName="platform_id"
-                          required={true}
-                          groupId ={genericId}
-                        >
-                            <option hidden value="">{t("Select a platform")}</option>
-                            {
-                                localStore.platformList.length == 0 ?
-                                <option disabled className='text-secondary' value="">{t("No ") + t("platforms")}</option>
-                                :
-                                localStore.platformList.map((platform, idx) => (
-                                    <option key={"mBO-" + idx} value={platform.id}>{platform.name}</option>
                                 ))
                             }
                         </FormikSelect>

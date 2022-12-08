@@ -3,43 +3,29 @@ import PropTypes from 'prop-types'
 import { MobileDataShow } from 'components/tableElements'
 
 const TableMobile = ({_crudName, listToShow, setState, t}) => {
+
     return(
       <React.Fragment>
         {listToShow.length ?
         listToShow.map((listItem, idx)=>(
                 <div className="row" key={_crudName.cod + "Item-" + idx}>
                   <div className="col-10">
-                    <div className="row">
-                      <MobileDataShow
-                        title={t("Code")}
-                        desc={listItem.code}
-                      />
-                      <MobileDataShow
-                        title={"Imei"}
-                        desc={listItem.imei}
-                      />
-                      <MobileDataShow
-                        title={t("State")}
-                        desc={
-                          <span
-                              className={`badge font-size-11 rounded-pill badge-soft-${
-                                listItem.active[0] == "a" ? "primary" : "dark"
-                              } text-uppercase`}
-                            >
-                              {listItem.active}
-                          </span>  
-                        }
-                      />
-                      <MobileDataShow
-                        title={t("Modem brand")}
-                        desc={listItem.mBrand_name || "- - -"}
-                      />
-                    </div>
+                    <MobileDataShow
+                      title={t("Number")}
+                      desc={listItem.number}
+                    />
+                    <MobileDataShow
+                      title={t("Code")}
+                      desc={listItem.code}
+                    />
+                    <MobileDataShow
+                      title={"Imei"}
+                      desc={listItem.imei}
+                    />
                   </div>
                   <div className="col-2">
-                    <center>
                     <button
-                        className='btn btn-sm btn-primary mb-3'
+                        className='btn btn-sm btn-primary'
                         onClick={()=>{
                             setState({
                                 modalOpen: true,
@@ -50,20 +36,6 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                         >
                         <i className="fas fa-edit"></i>
                     </button>
-                    <br />
-                    <button 
-                        className='btn btn-sm btn-secondary'
-                        onClick={()=>{
-                            setState({
-                                modalOpen: true,
-                                modalType: "Sim",
-                                elementSelected: listItem
-                            })
-                        }}
-                        >
-                        <i className="fas fa-sim-card"></i>
-                    </button>
-                    </center>
                   </div>
                   {
                     listToShow.length -1 > idx ?
@@ -81,7 +53,7 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                     : ""
                   }
                 </div>
-        )) :
+        )) : 
         <center>
           <h4 className="text-secondary my-5">{t("No " + _crudName.multple + " found")}</h4>
         </center>
@@ -92,7 +64,7 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
 
 TableMobile.propTypes = {
     _crudName: PropTypes.object,
-    listToShow: PropTypes.array,
+    listToShow: PropTypes.object,
     setSorterer: PropTypes.func,
     setState: PropTypes.func,
     sorterer: PropTypes.number,

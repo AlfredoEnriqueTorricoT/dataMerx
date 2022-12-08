@@ -48,7 +48,6 @@ const TableIndex = ({_crudName, localStore, setState, t}) => {
     }, [localStore.carList])
 
     useEffect(()=>{
-        console.log("ASDASDASD", filter);
         if (cList.length) {
             if (filter == "")
                 setTableFiltered(cList)
@@ -58,8 +57,6 @@ const TableIndex = ({_crudName, localStore, setState, t}) => {
     }, [filter])
 
     useEffect(()=>{
-        console.log(cList);
-        console.log(cList.length);
         if (cList.length) {
             let _keys = keysToSort[Math.abs(sorter) -1]
             let _multiplier = (sorter / Math.abs(sorter))

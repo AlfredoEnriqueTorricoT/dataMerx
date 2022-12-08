@@ -9,7 +9,7 @@ import { useMediaQuery } from "react-responsive"
 
 import { tableFilter, tableSorter } from "components/tableFilter"
 
-const keysToSort = ["code", "imei", "active", "platform_name", "mBrand_name"]
+const keysToSort = ["code", "imei", "active", "mBrand_name"]
 
 const TableIndex = ({_crudName, localStore, setState, t}) => {
     const [filter, setFilter] = useState("")
@@ -31,8 +31,6 @@ const TableIndex = ({_crudName, localStore, setState, t}) => {
                 code: modem.code,
                 imei: modem.imei,
                 active: modem.active ? t("active") : t("inactive"),
-                platform_id: modem.platform.id,
-                platform_name: modem.platform.name,
                 mark_id: modem.modems_mark.id,
                 mBrand_name: modem.modems_mark.name,
                 sim_id: modem.sim ? modem.sim.id : ""

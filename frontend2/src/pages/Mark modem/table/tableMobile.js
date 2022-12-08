@@ -11,35 +11,19 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                   <div className="col-10">
                     <div className="row">
                       <MobileDataShow
-                        title={t("Code")}
-                        desc={listItem.code}
+                        title={t("Name")}
+                        desc={listItem.name}
                       />
                       <MobileDataShow
-                        title={"Imei"}
-                        desc={listItem.imei}
-                      />
-                      <MobileDataShow
-                        title={t("State")}
-                        desc={
-                          <span
-                              className={`badge font-size-11 rounded-pill badge-soft-${
-                                listItem.active[0] == "a" ? "primary" : "dark"
-                              } text-uppercase`}
-                            >
-                              {listItem.active}
-                          </span>  
-                        }
-                      />
-                      <MobileDataShow
-                        title={t("Modem brand")}
-                        desc={listItem.mBrand_name || "- - -"}
+                        title={t("Details")}
+                        desc={listItem.detail || "- - -"}
                       />
                     </div>
                   </div>
                   <div className="col-2">
                     <center>
                     <button
-                        className='btn btn-sm btn-primary mb-3'
+                        className='btn btn-sm btn-primary mb-1'
                         onClick={()=>{
                             setState({
                                 modalOpen: true,

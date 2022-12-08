@@ -14,7 +14,6 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                         {name: t("Code"), arrow: true},
                         {name: "Imei", arrow: true},
                         {name: t("State"), arrow: true},
-                        {name: t("Platform"), arrow: true},
                         {name: t("Modem brand"), arrow: true},
                         {name: t("Actions"), arrow: false}
                       ]}
@@ -41,7 +40,6 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                   {listItem.active}
                                 </span>
                                 </td>
-                                <td>{listItem.platform_name}</td>
                                 <td>{listItem.mBrand_name}</td>
                                 <td>
                                     <button 

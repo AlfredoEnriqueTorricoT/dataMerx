@@ -7,6 +7,9 @@ import Table from "./table"
 import { SpinnerL } from "components/components"
 import { tableFilter, tableSorter } from "components/tableFilter"
 import { ErrorTable } from "components/tableElements"
+import TableMobile from "./tableMobile"
+
+import { useMediaQuery } from "react-responsive"
 
 const TableIndex = ({_crudName, localStore, setState, t}) => {
     const [filter, setFilter] = useState("")
@@ -14,6 +17,8 @@ const TableIndex = ({_crudName, localStore, setState, t}) => {
     const [sorter, zetSorter] = useState(1)
     
     const [tableFiltered, setTableFiltered] = useState([])
+
+    const isTabletOrMobile = useMediaQuery({ query: "(max-width: 760px)" });
 
     const setSorter = numero => {
         Math.abs(sorter) === numero ? zetSorter(sorter * -1) : zetSorter(numero)
@@ -58,14 +63,23 @@ const TableIndex = ({_crudName, localStore, setState, t}) => {
                             <center>
                                 <h4 className="text-secondary my-5">{t("No " + _crudName.multiple)}</h4>
                             </center> :
-                            <Table
-                                _crudName={_crudName}
-                                listToShow={tableFiltered}
-                                setSorter={setSorter}
-                                setState={setState}
-                                sorter={sorter}
-                                t={t}
-                            />
+                            (isTabletOrMobile ?
+                                <TableMobile
+                                    _crudName={_crudName}
+                                    listToShow={tableFiltered}
+                                    setState={setState}
+                                    t={t}
+                                />
+                                :
+                                <Table
+                                    _crudName={_crudName}
+                                    listToShow={tableFiltered}
+                                    setSorter={setSorter}
+                                    setState={setState}
+                                    sorter={sorter}
+                                    t={t}
+                                />
+                            )
                         )
                     : ""
                 }

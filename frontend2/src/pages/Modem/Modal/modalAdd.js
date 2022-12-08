@@ -15,7 +15,6 @@ const ModalAdd = ({_crudName, formName, localStore, onPostAndGet, setToastW, t})
         if (!values.imei) errors.imei = t("Enter the modem imei")
         if (!values.code) errors.code = t("Enter the modem code")
         if (!values.mark_id) errors.mark_id = t("Select a modem brand")
-        if (!values.platform_id) errors.platform_id = t("Select a platform")
 
         return errors
     }
@@ -37,7 +36,6 @@ const ModalAdd = ({_crudName, formName, localStore, onPostAndGet, setToastW, t})
                     imei: "",
                     code: "",
                     mark_id: "",
-                    platform_id: "",
                 }}
                 validate={validateFunction}
             >
@@ -70,22 +68,6 @@ const ModalAdd = ({_crudName, formName, localStore, onPostAndGet, setToastW, t})
                                 :
                                 localStore.modemBrandList.map((mBrand, idx) => (
                                     <option key={"mBO-" + idx} value={mBrand.id}>{mBrand.name}</option>
-                                ))
-                            }
-                        </FormikSelect>
-                        <FormikSelect
-                          label={t("Platform")}
-                          inputName="platform_id"
-                          required={true}
-                          groupId ={genericId}
-                        >
-                            <option hidden value="">{t("Select a platform")}</option>
-                            {
-                                localStore.platformList.length == 0 ?
-                                <option disabled className='text-secondary' value="">{t("No ") + t("platforms")}</option>
-                                :
-                                localStore.platformList.map((platform, idx) => (
-                                    <option key={"mBO-" + idx} value={platform.id}>{platform.name}</option>
                                 ))
                             }
                         </FormikSelect>

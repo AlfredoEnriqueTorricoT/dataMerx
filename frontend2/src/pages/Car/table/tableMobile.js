@@ -73,8 +73,6 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                     : ""
                   }
                 </div>
-            //   </div>
-            // </div>
         )) :
         <center>
           <h4 className="text-secondary my-5">{t("No cars found")}</h4>
