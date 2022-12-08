@@ -25,7 +25,7 @@ const ModalEdit = ({_crudName, localStore, onPutAndGet, setToastW, state, t}) =>
 
       onPutAndGet({
         saveAs: _crudName.cod + "List",
-        payload: formData,
+        payload: values,
         url: "car"})
     }
 
