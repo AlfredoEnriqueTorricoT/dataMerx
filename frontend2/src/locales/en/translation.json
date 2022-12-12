@@ -13,6 +13,7 @@
   "cars": "cars",
   "Code": "Code",
   
+  "Danger": "Danger",
   "Details": "Details",
   
   "Edit": "Edit",
@@ -21,6 +22,8 @@
   "Enter the car mark": "Enter the car mark",
   "Enter the car model": "Enter the car model",
   "Enter the car name": "Enter the car name",
+  "Enter the event detail": "Enter the event detail",
+  "Enter the event title": "Enter the event title",
   "Enter the modem code": "Enter the modem code",
   "Enter the modem imei": "Enter the modem imei",
   "Enter the modem brand name": "Enter the modem brand name",
@@ -29,9 +32,18 @@
   "Enter the platform name": "Enter the platform name",
   "Enter the platform page web": "Enter the platform page web",
   "Enter the platform password": "Enter the platform password",
+  "Event": "Event",
+  "Events": "Events",
+  "Event type": "Event type",
+  "Events of car ": "Events of car ",
+  "Events of modem ": "Events of modem ",
+  "Events of sim ": "Events of sim ",
+  "event": "event",
+  "events": "events",
   
   "INACTIVE": "INACTIVE",
   "inactive": "inactive",
+  "Informative": "Informative",
 
   "Mark": "Mark",
   "Model": "Model",
@@ -50,6 +62,7 @@
   "Number": "Number",
   "name": "name",
   "No ": "No ",
+  "No events": "No events",
   "No modem brands": "No modem brands",
   "No sims": "No sims",
   "No cars found": "No cars found",
@@ -78,12 +91,14 @@
   "Profile": "Profile",
   
   "Retry": "Retry",
+  "Return": "Return",
 
   "Select a modem brand": "Select a modem brand",
   "Select a platform": "Select a platform",
   "Select a modem": "Select a modem",
   "Select a sim": "Select a sim",
   "Select the car platform": "Select the car platform",
+  "Select the type of event": "Select the type of event",
   "Sim already assigned": "Sim already assigned",
   "Spanish": "Spanish",
   "State": "State",
@@ -122,5 +137,7 @@
   "The platform has been deleted": "The platform has been deleted",
 
   "User": "User",
-  "Users": "Users"
+  "Users": "Users",
+  
+  "Warning": "Warning"
 }

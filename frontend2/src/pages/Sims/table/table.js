@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
+const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) => {
 
     const showHeader = (name, id) => {
           return (
@@ -54,7 +54,7 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                 <td>{mBrand.imei}</td>
                                 <td>
                                     <button 
-                                        className='btn btn-sm btn-primary'
+                                        className='btn btn-sm btn-primary me-2'
                                         onClick={()=>{
                                             setState({
                                                 modalOpen: true,
@@ -64,6 +64,18 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                         }}
                                         >
                                         <i className="fas fa-edit"></i>
+                                    </button>
+                                    <button
+                                    onClick={()=>{
+                                        onGet({saveAs: "eventList", url: "event/sim/" + mBrand.id})
+                                        setState({
+                                            tableMode: "events",
+                                            elementSelected: mBrand
+                                        })
+                                    }}
+                                        className="btn btn-sm btn-info"
+                                    >
+                                        <i className="fas fa-eye"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -76,7 +88,8 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
 
 Table.propTypes = {
     _crudName: PropTypes.object,
-    listToShow: PropTypes.object,
+    onGet: PropTypes.func,
+    listToShow: PropTypes.array,
     setSorterer: PropTypes.func,
     setState: PropTypes.func,
     sorterer: PropTypes.number,

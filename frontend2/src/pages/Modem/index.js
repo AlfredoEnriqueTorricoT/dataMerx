@@ -18,6 +18,7 @@ import {
 } from "store/modem/actions"
 import TableIndex from "./table/tableIndex"
 import ModalIndex from "./Modal/modalIndex"
+import EventsTableIndex from "./events/tableIndex"
 import { ErrorTable } from "components/tableElements"
 import { SpinnerL } from "components/components"
 
@@ -35,6 +36,8 @@ const ModemPage = ({
     t
 }) => {
     const [state, _zetState] = useState({
+            eventTableStatus: "loading",
+            tableMode: "modems",
             modalOpen: false,
             modalSize: "md",
             modalType: "Add",
@@ -64,26 +67,39 @@ const ModemPage = ({
             <div className="page-content mb-0 pb-0">
                 <div className="container">
                     <Breadcrumbs title="Cuadros de mando" breadcrumbItem={t(_crudName.multiple)} />
-                    {state.tableStatus == "loading" ? <SpinnerL /> : ""}
-                    {state.tableStatus == "success" ?
-                        <TableIndex
+                    <div className="tab-content">
+                        <div className={`tab-pane fade ${state.tableMode == "modems" ? "show active" : ""}`}>
+                            {state.tableStatus == "loading" ? <SpinnerL /> : ""}
+                            {state.tableStatus == "success" ?
+                                <TableIndex
+                                    _crudName={_crudName}
+                                    localStore={localStore}
+                                    onGet={onGet}
+                                    setState={setState}
+                                    t={t} /> : ""
+                            }
+                            {state.tableStatus == "error" ?
+                                <ErrorTable
+                                    cod={localStore.status}
+                                    retryFunction={()=>{
+                                        onGet({ saveAs: _crudName.cod + "List", url: "modem" });
+                                        setState({tableStatus: "loading"})
+                                    }}
+                                >
+                                    {t("Retry")}
+                                </ErrorTable> : ""
+                            }
+                        </div>
+                        <div className={`tab-pane fade ${state.tableMode == "events" ? "show active" : ""}`}>
+                            <EventsTableIndex
                             _crudName={_crudName}
                             localStore={localStore}
                             onGet={onGet}
                             setState={setState}
-                            t={t} /> : ""
-                    }
-                    {state.tableStatus == "error" ?
-                        <ErrorTable
-                            cod={localStore.status}
-                            retryFunction={()=>{
-                                onGet({ saveAs: _crudName.cod + "List", url: "modem" });
-                                setState({tableStatus: "loading"})
-                            }}
-                        >
-                            {t("Retry")}
-                        </ErrorTable> : ""
-                    }
+                            state={state}
+                            t={t} />
+                        </div>
+                    </div>
                 </div>
             </div>
 

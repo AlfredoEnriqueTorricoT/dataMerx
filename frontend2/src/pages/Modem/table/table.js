@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { THeaderSorter } from 'components/tableElements';
 
-const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
+const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) => {
     return(
             <div className="grayScroll table-responsive" style={{maxHeight: "55vh", overflow: "auto"}}>
                 <table className="table table-striped">
@@ -55,7 +55,7 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                         <i className="fas fa-edit"></i>
                                     </button>
                                     <button 
-                                        className='btn btn-sm btn-secondary'
+                                        className='btn btn-sm btn-secondary me-2'
                                         onClick={()=>{
                                             setState({
                                                 modalOpen: true,
@@ -65,6 +65,18 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                         }}
                                         >
                                         <i className="fas fa-sim-card"></i>
+                                    </button>
+                                    <button
+                                    onClick={()=>{
+                                        onGet({saveAs: "eventList", url: "event/modem/" + listItem.id})
+                                        setState({
+                                            tableMode: "events",
+                                            elementSelected: listItem
+                                        })
+                                    }}
+                                        className="btn btn-sm btn-info"
+                                    >
+                                        <i className="fas fa-eye"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -78,6 +90,7 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
 Table.propTypes = {
     _crudName: PropTypes.object,
     listToShow: PropTypes.array,
+    onGet: PropTypes.func,
     setSorterer: PropTypes.func,
     setState: PropTypes.func,
     sorterer: PropTypes.number,

@@ -11,7 +11,7 @@ import { tableFilter, tableSorter } from "components/tableFilter"
 
 const keysToSort = ["code", "imei", "active", "mBrand_name"]
 
-const TableIndex = ({_crudName, localStore, setState, t}) => {
+const TableIndex = ({_crudName, onGet, localStore, setState, t}) => {
     const [filter, setFilter] = useState("")
     const [mList, setMList] = useState([])
     const [sorter, zetSorter] = useState(1)
@@ -88,6 +88,7 @@ const TableIndex = ({_crudName, localStore, setState, t}) => {
                 isTabletOrMobile ?
                     <TableMobile
                         _crudName={_crudName}
+                        onGet={onGet}
                         listToShow={tableFiltered}
                         setState={setState}
                         t={t}
@@ -95,6 +96,7 @@ const TableIndex = ({_crudName, localStore, setState, t}) => {
                     :
                     <Table
                         _crudName={_crudName}
+                        onGet={onGet}
                         listToShow={tableFiltered}
                         setSorter={setSorter}
                         setState={setState}
@@ -109,6 +111,7 @@ const TableIndex = ({_crudName, localStore, setState, t}) => {
 
 TableIndex.propTypes = {
     _crudName: PropTypes.object,
+    onGet: PropTypes.func,
     localStore: PropTypes.object,
     setState: PropTypes.func,
     t: PropTypes.func

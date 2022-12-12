@@ -15,6 +15,7 @@ const INITIAL_CAR = {
     carList: [],
     modemList: [],
     platformList: [],
+    eventList: []
 }
 
 const Car = (state = INITIAL_CAR, action) => {

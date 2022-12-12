@@ -1,5 +1,12 @@
 import React from "react"
 
+import {
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
+
 const SearchBar = props => {
     const { _onChange, _value } = props;
   
@@ -81,4 +88,28 @@ const ErrorTable = props => {
     )
 }
 
-export {ErrorTable, SearchBar, MobileDataShow, THeaderSorter}
+const OptionsButton = ({buttonsList}) => {
+  return(
+    <UncontrolledDropdown>
+                        <DropdownToggle
+                          className="card-drop"
+                          tag="i"
+                          style={{ cursor: "pointer" }}
+                        >
+                          <i className="mdi mdi-dots-horizontal font-size-18" />
+                        </DropdownToggle>
+                        <DropdownMenu className="dropdown-menu-end">
+                          {buttonsList.map(({_label, ..._button}, idx) => (
+                            <DropdownItem
+                            key={"dI-" + idx}
+                            {..._button}
+                          >
+                            {_label}
+                          </DropdownItem>
+                          ))}
+                        </DropdownMenu>
+                      </UncontrolledDropdown>
+  )
+}
+
+export {ErrorTable, SearchBar, OptionsButton, MobileDataShow, THeaderSorter}

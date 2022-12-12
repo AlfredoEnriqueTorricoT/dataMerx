@@ -1,0 +1,8 @@
+export const GET_EVENT = "GET_EVENT";
+export const POST_EVENT = "POST_EVENT";
+export const PUT_EVENT = "PUT_EVENT";
+export const DELETE_EVENT = "DELETE_EVENT";
+export const POST_AND_GET_EVENT = "POST_AND_GET_EVENT";
+export const PUT_AND_GET_EVENT = "PUT_AND_GET_EVENT";
+export const DELETE_AND_GET_EVENT = "DELETE_AND_GET_EVENT";
+export const UPDATE_EVENT_STORAGE = "UPDATE_EVENT_STORAGE";

@@ -21,6 +21,7 @@ import UserPage from "pages/User"
 import PlatformPage from "pages/Platform"
 import CarPage from "pages/Car"
 import ModemPage from "pages/Modem"
+import EventPage from "pages/Events";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -30,6 +31,7 @@ const authProtectedRoutes = [
   { path: "/platform", component: PlatformPage },
   { path: "/car", component: CarPage },
   { path: "/modem", component: ModemPage },
+  { path: "/event", component: EventPage },
 
   //profile
   { path: "/profile", component: UserProfile },

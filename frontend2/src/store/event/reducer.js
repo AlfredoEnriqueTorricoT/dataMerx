@@ -1,72 +1,71 @@
 import {
-    GET_MODEM,
-    POST_MODEM,
-    PUT_MODEM,
-    DELETE_MODEM,
-    POST_AND_GET_MODEM,
-    PUT_AND_GET_MODEM,
-    DELETE_AND_GET_MODEM,
-    UPDATE_MODEM_STORAGE,
+    GET_EVENT,
+    POST_EVENT,
+    PUT_EVENT,
+    DELETE_EVENT,
+    POST_AND_GET_EVENT,
+    PUT_AND_GET_EVENT,
+    DELETE_AND_GET_EVENT,
+    UPDATE_EVENT_STORAGE,
 } from "./actionTypes"
 
-const INITIAL_MODEM = {
+const INITIAL_EVENT = {
     status: "waiting response",
-    message: "",
-    modemList: [],
+    eventList: [],
     simList: [],
-    eventList: []
+    modemList: [],
+    carList: []
 }
 
-const Modem = (state = INITIAL_MODEM, action) => {
+const Event = (state = INITIAL_EVENT, action) => {
     switch (action.type) {
-        case GET_MODEM:
+        case GET_EVENT:
             return {
                 ...state,
                 status: "waiting response"
             }
             
-        case POST_MODEM:
+        case POST_EVENT:
             return {
                 ...state,
                 status: "waiting response"
             }
 
-        case PUT_MODEM:
+        case PUT_EVENT:
             return {
                 ...state,
                 status: "waiting response"
             }
 
-        case DELETE_MODEM:
+        case DELETE_EVENT:
             return {
                 ...state,
                 status: "waiting response"
             }
 
-        case POST_AND_GET_MODEM:
+        case POST_AND_GET_EVENT:
             return {
                 ...state,
                 status: "waiting response"
             }
 
-        case PUT_AND_GET_MODEM:
+        case PUT_AND_GET_EVENT:
             return {
                 ...state,
                 status: "waiting response"
             }
 
-        case DELETE_AND_GET_MODEM:
+        case DELETE_AND_GET_EVENT:
             return {
                 ...state,
                 status: "waiting response"
             }
 
-        case UPDATE_MODEM_STORAGE:
+        case UPDATE_EVENT_STORAGE:
             return {
                 ...state,
                 [action.saveAs]: action.payload,
-                status: action.status,
-                message: action.message
+                status: action.status
             }
 
         default:
@@ -74,4 +73,4 @@ const Modem = (state = INITIAL_MODEM, action) => {
     }
 }
 
-export default Modem
+export default Event

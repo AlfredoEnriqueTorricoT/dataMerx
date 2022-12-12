@@ -139,6 +139,9 @@ class SidebarContent extends Component {
                     <Link to="/modem">{this.props.t("Modem")}</Link>
                   </li>
                   <li>
+                    <Link to="/event">{this.props.t("Events")}</Link>
+                  </li>
+                  <li>
                     <Link to="#">
                       <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span>
                       {this.props.t("Jobs")}

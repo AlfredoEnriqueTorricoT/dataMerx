@@ -14,6 +14,7 @@ import userSaga from "./users/saga"
 import platformSaga from "./platform/saga"
 import carSaga from "./car/saga"
 import modemSaga from "./modem/saga"
+import eventSaga from "./event/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -30,6 +31,7 @@ export default function* rootSaga() {
     fork(platformSaga),
     fork(carSaga),
     fork(userSaga),
-    fork(modemSaga)
+    fork(modemSaga),
+    fork(eventSaga)
   ])
 }

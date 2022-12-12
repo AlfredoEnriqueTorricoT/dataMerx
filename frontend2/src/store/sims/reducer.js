@@ -11,7 +11,8 @@ import {
 
 const INITIAL_DATA = {
     status: "waiting response",
-    simList: []
+    simList: [],
+    eventList: []
 }
 
 const Sims = (state = INITIAL_DATA, action) => {

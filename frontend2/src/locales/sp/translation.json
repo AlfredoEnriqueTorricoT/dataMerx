@@ -14,6 +14,7 @@
   "Code": "Código",
   
   "Details": "Detalles",
+  "Danger": "Peligro",
 
   "Edit": "Editar",
   "Enter a email": "Ingrese un email",
@@ -21,15 +22,26 @@
   "Enter the car mark": "Ingrese la marca del vehículo",
   "Enter the car model": "Ingrese el modelo del vehículo",
   "Enter the car name": "Ingrese el nombre del vehículo",
+  "Enter the event detail": "Ingrese los detalles del evento",
+  "Enter the event title": "Ingrese el título del evento",
   "Enter the modem brand name": "Ingrese el nombre de la marca de módem",
   "Enter the modem brand detail": "Ingrese los detalles de la marca de módem",
   "Enter the platform email": "Ingrese el email de la plataforma",
   "Enter the platform name": "Ingrese el nombre de la plataforma",
   "Enter the platform page web": "Ingrese la página web de la plataforma",
   "Enter the platform password": "Ingrese la contraseña de la plataforma",
+  "Event": "Evento",
+  "Events": "Eventos",
+  "Event type": "Tipo de evento",
+  "Events of car ": "Eventos del vehículo ",
+  "Events of modem ": "Eventos del módem ",
+  "Events of sim ": "Eventos del sim ",
+  "event": "evento",
+  "events": "eventos",
 
   "INACTIVE": "INACTIVO",
   "inactive": "inactivo",
+  "Informative": "Informativo",
 
   "Mark": "Marca",
   "Model": "Modelo",
@@ -48,6 +60,7 @@
   "name": "nombre",
   "Number": "Número",
   "No ": "Sin ",
+  "No events": "Sin eventos",
   "No modem brands": "No hay marcas de módems",
   "No sims": "No hay sims",
   "No cars found": "No se encontraron vehículos",
@@ -76,12 +89,14 @@
   "Profile": "Perfíl",
   
   "Retry": "Reintentar",
+  "Return": "Volver",
 
   "Select a modem brand": "Seleccione una marca de módem",
   "Select a platform": "Seleccione una plataforma",
   "Select a modem": "Seleccione un módem",
   "Select a sim": "Seleccione un sim",
   "Select the car platform": "Seleccione la plataforma del vehículo",
+  "Select the type of event": "Seleccione el tipo de evento",
   "Sim already assigned": "Sim ya asignado",
   "Spanish": "Español",
   "State": "Estado",
@@ -120,5 +135,7 @@
   "The plaform has been deleted": "La plataforma ha sido eliminada",
 
   "User": "Usuario",
-  "Users": "Usuarios"
+  "Users": "Usuarios",
+
+  "Warning": "Advertencia"
 }

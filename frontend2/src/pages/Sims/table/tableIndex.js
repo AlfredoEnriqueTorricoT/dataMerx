@@ -11,7 +11,7 @@ import TableMobile from "./tableMobile"
 
 import { useMediaQuery } from "react-responsive"
 
-const TableIndex = ({_crudName, localStore, setState, t}) => {
+const TableIndex = ({_crudName, onGet, localStore, setState, t}) => {
     const [filter, setFilter] = useState("")
     const [tableStatus, setTableStatus] = useState("loading")
     const [sorter, zetSorter] = useState(1)
@@ -67,6 +67,7 @@ const TableIndex = ({_crudName, localStore, setState, t}) => {
                                 <TableMobile
                                     _crudName={_crudName}
                                     listToShow={tableFiltered}
+                                    onGet={onGet}
                                     setState={setState}
                                     t={t}
                                 />
@@ -74,6 +75,7 @@ const TableIndex = ({_crudName, localStore, setState, t}) => {
                                 <Table
                                     _crudName={_crudName}
                                     listToShow={tableFiltered}
+                                    onGet={onGet}
                                     setSorter={setSorter}
                                     setState={setState}
                                     sorter={sorter}
@@ -84,7 +86,15 @@ const TableIndex = ({_crudName, localStore, setState, t}) => {
                     : ""
                 }
                 {tableStatus == "error" &&
-                    <ErrorTable cod={localStore.status}>{t("Retry")}</ErrorTable>
+                    <ErrorTable
+                        cod={localStore.status}
+                        retryFunction={()=>{
+                            onGet({ saveAs: _crudName.cod + "List", url: "sim" })
+                            setTableStatus("loading")
+                        }}
+                    >
+                        {t("Retry")}
+                    </ErrorTable>
                 }
             </div>
         </div>
@@ -93,6 +103,7 @@ const TableIndex = ({_crudName, localStore, setState, t}) => {
 
 TableIndex.propTypes = {
     _crudName: PropTypes.object,
+    onGet: PropTypes.func,
     localStore: PropTypes.object,
     setState: PropTypes.func,
     t: PropTypes.func

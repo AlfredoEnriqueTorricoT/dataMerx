@@ -8,21 +8,22 @@ import { Modal } from "reactstrap"
 import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 import {
-    getSim as petitionGet,
-    postSim as petitionPost,
-    putSim as petitionPut,
-    deleteSim as petitionDelete,
-    postAndGetSim as petitionPostAndGet,
-    putAndGetSim as petitionPutAndGet,
-    deleteAndGetSim as petitionDeleteAndGet,
-} from "store/actions"
+    getEvent as petitionGet,
+    postEvent as petitionPost,
+    putEvent as petitionPut,
+    deleteEvent as petitionDelete,
+    postAndGetEvent as petitionPostAndGet,
+    putAndGetEvent as petitionPutAndGet,
+    deleteAndGetEvent as petitionDeleteAndGet,
+} from "store/event/actions"
 import TableIndex from "./table/tableIndex"
-import EventsTableIndex from "./events/tableIndex"
 import ModalIndex from "./Modal/modalIndex"
+import { ErrorTable } from "components/tableElements"
+import { SpinnerL } from "components/components"
 
-const _crudName = {single: "sim", multiple: "sims", cod: "sim"}
+const _crudName = {single: "event", multiple: "events", cod: "event"}
 
-const SimPage = ({
+const EventPage = ({
     localStore,
     onGet,
     onPost,
@@ -34,12 +35,11 @@ const SimPage = ({
     t
 }) => {
     const [state, _zetState] = useState({
-            eventTableStatus: "loading",
             modalOpen: false,
             modalSize: "md",
             modalType: "Add",
-            tableMode: "sims",
-            elementSelected: {}
+            elementSelected: {},
+            tableStatus: "loading"
     })
 
     const setState = (data) => {
@@ -47,33 +47,44 @@ const SimPage = ({
     }
 
     useEffect(()=>{
-        onGet({ saveAs: _crudName.cod + "List", url: "sim" })
+        onGet({ saveAs: _crudName.cod + "List", url: "event" })
+        onGet({ saveAs: "simList", url: "sim" })
+        onGet({ saveAs: "modemList", url: "modem" })
+        onGet({ saveAs: "carList", url: "car" })
     }, [])
+
+    useEffect(()=>{
+        if (state.tableStatus == "loading" && localStore.status != "waiting response") {
+            if (localStore.status == 200) setState({tableStatus: "success"})
+            else setState({tableStatus: "error"})
+        }
+    }, [localStore.status])
 
     return(
         <React.Fragment>
             <div className="page-content mb-0 pb-0">
                 <div className="container">
                     <Breadcrumbs title="Cuadros de mando" breadcrumbItem={t(_crudName.multiple)} />
-                    <div className="tab-content">
-                        <div className={`tab-pane fade ${state.tableMode == "sims" ? "show active" : ""}`}>
-                            <TableIndex
+                    {state.tableStatus == "loading" ? <SpinnerL /> : ""}
+                    {state.tableStatus == "success" ?
+                        <TableIndex
                             _crudName={_crudName}
                             localStore={localStore}
                             onGet={onGet}
                             setState={setState}
-                            t={t} />
-                        </div>
-                        <div className={`tab-pane fade ${state.tableMode == "events" ? "show active" : ""}`}>
-                            <EventsTableIndex
-                            _crudName={_crudName}
-                            localStore={localStore}
-                            onGet={onGet}
-                            setState={setState}
-                            state={state}
-                            t={t} />
-                        </div>
-                    </div>
+                            t={t} /> : ""
+                    }
+                    {state.tableStatus == "error" ?
+                        <ErrorTable
+                            cod={localStore.status}
+                            retryFunction={()=>{
+                                onGet({ saveAs: _crudName.cod + "List", url: "event" });
+                                setState({tableStatus: "loading"})
+                            }}
+                        >
+                            {t("Retry")}
+                        </ErrorTable> : ""
+                    }
                 </div>
             </div>
 
@@ -92,7 +103,7 @@ const SimPage = ({
     )
 }
 
-SimPage.propTypes = {
+EventPage.propTypes = {
     localStore: PropTypes.object,
     onGet: PropTypes.func,
     onPost: PropTypes.func,
@@ -105,7 +116,7 @@ SimPage.propTypes = {
 }
 
 const mapStateToProps = state => ({
-    localStore: state.Sims
+    localStore: state.Event
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -118,4 +129,4 @@ const mapDispatchToProps = dispatch => ({
     onDeleteAndGet: data => dispatch(petitionDeleteAndGet(data)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(SimPage))
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(EventPage))

@@ -63,6 +63,18 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                         >
                         <i className="fas fa-sim-card"></i>
                     </button>
+                    <button
+                      onClick={()=>{
+                          onGet({saveAs: "eventList", url: "event/modem/" + listItem.id})
+                          setState({
+                              tableMode: "events",
+                              elementSelected: listItem
+                          })
+                      }}
+                          className="btn btn-sm btn-info"
+                      >
+                          <i className="fas fa-eye"></i>
+                    </button>
                     </center>
                   </div>
                   {
