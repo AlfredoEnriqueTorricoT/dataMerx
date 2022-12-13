@@ -35,6 +35,13 @@ class ModemController extends Controller
     {
         //echo $request->bearerToken();
         try {
+
+            $countModemRepeat = Modem::where("imei",$request->imei)->get()->count();
+
+            if($countModemRepeat > 0) {
+                return Res::responseError432("Imei ya registrado.", null);
+            }
+
             $request->sim_id = null;
             $obj = Modem::create($request->all());
 

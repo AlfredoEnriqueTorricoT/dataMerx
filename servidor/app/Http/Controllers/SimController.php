@@ -26,6 +26,13 @@ class SimController extends Controller
     {
         //echo $request->bearerToken();
         try {
+
+            $countSimRepeat = Sim::where("imei",$request->imei)->get()->count();
+
+            if($countSimRepeat > 0) {
+                return Res::responseError432("Imei ya registrado.", null);
+            }
+
             $obj = Sim::create($request->all());
 
             $event = [
