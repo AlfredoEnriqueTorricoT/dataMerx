@@ -62,15 +62,27 @@ function* postAndGetSimSaga(action) {
   try {
     response = yield call(AxiosServices.POST, {payload: action.payload, url: action.url})
     console.log(response);
-    if (response.data.status == 200) {
-      yield put(
-        getSim({
-          saveAs: action.saveAs,
-          url: action.urlToGet || action.url,
-        })
-      )
-    } else {
-      yield put(updateSimStorage({status: response.data.message}))
+    console.log(response.response);
+    console.log(response.response.status);
+    try {
+      if (response.data.status == 200) {
+        yield put(
+          getSim({
+            saveAs: action.saveAs,
+            url: action.urlToGet || action.url,
+          })
+        )
+      } else {
+        if (response.response.status == 432)
+          yield put(updateSimStorage({status: response.response.status, message: (response.response.data.message || "")}))
+        else
+          yield put(updateSimStorage({status: response.data.message}))
+      } 
+    } catch (error) {
+      if (response.response.status == 432)
+          yield put(updateSimStorage({status: response.response.status, message: (response.response.data.message || "")}))
+        else
+          yield put(updateSimStorage({status: response.data.message}))
     }
   } catch (error) {
     yield put(updateSimStorage({status: error.message}))
@@ -93,8 +105,10 @@ function* putAndGetSimSaga(action) {
         })
       )
     } else {
-      console.log("40?: ", response);
-      yield put(updateSimStorage({status: "error"}))
+      if (response.response.status == 432)
+        yield put(updateSimStorage({status: response.response.status, message: (response.response.data.message || "")}))
+      else
+        yield put(updateSimStorage({status: "error"}))
     }
   } catch (error) {
     console.log("ERROR: ", response, error, action);

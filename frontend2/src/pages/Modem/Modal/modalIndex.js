@@ -37,11 +37,17 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPut, onPutAndGet, se
         const okMessage = toastSuccessMessages[state.modalType]
         const failMessage = toastFailMessages[state.modalType]
 
-        showToast({
-            type: itsOk ? "success" : "warning",
-            title: itsOk ? t("Success") : t("Error") + " (" + localStore.status + ")",
-            message: t(itsOk ? okMessage : failMessage)
-        })
+        if (localStore.status == 432)
+            showToast({
+                type: "warning",
+                message: localStore.message
+            })
+        else
+            showToast({
+                type: itsOk ? "success" : "warning",
+                title: itsOk ? t("Success") : t("Error") + " (" + localStore.status + ")",
+                message: t(itsOk ? okMessage : failMessage)
+            })
 
         if (itsOk) {
             setState({modalOpen: false});

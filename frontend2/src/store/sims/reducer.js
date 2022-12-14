@@ -11,6 +11,7 @@ import {
 
 const INITIAL_DATA = {
     status: "waiting response",
+    message: "",
     simList: [],
     eventList: []
 }
@@ -63,7 +64,8 @@ const Sims = (state = INITIAL_DATA, action) => {
             return {
                 ...state,
                 [action.saveAs]: action.payload,
-                status: action.status
+                status: action.status,
+                message: action.message
             }
 
         default:

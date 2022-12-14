@@ -13,6 +13,7 @@ const INITIAL_MODEM = {
     status: "waiting response",
     message: "",
     modemList: [],
+    modemBrandList: [],
     simList: [],
     eventList: []
 }
@@ -66,7 +67,7 @@ const Modem = (state = INITIAL_MODEM, action) => {
                 ...state,
                 [action.saveAs]: action.payload,
                 status: action.status,
-                message: action.message
+                message: action.message || ""
             }
 
         default:

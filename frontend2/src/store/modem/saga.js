@@ -80,9 +80,12 @@ function* postAndGetModemSaga(action) {
           })
         )
       } else {
-        yield put(updateModemStorage({status: response.status, message: (response.data.message || "")}))
+        yield put(updateModemStorage({status: response.response.status, message: (response.response.data.message || "")}))
       }
     } catch (error) {
+      if (response.response.status == 432) {
+        yield put(updateModemStorage({status: response.response.status, message: (response.response.data.message || "")}))
+      } else
       yield put(updateModemStorage({status: response.response.status}))
     }
 

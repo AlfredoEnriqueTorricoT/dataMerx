@@ -19,11 +19,17 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
         const okMessage = "The " + _crudName.single + " has been " + state.modalType.toLowerCase() + (state.modalType != "delete" ? "ed" : "d")
         const failMessage = "The " + _crudName.single + " could not be " + state.modalType.toLowerCase() + (state.modalType != "delete" ? "ed" : "d")
 
-        showToast({
-            type: itsOk ? "success" : "warning",
-            title: itsOk ? t("Success") : t("Error") + " (" + localStore.status + ")",
-            message: t(itsOk ? okMessage : failMessage)
-        })
+        if (localStore.status == 432)
+            showToast({
+                type: "warning",
+                message: localStore.message
+            })
+        else
+            showToast({
+                type: itsOk ? "success" : "warning",
+                title: itsOk ? t("Success") : t("Error") + " (" + localStore.status + ")",
+                message: t(itsOk ? okMessage : failMessage)
+            })
 
         if (itsOk) setState({modalOpen: false})
     }
