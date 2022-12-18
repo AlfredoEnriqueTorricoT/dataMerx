@@ -107,6 +107,7 @@ const CarPage = ({
                 <ModalIndex
                     _crudName={_crudName}
                     localStore={localStore}
+                    onPost={onPost}
                     onPostAndGet={onPostAndGet}
                     onPutAndGet={onPutAndGet}
                     setState={setState}

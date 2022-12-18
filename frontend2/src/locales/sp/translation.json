@@ -4,6 +4,7 @@
   "Active": "Activo",
   "active": "activo",
   "Add": "Añadir",
+  "Add event to": "Añadir evento a",
   "Assign": "Asignar",
 
   "Cancel": "Cancelar",
@@ -91,6 +92,7 @@
   "Retry": "Reintentar",
   "Return": "Volver",
 
+  "Select a car": "Seleccione un vehículo",
   "Select a modem brand": "Seleccione una marca de módem",
   "Select a platform": "Seleccione una plataforma",
   "Select a modem": "Seleccione un módem",

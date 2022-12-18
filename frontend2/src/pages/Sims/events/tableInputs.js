@@ -5,7 +5,7 @@ import { SearchBar } from "components/tableElements"
 
 const TableInputs = ({_crudName, filter, setFilter, setState, t}) => {
     return(
-        <div className="d-sm-flex flex-wrap mb-3">
+        <div className="d-flex flex-wrap mb-3">
           <SearchBar _onChange={setFilter} _value={filter} />
         
             <div className="ms-auto">

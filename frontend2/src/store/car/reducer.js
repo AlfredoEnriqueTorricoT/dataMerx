@@ -14,6 +14,7 @@ const INITIAL_CAR = {
     message: "",
     carList: [],
     modemList: [],
+    simList: [],
     platformList: [],
     eventList: []
 }

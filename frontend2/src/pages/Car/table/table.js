@@ -39,7 +39,7 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                 <td>{listItem.modem_code || "- - -"}</td>
                                 <td>
                                     <button 
-                                        className='btn btn-sm btn-primary me-2'
+                                        className='btn btn-sm btn-primary me-1'
                                         onClick={()=>{
                                             setState({
                                                 modalOpen: true,
@@ -51,7 +51,7 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                         <i className="fas fa-edit"></i>
                                     </button>
                                     <button 
-                                        className='btn btn-sm btn-secondary me-2'
+                                        className='btn btn-sm btn-secondary me-1'
                                         onClick={()=>{
                                             setState({
                                                 modalOpen: true,
@@ -70,9 +70,21 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                             elementSelected: listItem
                                         })
                                     }}
-                                        className="btn btn-sm btn-info"
+                                        className="btn btn-sm btn-info me-1"
                                     >
                                         <i className="fas fa-eye"></i>
+                                    </button>
+                                    <button 
+                                        className='btn btn-sm btn-primary'
+                                        onClick={()=>{
+                                            setState({
+                                                modalOpen: true,
+                                                modalType: "Add event to",
+                                                elementSelected: listItem
+                                            })
+                                        }}
+                                        >
+                                        <i className="fas fa-tasks"></i>
                                     </button>
                                 </td>
                             </tr>

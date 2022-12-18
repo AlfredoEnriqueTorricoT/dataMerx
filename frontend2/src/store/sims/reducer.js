@@ -13,7 +13,9 @@ const INITIAL_DATA = {
     status: "waiting response",
     message: "",
     simList: [],
-    eventList: []
+    eventList: [],
+    modemList:[],
+    carList:[]
 }
 
 const Sims = (state = INITIAL_DATA, action) => {

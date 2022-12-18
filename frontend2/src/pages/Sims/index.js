@@ -48,6 +48,8 @@ const SimPage = ({
 
     useEffect(()=>{
         onGet({ saveAs: _crudName.cod + "List", url: "sim" })
+        onGet({ saveAs: "modemList", url: "modem" })
+        onGet({ saveAs: "carList", url: "car" })
     }, [])
 
     return(
@@ -81,6 +83,7 @@ const SimPage = ({
                 <ModalIndex
                     _crudName={_crudName}
                     localStore={localStore}
+                    onPost={onPost}
                     onPostAndGet={onPostAndGet}
                     onPutAndGet={onPutAndGet}
                     setState={setState}

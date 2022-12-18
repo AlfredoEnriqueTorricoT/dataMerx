@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { MobileDataShow } from 'components/tableElements'
 
-const TableMobile = ({_crudName, listToShow, setState, t}) => {
+const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
     return(
       <React.Fragment>
         {listToShow.length ?
@@ -39,7 +39,7 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                   <div className="col-2">
                     <center>
                     <button
-                        className='btn btn-sm btn-primary mb-3'
+                        className='btn btn-sm btn-primary'
                         onClick={()=>{
                             setState({
                                 modalOpen: true,
@@ -52,7 +52,7 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                     </button>
                     <br />
                     <button 
-                        className='btn btn-sm btn-secondary'
+                        className='btn btn-sm btn-secondary my-1'
                         onClick={()=>{
                             setState({
                                 modalOpen: true,
@@ -63,6 +63,7 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                         >
                         <i className="fas fa-sim-card"></i>
                     </button>
+                    <br />
                     <button
                       onClick={()=>{
                           onGet({saveAs: "eventList", url: "event/modem/" + listItem.id})
@@ -71,9 +72,22 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                               elementSelected: listItem
                           })
                       }}
-                          className="btn btn-sm btn-info"
+                          className="btn btn-sm btn-info mb-1"
                       >
                           <i className="fas fa-eye"></i>
+                    </button>
+                    <br />
+                    <button 
+                        className='btn btn-sm btn-primary'
+                        onClick={()=>{
+                            setState({
+                                modalOpen: true,
+                                modalType: "Add event to",
+                                elementSelected: listItem
+                            })
+                        }}
+                        >
+                        <i className="fas fa-tasks"></i>
                     </button>
                     </center>
                   </div>
@@ -104,6 +118,7 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
 
 TableMobile.propTypes = {
     _crudName: PropTypes.object,
+    onGet: PropTypes.func,
     listToShow: PropTypes.array,
     setSorterer: PropTypes.func,
     setState: PropTypes.func,

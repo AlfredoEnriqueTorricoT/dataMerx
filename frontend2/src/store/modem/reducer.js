@@ -12,6 +12,7 @@ import {
 const INITIAL_MODEM = {
     status: "waiting response",
     message: "",
+    carList: [],
     modemList: [],
     modemBrandList: [],
     simList: [],

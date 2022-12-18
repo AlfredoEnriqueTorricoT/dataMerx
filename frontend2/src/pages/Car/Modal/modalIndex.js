@@ -5,8 +5,9 @@ import ModalEdit from './modalEdit';
 import { showToast } from 'components/toast';
 import ModalModem from './modalModem';
 import { Modal } from 'reactstrap';
+import ModalAddEvent from './modalAddEvent';
 
-const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState, state, t}) => {
+const ModalIndex = ({_crudName, localStore, onPost, onPostAndGet, onPutAndGet, setState, state, t}) => {
     const [secondModal, setSecondModal] = useState({open: false})
     const [toastWaiting, setToastW] = useState(false)
 
@@ -22,11 +23,24 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
 
     const _432message = "The modem does not have a sim added, you need to add a sim to the modem or find another modem"
 
+    const toastSuccessMessages = {
+        Add: "The car has been added",
+        Edit: "The car has been edited",
+        Modem: "The modem has been assigned",
+        ["Add event to"]: "The event has been registered"
+    }
+    const toastFailMessages = {
+        Add: "The car could not be added",
+        Edit: "The car could not be edited",
+        Modem: "The modem could not be assigned",
+        ["Add event to"]: "The event could not be registered"
+    }
+
     const toastFunction = () => {
         setSecondModal({open: false})
         const itsOk = localStore.status == 200
-        const okMessage = "The " + _crudName.single + " has been " + state.modalType.toLowerCase() + (state.modalType != "delete" ? "ed" : "d")
-        const failMessage = "The " + _crudName.single + " could not be " + state.modalType.toLowerCase() + (state.modalType != "delete" ? "ed" : "d")
+        const okMessage = toastSuccessMessages[state.modalType]
+        const failMessage = toastFailMessages[state.modalType]
 
         showToast({
             type: itsOk ? "success" : "warning",
@@ -38,8 +52,8 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
     }
 
 
-    const buttonIcon = {Add: "plus", Edit: "edit", Modem: "plus"}
-    const buttonText = {Add: "Add", Edit: "Edit", Modem: "Assign"}
+    const buttonIcon = {Add: "plus", Edit: "edit", Modem: "plus", ["Add event to"]: "plus"}
+    const buttonText = {Add: "Add", Edit: "Edit", Modem: "Assign", ["Add event to"]: "Add"}
 
     const modalToShow = () => {
         switch (state.modalType) {
@@ -75,6 +89,17 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
                         localStore={localStore}
                         onPutAndGet={onPutAndGet}
                         secondModal={secondModal}
+                        setToastW={setToastW}
+                        state={state}
+                        t={t}
+                    />
+                )
+            case "Add event to":
+                return(
+                    <ModalAddEvent
+                        _crudName={_crudName}
+                        localStore={localStore}
+                        onPost={onPost}
                         setToastW={setToastW}
                         state={state}
                         t={t}
@@ -177,6 +202,7 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
 ModalIndex.propTypes = {
     _crudName: PropTypes.object,
     localStore: PropTypes.object,
+    onPost: PropTypes.func,
     onPostAndGet: PropTypes.func,
     onPutAndGet: PropTypes.func,
     setState: PropTypes.func,

@@ -54,7 +54,7 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                 <td>{mBrand.imei}</td>
                                 <td>
                                     <button 
-                                        className='btn btn-sm btn-primary me-2'
+                                        className='btn btn-sm btn-primary'
                                         onClick={()=>{
                                             setState({
                                                 modalOpen: true,
@@ -73,9 +73,21 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                             elementSelected: mBrand
                                         })
                                     }}
-                                        className="btn btn-sm btn-info"
+                                        className="btn btn-sm btn-info mx-2"
                                     >
                                         <i className="fas fa-eye"></i>
+                                    </button>
+                                    <button
+                                      className="btn btn-sm btn-primary"
+                                      onClick={()=>{
+                                        setState({
+                                          modalOpen: true,
+                                          modalType: "Add event to",
+                                          elementSelected: mBrand
+                                        })
+                                      }}
+                                    >
+                                      <i className="fas fa-tasks"></i>
                                     </button>
                                 </td>
                             </tr>

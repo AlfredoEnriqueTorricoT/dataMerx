@@ -55,7 +55,7 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                                         <i className="fas fa-edit"></i>
                                     </button>
                                     <button 
-                                        className='btn btn-sm btn-secondary me-2'
+                                        className='btn btn-sm btn-secondary'
                                         onClick={()=>{
                                             setState({
                                                 modalOpen: true,
@@ -74,9 +74,21 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                                             elementSelected: listItem
                                         })
                                     }}
-                                        className="btn btn-sm btn-info"
+                                        className="btn btn-sm btn-info mx-2"
                                     >
                                         <i className="fas fa-eye"></i>
+                                    </button>
+                                    <button 
+                                        className='btn btn-sm btn-primary'
+                                        onClick={()=>{
+                                            setState({
+                                                modalOpen: true,
+                                                modalType: "Add event to",
+                                                elementSelected: listItem
+                                            })
+                                        }}
+                                        >
+                                        <i className="fas fa-tasks"></i>
                                     </button>
                                 </td>
                             </tr>

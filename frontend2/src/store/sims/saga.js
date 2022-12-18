@@ -41,7 +41,7 @@ function* postSimSaga(action) {
   let response;
 
   try {
-    response = yield call(AxiosServices.POST, action.url)
+    response = yield call(AxiosServices.POST, {payload: action.payload, url: action.url})
     if (response.data.status == 200) {
       yield put(updateSimStorage({
         payload: response.data.data,
@@ -117,6 +117,7 @@ function* putAndGetSimSaga(action) {
 
 function* simSaga() {
   yield takeEvery(GET_SIM, getSimSaga)
+  yield takeEvery(POST_SIM, postSimSaga)
   yield takeEvery(POST_AND_GET_SIM, postAndGetSimSaga)
   yield takeEvery(PUT_AND_GET_SIM, putAndGetSimSaga)
 }

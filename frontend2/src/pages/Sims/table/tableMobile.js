@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { MobileDataShow } from 'components/tableElements'
 
-const TableMobile = ({_crudName, listToShow, setState, t}) => {
+const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
 
     return(
       <React.Fragment>
@@ -36,6 +36,32 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                         >
                         <i className="fas fa-edit"></i>
                     </button>
+                    <br />
+                    <button
+                      onClick={()=>{
+                          onGet({saveAs: "eventList", url: "event/sim/" + listItem.id})
+                          setState({
+                              tableMode: "events",
+                              elementSelected: listItem
+                          })
+                      }}
+                          className="btn btn-sm btn-info my-2"
+                      >
+                          <i className="fas fa-eye"></i>
+                    </button>
+                    <br />
+                    <button
+                        className="btn btn-sm btn-primary"
+                        onClick={()=>{
+                          setState({
+                            modalOpen: true,
+                            modalType: "Add event to",
+                            elementSelected: listItem
+                          })
+                        }}
+                      >
+                        <i className="fas fa-tasks"></i>
+                    </button>
                   </div>
                   {
                     listToShow.length -1 > idx ?
@@ -64,6 +90,7 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
 
 TableMobile.propTypes = {
     _crudName: PropTypes.object,
+    onGet: PropTypes.func,
     listToShow: PropTypes.object,
     setSorterer: PropTypes.func,
     setState: PropTypes.func,

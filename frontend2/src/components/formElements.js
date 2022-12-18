@@ -30,7 +30,7 @@ const FormikInput = ({label, inputName, type, required, groupId}) => {
     )
   }
 
-const FormikSelect = ({children, label, inputName, required, groupId}) => {
+const FormikSelect = ({children, disabled, label, inputName, required, groupId}) => {
     return(
       <div className="row mb-2">
         <label
@@ -48,6 +48,7 @@ const FormikSelect = ({children, label, inputName, required, groupId}) => {
           <Field
             as="select"
             className="form-select"
+            disabled={disabled || false}
             id={groupId + inputName}
             name={inputName}
           >

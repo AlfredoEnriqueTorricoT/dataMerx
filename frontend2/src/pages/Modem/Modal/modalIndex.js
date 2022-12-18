@@ -2,11 +2,12 @@ import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import ModalAdd from './modalAdd';
 import ModalEdit from './modalEdit';
+import ModalAddEvent from './modalAddEvent';
 import { showToast } from 'components/toast';
 import ModalSim from './modalSim';
 import {Modal} from "reactstrap"
 
-const ModalIndex = ({_crudName, localStore, onPostAndGet, onPut, onPutAndGet, setState, state, t}) => {
+const ModalIndex = ({_crudName, localStore, onPostAndGet, onPost, onPutAndGet, setState, state, t}) => {
     const [toastWaiting, setToastW] = useState(false)
     const [secondModal, setSecondModal] = useState({open: false})
 
@@ -24,12 +25,14 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPut, onPutAndGet, se
     const toastSuccessMessages = {
         Add: "The modem has been added",
         Edit: "The modem has been edited",
-        Sim: "The sim has been assigned"
+        Sim: "The sim has been assigned",
+        ["Add event to"]: "The event has been registered"
     }
     const toastFailMessages = {
         Add: "The modem could not be added",
         Edit: "The modem could not be edited",
-        Sim: "The sim could not be assigned"
+        Sim: "The sim could not be assigned",
+        ["Add event to"]: "The event could not be registered"
     }
 
     const toastFunction = () => {
@@ -55,8 +58,8 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPut, onPutAndGet, se
         }
     }
 
-    const buttonIcon = {Add: "plus", Edit: "edit", Sim: "plus"}
-    const buttonText = {Add: "Add", Edit: "Edit", Sim: "Add"}
+    const buttonIcon = {Add: "plus", Edit: "edit", Sim: "plus", ["Add event to"]: "plus"}
+    const buttonText = {Add: "Add", Edit: "Edit", Sim: "Add", ["Add event to"]: "Add"}
 
     const modalToShow = () => {
         switch (state.modalType) {
@@ -97,7 +100,17 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPut, onPutAndGet, se
                         t={t}
                     />
                 )
-                
+            case "Add event to":
+                return(
+                    <ModalAddEvent
+                        _crudName={_crudName}
+                        localStore={localStore}
+                        onPost={onPost}
+                        setToastW={setToastW}
+                        state={state}
+                        t={t}
+                    />
+                )
             default:
                 break;
         }
@@ -198,7 +211,7 @@ ModalIndex.propTypes = {
     _crudName: PropTypes.object,
     localStore: PropTypes.object,
     onPostAndGet: PropTypes.func,
-    onPut: PropTypes.func,
+    onPost: PropTypes.func,
     onPutAndGet: PropTypes.func,
     setState: PropTypes.func,
     state: PropTypes.object,

@@ -40,6 +40,25 @@ function* getCarSaga(action) {
   }
 }
 
+function* postCarSaga(action) {
+  let response;
+
+  try {
+    response = yield call(AxiosServices.POST, {payload: action.payload, url: action.url})
+    if (response.data.status == 200) {
+      yield put(updateCarStorage({
+        payload: response.data.data,
+        saveAs: action.saveAs,
+        status: response.data.status}))
+    } else {
+      yield put(updateCarStorage({status: response.data.message}))
+    }
+  } catch (error) {
+    yield put(updateCarStorage({status: error.message}))
+    console.log("FAIL: ", response, error, action);
+  }
+}
+
 function* postAndGetCarSaga(action) {
   let response;
   try {
@@ -98,6 +117,7 @@ function* putAndGetCarSaga(action) {
 
 function* carSaga() {
   yield takeEvery(GET_CAR, getCarSaga)
+  yield takeEvery(POST_CAR, postCarSaga)
   yield takeEvery(POST_AND_GET_CAR, postAndGetCarSaga)
   yield takeEvery(PUT_AND_GET_CAR, putAndGetCarSaga)
 }

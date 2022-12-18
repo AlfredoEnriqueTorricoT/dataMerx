@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const TableMobile = ({_crudName, listToShow, setState, t}) => {
+const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
     return(
       <React.Fragment>
         {listToShow.length ?
@@ -32,7 +32,7 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                   <div className="col-2">
                     <center>
                       <button
-                          className='btn btn-sm btn-primary mb-3'
+                          className='btn btn-sm btn-primary'
                           onClick={()=>{
                               setState({
                                   modalOpen: true,
@@ -44,7 +44,7 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                           <i className="fas fa-edit"></i>
                       </button>
                       <button
-                          className='btn btn-sm btn-secondary'
+                          className='btn btn-sm btn-secondary mt-1'
                           onClick={()=>{
                               setState({
                                   modalOpen: true,
@@ -54,6 +54,31 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                           }}
                           >
                           <i className="fas fa-digital-tachograph"></i>
+                      </button>
+                      <button
+                        onClick={()=>{
+                            onGet({saveAs: "eventList", url: "event/car/" + listItem.id})
+                            setState({
+                                tableMode: "events",
+                                elementSelected: listItem
+                            })
+                        }}
+                            className="btn btn-sm btn-info my-1"
+                        >
+                            <i className="fas fa-eye"></i>
+                      </button>
+                      <br />
+                      <button 
+                            className='btn btn-sm btn-primary'
+                            onClick={()=>{
+                                setState({
+                                    modalOpen: true,
+                                    modalType: "Add event to",
+                                    elementSelected: listItem
+                                })
+                            }}
+                            >
+                            <i className="fas fa-tasks"></i>
                       </button>
                     </center>
                   </div>
@@ -83,6 +108,7 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
 
 TableMobile.propTypes = {
     _crudName: PropTypes.object,
+    onGet: PropTypes.func,
     listToShow: PropTypes.object,
     setSorterer: PropTypes.func,
     setState: PropTypes.func,

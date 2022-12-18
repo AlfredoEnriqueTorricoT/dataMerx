@@ -52,6 +52,7 @@ const ModemPage = ({
     useEffect(()=>{
         onGet({ saveAs: _crudName.cod + "List", url: "modem" })
         onGet({ saveAs: "modemBrandList", url: "modem-mark" })
+        onGet({ saveAs: "carList", url: "car" })
         onGet({ saveAs: "simList", url: "sim" })
     }, [])
 
@@ -108,6 +109,7 @@ const ModemPage = ({
                     _crudName={_crudName}
                     localStore={localStore}
                     onPostAndGet={onPostAndGet}
+                    onPost={onPost}
                     onPut={onPut}
                     onPutAndGet={onPutAndGet}
                     setState={setState}
