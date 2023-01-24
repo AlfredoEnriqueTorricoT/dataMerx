@@ -58,12 +58,10 @@ function* postSimSaga(action) {
 
 function* postAndGetSimSaga(action) {
   let response;
-  console.log(action);
+
   try {
     response = yield call(AxiosServices.POST, {payload: action.payload, url: action.url})
-    console.log(response);
-    console.log(response.response);
-    console.log(response.response.status);
+
     try {
       if (response.data.status == 200) {
         yield put(

@@ -19,7 +19,7 @@ function* loginUser({ payload: { user, history } }) {
       localStorage.setItem("userToken", response.data.data.token)
       let aUser = {name: response.data.data.name, email: response.data.data.email}
       localStorage.setItem("authUser", JSON.stringify(aUser))
-      history.push("/dashboard")
+      history.push("/car")
     } else {
       yield put(apiError("Correo o contraseña incorrectos"))
       console.log(response);

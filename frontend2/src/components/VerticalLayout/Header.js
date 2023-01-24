@@ -164,10 +164,10 @@ class Header extends Component {
                 </div>
               </div>
 
-              <LanguageDropdown />
+              {/* <LanguageDropdown /> */}
               <ProfileMenu />
 
-              <div className="dropdown d-inline-block">
+              {/* <div className="dropdown d-inline-block">
                 <button
                   onClick={() => {
                     this.toggleRightbar();
@@ -177,7 +177,7 @@ class Header extends Component {
                 >
                   <i className="bx bx-cog bx-spin"></i>
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </header>

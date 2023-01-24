@@ -117,21 +117,9 @@ class SidebarContent extends Component {
                   <span>{this.props.t("Dashboards")}</span>
                 </Link>
                 <ul className="sub-menu">
-                  <li>
+                  {/* <li>
                     <Link to="/dashboard">{this.props.t("Default")}</Link>
-                  </li>
-                  <li>
-                    <Link to="/mark-modem">{this.props.t("Modem brands")}</Link>
-                  </li>
-                  <li>
-                    <Link to="/sims">{this.props.t("Sims")}</Link>
-                  </li>
-                  <li>
-                    <Link to="/users">{this.props.t("Users")}</Link>
-                  </li>
-                  <li>
-                    <Link to="/platform">{this.props.t("Platforms")}</Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link to="/car">{this.props.t("Cars")}</Link>
                   </li>
@@ -139,14 +127,26 @@ class SidebarContent extends Component {
                     <Link to="/modem">{this.props.t("Modem")}</Link>
                   </li>
                   <li>
-                    <Link to="/event">{this.props.t("Events")}</Link>
+                    <Link to="/sims">{this.props.t("Sims")}</Link>
                   </li>
                   <li>
+                    <Link to="/mark-modem">{this.props.t("Modem brands")}</Link>
+                  </li>
+                  <li>
+                    <Link to="/platform">{this.props.t("Platforms")}</Link>
+                  </li>
+                  <li>
+                    <Link to="/users">{this.props.t("Users")}</Link>
+                  </li>
+                  {/* <li>
+                    <Link to="/event">{this.props.t("Events")}</Link>
+                  </li> */}
+                  {/* <li>
                     <Link to="#">
                       <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span>
                       {this.props.t("Jobs")}
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </li>              
             </ul>

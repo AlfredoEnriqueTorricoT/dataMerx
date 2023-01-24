@@ -31,7 +31,7 @@ const authProtectedRoutes = [
   { path: "/platform", component: PlatformPage },
   { path: "/car", component: CarPage },
   { path: "/modem", component: ModemPage },
-  { path: "/event", component: EventPage },
+  // { path: "/event", component: EventPage },
 
   //profile
   { path: "/profile", component: UserProfile },
