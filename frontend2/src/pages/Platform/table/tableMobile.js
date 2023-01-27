@@ -37,7 +37,8 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                                 elementSelected: listItem
                             })
                         }}
-                        >
+                        title='Editar plataforma'
+                      >
                         <i className="fas fa-edit"></i>
                     </button>
                   </div>

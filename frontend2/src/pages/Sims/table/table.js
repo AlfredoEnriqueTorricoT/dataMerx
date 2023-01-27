@@ -62,18 +62,20 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                                 elementSelected: mBrand
                                             })
                                         }}
-                                        >
+                                        title='Editar sim'
+                                      >
                                         <i className="fas fa-edit"></i>
                                     </button>
                                     <button
-                                    onClick={()=>{
-                                        onGet({saveAs: "eventList", url: "event/sim/" + mBrand.id})
-                                        setState({
-                                            tableMode: "events",
-                                            elementSelected: mBrand
-                                        })
-                                    }}
-                                        className="btn btn-sm btn-info mx-2"
+                                      className="btn btn-sm btn-info mx-2"
+                                      onClick={()=>{
+                                          onGet({saveAs: "eventList", url: "event/sim/" + mBrand.id})
+                                          setState({
+                                              tableMode: "events",
+                                              elementSelected: mBrand
+                                          })
+                                      }}
+                                      title='Ver eventos'
                                     >
                                         <i className="fas fa-eye"></i>
                                     </button>
@@ -86,6 +88,7 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                           elementSelected: mBrand
                                         })
                                       }}
+                                      title='Añadir evento'
                                     >
                                       <i className="fas fa-tasks"></i>
                                     </button>

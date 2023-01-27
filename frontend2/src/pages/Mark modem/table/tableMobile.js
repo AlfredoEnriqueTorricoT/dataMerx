@@ -31,21 +31,9 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                                 elementSelected: listItem
                             })
                         }}
+                        title='Editar marca de módem'
                         >
                         <i className="fas fa-edit"></i>
-                    </button>
-                    <br />
-                    <button 
-                        className='btn btn-sm btn-secondary'
-                        onClick={()=>{
-                            setState({
-                                modalOpen: true,
-                                modalType: "Sim",
-                                elementSelected: listItem
-                            })
-                        }}
-                        >
-                        <i className="fas fa-sim-card"></i>
                     </button>
                     </center>
                   </div>

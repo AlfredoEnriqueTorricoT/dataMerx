@@ -15,9 +15,6 @@ const ModalAddEvent = ({_crudName, localStore, onPost, setToastW, state, t}) => 
 
         if (!values.title) errors.title = t("Enter the event title")
         if (!values.type_id) errors.type_id = t("Select the type of event")
-        if (!values.car_id && !values.modem_id && !values.sim_id) {
-          errors.qwerty = "QWERTY"
-        }
 
         return errors
     }
@@ -89,51 +86,6 @@ const ModalAddEvent = ({_crudName, localStore, onPost, setToastW, state, t}) => 
                           <option value={2}>{t("Warning")}</option>
                           <option value={3}>{t("Danger")}</option>
                         </FormikSelect>
-                        <FormikSelect
-                          disabled={true}
-                          label={t("Sim")}
-                          inputName="sim_id"
-                          groupId ={genericId}
-                        >
-                            <option className="text-secondary" disabled value={state.elementSelected.id}>{state.elementSelected.number}</option>
-                        </FormikSelect>
-                        <FormikSelect
-                          label={t("Modem")}
-                          inputName="modem_id"
-                          groupId ={genericId}
-                        >
-                          <option className="text-secondary" hidden value="">{t("Select a modem")}</option>
-                          {localStore.modemList.length ?
-                            localStore.modemList.map((modem, idx)=>(
-                              <option key={"eAM-"+idx} value={modem.id}>{modem.code}</option>
-                            ))
-                            :
-                            <option className="text-secondary" disabled value="NOVALUE">{t("No ") + t("modems")}</option>
-                          }
-                        </FormikSelect>
-                        <FormikSelect
-                          label={t("Car")}
-                          inputName="car_id"
-                          groupId ={genericId}
-                        >
-                          <option className="text-secondary" hidden value="">{t("Select a car")}</option>
-                          {localStore.carList.length ?
-                            localStore.carList.map((car, idx)=>(
-                              <option key={"eAC-"+idx} value={car.id}>{car.name}</option>
-                            ))
-                            :
-                            <option className="text-secondary" disabled value="NOVALUE">{t("No ") + t("cars")}</option>
-                          }
-                        </FormikSelect>
-                        {errors.qwerty ?
-                          <div className="row">
-                            <div className="col-3"></div>
-                            <div className="col-9">
-                              <h6 className="text-danger">Seleccione al menos un sim, módem o vehículo</h6>
-                            </div>
-                          </div>
-                          : ""
-                        }
                     </Form>
                 )}
             </Formik>

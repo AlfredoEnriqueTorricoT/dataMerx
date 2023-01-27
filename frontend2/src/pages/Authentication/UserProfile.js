@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Alert, Button, Card, CardBody, Col, Container, Row, Label } from "reactstrap";
+import Avatar from "react-avatar";
 
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -25,17 +26,19 @@ class UserProfile extends Component {
   componentDidMount() {
     if (localStorage.getItem("authUser")) {
       const obj = JSON.parse(localStorage.getItem("authUser"));
+      const userData = JSON.parse(localStorage.getItem("userData"));
+      const full_name = userData.name + " " + userData.last_name + " " + userData.last_name_mother
       if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
         this.setState({
-          name: obj.displayName,
-          email: obj.email,
-          idx: obj.uid,
+          name: full_name,
+          email: userData.email,
+          idx: userData.id,
         });
       } else if (
         process.env.REACT_APP_DEFAULTAUTH === "fake" ||
         process.env.REACT_APP_DEFAULTAUTH === "jwt"
       ) {
-        this.setState({ name: obj.username, email: obj.email, idx: obj.uid });
+        this.setState({ name: full_name, email: userData.email, idx: userData.id });
       }
     }
   }
@@ -44,17 +47,20 @@ class UserProfile extends Component {
   componentDidUpdate(prevProps, prevState, ss) {
     if (this.props !== prevProps) {
       const obj = JSON.parse(localStorage.getItem("authUser"));
+      const userData = JSON.parse(localStorage.getItem("userData"));
+      const full_name = userData.name + " " + userData.last_name + " " + userData.last_name_mother
       if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
+
         this.setState({
-          name: obj.displayName,
-          email: obj.email,
-          idx: obj.uid,
+          name: full_name,
+          email: userData.email,
+          idx: userData.id,
         });
       } else if (
         process.env.REACT_APP_DEFAULTAUTH === "fake" ||
         process.env.REACT_APP_DEFAULTAUTH === "jwt"
       ) {
-        this.setState({ name: obj.username, email: obj.email, idx: obj.uid });
+        this.setState({ name: full_name, email: userData.email, idx: userData.id });
       }
       setTimeout(() => {
         this.props.resetProfileFlag();
@@ -83,10 +89,16 @@ class UserProfile extends Component {
                   <CardBody>
                     <div className="d-flex">
                       <div className="me-3">
-                        <img
+                        {/* <img
                           src={avatar}
                           alt=""
                           className="avatar-md rounded-circle img-thumbnail"
+                        /> */}
+                        <Avatar
+                          alt={this.state.name}
+                          name={this.state.name}
+                          round
+                          size="60px"
                         />
                       </div>
                       <div className="align-self-center flex-1">
@@ -102,7 +114,7 @@ class UserProfile extends Component {
               </Col>
             </Row>
 
-            <h4 className="card-title mb-4">Change User Name</h4>
+            <h4 className="card-title mb-4">Cambiar nombre de usuario</h4>
 
             <Card>
               <CardBody>
@@ -125,7 +137,7 @@ class UserProfile extends Component {
                     <Form className="form-horizontal">
                       <div className="mb-3">
                         <Label for="username" className="form-label">
-                          Username
+                          Nombre de usuario
                         </Label>
                         <Field
                           name="username"
@@ -155,7 +167,7 @@ class UserProfile extends Component {
                       </div>
                       <div className="text-center mt-4">
                         <Button type="submit" color="danger">
-                          Update User Name
+                          Actualizar nombre de usuario
                         </Button>
                       </div>
                     </Form>

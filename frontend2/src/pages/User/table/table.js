@@ -60,7 +60,8 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                                 elementSelected: mBrand
                                             })
                                         }}
-                                        >
+                                        title='Editar usuario'
+                                      >
                                         <i className="fas fa-edit"></i>
                                     </button>
                                 </td>

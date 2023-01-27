@@ -11,11 +11,12 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                       sorter={sorter}
                       setSorter={setSorter}
                       headerNames={[
-                        {name: t("Code"), arrow: true},
+                        {name: "Código", arrow: true},
                         {name: "Imei", arrow: true},
-                        {name: t("State"), arrow: true},
-                        {name: t("Modem brand"), arrow: true},
-                        {name: t("Actions"), arrow: false}
+                        {name: "Estado", arrow: true},
+                        {name: "Marca de módem", arrow: true},
+                        {name: "Número", arrow: true},
+                        {name: "Acciones", arrow: false}
                       ]}
                      />
                     <tbody>
@@ -41,6 +42,7 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                                 </span>
                                 </td>
                                 <td>{listItem.mBrand_name}</td>
+                                <td>{listItem.sim_number || "- - -"}</td>
                                 <td>
                                     <button 
                                         className='btn btn-sm btn-primary me-2'
@@ -51,6 +53,7 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                                                 elementSelected: listItem
                                             })
                                         }}
+                                        title='Editar módem'
                                         >
                                         <i className="fas fa-edit"></i>
                                     </button>
@@ -63,23 +66,26 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                                                 elementSelected: listItem
                                             })
                                         }}
+                                        title='Tarjeta sim'
                                         >
                                         <i className="fas fa-sim-card"></i>
                                     </button>
                                     <button
-                                    onClick={()=>{
-                                        onGet({saveAs: "eventList", url: "event/modem/" + listItem.id})
-                                        setState({
-                                            tableMode: "events",
-                                            elementSelected: listItem
-                                        })
-                                    }}
                                         className="btn btn-sm btn-info mx-2"
+                                        title='Ver eventos'
+                                        onClick={()=>{
+                                            onGet({saveAs: "eventList", url: "event/modem/" + listItem.id})
+                                            setState({
+                                                tableMode: "events",
+                                                elementSelected: listItem
+                                            })
+                                        }}
                                     >
                                         <i className="fas fa-eye"></i>
                                     </button>
                                     <button 
                                         className='btn btn-sm btn-primary'
+                                        title='Añadir evento'
                                         onClick={()=>{
                                             setState({
                                                 modalOpen: true,

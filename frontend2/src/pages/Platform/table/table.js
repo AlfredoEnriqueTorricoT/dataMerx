@@ -43,7 +43,8 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                                 elementSelected: listItem
                                             })
                                         }}
-                                        >
+                                        title='Editar plataforma'
+                                      >
                                         <i className="fas fa-edit"></i>
                                     </button>
                                 </td>

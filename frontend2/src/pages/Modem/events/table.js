@@ -67,40 +67,40 @@ const Table = ({_crudName, listToShow, setState, t}) => {
 
                 <div className="row">
                   <div className="col-5 col-sm-6 col-md-7 col-lg-7 col-xl-7">
-                    {listItem.detail}
+                    {listItem.detail} <br />
+                    <button className='btn btn-primary btn-sm btn-label mt-2'>
+                      <i className="fas fa-camera label-icon"></i>
+                      Agregar foto
+                    </button>
                   </div>
                   <div className="col-7 col-sm-6 col-md-5 col-lg-5 col-xl-5">
                     {listItem.car_id ?
                       <EventDataShow
                         title={t("Car")}
-                        desc={listItem.car_id}
+                        desc={listItem.car.name}
                       />
                     : ""}
                     {listItem.modem_id ? 
                         <EventDataShow
                           title={t("Modem")}
-                          desc={listItem.modem_id}
+                          desc={listItem.modem.code}
                         />
                     : ""
                     }
                     {listItem.sim_id ? 
                           <EventDataShow
                           title={t("Sim")}
-                          desc={listItem.sim_id}
+                          desc={listItem.sim.number}
                         />
                     : ""
                     }
                     {listItem.platform_id ? 
                           <EventDataShow
                           title={t("Platform")}
-                          desc={listItem.platform_id}
+                          desc={listItem.platform.name}
                         />
                     : ""
                     }
-                    <EventDataShow
-                      title={t("User")}
-                      desc={listItem.user_id}
-                    />
                   </div>
                 </div>
               </div>

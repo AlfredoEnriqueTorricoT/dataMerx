@@ -33,7 +33,8 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                                 elementSelected: listItem
                             })
                         }}
-                        >
+                        title='Editar sim'
+                      >
                         <i className="fas fa-edit"></i>
                     </button>
                     <br />
@@ -45,8 +46,9 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                               elementSelected: listItem
                           })
                       }}
-                          className="btn btn-sm btn-info my-2"
-                      >
+                      className="btn btn-sm btn-info my-2"
+                      title='Ver eventos'
+                    >
                           <i className="fas fa-eye"></i>
                     </button>
                     <br />
@@ -59,6 +61,7 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                             elementSelected: listItem
                           })
                         }}
+                        title='Añadir evento'
                       >
                         <i className="fas fa-tasks"></i>
                     </button>

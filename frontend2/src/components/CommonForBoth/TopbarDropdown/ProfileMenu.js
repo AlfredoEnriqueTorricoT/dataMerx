@@ -7,6 +7,7 @@ import {
   DropdownItem,
 } from "reactstrap";
 import { withRouter, Link } from "react-router-dom";
+import Avatar from "react-avatar";
 
 //i18n
 import { withTranslation } from "react-i18next";
@@ -18,8 +19,9 @@ import { connect } from "react-redux";
 
 const getUserName = () => {
   if (localStorage.getItem("authUser")) {
-    const obj = JSON.parse(localStorage.getItem("authUser"))
-    return obj;
+    const obj = JSON.parse(localStorage.getItem("userData"))
+    const full_name = obj.name + " " + obj.last_name + " " + obj.last_name_mother
+    return full_name;
   }
 }
 
@@ -42,7 +44,7 @@ class ProfileMenu extends Component {
   componentDidMount() {
     const userData = getUserName();
     if (userData) {
-      this.setState({ name: userData.username })
+      this.setState({ name: userData })
     }
   }
 
@@ -50,7 +52,7 @@ class ProfileMenu extends Component {
     if (prevProps.success !== this.props.success) {
       const userData = getUserName();
       if (userData) {
-        this.setState({ name: userData.username })
+        this.setState({ name: userData })
       }
     }
   }
@@ -68,11 +70,18 @@ class ProfileMenu extends Component {
             id="page-header-user-dropdown"
             tag="button"
           >
-            <img
+            {/* <img
               className="rounded-circle header-profile-user"
               src={user1}
               alt="Header Avatar"
-            />{" "}
+            />{" "} */}
+            <Avatar
+              alt={this.state.name}
+              className="header-profile-user"
+              name={this.state.name}
+              round
+              size="40px"
+            />
             <span className="d-none d-xl-inline-block ms-1">
               {this.state.name}
             </span>

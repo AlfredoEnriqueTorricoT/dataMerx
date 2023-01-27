@@ -41,13 +41,12 @@ const ModalAddEvent = ({_crudName, localStore, onPost, setToastW, state, t}) => 
                     title: "",
                     detail: "",
                     type_id: "",
-                    car_id: "",
                     modem_id: state.elementSelected.id,
-                    sim_id: ""
+                    sim_id: state.elementSelected.sim_id || ""
                 }}
                 validate={validateFunction}
             >
-                {({errors})=>(
+                {()=>(
                     <Form id={_crudName.cod + "_" + formName}>
                         <FormikInput
                           label={t("Title")}
@@ -85,42 +84,6 @@ const ModalAddEvent = ({_crudName, localStore, onPost, setToastW, state, t}) => 
                           <option value={1}>{t("Informative")}</option>
                           <option value={2}>{t("Warning")}</option>
                           <option value={3}>{t("Danger")}</option>
-                        </FormikSelect>
-                        <FormikSelect
-                          label={t("Sim")}
-                          inputName="sim_id"
-                          groupId ={genericId}
-                        >
-                          <option className="text-secondary" hidden value="">{t("Select a sim")}</option>
-                          {localStore.simList.length ?
-                            localStore.simList.map((sim, idx)=>(
-                              <option key={"sAM-"+idx} value={sim.id}>{sim.number}</option>
-                            ))
-                            :
-                            <option className="text-secondary" disabled value="NOVALUE">{t("No ") + t("modems")}</option>
-                          }
-                        </FormikSelect>
-                        <FormikSelect
-                          disabled={true}
-                          label={t("Modem")}
-                          inputName="modem_id"
-                          groupId ={genericId}
-                        >
-                          <option className="text-secondary" disabled value={state.elementSelected.id}>{state.elementSelected.code}</option>
-                        </FormikSelect>
-                        <FormikSelect
-                          label={t("Car")}
-                          inputName="car_id"
-                          groupId ={genericId}
-                        >
-                          <option className="text-secondary" hidden value="">{t("Select a car")}</option>
-                          {localStore.carList.length ?
-                            localStore.carList.map((car, idx)=>(
-                              <option key={"eAC-"+idx} value={car.id}>{car.name}</option>
-                            ))
-                            :
-                            <option className="text-secondary" disabled value="NOVALUE">{t("No ") + t("cars")}</option>
-                          }
                         </FormikSelect>
                     </Form>
                 )}

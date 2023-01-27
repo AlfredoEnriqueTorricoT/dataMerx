@@ -40,6 +40,7 @@ const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
                                   elementSelected: listItem
                               })
                           }}
+                          title='Editar vehículo'
                           >
                           <i className="fas fa-edit"></i>
                       </button>
@@ -52,10 +53,12 @@ const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
                                   elementSelected: listItem
                               })
                           }}
+                          title='Módem del vehículo'
                           >
                           <i className="fas fa-digital-tachograph"></i>
                       </button>
                       <button
+                        className="btn btn-sm btn-info my-1"
                         onClick={()=>{
                             onGet({saveAs: "eventList", url: "event/car/" + listItem.id})
                             setState({
@@ -63,7 +66,7 @@ const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
                                 elementSelected: listItem
                             })
                         }}
-                            className="btn btn-sm btn-info my-1"
+                        title='Ver eventos'
                         >
                             <i className="fas fa-eye"></i>
                       </button>
@@ -77,6 +80,7 @@ const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
                                     elementSelected: listItem
                                 })
                             }}
+                            title='Añadir evento'
                             >
                             <i className="fas fa-tasks"></i>
                       </button>

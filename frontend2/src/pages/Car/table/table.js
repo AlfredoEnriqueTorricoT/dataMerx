@@ -47,6 +47,7 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                                 elementSelected: listItem
                                             })
                                         }}
+                                        title='Editar vehículo'
                                         >
                                         <i className="fas fa-edit"></i>
                                     </button>
@@ -59,18 +60,20 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                                 elementSelected: listItem
                                             })
                                         }}
+                                        title='Módem del vehículo'
                                         >
                                         <i className="fas fa-digital-tachograph"></i>
                                     </button>
                                     <button
-                                    onClick={()=>{
-                                        onGet({saveAs: "eventList", url: "event/car/" + listItem.id})
-                                        setState({
-                                            tableMode: "events",
-                                            elementSelected: listItem
-                                        })
-                                    }}
                                         className="btn btn-sm btn-info me-1"
+                                        onClick={()=>{
+                                            onGet({saveAs: "eventList", url: "event/car/" + listItem.id})
+                                            setState({
+                                                tableMode: "events",
+                                                elementSelected: listItem
+                                            })
+                                        }}
+                                        title='Ver eventos'
                                     >
                                         <i className="fas fa-eye"></i>
                                     </button>
@@ -83,7 +86,8 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                                 elementSelected: listItem
                                             })
                                         }}
-                                        >
+                                        title='Añadir evento'
+                                    >
                                         <i className="fas fa-tasks"></i>
                                     </button>
                                 </td>

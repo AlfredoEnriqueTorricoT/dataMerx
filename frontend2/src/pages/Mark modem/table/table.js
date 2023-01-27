@@ -60,6 +60,7 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                                 elementSelected: mBrand
                                             })
                                         }}
+                                        title='Editar marca de módem'
                                         >
                                         <i className="fas fa-edit"></i>
                                     </button>
