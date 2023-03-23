@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\ModemController;
 use App\Http\Controllers\ModemsMarkController;
 use App\Http\Controllers\PlatformController;
@@ -48,6 +49,7 @@ Route::put('user', [UserController::class,'update']);
 Route::get('sim', [SimController::class,'index']);
 Route::post('sim', [SimController::class,'store'])->middleware("auth:sanctum");
 Route::put('sim', [SimController::class,'update']);
+Route::post('sim-upload', [SimController::class,'storeUpload'])->middleware("auth:sanctum");
 
 Route::get('car', [CarController::class,'index']);
 Route::post('car', [CarController::class,'store'])->middleware("auth:sanctum");;
@@ -63,3 +65,5 @@ Route::post('event', [EventController::class,'store']);
 Route::get('platform', [PlatformController::class,'index']);
 Route::post('platform', [PlatformController::class,'store']);
 Route::put('platform', [PlatformController::class,'update']);
+
+Route::post('images', [ImagesController::class,'upload']);

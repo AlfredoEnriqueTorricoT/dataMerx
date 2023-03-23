@@ -53,6 +53,39 @@ class SimController extends Controller
         }
     }
 
+    public function storeUpload(Request $request)
+    {
+        //echo $request->bearerToken();
+        try {
+
+            $countSimRepeat = Sim::where("imei",$request->imei)->get()->count();
+
+            if($countSimRepeat > 0) {
+                return Res::responseError432("Imei ya registrado.", null);
+            }
+
+            $obj = Sim::create($request->all());
+
+            $event = [
+                "title" => "Registro",
+                "detail" => "Sim registrado",
+                "type_id" => 1,
+                "car_id" => null,
+                "modem_id" => null,
+                "sim_id" => $obj->id,
+                "platform_id" => null,
+                "user_id" => auth()->user()->id
+            ];
+            EventController::_store($event);
+
+            ImagesController::upload($request, "s", $obj["id"]);
+
+            return Res::responseSuccess($obj);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
     public function update(Request $request)
     {
         try {
@@ -69,7 +102,7 @@ class SimController extends Controller
             $obj->save();
 
             return Res::responseSuccess($obj);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
         }
     }
