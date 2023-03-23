@@ -27,10 +27,10 @@ const resources = {
   },
 }
 
-const language = localStorage.getItem("I18N_LANGUAGE")
-if (!language) {
+// const language = localStorage.getItem("I18N_LANGUAGE")
+// if (!language) {
   localStorage.setItem("I18N_LANGUAGE", "sp")
-}
+// }
 
 i18n
   .use(detector)
