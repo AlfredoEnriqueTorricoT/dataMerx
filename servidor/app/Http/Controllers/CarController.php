@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Res;
 use App\Models\Car;
+use App\Models\Images;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +20,25 @@ class CarController extends Controller
                 $car["platform"] = $car->platform;
                 $car["modem"] = $car->modem;
             }
+            return Res::responseSuccess($list);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
+    public function indexSearchPlaca($placa)
+    {
+        try {
+            $list = Car::where("placa","like", '%'.$placa.'%')->get();
+
+            foreach($list as $car){
+                $car->images = Images::where([
+                    ["table", "=", "c"],
+                    ["table_id", "=", $car["id"]],
+                ])->get("url");
+            }
+
+
             return Res::responseSuccess($list);
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
@@ -44,6 +64,32 @@ class CarController extends Controller
                 "user_id" => auth()->user()->id
             ];
             EventController::_store($event);
+
+            return Res::responseSuccess($obj);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
+    public function storeUpload(Request $request)
+    {
+        try {
+            $request->sim_id = null;
+            $obj = Car::create($request->all());
+
+            $event = [
+                "title" => "Registro",
+                "detail" => "Auto registrado",
+                "type_id" => 1,
+                "car_id" => $obj->id,
+                "modem_id" => null,
+                "sim_id" => null,
+                "platform_id" => null,
+                "user_id" => auth()->user()->id
+            ];
+            EventController::_store($event);
+
+            ImagesController::upload($request, "c", $obj["id"]);
 
             return Res::responseSuccess($obj);
         } catch (Exception $ex) {

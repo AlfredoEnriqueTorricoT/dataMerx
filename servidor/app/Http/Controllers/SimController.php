@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Res;
+use App\Models\Images;
 use App\Models\Sim;
 use Exception;
 use Illuminate\Http\Request;
@@ -14,6 +15,25 @@ class SimController extends Controller
     {
         try {
             $list = Sim::all();
+            return Res::responseSuccess($list);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
+    public function indexSearch($imei)
+    {
+        try {
+            $list = Sim::where("imei","like", '%'.$imei.'%')->get();
+
+            foreach($list as $sim){
+                $sim->images = Images::where([
+                    ["table", "=", "s"],
+                    ["table_id", "=", $sim["id"]],
+                ])->get("url");
+            }
+
+
             return Res::responseSuccess($list);
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
