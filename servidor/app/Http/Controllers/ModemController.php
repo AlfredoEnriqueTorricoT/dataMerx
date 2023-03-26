@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Res;
+use App\Models\Images;
 use App\Models\Modem;
 use Exception;
 use Illuminate\Http\Request;
@@ -23,6 +24,25 @@ class ModemController extends Controller
                 $moden["sim"] = $moden->sim;
                 $moden["modems_mark"] = $moden->modems_mark;
             }
+            return Res::responseSuccess($list);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
+    public function indexSearch($imei)
+    {
+        try {
+            $list = Modem::where("imei","like", '%'.$imei.'%')->get();
+
+            foreach($list as $modem){
+                $modem->images = Images::where([
+                    ["table", "=", "m"],
+                    ["table_id", "=", $modem["id"]],
+                ])->get("url");
+            }
+
+
             return Res::responseSuccess($list);
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
@@ -56,6 +76,39 @@ class ModemController extends Controller
                 "user_id" => auth()->user()->id
             ];
             EventController::_store($event);
+
+            return Res::responseSuccess($obj);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+    public function storeUpload(Request $request)
+    {
+        //echo $request->bearerToken();
+        try {
+
+            $countModemRepeat = Modem::where("imei",$request->imei)->get()->count();
+
+            if($countModemRepeat > 0) {
+                return Res::responseError432("Imei ya registrado.", null);
+            }
+
+            $request->sim_id = null;
+            $obj = Modem::create($request->all());
+
+            $event = [
+                "title" => "Registro",
+                "detail" => "Modem registrado",
+                "type_id" => 1,
+                "car_id" => null,
+                "modem_id" => $obj->id,
+                "sim_id" => null,
+                "platform_id" => null,
+                "user_id" => auth()->user()->id
+            ];
+            EventController::_store($event);
+
+            ImagesController::upload($request, "m", $obj["id"]);
 
             return Res::responseSuccess($obj);
         } catch (Exception $ex) {
