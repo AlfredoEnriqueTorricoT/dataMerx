@@ -28,22 +28,13 @@ const ModalAdd = ({_crudName, onPostAndGet, t}) => {
     const submitFunction = values => {
       let fData = new FormData()
 
-      let imgs = []
-
-      if (simImages.length == 1) {
-        imgs = simImages[0]
-      } else if (simImages.length > 1) {
-        for (let x = 0; x < simImages.length; x++) {
-          imgs = [...imgs, simImages[x]]
-        }
+      for (let x = 0; x < simImages.length; x++) {
+        fData.append("images[]", simImages[x]);
       }
-
-      console.log(imgs);
 
       fData.append("number", values.number);
       fData.append("code", values.code);
       fData.append("imei", values.imei);
-      fData.append("images[]", imgs);
 
       onPostAndGet({
         saveAs: "simList",
