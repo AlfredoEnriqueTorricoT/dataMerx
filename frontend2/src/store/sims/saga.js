@@ -42,6 +42,7 @@ function* postSimSaga(action) {
 
   try {
     response = yield call(AxiosServices.POST, {payload: action.payload, url: action.url})
+
     if (response.data.status == 200) {
       yield put(updateSimStorage({
         payload: response.data.data,
@@ -61,7 +62,10 @@ function* postAndGetSimSaga(action) {
 
   try {
     response = yield call(AxiosServices.POST, {payload: action.payload, url: action.url})
-
+    console.log(action.payload);
+    console.log(Array.from(action.payload));
+    console.log((Array.from(action.payload))["images[]"]);
+    console.log(response);
     try {
       if (response.data.status == 200) {
         yield put(

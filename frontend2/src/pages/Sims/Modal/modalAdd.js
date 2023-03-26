@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 
 const ModalAdd = ({_crudName, onPostAndGet, t}) => {
+  const [simImages, setSimImages] = useState([]) 
   
     const validateFunction = values => {
         let errors = {}
@@ -14,14 +15,54 @@ const ModalAdd = ({_crudName, onPostAndGet, t}) => {
         return errors
     }
 
+    const saveImages = (imgFiles) => {
+      // const IM = new FormData();
+
+      // for (let x = 0; x < imgFiles.length; x++) {
+      //   console.log(imgFiles[x]);
+      //   IM.append("images[]", imgFiles[x]);
+      // }
+      setSimImages(imgFiles)
+    };
+    
+    const submitFunction = values => {
+      let fData = new FormData()
+
+      let imgs = []
+
+      if (simImages.length == 1) {
+        imgs = simImages[0]
+      } else if (simImages.length > 1) {
+        for (let x = 0; x < simImages.length; x++) {
+          imgs = [...imgs, simImages[x]]
+        }
+      }
+
+      console.log(imgs);
+
+      fData.append("number", values.number);
+      fData.append("code", values.code);
+      fData.append("imei", values.imei);
+      fData.append("images[]", imgs);
+
+      onPostAndGet({
+        saveAs: "simList",
+        payload: fData,
+        url: "sim-upload",
+        urlToGet: "sim"
+      })
+    }
+
     return(
         <React.Fragment>          
             <Formik
                 onSubmit={values =>{
-                  onPostAndGet({
-                    saveAs: "simList",
-                    payload: values,
-                    url: "sim"})} }
+                  // onPostAndGet({
+                  //   saveAs: "simList",
+                  //   payload: values,
+                  //   url: "sim"})
+                  submitFunction(values)
+                  } }
                 initialValues={{
                     number: "",
                     code: "",
@@ -93,9 +134,57 @@ const ModalAdd = ({_crudName, onPostAndGet, t}) => {
                             </ErrorMessage>
                           </div>
                         </div>
+                        
+                        <div className="row mb-1">
+                          <label
+                            htmlFor="sim_Add_imei"
+                            className="col-3 col-form-label"
+                            >
+                            Añadir imagen
+                            <p className="text-danger d-inline-block">(*)</p>
+                          </label>
+                          <div className="col-9">
+                            <Field
+                              className="form-control"
+                              id="sim_Add_imei"
+                              multiple
+                              name="images"
+                              onChange={i => {
+                                saveImages(i.target.files);
+                              }}
+                              type="file"
+                            />
+                          </div>
+                        </div>
                     </Form>
                 )}
             </Formik>
+
+            {/* <button
+              className="btn btn-sm btn-info"
+              onClick={() => {
+                document
+                  .getElementById("inputUploadSimImages"+idx)
+                  .click();
+              }}
+              title='Añadir imagen'
+            >
+              <i className="fas fa-camera"></i>
+            </button> */}
+
+            {/* <input
+              accept="image/*"
+              type="file"
+              id={"inputUploadSimImages"}
+              multiple
+              onChange={i => {
+                uploadAvatar(
+                  i.target.files,
+                  {number: mBrand.number, code: mBrand.code, imei: mBrand.imei}
+                );
+              }}
+              style={{ display: "none" }}
+            /> */}
         </React.Fragment>
     )
 }
