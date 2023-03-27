@@ -11,19 +11,10 @@ const ModalAdd = ({_crudName, onPostAndGet, t}) => {
         if (!values.number) errors.number = "Enter the sim number"
         if (!values.code) errors.code = "Enter the sim code"
         if (!values.imei) errors.imei = "Enter the sim imei"
+        if (!simImages) errors.images = "Seleccione una o varias imagenes"
 
         return errors
     }
-
-    const saveImages = (imgFiles) => {
-      // const IM = new FormData();
-
-      // for (let x = 0; x < imgFiles.length; x++) {
-      //   console.log(imgFiles[x]);
-      //   IM.append("images[]", imgFiles[x]);
-      // }
-      setSimImages(imgFiles)
-    };
     
     const submitFunction = values => {
       let fData = new FormData()
@@ -48,10 +39,6 @@ const ModalAdd = ({_crudName, onPostAndGet, t}) => {
         <React.Fragment>          
             <Formik
                 onSubmit={values =>{
-                  // onPostAndGet({
-                  //   saveAs: "simList",
-                  //   payload: values,
-                  //   url: "sim"})
                   submitFunction(values)
                   } }
                 initialValues={{
@@ -128,54 +115,31 @@ const ModalAdd = ({_crudName, onPostAndGet, t}) => {
                         
                         <div className="row mb-1">
                           <label
-                            htmlFor="sim_Add_imei"
+                            htmlFor="sim_Add_images"
                             className="col-3 col-form-label"
                             >
-                            Añadir imagen
+                            Añadir imagenes
                             <p className="text-danger d-inline-block">(*)</p>
                           </label>
                           <div className="col-9">
                             <Field
                               className="form-control"
-                              id="sim_Add_imei"
+                              id="sim_Add_images"
                               multiple
                               name="images"
                               onChange={i => {
-                                saveImages(i.target.files);
+                                setSimImages(i.target.files);
                               }}
                               type="file"
                             />
+                            <ErrorMessage name="images">
+                              {msg => <h6 className="text-danger">{t(msg)}</h6>}
+                            </ErrorMessage>
                           </div>
                         </div>
                     </Form>
                 )}
             </Formik>
-
-            {/* <button
-              className="btn btn-sm btn-info"
-              onClick={() => {
-                document
-                  .getElementById("inputUploadSimImages"+idx)
-                  .click();
-              }}
-              title='Añadir imagen'
-            >
-              <i className="fas fa-camera"></i>
-            </button> */}
-
-            {/* <input
-              accept="image/*"
-              type="file"
-              id={"inputUploadSimImages"}
-              multiple
-              onChange={i => {
-                uploadAvatar(
-                  i.target.files,
-                  {number: mBrand.number, code: mBrand.code, imei: mBrand.imei}
-                );
-              }}
-              style={{ display: "none" }}
-            /> */}
         </React.Fragment>
     )
 }

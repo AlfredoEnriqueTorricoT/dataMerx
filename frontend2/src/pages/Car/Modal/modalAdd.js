@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 
@@ -6,6 +6,7 @@ import {FormikInput, FormikSelect, isEmail, isUrl} from "components/formElements
 
 
 const ModalAdd = ({_crudName, formName, localStore, onPostAndGet, setToastW, t}) => {
+    const [carImages, setCarImages] = useState({})
   
     const genericId = _crudName.cod + "_" + formName + "_"
 
@@ -16,23 +17,46 @@ const ModalAdd = ({_crudName, formName, localStore, onPostAndGet, setToastW, t})
         if (!values.mark) errors.mark = t("Enter the car mark")
         if (!values.model) errors.model = t("Enter the car model")
         if (!values.placa) errors.placa = t("Enter the car license plate")
+        if (!carImages) errors.images = "Seleccione una o varias imagenes"
 
         return errors
     }
     
     const submitFunc = values => {
       setToastW(true)
-
+      
       onPostAndGet({
         saveAs: _crudName.cod + "List",
         payload: values,
         url: "car"})
     }
 
+    const submitFunction = values => {
+        setToastW(true)
+        let fData = new FormData()
+  
+        for (let x = 0; x < carImages.length; x++) {
+          fData.append("images[]", carImages[x]);
+        }
+  
+        fData.append("name", values.name);
+        fData.append("mark", values.mark);
+        fData.append("model", values.model);
+        fData.append("placa", values.placa);
+        fData.append("platform_id", values.platform_id);
+  
+        onPostAndGet({
+          saveAs: "carList",
+          payload: fData,
+          url: "car-upload",
+          urlToGet: "car"
+        })
+      }
+
     return(
         <React.Fragment>
             <Formik
-                onSubmit={submitFunc}
+                onSubmit={submitFunction}
                 initialValues={{
                     name: "",
                     mark: "",
@@ -85,6 +109,30 @@ const ModalAdd = ({_crudName, formName, localStore, onPostAndGet, setToastW, t})
                                 <option className='text-secondary' disabled value="">{t("No platforms")}</option>
                             }
                         </FormikSelect>
+                        <div className="row mb-1">
+                          <label
+                            htmlFor="car_Add_images"
+                            className="col-3 col-form-label"
+                            >
+                            Añadir imagenes
+                            <p className="text-danger d-inline-block">(*)</p>
+                          </label>
+                          <div className="col-9">
+                            <Field
+                              className="form-control"
+                              id="car_Add_images"
+                              multiple
+                              name="images"
+                              onChange={i => {
+                                setCarImages(i.target.files);
+                              }}
+                              type="file"
+                            />
+                            <ErrorMessage name="images">
+                              {msg => <h6 className="text-danger">{t(msg)}</h6>}
+                            </ErrorMessage>
+                          </div>
+                        </div>
                     </Form>
                 )}
             </Formik>

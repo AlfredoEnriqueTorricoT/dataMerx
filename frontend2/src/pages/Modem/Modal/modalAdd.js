@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 
@@ -6,6 +6,7 @@ import {FormikInput, FormikSelect, isEmail, isUrl} from "components/formElements
 
 
 const ModalAdd = ({_crudName, formName, localStore, onPostAndGet, setToastW, t}) => {
+    const [modemImages, setModemImages] = useState(false)
   
     const genericId = _crudName.cod + "_" + formName + "_"
 
@@ -15,23 +16,35 @@ const ModalAdd = ({_crudName, formName, localStore, onPostAndGet, setToastW, t})
         if (!values.imei) errors.imei = t("Enter the modem imei")
         if (!values.code) errors.code = t("Enter the modem code")
         if (!values.mark_id) errors.mark_id = t("Select a modem brand")
+        if (!modemImages) errors.images = "Seleccione una o varias imagenes"
 
         return errors
     }
-    
-    const submitFunc = values => {
-      setToastW(true)
-    
-      onPostAndGet({
-        saveAs: _crudName.cod + "List",
-        payload: values,
-        url: "modem"})
-    }
+
+    const submitFunction = values => {
+        setToastW(true)
+        let fData = new FormData()
+  
+        for (let x = 0; x < modemImages.length; x++) {
+            fData.append("images[]", modemImages[x]);
+        }
+  
+        fData.append("mark_id", values.mark_id);
+        fData.append("code", values.code);
+        fData.append("imei", values.imei);
+  
+        onPostAndGet({
+          saveAs: "modemList",
+          payload: fData,
+          url: "modem-upload",
+          urlToGet: "modem"
+        })
+      }
 
     return(
         <React.Fragment>
             <Formik
-                onSubmit={submitFunc}
+                onSubmit={submitFunction}
                 initialValues={{
                     imei: "",
                     code: "",
@@ -71,6 +84,30 @@ const ModalAdd = ({_crudName, formName, localStore, onPostAndGet, setToastW, t})
                                 ))
                             }
                         </FormikSelect>
+                        <div className="row mb-1">
+                          <label
+                            htmlFor="modem_Add_images"
+                            className="col-3 col-form-label"
+                            >
+                            Añadir imagenes
+                            <p className="text-danger d-inline-block">(*)</p>
+                          </label>
+                          <div className="col-9">
+                            <Field
+                              className="form-control"
+                              id="modem_Add_images"
+                              multiple
+                              name="images"
+                              onChange={i => {
+                                setModemImages(i.target.files);
+                              }}
+                              type="file"
+                            />
+                            <ErrorMessage name="images">
+                              {msg => <h6 className="text-danger">{t(msg)}</h6>}
+                            </ErrorMessage>
+                          </div>
+                        </div>
                     </Form>
                 )}
             </Formik>
