@@ -1,14 +1,39 @@
-import React from "react"
+import React, {useState} from "react"
 import PropTypes from "prop-types"
 
-import { SearchBar } from "components/tableElements"
+const TableInputs = ({onGet, setState, setTableStatus, status, t}) => {
+  const [placa, setPlaca] = useState("")
 
-const TableInputs = ({filter, listLength, setFilter, setState, t}) => {
+  const searchFunction = () => {
+    onGet({saveAs: "carList", url: "car/" + placa})
+    setTableStatus("loading")
+  }
+ 
     return(
         <div className="d-flex flex-wrap mb-3">
-          {listLength > 0 ?
-          <SearchBar _onChange={setFilter} _value={filter} />
-          : ""}
+          <div className="d-inline-block">
+            <div className="input-group">
+              <input
+                type="text"
+                className="form-control"
+                min={0}
+                onChange={i => setPlaca(i.target.value)}
+                placeholder="Buscar por placa..."
+                value={placa}
+              />
+              <div className="input-group-append">
+                <button
+                  className="btn btn-primary"
+                  disabled={status == "waiting response" || placa == ""}
+                  onClick={searchFunction}
+                >
+                  {status == "waiting response" && placa != "" ?
+                  <i className="bx bx-loader bx-spin"></i> :
+                  <i className="fas fa-search"></i>}
+                </button>
+              </div>
+            </div>
+          </div>
         
             <div className="ms-auto">
                 <button
@@ -25,10 +50,10 @@ const TableInputs = ({filter, listLength, setFilter, setState, t}) => {
 }
 
 TableInputs.propTypes = {
-    filter: PropTypes.func,
-    listLength: PropTypes.number,
-    setFilter: PropTypes.func,
+    onGet: PropTypes.func,
     setState: PropTypes.func,
+    setTableStatus: PropTypes.func,
+    status: PropTypes.any,
     t: PropTypes.func
 }
 
