@@ -33,9 +33,9 @@ class ModemController extends Controller
     public function indexSearch($imei)
     {
         try {
-            $list = Modem::where("imei","like", '%'.$imei.'%')->get();
+            $list = Modem::where("imei", "like", '%' . $imei . '%')->get();
 
-            foreach($list as $modem){
+            foreach ($list as $modem) {
                 $modem->images = Images::where([
                     ["table", "=", "m"],
                     ["table_id", "=", $modem["id"]],
@@ -49,6 +49,73 @@ class ModemController extends Controller
         }
     }
 
+    public function byId($id)
+    {
+        try {
+            $modem = Modem::find($id);
+
+            if($modem == null){
+                return null;
+            }
+
+            $modem->images = Images::where([
+                ["table", "=", "m"],
+                ["table_id", "=", $modem["id"]],
+            ])->get("url");
+
+
+            return $modem;
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
+
+    static function bySimId($simId)
+    {
+        try {
+            $modem = Modem::where("sim_id", $simId)->first();
+
+
+
+            $modem->images = Images::where([
+                ["table", "=", "m"],
+                ["table_id", "=", $modem["id"]],
+            ])->get("url");
+
+
+
+            return $modem;
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
+    public function details($id)
+    {
+
+        $modem = ModemController::byId($id);
+        if ($modem == null) {
+            return Res::responseSuccess([
+                "sim" => null,
+                "modem" => null,
+                "car" => null
+            ]);
+        }
+
+        $sim = SimController::byId($modem["sim_id"]);
+        $car = CarController::byModemId($modem["id"]);
+
+
+        $obj = [
+            "sim" => $sim,
+            "modem" => $modem,
+            "car" => $car
+        ];
+
+        return Res::responseSuccess($obj);
+    }
+
 
 
     public function store(Request $request)
@@ -56,9 +123,9 @@ class ModemController extends Controller
         //echo $request->bearerToken();
         try {
 
-            $countModemRepeat = Modem::where("imei",$request->imei)->get()->count();
+            $countModemRepeat = Modem::where("imei", $request->imei)->get()->count();
 
-            if($countModemRepeat > 0) {
+            if ($countModemRepeat > 0) {
                 return Res::responseError432("Imei ya registrado.", null);
             }
 
@@ -87,9 +154,9 @@ class ModemController extends Controller
         //echo $request->bearerToken();
         try {
 
-            $countModemRepeat = Modem::where("imei",$request->imei)->get()->count();
+            $countModemRepeat = Modem::where("imei", $request->imei)->get()->count();
 
-            if($countModemRepeat > 0) {
+            if ($countModemRepeat > 0) {
                 return Res::responseError432("Imei ya registrado.", null);
             }
 
@@ -157,7 +224,7 @@ class ModemController extends Controller
                 return Res::responseErrorNoData();
             }
 
-            if($obj->sim_id != null){
+            if ($obj->sim_id != null) {
                 $event = [
                     "title" => "Retiro de SIM",
                     "detail" => "Otro sim sera asignado a este modem",

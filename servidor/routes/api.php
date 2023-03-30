@@ -35,6 +35,7 @@ Route::post('/register', 'AuthController@register');
 
 Route::get('modem', [ModemController::class,'index']);
 Route::get('modem/{imei}', [ModemController::class,'indexSearch']);
+Route::get('modem/details/{id}', [ModemController::class,'details']);
 Route::post('modem', [ModemController::class,'store'])->middleware("auth:sanctum");
 Route::put('modem', [ModemController::class,'update']);
 Route::put('modem/update-sim', [ModemController::class,'update_sim'])->middleware("auth:sanctum");
@@ -50,6 +51,7 @@ Route::put('user', [UserController::class,'update']);
 
 Route::get('sim', [SimController::class,'index']);
 Route::get('sim/{imei}', [SimController::class,'indexSearch']);
+Route::get('sim/details/{id}', [SimController::class,'details']);
 Route::post('sim', [SimController::class,'store'])->middleware("auth:sanctum");
 Route::put('sim', [SimController::class,'update']);
 Route::post('sim-upload', [SimController::class,'storeUpload'])->middleware("auth:sanctum");

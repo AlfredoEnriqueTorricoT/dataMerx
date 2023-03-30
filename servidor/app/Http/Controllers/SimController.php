@@ -24,9 +24,9 @@ class SimController extends Controller
     public function indexSearch($imei)
     {
         try {
-            $list = Sim::where("imei","like", '%'.$imei.'%')->get();
+            $list = Sim::where("imei", "like", '%' . $imei . '%')->get();
 
-            foreach($list as $sim){
+            foreach ($list as $sim) {
                 $sim->images = Images::where([
                     ["table", "=", "s"],
                     ["table_id", "=", $sim["id"]],
@@ -40,6 +40,52 @@ class SimController extends Controller
         }
     }
 
+    static public function byId($id){
+        try {
+            $sim = Sim::find($id);
+
+            if($sim == null){
+                return null;
+            }
+
+            $sim->images = Images::where([
+                ["table", "=", "s"],
+                ["table_id", "=", $sim["id"]],
+            ])->get("url");
+
+
+            return $sim;
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+
+    }
+    public function details($id)
+    {
+        $sim = SimController::byId($id);
+        if($sim == null){
+            return Res::responseSuccess([
+                "sim" => null,
+                "modem" => null,
+                "car" => null
+            ]);
+        }
+
+        $modem = ModemController::bySimId($id);
+        $car = null;
+        if($modem != null) {
+            $car = CarController::byModemId($modem["id"]);
+        }
+
+        $obj = [
+            "sim" => $sim,
+            "modem" => $modem,
+            "car" => $car
+        ];
+
+        return Res::responseSuccess($obj);
+    }
+
 
 
     public function store(Request $request)
@@ -47,9 +93,9 @@ class SimController extends Controller
         //echo $request->bearerToken();
         try {
 
-            $countSimRepeat = Sim::where("imei",$request->imei)->get()->count();
+            $countSimRepeat = Sim::where("imei", $request->imei)->get()->count();
 
-            if($countSimRepeat > 0) {
+            if ($countSimRepeat > 0) {
                 return Res::responseError432("Imei ya registrado.", null);
             }
 
@@ -78,9 +124,9 @@ class SimController extends Controller
         //echo $request->bearerToken();
         try {
 
-            $countSimRepeat = Sim::where("imei",$request->imei)->get()->count();
+            $countSimRepeat = Sim::where("imei", $request->imei)->get()->count();
 
-            if($countSimRepeat > 0) {
+            if ($countSimRepeat > 0) {
                 return Res::responseError432("Imei ya registrado.", null);
             }
 

@@ -29,9 +29,9 @@ class CarController extends Controller
     public function indexSearchPlaca($placa)
     {
         try {
-            $list = Car::where("placa","like", '%'.$placa.'%')->get();
+            $list = Car::where("placa", "like", '%' . $placa . '%')->get();
 
-            foreach($list as $car){
+            foreach ($list as $car) {
                 $car->images = Images::where([
                     ["table", "=", "c"],
                     ["table_id", "=", $car["id"]],
@@ -40,6 +40,28 @@ class CarController extends Controller
 
 
             return Res::responseSuccess($list);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
+    static public function byModemId($modemId)
+    {
+        try {
+            $car = Car::where("modem_id", $modemId)->first();
+
+            if($car == null){
+                return null;
+            }
+
+            $car->images = Images::where([
+                ["table", "=", "c"],
+                ["table_id", "=", $car["id"]],
+            ])->get("url");
+
+
+
+            return $car;
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
         }
