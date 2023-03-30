@@ -45,6 +45,29 @@ class CarController extends Controller
         }
     }
 
+    public static function byId($id)
+    {
+        try {
+
+            $car = Car::find($id);
+
+            if($car == null){
+                return null;
+            }
+
+            $car->images = Images::where([
+                ["table", "=", "c"],
+                ["table_id", "=", $car["id"]],
+            ])->get("url");
+
+
+
+            return $car;
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
     static public function byModemId($modemId)
     {
         try {
@@ -65,6 +88,34 @@ class CarController extends Controller
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
         }
+    }
+
+    public function details($id)
+    {
+        $car = CarController::byId($id);
+        if($car == null){
+            return Res::responseSuccess([
+                "sim" => null,
+                "modem" => null,
+                "car" => null
+            ]);
+        }
+
+        $modem = ModemController::byId($car["modem_id"]);
+
+        $sim = null;
+        if($modem != null) {
+
+            $sim = SimController::byId($modem["sim_id"]);
+        }
+
+        $obj = [
+            "sim" => $sim,
+            "modem" => $modem,
+            "car" => $car
+        ];
+
+        return Res::responseSuccess($obj);
     }
 
 

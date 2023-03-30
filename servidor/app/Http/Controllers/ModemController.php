@@ -49,7 +49,7 @@ class ModemController extends Controller
         }
     }
 
-    public function byId($id)
+    public static function byId($id)
     {
         try {
             $modem = Modem::find($id);
@@ -76,7 +76,9 @@ class ModemController extends Controller
         try {
             $modem = Modem::where("sim_id", $simId)->first();
 
-
+            if($modem == null){
+                return null;
+            }
 
             $modem->images = Images::where([
                 ["table", "=", "m"],
