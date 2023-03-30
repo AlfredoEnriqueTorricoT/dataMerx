@@ -13,7 +13,7 @@ import { useMediaQuery } from "react-responsive"
 
 const TableIndex = ({_crudName, onGet, localStore, setState, t}) => {
     const [filter, setFilter] = useState("")
-    const [tableStatus, setTableStatus] = useState("loading")
+    const [tableStatus, setTableStatus] = useState("init")
     const [sorter, zetSorter] = useState(1)
     
     const [tableFiltered, setTableFiltered] = useState([])
@@ -31,12 +31,10 @@ const TableIndex = ({_crudName, onGet, localStore, setState, t}) => {
     }, [localStore.status])
 
     const keysToSort = ["number", "code", "imei"]
+
     useEffect(()=>{
-        if (filter == "")
-            setTableFiltered(localStore[_crudName.cod + "List"])
-        else
-        setTableFiltered(tableFilter(localStore[_crudName.cod + "List"], filter, keysToSort))
-    }, [filter, localStore[_crudName.cod + "List"]])
+
+    }, [localStore.status])
 
     useEffect(()=>{
         let _keys = keysToSort[Math.abs(sorter) -1]
@@ -53,15 +51,23 @@ const TableIndex = ({_crudName, onGet, localStore, setState, t}) => {
                 <TableInputs
                     _crudName={_crudName}
                     filter={filter}
+                    onGet={onGet}
                     setFilter={setFilter}
                     setState={setState}
+                    setTableStatus={setTableStatus}
                     t={t}
                 />
+                {tableStatus == "init" &&
+                <center>
+                    <h4 className="text-secondary my-5">
+                        Ingrese el imei del sim
+                    </h4>
+                </center>}
                 {tableStatus == "loading" && <SpinnerL />}
                 {tableStatus == "success" ?
                         (localStore[_crudName.cod + "List"].length == 0 ?
                             <center>
-                                <h4 className="text-secondary my-5">{t("No " + _crudName.multiple)}</h4>
+                                <h4 className="text-secondary my-5">No hay sims que coincidan con su busqueda</h4>
                             </center> :
                             (isTabletOrMobile ?
                                 <TableMobile

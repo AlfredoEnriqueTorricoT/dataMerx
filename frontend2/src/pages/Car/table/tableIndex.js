@@ -7,7 +7,8 @@ import TableMobile from "./tableMobile"
 
 import { useMediaQuery } from "react-responsive"
 
-import { tableFilter, tableSorter } from "components/tableFilter"
+import { tableSorter } from "components/tableFilter"
+import { SpinnerL } from "components/components"
 
 const keysToSort = ["name", "model", "mark", "placa", "platform_name", "modem_code"]
 
@@ -15,6 +16,7 @@ const TableIndex = ({_crudName, localStore, onGet, setState, t}) => {
     const [cList, setCList] = useState([])
     const [filter, setFilter] = useState("")
     const [sorter, zetSorter] = useState(1)
+    const [tableStatus, setTableStatus] = useState("init")
     
     const [tableFiltered, setTableFiltered] = useState([])
 
@@ -41,20 +43,15 @@ const TableIndex = ({_crudName, localStore, onGet, setState, t}) => {
         if (localStore.carList.length)
             setCList(newList)
 
-        if (filter == "")
-            setTableFiltered(newList)
-        else
-            setTableFiltered(tableFilter(newList, filter, keysToSort))
+        setTableFiltered(newList)
     }, [localStore.carList])
 
     useEffect(()=>{
-        if (cList.length) {
-            if (filter == "")
-                setTableFiltered(cList)
-            else
-            setTableFiltered(tableFilter(cList, filter, keysToSort))
+        if (tableStatus == "loading" && localStore.status != "waiting response") {
+            if (localStore.status == 200) setTableStatus("success")
+            else setTableStatus("error")
         }
-    }, [filter])
+    }, [localStore.status])
 
     useEffect(()=>{
         if (cList.length) {
@@ -71,18 +68,25 @@ const TableIndex = ({_crudName, localStore, onGet, setState, t}) => {
                     {t("List of") + " " + t(_crudName.multiple)}
                 </div>
                 <TableInputs
-                    _crudName={_crudName}
-                    filter={filter}
-                    listLength={localStore[_crudName.cod + "List"].length}
-                    setFilter={setFilter}
+                    onGet={onGet}
                     setState={setState}
+                    setTableStatus={setTableStatus}
+                    status={localStore.status}
                     t={t}
                 />
                 {
+                tableStatus == "init" ?
+                <center>
+                    <h4 className="text-secondary my-5">
+                        Ingrese la placa del vehículo
+                    </h4>
+                </center>:
+                tableStatus == "loading" ?
+                <SpinnerL /> :
                 localStore[_crudName.cod + "List"].length == 0 ?
                     <center>
                         <h4 className="text-secondary my-5">
-                            {t("No ") + " " + t(_crudName.multiple)}
+                            No hay vehículos que coincidan con su busqueda
                         </h4>
                     </center>
                 :
@@ -114,6 +118,7 @@ TableIndex.propTypes = {
     _crudName: PropTypes.object,
     localStore: PropTypes.object,
     onGet: PropTypes.func,
+    status: PropTypes.any,
     setState: PropTypes.func,
     t: PropTypes.func
 }

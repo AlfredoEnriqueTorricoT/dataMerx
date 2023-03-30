@@ -8,13 +8,14 @@ import TableMobile from "./tableMobile"
 import { useMediaQuery } from "react-responsive"
 
 import { tableFilter, tableSorter } from "components/tableFilter"
+import { SpinnerL } from "components/components"
 
 const keysToSort = ["code", "imei", "active", "mBrand_name"]
 
 const TableIndex = ({_crudName, onGet, localStore, setState, t}) => {
-    const [filter, setFilter] = useState("")
     const [mList, setMList] = useState([])
     const [sorter, zetSorter] = useState(1)
+    const [tableStatus, setTableStatus] = useState(0) //0 init, 1 loading, 2 success, 3 error
     
     const [tableFiltered, setTableFiltered] = useState([])
 
@@ -31,30 +32,23 @@ const TableIndex = ({_crudName, onGet, localStore, setState, t}) => {
                 code: modem.code,
                 imei: modem.imei,
                 active: modem.active ? t("active") : t("inactive"),
-                mark_id: modem.modems_mark.id,
-                mBrand_name: modem.modems_mark.name,
-                sim_id: modem.sim ? modem.sim.id : "",
-                sim_number: modem.sim ? modem.sim.number : ""
+                mark_id: modem.mark_id,
+                sim_id: modem.sim_id,
             }))
             
         if (localStore.modemList.length)
             setMList(newList)
 
-        if (filter == "")
-            setTableFiltered(newList)
-        else
-            setTableFiltered(tableFilter(newList, filter, keysToSort))
+        setTableFiltered(newList)
         // XPSSDMQNA(!PSSDMQNA)
     }, [localStore.modemList])
 
     useEffect(()=>{
-        if (mList.length) {
-            if (filter == "")
-                setTableFiltered(mList)
-            else
-            setTableFiltered(tableFilter(mList, filter, keysToSort))
-        }
-    }, [filter])
+       if (tableStatus == 1 && localStore.status != "waiting response") {
+        if (localStore.status == 200) setTableStatus(2)
+        else setTableStatus(3)
+       }
+    }, [localStore.status])
 
     useEffect(()=>{
         if (mList.length) {
@@ -71,14 +65,27 @@ const TableIndex = ({_crudName, onGet, localStore, setState, t}) => {
                     {t("List of") + " " + t(_crudName.multiple)}
                 </div>
                 <TableInputs
-                    _crudName={_crudName}
-                    filter={filter}
-                    listLength={mList.length}
-                    setFilter={setFilter}
+                    onGet={onGet}
                     setState={setState}
+                    setTableStatus={setTableStatus}
+                    status={localStore.status}
                     t={t}
                 />
                 {
+                tableStatus == 0 ?
+                <center>
+                    <h4 className="text-secondary my-5">
+                        Ingrese el imei del módem
+                    </h4>
+                </center> :
+                tableStatus == 1 ?
+                <SpinnerL /> :
+                tableStatus == 3 ?
+                <center>
+                    <h4 className="text-secondary my-5">
+                        Error
+                    </h4>
+                </center> :
                 mList.length == 0 ?
                     <center>
                         <h4 className="text-secondary my-5">
