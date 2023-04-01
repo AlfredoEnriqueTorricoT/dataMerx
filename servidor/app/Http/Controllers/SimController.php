@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Res;
+use App\Models\Car;
 use App\Models\Images;
+use App\Models\Modem;
 use App\Models\Sim;
 use Exception;
 use Illuminate\Http\Request;
@@ -24,7 +26,7 @@ class SimController extends Controller
     public function indexSearch($imei)
     {
         try {
-            $list = Sim::where("imei", "like", '%' . $imei . '%')->get();
+            $list = Sim::where("number", "like", '%' . $imei . '%')->get();
 
             foreach ($list as $sim) {
                 $sim->images = Images::where([
@@ -150,6 +152,37 @@ class SimController extends Controller
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
         }
+    }
+
+
+    public function event(Request $request){
+        $modem_id = null;
+        $car_id = null;
+        $sim_id =  $request->all()["id"];
+
+        $modem = Modem::where("sim_id", $sim_id)->first();
+        $car = null;
+        if($modem != null){
+            $modem_id = $modem["id"];
+
+            $car = Car::where("modem_id", $modem_id)->first();
+            if($car != null){
+                $car_id = $car["id"];
+            }
+
+        }
+
+        $element = [
+            "sim_id" => $sim_id,
+            "modem_id" => $modem_id,
+            "car_id" => $car_id
+        ];
+
+        EventController::storeUpload($request, $element);
+
+        return $element;
+
+
     }
 
     public function update(Request $request)

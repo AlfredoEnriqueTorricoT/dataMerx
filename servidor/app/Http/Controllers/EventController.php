@@ -98,6 +98,28 @@ class EventController extends Controller
         }
     }
 
+    public static function storeUpload(Request $request, $objId)
+    {
+        //echo $request->bearerToken();
+        try {
+
+            $obj = Event::create([
+                "title" => $request->all()["title"],
+                "detail" => $request->all()["detail"],
+                "type_id" => $request->all()["type_id"],
+                "car_id" => $objId["car_id"],
+                "modem_id" => $objId["modem_id"],
+                "sim_id" => $objId["sim_id"]
+            ]);
+
+            ImagesController::upload($request, "e", $obj["id"]);
+
+            return Res::responseSuccess($obj);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
 
     static public function _store($data)
     {
@@ -110,6 +132,8 @@ class EventController extends Controller
             return Res::responseError($ex->getMessage());
         }
     }
+
+
 
     public function update(Request $request)
     {

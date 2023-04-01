@@ -53,6 +53,7 @@ Route::get('sim', [SimController::class,'index']);
 Route::get('sim/{imei}', [SimController::class,'indexSearch']);
 Route::get('sim/details/{id}', [SimController::class,'details']);
 Route::post('sim', [SimController::class,'store'])->middleware("auth:sanctum");
+Route::post('sim/event', [SimController::class,'event']);
 Route::put('sim', [SimController::class,'update']);
 Route::post('sim-upload', [SimController::class,'storeUpload'])->middleware("auth:sanctum");
 
@@ -69,6 +70,7 @@ Route::get('event/car/{id}', [EventController::class,'car']);
 Route::get('event/modem/{id}', [EventController::class,'modem']);
 Route::get('event/sim/{id}', [EventController::class,'sim']);
 Route::post('event', [EventController::class,'store']);
+Route::post('event-upload', [EventController::class,'storeUpload']);
 
 Route::get('platform', [PlatformController::class,'index']);
 Route::post('platform', [PlatformController::class,'store']);
