@@ -104,7 +104,7 @@ const ModalDetails = ({localStore}) => {
                       <NavItem _num={1} _name="Vehículo" />
                       <NavItem _num={2} _name="Sim" />
                     </ul>
-                    <div className="tab-content pt-4">
+                    <div className="tab-content pt-4 grayScroll" style={{maxHeight: "55vh", overflowY: "auto", overflowX: "hidden"}}>
                         <div className={`tab-pane fade ${activeTab == 0 ? "active show" : ""}`}>
                             {localStore.modemDetails.modem.images ?
                                 <div className="row mb-1">
@@ -117,8 +117,8 @@ const ModalDetails = ({localStore}) => {
                                     <ShowData title={"Imei"} data={localStore.modemDetails.modem.imei} />
                                 </div>
                                 <div className="col">
-                                    <ShowData title={"Mark id"} data={localStore.modemDetails.modem.mark_id} />
-                                    <ShowData title={"Sim id"} data={localStore.modemDetails.modem.sim_id || "Sin sim"} />
+                                    <ShowData title={"Mark id"} data={localStore.modemDetails.modem.mark_id || "- - -"} />
+                                    <ShowData title={"Sim id"} data={localStore.modemDetails.modem.sim_id || "- - -"} />
                                 </div>
                             </div>
                         </div>
@@ -138,7 +138,7 @@ const ModalDetails = ({localStore}) => {
                                 <div className="col">
                                     <ShowData title={"Marca"} data={localStore.modemDetails.car.mark} />
                                     <ShowData title={"Modelo"} data={localStore.modemDetails.car.model} />
-                                    <ShowData title={"Plataforma"} data={localStore.modemDetails.car.platform_id} />
+                                    <ShowData title={"Plataforma"} data={localStore.modemDetails.car.platform_id || "- - -"} />
                                 </div>
                             </div>
                         </div> : ""}
@@ -155,7 +155,15 @@ const ModalDetails = ({localStore}) => {
                                     <ShowData title="Imei" data={localStore.modemDetails.sim.imei} />
                                 </div>
                                 <div className="col">
-                                    <ShowData title="Estado" data={localStore.modemDetails.sim.active} />
+                                    <ShowData title="Estado" data={
+                                        <span
+                                        className={`badge font-size-11 rounded-pill badge-soft-${
+                                            localStore.simDetails.sim.active ? "primary" : "dark"
+                                        } text-uppercase`}
+                                      >
+                                        {localStore.simDetails.sim.active ? "ACTIVO" : "INACTIVO"}
+                                      </span>
+                                    } />
                                     <ShowData title="Código" data={localStore.modemDetails.sim.code} />
                                 </div>
                             </div>

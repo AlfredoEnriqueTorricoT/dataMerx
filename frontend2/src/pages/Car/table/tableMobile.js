@@ -31,6 +31,19 @@ const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
                   </div>
                   <div className="col-2">
                     <center>
+                    <button
+                                        className="btn btn-sm btn-info mb-1"
+                                        onClick={()=>{
+                                            onGet({saveAs: "carDetails", url: "car/details/" + listItem.id})
+                                            setState({
+                                                modalOpen: true,
+                                                modalType: "Details"
+                                            })
+                                        }}
+                                        title='Ver detalles'
+                                    >
+                                        <i className="fas fa-eye"></i>
+                                    </button>
                       <button
                           className='btn btn-sm btn-primary'
                           onClick={()=>{

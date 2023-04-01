@@ -24,6 +24,20 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                     />
                   </div>
                   <div className="col-2">
+                  <button
+                                      className="btn btn-sm btn-info mb-1"
+                                      onClick={()=>{
+                                          onGet({saveAs: "simDetails", url: "sim/details/" + mBrand.id})
+                                          setState({
+                                              modalOpen: true,
+                                              modalType: "Details"
+                                          })
+                                      }}
+                                      title='Ver detalles'
+                                    >
+                                        <i className="fas fa-eye"></i>
+                                    </button>
+                                    <br />
                     <button
                         className='btn btn-sm btn-primary'
                         onClick={()=>{
@@ -46,7 +60,7 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                               elementSelected: listItem
                           })
                       }}
-                      className="btn btn-sm btn-info my-2"
+                      className="btn btn-sm btn-info my-1"
                       title='Ver eventos'
                     >
                           <i className="fas fa-eye"></i>
