@@ -19,8 +19,14 @@ import { connect } from "react-redux";
 
 const getUserName = () => {
   if (localStorage.getItem("authUser")) {
-    const obj = JSON.parse(localStorage.getItem("userData"))
-    const full_name = obj.name + " " + obj.last_name + " " + obj.last_name_mother
+    let full_name;
+    if (localStorage.getItem("userData")) {
+      const obj = JSON.parse(localStorage.getItem("userData"))
+      full_name = obj.name + " " + obj.last_name + " " + obj.last_name_mother
+    } else {
+      const obj = JSON.parse(localStorage.getItem("authUser"))
+      full_name = obj.name
+    }
     return full_name;
   }
 }
