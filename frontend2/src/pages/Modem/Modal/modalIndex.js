@@ -6,6 +6,7 @@ import ModalAddEvent from './modalAddEvent';
 import { showToast } from 'components/toast';
 import ModalSim from './modalSim';
 import {Modal} from "reactstrap"
+import ModalDetails from './modalDetails';
 
 const ModalIndex = ({_crudName, localStore, onPostAndGet, onPost, onPutAndGet, setState, state, t}) => {
     const [toastWaiting, setToastW] = useState(false)
@@ -69,7 +70,7 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPost, onPutAndGet, s
                         _crudName={_crudName}
                         formName={state.modalType}
                         localStore={localStore}
-                        onPostAndGet={onPostAndGet}
+                        onPost={onPost}
                         setState={setState}
                         setToastW={setToastW}
                         t={t}
@@ -111,6 +112,10 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPost, onPutAndGet, s
                         t={t}
                     />
                 )
+            case "Details":
+                return(
+                    <ModalDetails localStore={localStore} />
+                )
             default:
                 break;
         }
@@ -142,11 +147,12 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPost, onPutAndGet, s
                         setState({modalOpen: false})
                     }}
                 >
-                    {t("Cancel")}
+                    {state.modalType == "Details" ? "Cerrar" : "Cancelar"}
                 </button>
                 <div className="ms-auto">
                     <button
                         className={`btn btn-${toastWaiting ? "light" : "primary btn-label"}`}
+                        hidden={state.modalType == "Details"}
                         disabled={toastWaiting}
                         form={_crudName.cod + "_" + state.modalType}
                         type="submit"

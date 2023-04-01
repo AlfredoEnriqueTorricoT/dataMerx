@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 
-const ModalAdd = ({_crudName, onPostAndGet, t}) => {
+const ModalAdd = ({_crudName, onPost, t}) => {
   const [simImages, setSimImages] = useState([]) 
   
     const validateFunction = values => {
@@ -27,11 +27,10 @@ const ModalAdd = ({_crudName, onPostAndGet, t}) => {
       fData.append("code", values.code);
       fData.append("imei", values.imei);
 
-      onPostAndGet({
+      onPost({
         saveAs: "simList",
         payload: fData,
         url: "sim-upload",
-        urlToGet: "sim"
       })
     }
 
@@ -146,7 +145,7 @@ const ModalAdd = ({_crudName, onPostAndGet, t}) => {
 
 ModalAdd.propTypes = {
     _crudName: PropTypes.object,
-    onPostAndGet: PropTypes.func,
+    onPost: PropTypes.func,
     t: PropTypes.func,
 }
 

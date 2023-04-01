@@ -53,6 +53,19 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                 <td>{mBrand.code}</td>
                                 <td>{mBrand.imei}</td>
                                 <td>
+                                <button
+                                      className="btn btn-sm btn-info mx-2"
+                                      onClick={()=>{
+                                          onGet({saveAs: "simDetails", url: "sim/details/" + mBrand.id})
+                                          setState({
+                                              modalOpen: true,
+                                              modalType: "Details"
+                                          })
+                                      }}
+                                      title='Ver detalles'
+                                    >
+                                        <i className="fas fa-eye"></i>
+                                    </button>
                                     <button 
                                         className='btn btn-sm btn-primary'
                                         onClick={()=>{

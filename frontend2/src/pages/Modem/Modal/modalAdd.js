@@ -5,7 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import {FormikInput, FormikSelect, isEmail, isUrl} from "components/formElements"
 
 
-const ModalAdd = ({_crudName, formName, localStore, onPostAndGet, setToastW, t}) => {
+const ModalAdd = ({_crudName, formName, localStore, onPost, setToastW, t}) => {
     const [modemImages, setModemImages] = useState(false)
   
     const genericId = _crudName.cod + "_" + formName + "_"
@@ -33,11 +33,10 @@ const ModalAdd = ({_crudName, formName, localStore, onPostAndGet, setToastW, t})
         fData.append("code", values.code);
         fData.append("imei", values.imei);
   
-        onPostAndGet({
-          saveAs: "modemList",
+        onPost({
+          saveAs: "UNUSED_DATA",
           payload: fData,
           url: "modem-upload",
-          urlToGet: "modem"
         })
       }
 
@@ -119,7 +118,7 @@ ModalAdd.propTypes = {
     _crudName: PropTypes.object,
     formName: PropTypes.string,
     localStore: PropTypes.object,
-    onPostAndGet: PropTypes.func,
+    onPost: PropTypes.func,
     setToastW: PropTypes.func,
     t: PropTypes.func,
 }

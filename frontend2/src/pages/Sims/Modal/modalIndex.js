@@ -4,6 +4,7 @@ import ModalAdd from './modalAdd';
 import ModalEdit from './modalEdit';
 import { showToast } from 'components/toast';
 import ModalAddEvent from './modalAddEvent';
+import ModalDetails from './modalDetails';
 
 const ModalIndex = ({_crudName, localStore, onPost, onPostAndGet, onPutAndGet, setState, state, t}) => {
     const [toastWaiting, setToastW] = useState(false)
@@ -56,7 +57,7 @@ const ModalIndex = ({_crudName, localStore, onPost, onPostAndGet, onPutAndGet, s
                 return(
                     <ModalAdd
                         _crudName={_crudName}
-                        onPostAndGet={onPostAndGet}
+                        onPost={onPost}
                         setState={setState}
                         t={t}
                     />
@@ -81,6 +82,10 @@ const ModalIndex = ({_crudName, localStore, onPost, onPostAndGet, onPutAndGet, s
                         state={state}
                         t={t}
                     />
+                )
+            case "Details":
+                return(
+                    <ModalDetails localStore={localStore} />
                 )
                 
             default:
@@ -118,6 +123,7 @@ const ModalIndex = ({_crudName, localStore, onPost, onPostAndGet, onPutAndGet, s
                         className={`btn btn-${buttonColor[state.modalType]} btn-label`}
                         disabled={localStore.status == "waiting response"}
                         form={_crudName.cod + "_" + state.modalType}
+                        hidden={state.modalType == "Details"}
                         onClick={()=>setToastW(true)}
                         type="submit"
                     >

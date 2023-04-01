@@ -5,7 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import {FormikInput, FormikSelect, isEmail, isUrl} from "components/formElements"
 
 
-const ModalAdd = ({_crudName, formName, localStore, onPostAndGet, setToastW, t}) => {
+const ModalAdd = ({_crudName, formName, localStore, onPost, setToastW, t}) => {
     const [carImages, setCarImages] = useState({})
   
     const genericId = _crudName.cod + "_" + formName + "_"
@@ -20,15 +20,6 @@ const ModalAdd = ({_crudName, formName, localStore, onPostAndGet, setToastW, t})
         if (!carImages) errors.images = "Seleccione una o varias imagenes"
 
         return errors
-    }
-    
-    const submitFunc = values => {
-      setToastW(true)
-      
-      onPostAndGet({
-        saveAs: _crudName.cod + "List",
-        payload: values,
-        url: "car"})
     }
 
     const submitFunction = values => {
@@ -45,11 +36,10 @@ const ModalAdd = ({_crudName, formName, localStore, onPostAndGet, setToastW, t})
         fData.append("placa", values.placa);
         fData.append("platform_id", values.platform_id);
   
-        onPostAndGet({
-          saveAs: "carList",
+        onPost({
+          saveAs: "UNUSED_DATA",
           payload: fData,
           url: "car-upload",
-          urlToGet: "car"
         })
       }
 
@@ -144,7 +134,7 @@ ModalAdd.propTypes = {
     _crudName: PropTypes.object,
     formName: PropTypes.string,
     localStore: PropTypes.object,
-    onPostAndGet: PropTypes.func,
+    onPost: PropTypes.func,
     setToastW: PropTypes.func,
     t: PropTypes.func,
 }

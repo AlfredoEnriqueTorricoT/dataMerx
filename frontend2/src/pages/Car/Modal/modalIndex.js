@@ -6,6 +6,7 @@ import { showToast } from 'components/toast';
 import ModalModem from './modalModem';
 import { Modal } from 'reactstrap';
 import ModalAddEvent from './modalAddEvent';
+import ModalDetails from './modalDetails';
 
 const ModalIndex = ({_crudName, localStore, onPost, onPostAndGet, onPutAndGet, setState, state, t}) => {
     const [secondModal, setSecondModal] = useState({open: false})
@@ -63,7 +64,7 @@ const ModalIndex = ({_crudName, localStore, onPost, onPostAndGet, onPutAndGet, s
                         _crudName={_crudName}
                         formName={state.modalType}
                         localStore={localStore}
-                        onPostAndGet={onPostAndGet}
+                        onPost={onPost}
                         setState={setState}
                         setToastW={setToastW}
                         t={t}
@@ -105,6 +106,10 @@ const ModalIndex = ({_crudName, localStore, onPost, onPostAndGet, onPutAndGet, s
                         t={t}
                     />
                 )
+            case "Details":
+                return (
+                    <ModalDetails localStore={localStore}/>
+                )
                 
             default:
                 break;
@@ -141,6 +146,7 @@ const ModalIndex = ({_crudName, localStore, onPost, onPostAndGet, onPutAndGet, s
                         className={`btn btn-${toastWaiting ? "light" : "primary btn-label"}`}
                         disabled={toastWaiting}
                         form={_crudName.cod + "_" + state.modalType}
+                        hidden={state.modalType == "Details"}
                         type="submit"
                     >
                         {

@@ -49,7 +49,7 @@ const ModemPage = ({
     }
 
     useEffect(()=>{
-        onGet({ saveAs: _crudName.cod + "List", url: "modem" })
+        // onGet({ saveAs: _crudName.cod + "List", url: "modem" })
         onGet({ saveAs: "modemBrandList", url: "modem-mark" })
         onGet({ saveAs: "carList", url: "car" })
         onGet({ saveAs: "simList", url: "sim" })
