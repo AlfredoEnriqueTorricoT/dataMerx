@@ -67,10 +67,12 @@ Route::put('car', [CarController::class,'update']);
 Route::put('car/update-modem', [CarController::class,'update_modem'])->middleware("auth:sanctum");
 Route::post('car-upload', [CarController::class,'storeUpload'])->middleware("auth:sanctum");
 
-Route::get('event/{type}/{id}', [EventController::class,'index']);
+
 Route::get('event/car/{id}', [EventController::class,'car']);
 Route::get('event/modem/{id}', [EventController::class,'modem']);
 Route::get('event/sim/{id}', [EventController::class,'sim']);
+Route::get('event/{type}/{id}', [EventController::class,'index']);
+Route::get('event-images/{id}', [EventController::class,'images']);
 Route::post('event', [EventController::class,'store']);
 Route::post('event-upload', [EventController::class,'storeUpload']);
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Res;
 use App\Models\Car;
 use App\Models\Event;
+use App\Models\Images;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class EventController extends Controller
     public function index($type, $id)
     {
         try {
-            echo $type. " | " . $id;
+
             $list = Event::where($type."_id", $id)->get();
 
             foreach($list as $event){
@@ -134,6 +135,17 @@ class EventController extends Controller
         }
     }
 
+
+
+    public function images($id) {
+
+        $obj = Images::where([
+            ["table", "=", "e"],
+            ["table_id", "=", $id]
+        ])->get("url");
+
+        return Res::responseSuccess($obj);
+    }
 
 
     public function update(Request $request)
