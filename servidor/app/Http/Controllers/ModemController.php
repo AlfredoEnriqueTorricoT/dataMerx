@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Res;
+use App\Models\Car;
 use App\Models\Images;
 use App\Models\Modem;
+use App\Models\Sim;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -183,6 +185,37 @@ class ModemController extends Controller
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
         }
+    }
+
+    public function event(Request $request){
+        $modem_id = $request->all()["id"];
+        $car_id = null;
+        $sim_id =  null;
+
+        $modem = Modem::find($modem_id);
+
+        $car = null;
+        if($modem != null){
+            $modem_id = $modem["id"];
+            $sim_id = $modem["sim_id"];
+
+            $car = Car::where("modem_id", $modem_id)->first();
+            if($car != null){
+                $car_id = $car["id"];
+            }
+
+
+        }
+
+        $element = [
+            "sim_id" => $sim_id,
+            "modem_id" => $modem_id,
+            "car_id" => $car_id
+        ];
+
+        $event = EventController::storeUpload($request, $element);
+
+        return Res::responseSuccess($event);
     }
 
     public function update_sim(Request $request)

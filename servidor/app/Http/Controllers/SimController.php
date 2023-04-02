@@ -178,9 +178,9 @@ class SimController extends Controller
             "car_id" => $car_id
         ];
 
-        EventController::storeUpload($request, $element);
+        $event = EventController::storeUpload($request, $element);
 
-        return $element;
+        return Res::responseSuccess($event);
 
 
     }

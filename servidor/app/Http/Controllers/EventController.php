@@ -114,7 +114,7 @@ class EventController extends Controller
 
             ImagesController::upload($request, "e", $obj["id"]);
 
-            return Res::responseSuccess($obj);
+            return $obj;
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
         }

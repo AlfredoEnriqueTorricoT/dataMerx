@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Res;
 use App\Models\Car;
 use App\Models\Images;
+use App\Models\Modem;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -255,6 +256,39 @@ class CarController extends Controller
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
         }
+    }
+
+
+    public function event(Request $request){
+        $modem_id = null;
+        $car_id = $request->all()["id"];
+        $sim_id =  null;
+
+        $car = Car::find($car_id);
+
+        //$car = null;
+        if($car != null){
+
+            $modem = Modem::find($car->modem_id);
+            $modem_id = $car->modem_id;
+            $car_id = $car["id"];
+            if($modem != null){
+                $sim_id = $modem->sim_id;
+            }
+
+
+        }
+
+        $element = [
+            "sim_id" => $sim_id,
+            "modem_id" => $modem_id,
+            "car_id" => $car_id
+        ];
+
+        $evento = EventController::storeUpload($request, $element);
+
+        return Res::responseSuccess($evento);
+
     }
 
     public function update(Request $request)

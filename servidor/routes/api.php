@@ -37,6 +37,7 @@ Route::get('modem', [ModemController::class,'index']);
 Route::get('modem/{imei}', [ModemController::class,'indexSearch']);
 Route::get('modem/details/{id}', [ModemController::class,'details']);
 Route::post('modem', [ModemController::class,'store'])->middleware("auth:sanctum");
+Route::post('modem/event', [ModemController::class,'event']);
 Route::put('modem', [ModemController::class,'update']);
 Route::put('modem/update-sim', [ModemController::class,'update_sim'])->middleware("auth:sanctum");
 Route::post('modem-upload', [ModemController::class,'storeUpload'])->middleware("auth:sanctum");
@@ -60,7 +61,8 @@ Route::post('sim-upload', [SimController::class,'storeUpload'])->middleware("aut
 Route::get('car', [CarController::class,'index']);
 Route::get('car/{placa}', [CarController::class,'indexSearchPlaca']);
 Route::get('car/details/{id}', [CarController::class,'details']);
-Route::post('car', [CarController::class,'store'])->middleware("auth:sanctum");;
+Route::post('car', [CarController::class,'store'])->middleware("auth:sanctum");
+Route::post('car/event', [CarController::class,'event']);
 Route::put('car', [CarController::class,'update']);
 Route::put('car/update-modem', [CarController::class,'update_modem'])->middleware("auth:sanctum");
 Route::post('car-upload', [CarController::class,'storeUpload'])->middleware("auth:sanctum");
