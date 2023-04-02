@@ -11,10 +11,11 @@ use Illuminate\Http\Request;
 class EventController extends Controller
 {
     //
-    public function index()
+    public function index($type, $id)
     {
         try {
-            $list = Event::all();
+            echo $type. " | " . $id;
+            $list = Event::where($type."_id", $id)->get();
 
             foreach($list as $event){
                 $event["platform"] = $event->platform;
