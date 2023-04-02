@@ -1,11 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 
 import {FormikInput, FormikSelect} from "components/formElements"
 
-
 const ModalAddEvent = ({_crudName, localStore, onPost, setToastW, state, t}) => {
+    const [eventImages, setEventImages] = useState([])
     const formName = "Add event to"
     const genericId = _crudName.cod + "_" + formName + "_"
 
@@ -14,28 +14,49 @@ const ModalAddEvent = ({_crudName, localStore, onPost, setToastW, state, t}) => 
 
         if (!values.title) errors.title = t("Enter the event title")
         if (!values.type_id) errors.type_id = t("Select the type of event")
+        if (!eventImages) errors.images = "Seleccione una o varias imagenes"
 
         return errors
     }
     
-    const submitFunc = ({modem_id, sim_id, ...rest}) => {
+    // const submitFunc = ({modem_id, sim_id, ...rest}) => {
+    //   setToastW(true)
+
+    //   let formData = rest
+
+    //   if (modem_id) formData = {...formData, modem_id: modem_id}
+    //   if (sim_id) formData = {...formData, sim_id: sim_id}
+
+    //   onPost({
+    //     saveAs: "UNUSED_DATA",
+    //     payload: formData,
+    //     url: "event"})
+    // }
+
+    const submitFunction = values => {
       setToastW(true)
+      let fData = new FormData()
 
-      let formData = rest
+      for (let x = 0; x < eventImages.length; x++) {
+        fData.append("images[]", eventImages[x]);
+      }
 
-      if (modem_id) formData = {...formData, modem_id: modem_id}
-      if (sim_id) formData = {...formData, sim_id: sim_id}
+      fData.append("id", values.car_id);
+      fData.append("title", values.title);
+      fData.append("detail", values.detail);
+      fData.append("type_id", values.type_id);
 
       onPost({
         saveAs: "UNUSED_DATA",
-        payload: formData,
-        url: "event"})
+        payload: fData,
+        url: "car/event",
+      })
     }
 
     return(
         <React.Fragment>
             <Formik
-                onSubmit={submitFunc}
+                onSubmit={submitFunction}
                 initialValues={{
                     title: "",
                     detail: "",
@@ -83,7 +104,31 @@ const ModalAddEvent = ({_crudName, localStore, onPost, setToastW, state, t}) => 
                           <option value={1}>{t("Informative")}</option>
                           <option value={2}>{t("Warning")}</option>
                           <option value={3}>{t("Danger")}</option>
-                        </FormikSelect>                        
+                        </FormikSelect>
+                        <div className="row mb-1">
+                          <label
+                            htmlFor="car_event_Add_images"
+                            className="col-3 col-form-label"
+                            >
+                            Añadir imagenes
+                            <p className="text-danger d-inline-block">(*)</p>
+                          </label>
+                          <div className="col-9">
+                            <Field
+                              className="form-control"
+                              id="car_event_Add_images"
+                              multiple
+                              name="images"
+                              onChange={i => {
+                                setEventImages(i.target.files);
+                              }}
+                              type="file"
+                            />
+                            <ErrorMessage name="images">
+                              {msg => <h6 className="text-danger">{t(msg)}</h6>}
+                            </ErrorMessage>
+                          </div>
+                        </div>                        
                     </Form>
                 )}
             </Formik>

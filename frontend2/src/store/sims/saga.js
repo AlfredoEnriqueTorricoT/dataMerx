@@ -21,6 +21,9 @@ function* getSimSaga(action) {
 
   try {
     response = yield call(AxiosServices.GET, action.url)
+    console.log(response);
+    console.log(response.data);
+    console.log(response.data.data);
     if (response.data.status == 200) {
       yield put(updateSimStorage({
         payload: response.data.data,

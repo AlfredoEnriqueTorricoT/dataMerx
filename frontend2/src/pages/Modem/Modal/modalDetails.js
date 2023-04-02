@@ -158,10 +158,10 @@ const ModalDetails = ({localStore}) => {
                                     <ShowData title="Estado" data={
                                         <span
                                         className={`badge font-size-11 rounded-pill badge-soft-${
-                                            localStore.simDetails.sim.active ? "primary" : "dark"
+                                            localStore.modemDetails.sim.active ? "primary" : "dark"
                                         } text-uppercase`}
                                       >
-                                        {localStore.simDetails.sim.active ? "ACTIVO" : "INACTIVO"}
+                                        {localStore.modemDetails.sim.active ? "ACTIVO" : "INACTIVO"}
                                       </span>
                                     } />
                                     <ShowData title="Código" data={localStore.modemDetails.sim.code} />
