@@ -5,8 +5,9 @@ import ModalEdit from './modalEdit';
 import { showToast } from 'components/toast';
 import ModalAddEvent from './modalAddEvent';
 import ModalDetails from './modalDetails';
+import ModalEvent from './modalEvents';
 
-const ModalIndex = ({_crudName, localStore, onPost, onPostAndGet, onPutAndGet, setState, state, t}) => {
+const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAndGet, setState, state, t}) => {
     const [toastWaiting, setToastW] = useState(false)
 
     useEffect(()=>{
@@ -87,6 +88,10 @@ const ModalIndex = ({_crudName, localStore, onPost, onPostAndGet, onPutAndGet, s
                 return(
                     <ModalDetails localStore={localStore} />
                 )
+            case "Events":
+                return(
+                    <ModalEvent localStore={localStore} onGet={onGet} state={state} />
+                    )
                 
             default:
                 break;
@@ -123,7 +128,7 @@ const ModalIndex = ({_crudName, localStore, onPost, onPostAndGet, onPutAndGet, s
                         className={`btn btn-${buttonColor[state.modalType]} btn-label`}
                         disabled={localStore.status == "waiting response"}
                         form={_crudName.cod + "_" + state.modalType}
-                        hidden={state.modalType == "Details"}
+                        hidden={state.modalType == "Details" || state.modalType == "Events"}
                         onClick={()=>setToastW(true)}
                         type="submit"
                     >
@@ -143,6 +148,7 @@ const ModalIndex = ({_crudName, localStore, onPost, onPostAndGet, onPutAndGet, s
 ModalIndex.propTypes = {
     _crudName: PropTypes.object,
     localStore: PropTypes.object,
+    onGet: PropTypes.func,
     onPost: PropTypes.func,
     onPostAndGet: PropTypes.func,
     onPutAndGet: PropTypes.func,

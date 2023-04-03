@@ -88,6 +88,7 @@ const ModemPage = ({
                     _crudName={_crudName}
                     localStore={localStore}
                     onPostAndGet={onPostAndGet}
+                    onGet={onGet}
                     onPost={onPost}
                     onPut={onPut}
                     onPutAndGet={onPutAndGet}

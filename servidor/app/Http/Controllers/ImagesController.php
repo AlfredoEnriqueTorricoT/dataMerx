@@ -14,7 +14,7 @@ class ImagesController extends Controller
 
     static public function upload(Request $request, $table, $table_id)
     {
-
+        //echo "aqui";
         //$user = auth()->user();
         if(!$request->file('images')){
             return ;

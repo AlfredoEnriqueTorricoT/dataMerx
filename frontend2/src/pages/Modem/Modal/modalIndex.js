@@ -7,8 +7,9 @@ import { showToast } from 'components/toast';
 import ModalSim from './modalSim';
 import {Modal} from "reactstrap"
 import ModalDetails from './modalDetails';
+import ModalEvent from './modalEvents';
 
-const ModalIndex = ({_crudName, localStore, onPostAndGet, onPost, onPutAndGet, setState, state, t}) => {
+const ModalIndex = ({_crudName, localStore, onPostAndGet, onGet, onPost, onPutAndGet, setState, state, t}) => {
     const [toastWaiting, setToastW] = useState(false)
     const [secondModal, setSecondModal] = useState({open: false})
 
@@ -116,6 +117,10 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPost, onPutAndGet, s
                 return(
                     <ModalDetails localStore={localStore} />
                 )
+            case "Events":
+                return(
+                    <ModalEvent localStore={localStore} onGet={onGet} state={state} />
+                )
             default:
                 break;
         }
@@ -152,7 +157,7 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPost, onPutAndGet, s
                 <div className="ms-auto">
                     <button
                         className={`btn btn-${toastWaiting ? "light" : "primary btn-label"}`}
-                        hidden={state.modalType == "Details"}
+                        hidden={state.modalType == "Details" || state.modalType == "Events"}
                         disabled={toastWaiting}
                         form={_crudName.cod + "_" + state.modalType}
                         type="submit"
@@ -217,6 +222,7 @@ ModalIndex.propTypes = {
     _crudName: PropTypes.object,
     localStore: PropTypes.object,
     onPostAndGet: PropTypes.func,
+    onGet: PropTypes.func,
     onPost: PropTypes.func,
     onPutAndGet: PropTypes.func,
     setState: PropTypes.func,

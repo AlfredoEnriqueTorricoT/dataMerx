@@ -83,6 +83,7 @@ const SimPage = ({
                 <ModalIndex
                     _crudName={_crudName}
                     localStore={localStore}
+                    onGet={onGet}
                     onPost={onPost}
                     onPostAndGet={onPostAndGet}
                     onPutAndGet={onPutAndGet}

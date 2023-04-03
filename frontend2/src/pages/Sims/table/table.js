@@ -84,8 +84,11 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                       onClick={()=>{
                                           onGet({saveAs: "eventList", url: "event/sim/" + mBrand.id})
                                           setState({
-                                              tableMode: "events",
-                                              elementSelected: mBrand
+                                            modalOpen: true,
+                                            modalType: "Events",
+                                            modalSize: "lg",
+                                            elementSelected: mBrand
+                                            // tableMode: "events",
                                           })
                                       }}
                                       title='Ver eventos'

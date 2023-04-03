@@ -87,8 +87,11 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                                         onClick={()=>{
                                             onGet({saveAs: "eventList", url: "event/modem/" + listItem.id})
                                             setState({
-                                                tableMode: "events",
+                                                modalOpen: true,
+                                                modalType: "Events",
+                                                modalSize: "lg",
                                                 elementSelected: listItem
+                                                // tableMode: "events",
                                             })
                                         }}
                                     >

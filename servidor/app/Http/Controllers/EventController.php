@@ -24,11 +24,11 @@ class EventController extends Controller
                 $event["modem"] = $event->modem;
                 $event["sim"] = $event->sim;
 
-
+                /*
                 $event["images"] = Images::where([
                     ["table", "=", "e"],
                     ["table_id", "=", $event->id]
-                ])->get("url");
+                ])->get("url");*/
             }
 
             return Res::responseSuccess($list);
