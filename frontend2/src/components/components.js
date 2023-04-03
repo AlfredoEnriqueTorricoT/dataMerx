@@ -55,3 +55,14 @@ export const SpinnerL = () => {
       </center>
     );
   };
+
+ export const getThisDate = (_data) => {
+  const meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+  let theDate = new Date(_data)
+
+  let _day = theDate.getDate()
+  let _month = theDate.getMonth()
+  let _year = theDate.getFullYear()
+  
+  return(_day + " " + meses[_month] + ". " + _year)
+ }
