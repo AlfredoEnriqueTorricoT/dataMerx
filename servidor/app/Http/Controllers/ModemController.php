@@ -177,9 +177,9 @@ class ModemController extends Controller
                 "platform_id" => null,
                 "user_id" => auth()->user()->id
             ];
-            EventController::_store($event);
+            $eventSave =EventController::_store($event);
 
-            ImagesController::upload($request, "m", $obj["id"]);
+            ImagesController::upload($request, "e", $eventSave["id"]);
 
             return Res::responseSuccess($obj);
         } catch (Exception $ex) {

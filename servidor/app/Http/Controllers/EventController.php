@@ -47,6 +47,10 @@ class EventController extends Controller
                 $event["car"] = $event->car;
                 $event["modem"] = $event->modem;
                 $event["sim"] = $event->sim;
+                $event["images"] = Images::where([
+                    ["table", "=", "e"],
+                    ["table_id", "=", $event->id]
+                ])->get("url");
             }
 
             return Res::responseSuccess($list);
@@ -65,6 +69,10 @@ class EventController extends Controller
                 $event["car"] = $event->car;
                 $event["modem"] = $event->modem;
                 $event["sim"] = $event->sim;
+                $event["images"] = Images::where([
+                    ["table", "=", "e"],
+                    ["table_id", "=", $event->id]
+                ])->get("url");
             }
 
             return Res::responseSuccess($list);
@@ -83,6 +91,10 @@ class EventController extends Controller
                 $event["car"] = $event->car;
                 $event["modem"] = $event->modem;
                 $event["sim"] = $event->sim;
+                $event["images"] = Images::where([
+                    ["table", "=", "e"],
+                    ["table_id", "=", $event->id]
+                ])->get("url");
             }
 
             return Res::responseSuccess($list);
@@ -132,9 +144,9 @@ class EventController extends Controller
     static public function _store($data)
     {
         try {
-            Event::create($data);
+            $obj = Event::create($data);
 
-            //return Res::responseSuccess($obj);
+            return $obj;
         } catch (Exception $ex) {
             echo $ex;
             return Res::responseError($ex->getMessage());
