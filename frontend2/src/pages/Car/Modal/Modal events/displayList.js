@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 import { getThisDate, SpinnerL } from 'components/components'
 import { ErrorTable } from 'components/tableElements'
-import DisplayDetails from './displayDetails'
 
 const DisplayEventList = ({
     activeTab,
@@ -21,6 +20,28 @@ const DisplayEventList = ({
 }) => {
     const badgeColor = ["buen", "info", "warning", "danger"]
     const badgeText = ["dia", "Informativo", "Advertencia", "Peligro"]
+
+    const DisplayImages = ({images}) => {
+        if (images.length)
+            return(
+                <React.Fragment>
+                    {images.map((image, idx) => (
+                        <div className="row mb-1" key={"image-"+idx}>
+                            <img
+                                className="d-block w-100 imgCover"
+                                src={"http://localhost:8000/storage/" + image.url}
+                                alt="Second slide"
+                            />
+                        </div>
+                    ))}
+                </React.Fragment>
+            )
+        else return(
+            <center>
+                <h4 className="text-secondary my-5 py-5">Sin imágenes</h4>
+            </center>
+        )
+    }
 
     const Carrousel = ({images}) => {
         const maxImg = images.length - 1
@@ -119,27 +140,15 @@ const DisplayEventList = ({
                 </div>
             </div>
             <div className="col-5 m-0 p-0 grayScroll" style={{maxHeight: "55vh", overflowY: "auto", overflowX: "hidden"}}>
-                {detailStatus == -1 ?
+                {idSelected == -1 ?
                     <center>
                         <h4 className="text-secondary my-5 py-5">Seleccione un evento</h4>
                     </center>
-                : ""}
-                {detailStatus == 0 ? <div className="my-5"><SpinnerL /></div> : ""}
-                {detailStatus == 1 ?
+                :
                     <React.Fragment>
-                        <Carrousel images={localStore.eventImage} />
-                        <DisplayDetails
-                            activeTab={activeTab}
-                            eventDetails={{
-                                car: localStore.eventList.find((event)=>event.id == idSelected).car,
-                                modem: localStore.eventList.find((event)=>event.id == idSelected).modem,
-                                sim: localStore.eventList.find((event)=>event.id == idSelected).sim}}
-                            setActiveTab={setActiveTab}
-                            setShowImg={setShowImg}
-                            tabsLocked={tabsLocked}
-                        />
+                        <DisplayImages images={localStore.eventList.find((event)=>event.id == idSelected).images} />
                     </React.Fragment>
-                : ""}
+                }
                 {detailStatus == 2 ? <ErrorTable cod={localStore.status} retryFunction={RetryFDetail} /> : ""}
             </div>
         </div>

@@ -72,6 +72,7 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                             setState({
                                                 modalOpen: true,
                                                 modalType: "Edit",
+                                                modalSize: "md",
                                                 elementSelected: mBrand
                                             })
                                         }}
@@ -100,6 +101,7 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                       onClick={()=>{
                                         setState({
                                           modalOpen: true,
+                                          modalSize: "md",
                                           modalType: "Add event to",
                                           elementSelected: mBrand
                                         })
