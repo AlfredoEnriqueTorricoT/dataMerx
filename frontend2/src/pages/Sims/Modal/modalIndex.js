@@ -5,7 +5,7 @@ import ModalEdit from './modalEdit';
 import { showToast } from 'components/toast';
 import ModalAddEvent from './modalAddEvent';
 import ModalDetails from './modalDetails';
-import ModalEvent from './modalEvents';
+import ModalEvent from './Modal events/modalEvents';
 
 const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAndGet, setState, state, t}) => {
     const [toastWaiting, setToastW] = useState(false)

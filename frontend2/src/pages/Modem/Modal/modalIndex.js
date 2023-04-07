@@ -7,7 +7,7 @@ import { showToast } from 'components/toast';
 import ModalSim from './modalSim';
 import {Modal} from "reactstrap"
 import ModalDetails from './modalDetails';
-import ModalEvent from './modalEvents';
+import ModalEvent from './Modal events/modalEvents';
 
 const ModalIndex = ({_crudName, localStore, onPostAndGet, onGet, onPost, onPutAndGet, setState, state, t}) => {
     const [toastWaiting, setToastW] = useState(false)
