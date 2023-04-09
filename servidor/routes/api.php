@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\ModemController;
@@ -79,5 +80,9 @@ Route::post('event-upload', [EventController::class,'storeUpload']);
 Route::get('platform', [PlatformController::class,'index']);
 Route::post('platform', [PlatformController::class,'store']);
 Route::put('platform', [PlatformController::class,'update']);
+
+Route::get('client/{ci}', [ClientController::class,'indexSearch']);
+Route::post('client', [ClientController::class,'store']);
+Route::put('client', [ClientController::class,'update']);
 
 Route::post('images', [ImagesController::class,'upload']);
