@@ -42,7 +42,7 @@ const ModalAddEvent = ({_crudName, localStore, onPost, setToastW, state, t}) => 
         fData.append("images[]", eventImages[x]);
       }
 
-      fData.append("id", values.modem_id);
+      fData.append("id", values.sim_id);
       fData.append("title", values.title);
       fData.append("detail", values.detail);
       fData.append("type_id", values.type_id);
