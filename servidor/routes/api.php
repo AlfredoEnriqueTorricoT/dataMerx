@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\ClientCarController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ImagesController;
@@ -84,5 +85,8 @@ Route::put('platform', [PlatformController::class,'update']);
 Route::get('client/{ci}', [ClientController::class,'indexSearch']);
 Route::post('client', [ClientController::class,'store']);
 Route::put('client', [ClientController::class,'update']);
+
+Route::post('client-car', [ClientCarController::class,'store']);
+Route::delete('client-car/{obj}', [ClientCarController::class,'destroy']);
 
 Route::post('images', [ImagesController::class,'upload']);

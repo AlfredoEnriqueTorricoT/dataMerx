@@ -7,6 +7,7 @@ use App\Http\Res;
 use App\Models\Client;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
@@ -16,6 +17,13 @@ class ClientController extends Controller
     {
         try {
             $list = Client::where("ci", "like", '%' . $ci . '%')->get();
+
+            $sql = "select c.* from (SELECT * FROM client_cars where client_id = ?) cc
+            join cars c on cc.car_id = c.id;";
+
+            foreach($list as $client){
+                $client["cars"] = collect(DB::select($sql, [$client["id"]]))->all();
+            }
 
             return Res::responseSuccess($list);
         } catch (Exception $ex) {
