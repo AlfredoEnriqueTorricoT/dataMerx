@@ -130,6 +130,9 @@ class SidebarContent extends Component {
                     <Link to="/sims">{this.props.t("Sims")}</Link>
                   </li>
                   <li>
+                    <Link to="/clients">Clientes</Link>
+                  </li>
+                  <li>
                     <Link to="/mark-modem">{this.props.t("Modem brands")}</Link>
                   </li>
                   <li>
