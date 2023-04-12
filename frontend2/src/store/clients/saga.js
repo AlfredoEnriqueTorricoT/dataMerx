@@ -115,11 +115,37 @@ function* putAndGetClientSaga(action) {
   }
 }
 
+function* deleteClientSaga(action) {
+  let response;
+  try {
+    response = yield call(AxiosServices.DELETE, {url: action.url})
+
+    try {
+      if (response.data.status == 200) {
+        yield put(updateClientStorage({
+          payload: response.data.data,
+          saveAs: action.saveAs,
+          status: response.data.status}))
+      } else {
+        yield put(updateClientStorage({status: response.data.status}))
+      }  
+    } catch (error) {
+      yield put(updateClientStorage({status: response.response.status}))
+    }
+    
+} catch (error) {
+  console.log("resp:", response);
+  console.log("error:", error);
+  yield put(updateClientStorage({status: "Unexpected error"}))
+  }
+}
+
 function* clientSaga() {
   yield takeEvery(GET_CLIENT, getClientSaga)
   yield takeEvery(POST_CLIENT, postClientSaga)
   yield takeEvery(POST_AND_GET_CLIENT, postAndGetClientSaga)
   yield takeEvery(PUT_AND_GET_CLIENT, putAndGetClientSaga)
+  yield takeEvery(DELETE_CLIENT, deleteClientSaga)
 }
 
 export default clientSaga

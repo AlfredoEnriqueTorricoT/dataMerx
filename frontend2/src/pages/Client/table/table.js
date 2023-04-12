@@ -33,16 +33,20 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                 <td>
                                 <button
                                         className="btn btn-sm me-1"
-                                        // onClick={()=>{
-                                        //     onGet({saveAs: "carDetails", url: "car/details/" + listItem.id})
-                                        //     setState({
-                                        //         modalOpen: true,
-                                        //         modalType: "Details"
-                                        //     })
-                                        // }}
-                                        title='Ver detalles'
+                                        onClick={()=>{
+                                            setState({
+                                                elementSelected: {
+                                                    id: listItem.id,
+                                                    cars: listItem.cars
+                                                },
+                                                modalOpen: true,
+                                                modalType: "Car",
+                                                modalSize: "xl"
+                                            })
+                                        }}
+                                        title='Ver vehículos'
                                     >
-                                        <i className="fas fa-eye text-info"></i>
+                                        <i className="fas fa-car text-info"></i>
                                     </button>
                                     {/* <button 
                                         className='btn btn-sm btn-primary me-1'

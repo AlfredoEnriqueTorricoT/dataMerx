@@ -85,6 +85,7 @@ const ClientPage = ({
                 <ModalIndex
                     _crudName={_crudName}
                     localStore={localStore}
+                    onDelete={onDelete}
                     onGet={onGet}
                     onPost={onPost}
                     onPostAndGet={onPostAndGet}

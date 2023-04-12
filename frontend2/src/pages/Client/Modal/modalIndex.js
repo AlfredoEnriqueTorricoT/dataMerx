@@ -8,8 +8,9 @@ import { Modal } from 'reactstrap';
 import ModalAddEvent from './modalAddEvent';
 import ModalDetails from './modalDetails';
 import ModalEvent from './Modal events/modalEvents';
+import ModalCar from './modalCar';
 
-const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAndGet, setState, state, t}) => {
+const ModalIndex = ({_crudName, localStore, onDelete, onGet, onPost, onPostAndGet, onPutAndGet, setState, state, t}) => {
     const [secondModal, setSecondModal] = useState({open: false})
     const [toastWaiting, setToastW] = useState(false)
 
@@ -71,53 +72,20 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAn
                         t={t}
                         />
                 )
-            case "Edit":
+            case "Car":
                 return(
-                    <ModalEdit
+                    <ModalCar
                         _crudName={_crudName}
                         formName={state.modalType}
                         localStore={localStore}
-                        onPutAndGet={onPutAndGet}
-                        setToastW={setToastW}
-                        state={state}
-                        t={t}
-                    />
-                )
-            case "Modem":
-                return(
-                    <ModalModem
-                        _crudName={_crudName}
-                        formName={state.modalType}
-                        localStore={localStore}
-                        onPutAndGet={onPutAndGet}
-                        secondModal={secondModal}
-                        setToastW={setToastW}
-                        state={state}
-                        t={t}
-                    />
-                )
-            case "Add event to":
-                return(
-                    <ModalAddEvent
-                        _crudName={_crudName}
-                        localStore={localStore}
-                        onPost={onPost}
-                        setToastW={setToastW}
-                        state={state}
-                        t={t}
-                    />
-                )
-            case "Details":
-                return (
-                    <ModalDetails localStore={localStore}/>
-                )
-            case "Events":
-                return(
-                    <ModalEvent
-                        localStore={localStore}
+                        onDelete={onDelete}
                         onGet={onGet}
+                        onPost={onPost}
+                        setState={setState}
+                        setToastW={setToastW}
                         state={state}
-                    />
+                        t={t}
+                        />
                 )
                 
             default:
@@ -217,6 +185,7 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAn
 ModalIndex.propTypes = {
     _crudName: PropTypes.object,
     localStore: PropTypes.object,
+    onDelete: PropTypes.func,
     onGet: PropTypes.func,
     onPost: PropTypes.func,
     onPostAndGet: PropTypes.func,

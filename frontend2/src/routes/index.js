@@ -14,7 +14,6 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 import Dashboard from "../pages/Dashboard/index";
 
 //newPages
-// import Clientes from "pages/Clientes";
 import MarkModem from "pages/Mark modem";
 import SimPage from "pages/Sims"
 import UserPage from "pages/User"
@@ -49,7 +48,6 @@ const publicRoutes = [
   { path: "/forgot-password", component: ForgetPwd },
   { path: "/register", component: Register },
 
-  // { path: "/clientes", component: Clientes}
 ];
 
 export { authProtectedRoutes, publicRoutes };

@@ -34,6 +34,7 @@ const TableIndex = ({_crudName, localStore, onGet, setState, t}) => {
                 name: client.name,
                 last_name: client.last_name,
                 last_mother_name: client.last_mother_name,
+                cars: client.cars,
                 fullName:
                     client.name + " " + (client.last_name || "") + " " + (client.last_mother_name || "")
             }))

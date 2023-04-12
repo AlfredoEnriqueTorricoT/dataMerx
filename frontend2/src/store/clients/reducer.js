@@ -13,6 +13,7 @@ const INITIAL_CLIENT = {
     status: "waiting response",
     message: "",
     clientList: [],
+    carList: [],
     modemList: [],
     simList: [],
     platformList: [],
