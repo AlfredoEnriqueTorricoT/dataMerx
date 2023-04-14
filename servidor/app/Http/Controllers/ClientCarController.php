@@ -22,7 +22,7 @@ class ClientCarController extends Controller
             ])->get()->count();
 
             if($count > 0){
-                return Res::responseError("Ya se ha asignado este dispositivo al cliente");
+                return Res::responseError432("Ya se ha asignado este dispositivo al cliente",null);
             }
 
             $obj = ClientCar::create($obj);
