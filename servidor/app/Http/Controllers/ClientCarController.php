@@ -14,7 +14,18 @@ class ClientCarController extends Controller
     function store(Request $request)
     {
         try {
-            $obj = ClientCar::create($request->all());
+            $obj = $request->all();
+
+            $count = ClientCar::where([
+                ["client_id","=", $obj["client_id"]],
+                ["car_id","=", $obj["car_id"]]
+            ])->get()->count();
+
+            if($count > 0){
+                return Res::responseError("Ya se ha asignado este dispositivo al cliente");
+            }
+
+            $obj = ClientCar::create($obj);
             return Res::responseSuccess($obj);
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
