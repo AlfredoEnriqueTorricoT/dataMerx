@@ -39,7 +39,7 @@ const TableInputs = ({onGet, setState, setTableStatus, status, t}) => {
                 <button
                   className="btn btn-sm btn-success btn-label waves-effect waves-light"
                   onClick={()=>{
-                    setState({modalOpen: true, modalType: "Add"})
+                    setState({modalOpen: true, modalType: "Add", modalSize: "md"})
                   }}
                 >
                     <i className="fas fa-plus label-icon"></i>
