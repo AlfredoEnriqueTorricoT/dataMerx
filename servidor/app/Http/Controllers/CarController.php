@@ -46,6 +46,23 @@ class CarController extends Controller
         }
     }
 
+    public function indexSearchPlacaForAssign($placa, $client_id)
+    {
+        try {
+            
+            //$list = Car::where("placa", "like", '%' . $placa . '%')->get();
+            $sql = "select c.* from (select * from cars where placa like '%$placa%') c
+            left join (select * from client_cars where client_id = $client_id) cc on c.id = cc.car_id
+            where cc.id is  null;";
+
+            $list = collect(DB::select($sql));
+        
+            return Res::responseSuccess($list);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
     public static function byId($id)
     {
         try {
