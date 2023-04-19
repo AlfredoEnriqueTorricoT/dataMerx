@@ -18,7 +18,7 @@ class ClientController extends Controller
         try {
             $list = Client::where("ci", "like", '%' . $ci . '%')->get();
 
-            $sql = "select c.* from (SELECT * FROM client_cars where client_id = ?) cc
+            $sql = "select c.*, cc.id as client_car from (SELECT * FROM client_cars where client_id = ?) cc
             join cars c on cc.car_id = c.id;";
 
             foreach($list as $client){
