@@ -14,27 +14,15 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
     const [placa, setPlaca] = useState("")
     const [modalStatus, setModalStatus] = useState(-1) // -1 init, 0 loading, 1 success, 2 error
     const [tWaiting, setTWaiting] = useState(false)
+
+    const [linkedCarList, setLinkedCarList] = useState([])
+    const [carSelectedId, setSelectedCarId] = useState(0)
   
     const genericId = _crudName.cod + "_" + formName + "_"
 
-    // const validateFunction = values => {
-    //     let errors = {}
-
-    //     if (!values.ci) errors.ci = "Ingrese el ci del cliente"
-    //     if (!values.name) errors.name = "Ingrese el nombre del cliente"
-
-    //     return errors
-    // }
-
-    // const submitFunction = values => {
-    //     setToastW(true)
-  
-    //     onPost({
-    //       saveAs: "UNUSED_DATA",
-    //       payload: values,
-    //       url: "client",
-    //     })
-    //   }
+    useEffect(()=>{
+      setLinkedCarList(state.elementSelected.cars || [])
+    }, [])
 
     useEffect(()=>{
       if (modalStatus == 0 && localStore.status != "waiting response") {
@@ -45,6 +33,11 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
       if (tWaiting && localStore.status != "waiting response") {
         if (localStore.status == 200) {
           showToast({type: "success", message: `El vehículo ha sido ${tWaiting}do`})
+          setTWaiting(false)
+          if (carSelectedId != 0) updateLinkedCarList()
+        }
+        else if (localStore.status == 432) {
+          showToast({type: "info", message: localStore.message})
           setTWaiting(false)
         }
         else {
@@ -59,6 +52,19 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
       setModalStatus(0)
     }
 
+    const updateLinkedCarList = () => {
+      const idObjetive = carSelectedId > 0 ? carSelectedId : (carSelectedId * -1)
+      const carObjetive = localStore.carList.find(car => car.id == idObjetive)
+      if (carSelectedId > 0) {
+        setLinkedCarList([...linkedCarList, carObjetive])
+      } else if ((carSelectedId < 0)) {
+        console.log("CPQA");
+      } else {
+        console.log("WHYYYYYYYYYYYYYYYY");
+      }
+      setSelectedCarId(0)
+    }
+
     const addCar = id => {
       const fData = {
         client_id: state.elementSelected.id,
@@ -70,6 +76,7 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
         url: "client-car"
       })
       setTWaiting("vincula")
+      setSelectedCarId(id)
     }
     
     const quitCar = id => {
@@ -78,6 +85,7 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
         url: "client-car/" + id
       })
       setTWaiting("desvincula")
+      setSelectedCarId(id * -1)
     }
 
     return(
@@ -151,7 +159,7 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
                     <td>{car.mark}</td>
                     <td>{car.model}</td>
                     <td>
-                      {state.elementSelected.cars.some(coche => coche.id == car.id) ?
+                      {linkedCarList.some(coche => coche.id == car.id) ?
                       <button
                       className='btn py-0'
                       disabled={modalStatus != 1}
@@ -214,8 +222,8 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
                     </thead>
                     <tbody>
           {
-              state.elementSelected.cars.length ?
-                state.elementSelected.cars.map((car, idx) => (
+              linkedCarList.length ?
+                linkedCarList.map((car, idx) => (
                   <tr key={idx}>
                     <td>{car.name}</td>
                     <td>{car.placa}</td>
@@ -248,51 +256,6 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
         </div>
       </div>
     )
-    // return(
-    //     <React.Fragment>
-    //         <Formik
-    //             onSubmit={submitFunction}
-    //             initialValues={{
-    //                 ci: "",
-    //                 name: "",
-    //                 last_name: "",
-    //                 last_mother_name: "",
-    //             }}
-    //             validate={validateFunction}
-    //         >
-    //             {({errors})=>(
-    //                 <Form id={_crudName.cod + "_" + formName}>
-    //                     <FormikInput
-    //                       label="C. I."
-    //                       inputName="ci"
-    //                       type="text"
-    //                       required={true}
-    //                       groupId ={genericId}
-    //                     />
-    //                     <FormikInput
-    //                       label="Nombre"
-    //                       inputName="name"
-    //                       type="text"
-    //                       required={true}
-    //                       groupId ={genericId}
-    //                     />
-    //                     <FormikInput
-    //                       label="Apellido paterno"
-    //                       inputName="last_name"
-    //                       type="text"
-    //                       groupId ={genericId}
-    //                     />
-    //                     <FormikInput
-    //                       label="Apellido materno"
-    //                       inputName="last_mother_name"
-    //                       type="text"
-    //                       groupId ={genericId}
-    //                     />
-    //                 </Form>
-    //             )}
-    //         </Formik>
-    //     </React.Fragment>
-    // )
 }
 
 ModalCar.propTypes = {

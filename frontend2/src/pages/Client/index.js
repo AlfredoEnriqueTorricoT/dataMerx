@@ -22,7 +22,7 @@ import ModalIndex from "./Modal/modalIndex"
 import { ErrorTable } from "components/tableElements"
 import { SpinnerL } from "components/components"
 
-const _crudName = {single: "client", multiple: "clients", cod: "client"}
+const _crudName = {single: "cliente", multiple: "clientes", cod: "client"}
 
 const ClientPage = ({
     localStore,

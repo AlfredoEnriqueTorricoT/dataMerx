@@ -72,7 +72,7 @@ const ModalIndex = ({_crudName, localStore, onDelete, onGet, onPost, onPostAndGe
                         t={t}
                         />
                 )
-            case "Car":
+            case "Vehículos del":
                 return(
                     <ModalCar
                         _crudName={_crudName}

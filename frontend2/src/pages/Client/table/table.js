@@ -40,7 +40,7 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                                     cars: listItem.cars
                                                 },
                                                 modalOpen: true,
-                                                modalType: "Car",
+                                                modalType: "Vehículos del",
                                                 modalSize: "xl"
                                             })
                                         }}
