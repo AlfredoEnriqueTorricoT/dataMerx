@@ -121,7 +121,7 @@ function* deleteClientSaga(action) {
     response = yield call(AxiosServices.DELETE, {url: action.url})
 
     try {
-      if (response.data.status == 200) {
+      if (response.data.status >= 200 && response.data.status <= 205) {
         yield put(updateClientStorage({
           payload: response.data.data,
           saveAs: action.saveAs,

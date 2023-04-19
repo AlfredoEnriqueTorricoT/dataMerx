@@ -123,7 +123,7 @@ const ModalIndex = ({_crudName, localStore, onDelete, onGet, onPost, onPostAndGe
                         className={`btn btn-${toastWaiting ? "light" : "primary btn-label"}`}
                         disabled={toastWaiting}
                         form={_crudName.cod + "_" + state.modalType}
-                        hidden={state.modalType == "Details" || state.modalType == "Events"}
+                        hidden={["Events", "Details", "Vehículos del"].includes(state.modalType)}
                         type="submit"
                     >
                         {
@@ -163,6 +163,7 @@ const ModalIndex = ({_crudName, localStore, onDelete, onGet, onPost, onPostAndGe
                                 {t("Cancel")}
                             </button>
                             <div className="ms-auto">
+
                                 <button
                                     className={`btn btn-${localStore.status == "waiting response" ? "light" : "primary btn-label"}`}
                                     disabled={localStore.status == "waiting response"}

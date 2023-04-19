@@ -31,7 +31,7 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
       }
 
       if (tWaiting && localStore.status != "waiting response") {
-        if (localStore.status == 200) {
+        if (localStore.status >= 200 && localStore.status <= 205) {
           showToast({type: "success", message: `El vehículo ha sido ${tWaiting}do`})
           setTWaiting(false)
           if (carSelectedId != 0) updateLinkedCarList()
@@ -48,7 +48,7 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
     }, [localStore.status])
 
     const searchFunction = () => {
-      onGet({saveAs: "carList", url: "car/" + placa})
+      onGet({saveAs: "carList", url: "car/for-assign/" + placa + "/" + state.elementSelected.id})
       setModalStatus(0)
     }
 
@@ -58,9 +58,8 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
       if (carSelectedId > 0) {
         setLinkedCarList([...linkedCarList, carObjetive])
       } else if ((carSelectedId < 0)) {
-        console.log("CPQA");
-      } else {
-        console.log("WHYYYYYYYYYYYYYYYY");
+        let newLCL = linkedCarList.filter(car => car.id != idObjetive)
+        setLinkedCarList(newLCL)
       }
       setSelectedCarId(0)
     }
@@ -79,10 +78,10 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
       setSelectedCarId(id)
     }
     
-    const quitCar = id => {
+    const quitCar = (id, cCar) => {
       onDelete({
         saveAs: "UNUSED-DATA",
-        url: "client-car/" + id
+        url: "client-car/" + cCar
       })
       setTWaiting("desvincula")
       setSelectedCarId(id * -1)
@@ -122,7 +121,7 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
             </div>
           </div>
 
-          <div className="grayScroll table-responsive" style={{maxHeight: "55vh", overflow: "auto"}}>
+          <div className="grayScroll table-responsive p-1" style={{maxHeight: "55vh", overflow: "auto"}}>
                 <table className="table table-striped">
                     <thead>
                       <tr>
@@ -163,7 +162,7 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
                       <button
                       className='btn py-0'
                       disabled={modalStatus != 1}
-                      onClick={()=>quitCar(car.id)}
+                      onClick={()=>quitCar(car.id, car.client_car)}
                       title='Desvincular vehículo'
                       >
                         <i className="fas fa-minus text-danger"></i>
@@ -184,7 +183,7 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
               : 
                   <tr>
                     <td colSpan={5}>
-                      <h4 className="text-secondary">
+                      <h4 className="text-secondary my-3 py-5">
                         No hay vehículos que coincidan con su busqueda
                       </h4>
                     </td>
@@ -209,7 +208,7 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
           <div className="row">
             <h4>Vehiculos vinculados</h4>
           </div>
-          <div className="grayScroll table-responsive" style={{maxHeight: "55vh", overflow: "auto"}}>
+          <div className="grayScroll table-responsive p-1" style={{maxHeight: "55vh", overflow: "auto"}}>
                 <table className="table table-striped">
                     <thead>
                       <tr>
@@ -233,7 +232,7 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
                       <button
                         className='btn py-0'
                         disabled={modalStatus == 0}
-                        onClick={()=>quitCar(car.id)}
+                        onClick={()=>quitCar(car.id, car.client_car)}
                         title='Desvincular vehículo'
                         >
                         <i className="fas fa-minus text-danger"></i>
@@ -244,7 +243,7 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
               : 
                   <tr>
                     <td colSpan={5}>
-                      <h4 className="text-secondary">
+                      <h4 className="text-secondary my-3 py-5">
                         No hay vehículos vinculados al cliente
                       </h4>
                     </td>
