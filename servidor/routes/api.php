@@ -61,6 +61,7 @@ Route::put('sim', [SimController::class,'update']);
 Route::post('sim-upload', [SimController::class,'storeUpload'])->middleware("auth:sanctum");
 
 Route::get('car', [CarController::class,'index']);
+Route::get('car/for-assign/{placa}/{client_id}', [CarController::class,'indexSearchPlacaForAssign']);
 Route::get('car/{placa}', [CarController::class,'indexSearchPlaca']);
 Route::get('car/details/{id}', [CarController::class,'details']);
 Route::post('car', [CarController::class,'store'])->middleware("auth:sanctum");
