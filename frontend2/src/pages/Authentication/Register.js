@@ -78,7 +78,7 @@ class Register extends Component {
                         initialValues={{
                           email: (this.state && this.state.email) || "",
                           password: (this.state && this.state.password) || "",
-                          username: (this.state && this.state.username) || "",
+                          name: (this.state && this.state.name) || "",
                         }}
                         validationSchema={Yup.object().shape({
                           email: Yup.string().required(
@@ -87,12 +87,12 @@ class Register extends Component {
                           password: Yup.string().required(
                             "Please Enter Valid Password"
                           ),
-                          username: Yup.string().required(
-                            "Please Enter Valid Username"
+                          name: Yup.string().required(
+                            "Please Enter Valid name"
                           ),
                         })}
                         onSubmit={values => {
-                          this.props.registerUser(values);
+                          this.props.registerUser(values, this.props.history);
                         }}
                       >
                         {({ errors, status, touched }) => (
@@ -139,21 +139,21 @@ class Register extends Component {
                               />
                             </div>
                             <div className="mb-3">
-                              <Label for="username" className="form-label">
+                              <Label for="name" className="form-label">
                                 Username
                               </Label>
                               <Field
-                                name="username"
+                                name="name"
                                 type="text"
                                 className={
                                   "form-control" +
-                                  (errors.username && touched.username
+                                  (errors.name && touched.name
                                     ? " is-invalid"
                                     : "")
                                 }
                               />
                               <ErrorMessage
-                                name="username"
+                                name="name"
                                 component="div"
                                 className="invalid-feedback"
                               />
@@ -162,6 +162,7 @@ class Register extends Component {
                             <div className="mt-4 d-grid">
                               <button
                                 className="btn btn-primary btn-block"
+                                disabled={this.props.loading}
                                 type="submit"
                               >
                                 Register
@@ -206,10 +207,11 @@ class Register extends Component {
 
 Register.propTypes = {
   apiError: PropTypes.any,
+  history: PropTypes.object,
   registerUser: PropTypes.func,
   registerUserFailed: PropTypes.any,
   registrationError: PropTypes.any,
-  user: PropTypes.object,
+  user: PropTypes.any,
 };
 
 const mapStateToProps = state => {
