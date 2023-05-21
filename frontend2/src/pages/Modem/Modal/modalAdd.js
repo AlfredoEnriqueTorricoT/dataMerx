@@ -54,15 +54,15 @@ const ModalAdd = ({_crudName, formName, localStore, onPost, setToastW, t}) => {
                 {({errors})=>(
                     <Form id={_crudName.cod + "_" + formName}>
                       <FormikInput
+                        label={t("Code")}
+                        inputName="code"
+                        type="number"
+                        required={true}
+                        groupId ={genericId}
+                      />
+                      <FormikInput
                           label="Imei"
                           inputName="imei"
-                          type="number"
-                          required={true}
-                          groupId ={genericId}
-                        />
-                        <FormikInput
-                          label={t("Code")}
-                          inputName="code"
                           type="number"
                           required={true}
                           groupId ={genericId}

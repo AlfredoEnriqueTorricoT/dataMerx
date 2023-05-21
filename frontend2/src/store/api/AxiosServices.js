@@ -2,6 +2,7 @@ import axios from "axios";
 
 //const URL = process.env.REACT_APP_DATABASEURL;
 const URL = "http://localhost:8000/api/";
+export const URL_IMAGE = "http://localhost:8000/";
 // const config = {
 //   headers: { Authorization: `Bearer ${localStorage.getItem("userToken")}` },
 // };

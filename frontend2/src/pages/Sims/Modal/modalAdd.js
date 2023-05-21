@@ -51,27 +51,6 @@ const ModalAdd = ({_crudName, onPost, t}) => {
                     <Form id={_crudName.cod + "_Add"}>
                         <div className="row mb-1">
                           <label
-                            htmlFor="sim_Add_number"
-                            className="col-3 col-form-label"
-                            >
-                            {t("Number")}
-                            <p className="text-danger d-inline-block">(*)</p>
-                          </label>
-                          <div className="col-9">
-                            <Field
-                              className="form-control"
-                              id="sim_Add_number"
-                              name="number"
-                              type="number"
-                            />
-                            <ErrorMessage name="number">
-                              {msg => <h6 className="text-danger">{t(msg)}</h6>}
-                            </ErrorMessage>
-                          </div>
-                        </div>
-
-                        <div className="row mb-1">
-                          <label
                             htmlFor="sim_Add_code"
                             className="col-3 col-form-label"
                             >
@@ -86,6 +65,27 @@ const ModalAdd = ({_crudName, onPost, t}) => {
                               type="number"
                             />
                             <ErrorMessage name="code">
+                              {msg => <h6 className="text-danger">{t(msg)}</h6>}
+                            </ErrorMessage>
+                          </div>
+                        </div>
+
+                        <div className="row mb-1">
+                          <label
+                            htmlFor="sim_Add_number"
+                            className="col-3 col-form-label"
+                            >
+                            {t("Number")}
+                            <p className="text-danger d-inline-block">(*)</p>
+                          </label>
+                          <div className="col-9">
+                            <Field
+                              className="form-control"
+                              id="sim_Add_number"
+                              name="number"
+                              type="number"
+                            />
+                            <ErrorMessage name="number">
                               {msg => <h6 className="text-danger">{t(msg)}</h6>}
                             </ErrorMessage>
                           </div>
