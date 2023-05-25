@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { OptionsButton } from 'components/tableElements';
 
 const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
 
@@ -51,7 +52,21 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                 <td>{mBrand.name}</td>
                                 <td>{mBrand.detail || "- - -"}</td>
                                 <td>
-                                    <button 
+                                  <OptionsButton
+                                    buttonsList={[
+                                      {
+                                        _label: "Editar marca de módem",
+                                        onClick: ()=>{
+                                          setState({
+                                              modalOpen: true,
+                                              modalType: "Edit",
+                                              elementSelected: mBrand
+                                          })
+                                      }
+                                      }
+                                    ]}
+                                  />
+                                    {/* <button 
                                         className='btn btn-sm btn-primary'
                                         onClick={()=>{
                                             setState({
@@ -63,7 +78,7 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                         title='Editar marca de módem'
                                         >
                                         <i className="fas fa-edit"></i>
-                                    </button>
+                                    </button> */}
                                 </td>
                             </tr>
                         ))}

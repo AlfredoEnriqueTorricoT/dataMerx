@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { OptionsButton } from 'components/tableElements'
+
 const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
     return(
       <React.Fragment>
@@ -30,74 +32,62 @@ const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
                     </div>
                   </div>
                   <div className="col-2">
-                    <center>
-                    <button
-                                        className="btn btn-sm btn-info mb-1"
-                                        onClick={()=>{
-                                            onGet({saveAs: "carDetails", url: "car/details/" + listItem.id})
-                                            setState({
-                                                modalOpen: true,
-                                                modalType: "Details"
-                                            })
-                                        }}
-                                        title='Ver detalles'
-                                    >
-                                        <i className="fas fa-eye"></i>
-                                    </button>
-                      <button
-                          className='btn btn-sm btn-primary'
-                          onClick={()=>{
-                              setState({
-                                  modalOpen: true,
-                                  modalType: "Edit",
-                                  elementSelected: listItem
-                              })
-                          }}
-                          title='Editar vehículo'
-                          >
-                          <i className="fas fa-edit"></i>
-                      </button>
-                      <button
-                          className='btn btn-sm btn-secondary mt-1'
-                          onClick={()=>{
-                              setState({
-                                  modalOpen: true,
-                                  modalType: "Modem",
-                                  elementSelected: listItem
-                              })
-                          }}
-                          title='Módem del vehículo'
-                          >
-                          <i className="fas fa-digital-tachograph"></i>
-                      </button>
-                      <button
-                        className="btn btn-sm btn-info my-1"
-                        onClick={()=>{
-                            onGet({saveAs: "eventList", url: "event/car/" + listItem.id})
-                            setState({
-                                tableMode: "events",
-                                elementSelected: listItem
-                            })
-                        }}
-                        title='Ver eventos'
-                        >
-                            <i className="fas fa-eye"></i>
-                      </button>
-                      <br />
-                      <button 
-                            className='btn btn-sm btn-primary'
-                            onClick={()=>{
-                                setState({
-                                    modalOpen: true,
-                                    modalType: "Add event to",
-                                    elementSelected: listItem
-                                })
-                            }}
-                            title='Añadir evento'
-                            >
-                            <i className="fas fa-tasks"></i>
-                      </button>
-                    </center>
+                  <OptionsButton
+                                    buttonsList={[
+                                        {
+                                            _label: "Ver detalles",
+                                            onClick: ()=>{
+                                                onGet({saveAs: "carDetails", url: "car/details/" + listItem.id})
+                                                setState({
+                                                    modalOpen: true,
+                                                    modalType: "Details"
+                                                })
+                                            }
+                                        },
+                                        {
+                                            _label: "Editar vehículo",
+                                            onClick: ()=>{
+                                                setState({
+                                                    modalOpen: true,
+                                                    modalType: "Edit",
+                                                    elementSelected: listItem
+                                                })
+                                            }
+                                        },
+                                        {
+                                            _label: "Módem del vehículo",
+                                            onClick: ()=>{
+                                                setState({
+                                                    modalOpen: true,
+                                                    modalType: "Modem",
+                                                    elementSelected: listItem
+                                                })
+                                            }
+                                        },
+                                        {
+                                            _label: "Ver eventos",
+                                            onClick: ()=>{
+                                                onGet({saveAs: "eventList", url: "event/car/" + listItem.id})
+                                                setState({
+                                                    modalType: "Events",
+                                                    modalOpen: true,
+                                                    modalSize: "lg",
+                                                    elementSelected: listItem
+                                                })
+                                            }
+                                        },
+                                        {
+                                            _label: "Añadir evento",
+                                            onClick: ()=>{
+                                                setState({
+                                                    modalOpen: true,
+                                                    modalType: "Add event to",
+                                                    elementSelected: listItem
+                                                })
+                                            }
+                                        },
+                                    ]}
+                                />
                   </div>
                   {
                     listToShow.length -1 > idx ?

@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { OptionsButton } from 'components/tableElements'
+
 const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
     return(
       <React.Fragment>
@@ -22,21 +24,24 @@ const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
                     </div>
                   </div>
                   <div className="col-2">
-                    <center>
-                    <button
-                                        className="btn btn-sm mb-1"
-                                        // onClick={()=>{
-                                        //     onGet({saveAs: "carDetails", url: "car/details/" + listItem.id})
-                                        //     setState({
-                                        //         modalOpen: true,
-                                        //         modalType: "Details"
-                                        //     })
-                                        // }}
-                                        title='Ver detalles'
-                                    >
-                                        <i className="fas fa-eye text-info"></i>
-                                    </button>
-                    </center>
+                    <OptionsButton
+                        buttonsList={[
+                            {
+                                _label: "Ver vehículos",
+                                onClick: ()=>{
+                                    setState({
+                                        elementSelected: {
+                                            id: listItem.id,
+                                            cars: listItem.cars
+                                        },
+                                        modalOpen: true,
+                                        modalType: "Vehículos del",
+                                        modalSize: "xl"
+                                    })
+                                }
+                            }
+                        ]}
+                    />
                   </div>
                   {
                     listToShow.length -1 > idx ?
