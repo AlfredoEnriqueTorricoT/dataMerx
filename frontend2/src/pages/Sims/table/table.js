@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { OptionsButton } from 'components/tableElements';
+
 const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) => {
 
     const showHeader = (name, id) => {
@@ -28,7 +30,7 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
       };
 
     return(
-            <div className="grayScroll table-responsive" style={{maxHeight: "55vh", overflow: "auto"}}>
+            <div className="grayScroll table-responsive" style={{height: "55vh", overflow: "auto"}}>
                 <table className="table table-striped">
                     <thead>
                         <tr>
@@ -53,63 +55,46 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                 <td>{mBrand.code}</td>
                                 <td>{mBrand.imei}</td>
                                 <td>
-                                <button
-                                      className="btn btn-sm btn-info mx-2"
-                                      onClick={()=>{
-                                          onGet({saveAs: "simDetails", url: "sim/details/" + mBrand.id})
-                                          setState({
-                                              modalOpen: true,
-                                              modalType: "Details"
-                                          })
-                                      }}
-                                      title='Ver detalles'
-                                    >
-                                        <i className="fas fa-eye"></i>
-                                    </button>
-                                    <button 
-                                        className='btn btn-sm btn-primary'
-                                        onClick={()=>{
-                                            setState({
-                                                modalOpen: true,
-                                                modalType: "Edit",
-                                                modalSize: "md",
-                                                elementSelected: mBrand
-                                            })
-                                        }}
-                                        title='Editar sim'
-                                      >
-                                        <i className="fas fa-edit"></i>
-                                    </button>
-                                    <button
-                                      className="btn btn-sm btn-info mx-2"
-                                      onClick={()=>{
-                                          onGet({saveAs: "eventList", url: "event/sim/" + mBrand.id})
-                                          setState({
+                                  <OptionsButton
+                                    buttonsList={[
+                                      {_label: "Ver detalles",
+                                      onClick: ()=>{
+                                        onGet({saveAs: "simDetails", url: "sim/details/" + mBrand.id})
+                                        setState({
                                             modalOpen: true,
-                                            modalType: "Events",
-                                            modalSize: "lg",
+                                            modalType: "Details"
+                                        })
+                                      }},
+                                      {_label: "Editar sim",
+                                      onClick: ()=>{
+                                        setState({
+                                            modalOpen: true,
+                                            modalType: "Edit",
+                                            modalSize: "md",
                                             elementSelected: mBrand
-                                            // tableMode: "events",
-                                          })
-                                      }}
-                                      title='Ver eventos'
-                                    >
-                                        <i className="fas fa-eye"></i>
-                                    </button>
-                                    <button
-                                      className="btn btn-sm btn-primary"
-                                      onClick={()=>{
+                                        })
+                                      }},
+                                      {_label: "Ver eventos",
+                                      onClick: ()=>{
+                                        onGet({saveAs: "eventList", url: "event/sim/" + mBrand.id})
+                                        setState({
+                                          modalOpen: true,
+                                          modalType: "Events",
+                                          modalSize: "lg",
+                                          elementSelected: mBrand
+                                        })
+                                      }},
+                                      {_label: "Añadir evento",
+                                      onClick: ()=>{
                                         setState({
                                           modalOpen: true,
                                           modalSize: "md",
                                           modalType: "Add event to",
                                           elementSelected: mBrand
                                         })
-                                      }}
-                                      title='Añadir evento'
-                                    >
-                                      <i className="fas fa-tasks"></i>
-                                    </button>
+                                      }},
+                                    ]}
+                                  />
                                 </td>
                             </tr>
                         ))}

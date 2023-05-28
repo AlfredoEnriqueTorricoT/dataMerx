@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { MobileDataShow } from 'components/tableElements'
+import { OptionsButton, MobileDataShow } from 'components/tableElements'
 
 const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
 
@@ -23,62 +23,47 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                       desc={listItem.imei}
                     />
                   </div>
-                  <div className="col-2">
-                  <button
-                                      className="btn btn-sm btn-info mb-1"
-                                      onClick={()=>{
-                                          onGet({saveAs: "simDetails", url: "sim/details/" + mBrand.id})
-                                          setState({
-                                              modalOpen: true,
-                                              modalType: "Details"
-                                          })
-                                      }}
-                                      title='Ver detalles'
-                                    >
-                                        <i className="fas fa-eye"></i>
-                                    </button>
-                                    <br />
-                    <button
-                        className='btn btn-sm btn-primary'
-                        onClick={()=>{
-                            setState({
-                                modalOpen: true,
-                                modalType: "Edit",
-                                elementSelected: listItem
-                            })
-                        }}
-                        title='Editar sim'
-                      >
-                        <i className="fas fa-edit"></i>
-                    </button>
-                    <br />
-                    <button
-                      onClick={()=>{
-                          onGet({saveAs: "eventList", url: "event/sim/" + listItem.id})
-                          setState({
-                              tableMode: "events",
-                              elementSelected: listItem
-                          })
-                      }}
-                      className="btn btn-sm btn-info my-1"
-                      title='Ver eventos'
-                    >
-                          <i className="fas fa-eye"></i>
-                    </button>
-                    <br />
-                    <button
-                        className="btn btn-sm btn-primary"
-                        onClick={()=>{
-                          setState({
-                            modalOpen: true,
-                            modalType: "Add event to",
-                            elementSelected: listItem
-                          })
-                        }}
-                        title='Añadir evento'
-                      >
-                        <i className="fas fa-tasks"></i>
-                    </button>
+                  <div className="col-2 mt-3">
+                  <OptionsButton
+                                    buttonsList={[
+                                      {_label: "Ver detalles",
+                                      onClick: ()=>{
+                                        onGet({saveAs: "simDetails", url: "sim/details/" + listItem.id})
+                                        setState({
+                                            modalOpen: true,
+                                            modalType: "Details"
+                                        })
+                                      }},
+                                      {_label: "Editar sim",
+                                      onClick: ()=>{
+                                        setState({
+                                            modalOpen: true,
+                                            modalType: "Edit",
+                                            modalSize: "md",
+                                            elementSelected: listItem
+                                        })
+                                      }},
+                                      {_label: "Ver eventos",
+                                      onClick: ()=>{
+                                        onGet({saveAs: "eventList", url: "event/sim/" + listItem.id})
+                                        setState({
+                                          modalOpen: true,
+                                          modalType: "Events",
+                                          modalSize: "lg",
+                                          elementSelected: listItem
+                                        })
+                                      }},
+                                      {_label: "Añadir evento",
+                                      onClick: ()=>{
+                                        setState({
+                                          modalOpen: true,
+                                          modalSize: "md",
+                                          modalType: "Add event to",
+                                          elementSelected: listItem
+                                        })
+                                      }},
+                                    ]}
+                                  />
                   </div>
                   {
                     listToShow.length -1 > idx ?
