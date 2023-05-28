@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ClientCarController;
 use App\Http\Controllers\ClientController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\ModemsMarkController;
 use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\SimController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WifiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,17 +25,17 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('user', [App\Http\Controllers\API\AuthController::class, 'index'])->middleware("auth:sanctum");
-Route::post('user', [App\Http\Controllers\API\AuthController::class, 'register']);
-Route::put('user', [App\Http\Controllers\API\AuthController::class, 'update'])->middleware("auth:sanctum");
-Route::post('login', [App\Http\Controllers\API\AuthController::class, 'login']);
-Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout'])->middleware("auth:sanctum");
+Route::get('user', [AuthController::class, 'index'])->middleware("auth:sanctum");
+Route::post('user', [AuthController::class, 'register']);
+Route::put('user', [AuthController::class, 'update'])->middleware("auth:sanctum");
+Route::post('login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware("auth:sanctum");
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/register', 'AuthController@register');
+Route::post('/register', [AuthController::class, 'register']);
 
 Route::get('modem', [ModemController::class,'index']);
 Route::get('modem/{imei}', [ModemController::class,'indexSearch']);
@@ -91,3 +93,9 @@ Route::post('client-car', [ClientCarController::class,'store']);
 Route::delete('client-car/{obj}', [ClientCarController::class,'destroy']);
 
 Route::post('images', [ImagesController::class,'upload']);
+
+
+Route::get('wifi', [WifiController::class,'index']);
+Route::post('wifi', [WifiController::class,'store']);
+Route::put('wifi', [WifiController::class,'update']);
+Route::delete('wifi/{obj}', [WifiController::class,'destroy']);
