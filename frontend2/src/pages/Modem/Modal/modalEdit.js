@@ -46,15 +46,15 @@ const ModalEdit = ({_crudName, localStore, onPutAndGet, setToastW, state, t}) =>
                 {({errors})=>(
                     <Form id={_crudName.cod + "_" + _formName}>
                         <FormikInput
-                          label="Imei"
-                          inputName="imei"
+                          label={t("Code")}
+                          inputName="code"
                           type="number"
                           required={true}
                           groupId ={genericId}
                         />
                         <FormikInput
-                          label={t("Code")}
-                          inputName="code"
+                          label="Imei"
+                          inputName="imei"
                           type="number"
                           required={true}
                           groupId ={genericId}

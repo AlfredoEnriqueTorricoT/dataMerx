@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { getThisDate, SpinnerL } from 'components/components'
 import { ErrorTable } from 'components/tableElements'
+import { URL_IMAGE } from 'store/api/AxiosServices'
 
 const DisplayEventList = ({
     activeTab,
@@ -29,7 +30,7 @@ const DisplayEventList = ({
                         <div className="row mb-1" key={"image-"+idx}>
                             <img
                                 className="d-block w-100 imgCover"
-                                src={"http://localhost:8000/storage/" + image.url}
+                                src={URL_IMAGE + "storage/" + image.url}
                                 alt="Second slide"
                             />
                         </div>

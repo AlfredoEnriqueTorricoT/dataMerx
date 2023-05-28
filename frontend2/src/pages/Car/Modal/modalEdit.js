@@ -12,7 +12,6 @@ const ModalEdit = ({_crudName, localStore, onPutAndGet, setToastW, state, t}) =>
     const validateFunction = values => {
         let errors = {}
 
-        if (!values.name) errors.name = t("Enter the car name")
         if (!values.mark) errors.mark = t("Enter the car mark")
         if (!values.model) errors.model = t("Enter the car model")
         if (!values.placa) errors.placa = t("Enter the car license plate")
@@ -35,7 +34,6 @@ const ModalEdit = ({_crudName, localStore, onPutAndGet, setToastW, state, t}) =>
                 onSubmit={submitFunc}
                 initialValues={{
                   id: state.elementSelected.id,
-                  name: state.elementSelected.name,
                   mark: state.elementSelected.mark,
                   model: state.elementSelected.model,
                   placa: state.elementSelected.placa,
@@ -45,13 +43,6 @@ const ModalEdit = ({_crudName, localStore, onPutAndGet, setToastW, state, t}) =>
             >
                 {({errors})=>(
                     <Form id={_crudName.cod + "_" + _formName}>
-                        <FormikInput
-                          label={t("Name")}
-                          inputName="name"
-                          type="text"
-                          required={true}
-                          groupId ={genericId}
-                        />
                         <FormikInput
                           label={t("Mark")}
                           inputName="mark"

@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { OptionsButton } from 'components/tableElements';
+
 const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
 
     const showHeader = (name, id) => {
@@ -51,7 +53,21 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                 <td>{mBrand.name}</td>
                                 <td>{mBrand.email}</td>
                                 <td>
-                                    <button 
+                                  <OptionsButton
+                                    buttonsList={[
+                                      {
+                                        _label: "Editar usuario",
+                                        onClick: ()=>{
+                                          setState({
+                                              modalOpen: true,
+                                              modalType: "Edit",
+                                              elementSelected: mBrand
+                                          })
+                                      }
+                                      }
+                                    ]}
+                                  />
+                                    {/* <button 
                                         className='btn btn-sm btn-primary'
                                         onClick={()=>{
                                             setState({
@@ -63,7 +79,7 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                         title='Editar usuario'
                                       >
                                         <i className="fas fa-edit"></i>
-                                    </button>
+                                    </button> */}
                                 </td>
                             </tr>
                         ))}

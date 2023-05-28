@@ -13,7 +13,7 @@ const ModalAdd = ({_crudName, formName, localStore, onPost, setToastW, t}) => {
     const validateFunction = values => {
         let errors = {}
 
-        if (!values.name) errors.name = t("Enter the car name")
+        // if (!values.name) errors.name = t("Enter the car name")
         if (!values.mark) errors.mark = t("Enter the car mark")
         if (!values.model) errors.model = t("Enter the car model")
         if (!values.placa) errors.placa = t("Enter the car license plate")
@@ -30,7 +30,6 @@ const ModalAdd = ({_crudName, formName, localStore, onPost, setToastW, t}) => {
           fData.append("images[]", carImages[x]);
         }
   
-        fData.append("name", values.name);
         fData.append("mark", values.mark);
         fData.append("model", values.model);
         fData.append("placa", values.placa);
@@ -48,7 +47,6 @@ const ModalAdd = ({_crudName, formName, localStore, onPost, setToastW, t}) => {
             <Formik
                 onSubmit={submitFunction}
                 initialValues={{
-                    name: "",
                     mark: "",
                     model: "",
                     placa: "",
@@ -58,13 +56,13 @@ const ModalAdd = ({_crudName, formName, localStore, onPost, setToastW, t}) => {
             >
                 {({errors})=>(
                     <Form id={_crudName.cod + "_" + formName}>
-                        <FormikInput
+                        {/* <FormikInput
                           label={t("Name")}
                           inputName="name"
                           type="text"
                           required={true}
                           groupId ={genericId}
-                        />
+                        /> */}
                         <FormikInput
                           label={t("Mark")}
                           inputName="mark"

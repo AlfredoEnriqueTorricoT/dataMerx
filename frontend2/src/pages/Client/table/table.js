@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { THeaderSorter } from 'components/tableElements';
+import { OptionsButton, THeaderSorter } from 'components/tableElements';
 
 const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) => {
 
@@ -31,78 +31,24 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                 <td>{listItem.fullName}</td>
                                 <td>{listItem.ci}</td>
                                 <td>
-                                <button
-                                        className="btn btn-sm me-1"
-                                        onClick={()=>{
-                                            setState({
-                                                elementSelected: {
-                                                    id: listItem.id,
-                                                    cars: listItem.cars
-                                                },
-                                                modalOpen: true,
-                                                modalType: "Vehículos del",
-                                                modalSize: "xl"
-                                            })
-                                        }}
-                                        title='Ver vehículos'
-                                    >
-                                        <i className="fas fa-car text-info"></i>
-                                    </button>
-                                    {/* <button 
-                                        className='btn btn-sm btn-primary me-1'
-                                        onClick={()=>{
-                                            setState({
-                                                modalOpen: true,
-                                                modalType: "Edit",
-                                                elementSelected: listItem
-                                            })
-                                        }}
-                                        title='Editar vehículo'
-                                        >
-                                        <i className="fas fa-edit"></i>
-                                    </button>
-                                    <button 
-                                        className='btn btn-sm btn-secondary me-1'
-                                        onClick={()=>{
-                                            setState({
-                                                modalOpen: true,
-                                                modalType: "Modem",
-                                                elementSelected: listItem
-                                            })
-                                        }}
-                                        title='Módem del vehículo'
-                                        >
-                                        <i className="fas fa-digital-tachograph"></i>
-                                    </button>
-                                    <button
-                                        className="btn btn-sm btn-info me-1"
-                                        onClick={()=>{
-                                            onGet({saveAs: "eventList", url: "event/car/" + listItem.id})
-                                            setState({
-                                                modalType: "Events",
-                                                modalOpen: true,
-                                                modalSize: "lg",
-                                                elementSelected: listItem
-                                                // tableMode: "events",
-                                            })
-                                        }}
-                                        title='Ver eventos'
-                                    >
-                                        <i className="fas fa-eye"></i>
-                                    </button>
-                                    <button 
-                                        className='btn btn-sm btn-primary'
-                                        onClick={()=>{
-                                            setState({
-                                                modalOpen: true,
-                                                modalType: "Add event to",
-                                                elementSelected: listItem
-                                            })
-                                        }}
-                                        title='Añadir evento'
-                                    >
-                                        <i className="fas fa-tasks"></i>
-                                    </button> */}
+                                    <OptionsButton
+                                        buttonsList={[
+                                            {
+                                                _label: "Ver vehículos",
+                                                onClick: ()=>{
+                                                    setState({
+                                                        elementSelected: {
+                                                            id: listItem.id,
+                                                            cars: listItem.cars
+                                                        },
+                                                        modalOpen: true,
+                                                        modalType: "Vehículos del",
+                                                        modalSize: "xl"
+                                                    })
+                                                }
+                                            }
+                                        ]}
+                                    />
                                 </td>
                             </tr>
                         ))}

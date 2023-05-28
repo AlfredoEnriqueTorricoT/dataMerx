@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { THeaderSorter } from 'components/tableElements';
+import { OptionsButton, THeaderSorter } from 'components/tableElements';
 
 const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
     return(
@@ -34,7 +34,21 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                 <td>{listItem.url}</td>
                                 <td>{listItem.email}</td>
                                 <td>
-                                    <button 
+                                  <OptionsButton
+                                    buttonsList={[
+                                      {
+                                        _label: "Editar plataforma",
+                                        onClick: ()=>{
+                                          setState({
+                                              modalOpen: true,
+                                              modalType: "Edit",
+                                              elementSelected: listItem
+                                          })
+                                      }
+                                      }
+                                    ]}
+                                  />
+                                    {/* <button 
                                         className='btn btn-sm btn-primary'
                                         onClick={()=>{
                                             setState({
@@ -46,7 +60,7 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                         title='Editar plataforma'
                                       >
                                         <i className="fas fa-edit"></i>
-                                    </button>
+                                    </button> */}
                                 </td>
                             </tr>
                         ))}

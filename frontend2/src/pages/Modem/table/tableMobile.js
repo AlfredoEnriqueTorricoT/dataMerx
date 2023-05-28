@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { MobileDataShow } from 'components/tableElements'
+import { OptionsButton, MobileDataShow } from 'components/tableElements'
 
 const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
     return(
@@ -41,7 +41,63 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                     </div>
                   </div>
                   <div className="col-2">
-                    <center>
+                  <OptionsButton
+                                        buttonsList={[
+                                            {
+                                                _label: "Ver detalles",
+                                                onClick: ()=>{
+                                                    onGet({saveAs: "modemDetails", url: "modem/details/" + listItem.id})
+                                                    setState({
+                                                        modalOpen: true,
+                                                        modalType: "Details"
+                                                    })
+                                                }
+                                            },
+                                            {
+                                                _label: "Editar módem",
+                                                onClick: ()=>{
+                                                    setState({
+                                                        modalOpen: true,
+                                                        modalType: "Edit",
+                                                        elementSelected: listItem
+                                                    })
+                                                }
+                                            },
+                                            {
+                                                _label: "Tarjeta sim",
+                                                onClick: ()=>{
+                                                    setState({
+                                                        modalOpen: true,
+                                                        modalType: "Sim",
+                                                        elementSelected: listItem
+                                                    })
+                                                }
+                                            },
+                                            {
+                                                _label: "Ver eventos",
+                                                onClick: ()=>{
+                                                    onGet({saveAs: "eventList", url: "event/modem/" + listItem.id})
+                                                    setState({
+                                                        modalOpen: true,
+                                                        modalType: "Events",
+                                                        modalSize: "lg",
+                                                        elementSelected: listItem
+                                                    })
+                                                }
+                                            },
+                                            {
+                                                _label: "Añadir evento",
+                                                onClick: ()=>{
+                                                    setState({
+                                                        modalOpen: true,
+                                                        modalType: "Add event to",
+                                                        elementSelected: listItem
+                                                    })
+                                                }
+                                            }
+                                        ]}
+                                    />
+                    {/* <center>
                     <button
                                         className="btn btn-sm btn-info mb-1"
                                         title='Ver detalles'
@@ -109,7 +165,7 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                         >
                         <i className="fas fa-tasks"></i>
                     </button>
-                    </center>
+                    </center> */}
                   </div>
                   {
                     listToShow.length -1 > idx ?

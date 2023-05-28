@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { MobileDataShow } from 'components/tableElements'
+import { OptionsButton, MobileDataShow } from 'components/tableElements'
 
 const TableMobile = ({_crudName, listToShow, setState, t}) => {
 
@@ -28,7 +28,21 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                     />
                   </div>
                   <div className="col-2">
-                    <button
+                    <OptionsButton
+                      buttonsList={[
+                        {
+                          _label: "Editar plataforma",
+                          onClick: ()=>{
+                            setState({
+                                modalOpen: true,
+                                modalType: "Edit",
+                                elementSelected: listItem
+                            })
+                        }
+                        }
+                      ]}
+                    />
+                    {/* <button
                         className='btn btn-sm btn-primary'
                         onClick={()=>{
                             setState({
@@ -40,7 +54,7 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                         title='Editar plataforma'
                       >
                         <i className="fas fa-edit"></i>
-                    </button>
+                    </button> */}
                   </div>
                   {
                     listToShow.length -1 > idx ?
