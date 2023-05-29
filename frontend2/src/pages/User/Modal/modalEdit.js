@@ -7,8 +7,8 @@ const ModalEdit = ({onPutAndGet, state, t}) => {
     const validateFunction = values => {
         let errors = {}
 
-        if (!values.name) errors.name = "Enter the modem brand name"
-        if (!values.detail) errors.detail = "Enter the modem brand detail"
+        if (!values.name) errors.name = "Enter the user name"
+        if (!values.email) errors.email = "Enter the user email"
 
         return errors
     }
@@ -23,7 +23,7 @@ const ModalEdit = ({onPutAndGet, state, t}) => {
                   url: "modem-mark"})}
                 initialValues={{
                     name: state.elementSelected.name,
-                    detail: state.elementSelected.detail
+                    email: state.elementSelected.email
                 }}
                 validate={validateFunction}
             >
@@ -55,17 +55,17 @@ const ModalEdit = ({onPutAndGet, state, t}) => {
                             htmlFor="modemBrand_Edit_detail"
                             className="col-3 col-form-label"
                             >
-                            {t("Details")}
+                            Correo
                             <p className="text-danger d-inline-block">(*)</p>
                           </label>
                           <div className="col-9">
                             <Field
                               className="form-control"
                               id="modemBrand_Edit_detail"
-                              name="detail"
+                              name="email"
                               type="text"
                             />
-                            <ErrorMessage name="detail">
+                            <ErrorMessage name="email">
                               {msg => <h6 className="text-danger">{t(msg)}</h6>}
                             </ErrorMessage>
                           </div>

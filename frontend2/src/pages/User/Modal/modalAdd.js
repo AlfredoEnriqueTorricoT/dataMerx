@@ -7,8 +7,8 @@ const ModalAdd = ({onPostAndGet, t}) => {
     const validateFunction = values => {
         let errors = {}
 
-        if (!values.name) errors.name = "Enter the modem brand name"
-        if (!values.detail) errors.detail = "Enter the modem brand detail"
+        if (!values.name) errors.name = "Enter the user name"
+        if (!values.email) errors.email = "Enter the user email"
 
         return errors
     }
@@ -19,7 +19,7 @@ const ModalAdd = ({onPostAndGet, t}) => {
                 onSubmit={values => onPostAndGet({saveAs: "modemBrandList", payload: values, url: "user"})}
                 initialValues={{
                     name: "",
-                    detail: ""
+                    email: ""
                 }}
                 validate={validateFunction}
             >
@@ -58,10 +58,10 @@ const ModalAdd = ({onPostAndGet, t}) => {
                             <Field
                               className="form-control"
                               id="modemBrand_Add_detail"
-                              name="detail"
+                              name="email"
                               type="text"
                             />
-                            <ErrorMessage name="detail">
+                            <ErrorMessage name="email">
                               {msg => <h6 className="text-danger">{t(msg)}</h6>}
                             </ErrorMessage>
                           </div>
