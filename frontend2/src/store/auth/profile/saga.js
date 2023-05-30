@@ -18,9 +18,9 @@ const fireBaseBackend = getFirebaseBackend();
 function* editProfile({ payload: { user } }) {
   let response
 
-  console.log(user);
   try {
-    response = yield call(AxiosServices.PUT, {payload: {user: user.username}, url: "login"})
+    response = yield call(AxiosServices.PUT, {payload: {name: user.username}, url: "login"})
+    console.log(response);
     if (response.data.status == 200) {
       console.log("SUCCESS: ", response);
       yield put(
@@ -55,6 +55,7 @@ function* editProfile({ payload: { user } }) {
     //   yield put(profileSuccess(response));
     // }
   } catch (error) {
+    console.log(error);
     yield put(profileError("Error inesperado"));
   }
 }
