@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Res;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -54,6 +55,32 @@ class AuthController extends Controller
         unset($user->id);
 
         return Res::responseSuccess($user);
+    }
+
+
+    public function update(Request $request)
+    {        
+        try {
+            if (auth()->user()->id == "") {
+                return Res::responseErrorNoId();
+            }
+            $obj = User::findOrFail(auth()->user()->id);
+
+            if ($obj == null) {
+                return Res::responseErrorNoData();
+            }
+
+
+            $obj->fill($request->json()->all());
+            if ($request->password) {
+                $obj->password = Hash::make($request->password);
+            }
+            $obj->save();
+
+            return Res::responseSuccess($obj);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
     }
 
     public function logout()
