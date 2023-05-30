@@ -20,19 +20,16 @@ function* editProfile({ payload: { user } }) {
 
   try {
     response = yield call(AxiosServices.PUT, {payload: {name: user.username}, url: "login"})
-    console.log(response);
     if (response.data.status == 200) {
-      console.log("SUCCESS: ", response);
+      let uData = JSON.parse(localStorage.getItem("userData"))
+      uData.name = response.data.data.name
+      localStorage.setItem("userData", JSON.stringify(uData))
       yield put(
-        getUser({
-          saveAs: action.saveAs,
-          saveIn: action.saveIn,
-          url: action.urlToGet || action.url,
-        })
+        yield put(profileSuccess("El nombre de usuario ha sido actualizado"))
       )
     } else {
       console.log("40?: ", response);
-      yield put(updateUserStorage({status: "error"}))
+      yield put(profileError(response.message));
     }
     // if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
     //   const response = yield call(

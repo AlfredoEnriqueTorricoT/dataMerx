@@ -27,7 +27,7 @@ class UserProfile extends Component {
     if (localStorage.getItem("authUser")) {
       const obj = JSON.parse(localStorage.getItem("authUser"));
       const userData = JSON.parse(localStorage.getItem("userData"));
-      const full_name = userData.name + " " + userData.last_name + " " + userData.last_name_mother
+      const full_name = userData.name
       if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
         this.setState({
           name: full_name,
@@ -48,7 +48,7 @@ class UserProfile extends Component {
     if (this.props !== prevProps) {
       const obj = JSON.parse(localStorage.getItem("authUser"));
       const userData = JSON.parse(localStorage.getItem("userData"));
-      const full_name = userData.name + " " + (userData.last_name || "") + " " + (userData.last_name_mother || "")
+      const full_name = userData.name
       if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
 
         this.setState({
