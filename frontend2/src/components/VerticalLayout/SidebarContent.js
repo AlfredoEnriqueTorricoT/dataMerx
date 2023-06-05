@@ -117,6 +117,7 @@ class SidebarContent extends Component {
                   <span>{this.props.t("Dashboards")}</span>
                 </Link> */}
                 <Link to="/car">
+                  <i className="fas fa-car" />
                   <span>Vehículos</span>
                 </Link>
                 {/* <ul className="sub-menu">
@@ -130,31 +131,37 @@ class SidebarContent extends Component {
               </li>              
               <li>
                 <Link to="/modem">
+                  <i className="fas fa-hdd" />
                   <span>Módems</span>
                 </Link>
               </li>
               <li>
                 <Link to="/sims">
+                  <i className="fas fa-sim-card" />
                   <span>Sims</span>
                 </Link>
               </li>
               <li>
                 <Link to="/clients">
+                  <i className="fas fa-users" />
                   <span>Clientes</span>
                 </Link>
               </li>
               <li>
                 <Link to="/mark-modem">
+                  <i className="fas fa-list"></i>
                   <span>Marcas de módem</span>
                 </Link>
               </li>
               <li>
                 <Link to="/platform">
+                  <i className="fas fa-city"></i>
                   <span>Plataformas</span>
                 </Link>
               </li>
               <li>
                 <Link to="/users">
+                  <i className="fas fa-user-tie" />
                   <span>Usuarios</span>
                 </Link>
               </li>
