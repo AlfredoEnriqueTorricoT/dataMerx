@@ -22,7 +22,7 @@ const getUserName = () => {
     let full_name;
     if (localStorage.getItem("userData")) {
       const obj = JSON.parse(localStorage.getItem("userData"))
-      full_name = obj.name + " " + obj.last_name + " " + obj.last_name_mother
+      full_name = obj.name
     } else {
       const obj = JSON.parse(localStorage.getItem("authUser"))
       full_name = obj.name

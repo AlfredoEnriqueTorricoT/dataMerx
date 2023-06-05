@@ -19,6 +19,7 @@ function* loginUser({ payload: { user, history } }) {
       localStorage.setItem("userToken", response.data.data.token)
       let aUser = {name: response.data.data.name, email: response.data.data.email}
       localStorage.setItem("authUser", JSON.stringify(aUser))
+      localStorage.setItem("userData", JSON.stringify(aUser))
       history.push("/car")
     } else {
       yield put(apiError("Correo o contraseña incorrectos"))
@@ -33,6 +34,7 @@ function* loginUser({ payload: { user, history } }) {
 function* logoutUser({ payload: { history } }) {
   try {
     localStorage.removeItem("authUser")
+    localStorage.removeItem("userData")
 
     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
       const response = yield call(fireBaseBackend.logout)

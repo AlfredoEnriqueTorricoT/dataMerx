@@ -109,49 +109,55 @@ class SidebarContent extends Component {
             <ul className="metismenu list-unstyled" id="side-menu">
               <li className="menu-title">{this.props.t("Menu")}</li>
               <li>
-                <Link to="/#" className="has-arrow">
+                {/* <Link to="/#" className="has-arrow">
                   <i className="bx bx-home-circle" />
-                  {/* <span className="badge rounded-pill bg-info float-end">
+                  <span className="badge rounded-pill bg-info float-end">
                     04
-                  </span> */}
+                  </span>
                   <span>{this.props.t("Dashboards")}</span>
+                </Link> */}
+                <Link to="/car">
+                  <span>Vehículos</span>
                 </Link>
-                <ul className="sub-menu">
-                  {/* <li>
-                    <Link to="/dashboard">{this.props.t("Default")}</Link>
-                  </li> */}
-                  <li>
-                    <Link to="/car">{this.props.t("Cars")}</Link>
-                  </li>
-                  <li>
-                    <Link to="/modem">{this.props.t("Modem")}</Link>
-                  </li>
-                  <li>
-                    <Link to="/sims">{this.props.t("Sims")}</Link>
-                  </li>
-                  <li>
-                    <Link to="/clients">Clientes</Link>
-                  </li>
-                  <li>
-                    <Link to="/mark-modem">{this.props.t("Modem brands")}</Link>
-                  </li>
+                {/* <ul className="sub-menu">
                   <li>
                     <Link to="/platform">{this.props.t("Platforms")}</Link>
                   </li>
                   <li>
                     <Link to="/users">{this.props.t("Users")}</Link>
                   </li>
-                  {/* <li>
-                    <Link to="/event">{this.props.t("Events")}</Link>
-                  </li> */}
-                  {/* <li>
-                    <Link to="#">
-                      <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span>
-                      {this.props.t("Jobs")}
-                    </Link>
-                  </li> */}
-                </ul>
+                </ul> */}
               </li>              
+              <li>
+                <Link to="/modem">
+                  <span>Módems</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/sims">
+                  <span>Sims</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/clients">
+                  <span>Clientes</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/mark-modem">
+                  <span>Marcas de módem</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/platform">
+                  <span>Plataformas</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/users">
+                  <span>Usuarios</span>
+                </Link>
+              </li>
             </ul>
           </div>
         </SimpleBar>
