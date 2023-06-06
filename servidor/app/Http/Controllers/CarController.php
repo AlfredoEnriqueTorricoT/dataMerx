@@ -247,7 +247,8 @@ class CarController extends Controller
             }
 
             $newData = [
-                "modem_id" => $request->modem_id
+                "modem_id" => $request->modem_id,
+                "name" => $request->name
             ];
 
             $obj->fill($newData);
