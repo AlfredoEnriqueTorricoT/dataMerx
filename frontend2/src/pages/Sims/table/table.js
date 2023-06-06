@@ -30,7 +30,7 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
       };
 
     return(
-            <div className="grayScroll table-responsive" style={{height: "55vh", overflow: "auto"}}>
+            <div className="grayScroll table-responsive" style={{height: "52vh", overflow: "auto"}}>
                 <table className="table table-striped">
                     <thead>
                         <tr>
@@ -74,16 +74,6 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                             elementSelected: mBrand
                                         })
                                       }},
-                                      {_label: "Ver eventos",
-                                      onClick: ()=>{
-                                        onGet({saveAs: "eventList", url: "event/sim/" + mBrand.id})
-                                        setState({
-                                          modalOpen: true,
-                                          modalType: "Events",
-                                          modalSize: "lg",
-                                          elementSelected: mBrand
-                                        })
-                                      }},
                                       {_label: "Añadir evento",
                                       onClick: ()=>{
                                         setState({
@@ -93,6 +83,16 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                           elementSelected: mBrand
                                         })
                                       }},
+                                      {_label: "Ver eventos",
+                                      onClick: ()=>{
+                                        onGet({saveAs: "eventList", url: "event/sim/" + mBrand.id})
+                                        setState({
+                                          modalOpen: true,
+                                          modalType: "Events",
+                                          modalSize: "lg",
+                                          elementSelected: mBrand
+                                        })
+                                      }}
                                     ]}
                                   />
                                 </td>

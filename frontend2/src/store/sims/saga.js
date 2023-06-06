@@ -44,16 +44,28 @@ function* postSimSaga(action) {
   try {
     response = yield call(AxiosServices.POST, {payload: action.payload, url: action.url})
 
-    if (response.data.status == 200) {
-      yield put(updateSimStorage({
-        payload: response.data.data,
-        saveAs: action.saveAs,
-        status: response.data.status}))
-    } else {
-      yield put(updateSimStorage({status: response.data.message}))
+    try {
+      if (response.data.status == 200) {
+        yield put(updateSimStorage({
+          payload: response.response.data.data,
+          saveAs: action.saveAs,
+          status: response.response.data.status}))
+      } else {
+        yield put(updateSimStorage({status: response.response.data.message}))
+      }
+    } catch (error) {
+      if (response.response.data.status == 200) {
+        yield put(updateSimStorage({
+          payload: response.response.data.data,
+          saveAs: action.saveAs,
+          status: response.response.data.status}))
+      } else {
+        yield put(updateSimStorage({status: response.response.data.message}))
+      }
     }
   } catch (error) {
     yield put(updateSimStorage({status: error.message}))
+    console.log(response)
     console.log("FAIL: ", response, error, action);
   }
 }

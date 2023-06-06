@@ -12,11 +12,10 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                       sorter={sorter}
                       setSorter={setSorter}
                       headerNames={[
-                        {name: t("Name"), arrow: true},
-                        {name: t("Model"), arrow: true},
-                        {name: t("Mark"), arrow: true},
                         {name: t("License plate"), arrow: true},
-                        {name: t("Platform"), arrow: true},
+                        {name: t("Mark"), arrow: true},
+                        {name: t("Model"), arrow: true},
+                        {name: t("Name"), arrow: true},
                         {name: t("Modem"), arrow: true},
                         {name: t("Actions"), arrow: false}
                       ]}
@@ -32,11 +31,10 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                           </tr> :
                         listToShow.map((listItem, idx)=>(
                             <tr key={_crudName.cod + "Item-" + idx}>
-                                <td>{listItem.name}</td>
-                                <td>{listItem.model}</td>
-                                <td>{listItem.mark}</td>
                                 <td>{listItem.placa}</td>
-                                <td>{listItem.platform_name || "- - -"}</td>
+                                <td>{listItem.mark}</td>
+                                <td>{listItem.model}</td>
+                                <td>{listItem.name || "- - -"}</td>
                                 <td>{listItem.modem_code || "- - -"}</td>
                                 <td>
                                 <OptionsButton
@@ -62,11 +60,22 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                             }
                                         },
                                         {
-                                            _label: "Módem del vehículo",
+                                            _label: "Vincular módem",
                                             onClick: ()=>{
+                                                onGet({saveAs: "carDetails", url: "car/details/" + listItem.id})
                                                 setState({
                                                     modalOpen: true,
                                                     modalType: "Modem",
+                                                    elementSelected: listItem
+                                                })
+                                            }
+                                        },
+                                        {
+                                            _label: "Añadir evento",
+                                            onClick: ()=>{
+                                                setState({
+                                                    modalOpen: true,
+                                                    modalType: "Add event to",
                                                     elementSelected: listItem
                                                 })
                                             }
@@ -82,17 +91,7 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                                     elementSelected: listItem
                                                 })
                                             }
-                                        },
-                                        {
-                                            _label: "Añadir evento",
-                                            onClick: ()=>{
-                                                setState({
-                                                    modalOpen: true,
-                                                    modalType: "Add event to",
-                                                    elementSelected: listItem
-                                                })
-                                            }
-                                        },
+                                        }
                                     ]}
                                 />
                                 </td>

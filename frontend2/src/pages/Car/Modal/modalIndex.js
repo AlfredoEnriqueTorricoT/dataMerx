@@ -53,15 +53,36 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAn
         if (itsOk) setState({modalOpen: false})
     }
 
+    const CloseModalButton = () => (
+        <button
+            type="button"
+            onClick={()=>{
+                setState({modalOpen: false})
+              }}
+            className="close"
+            aria-label="Close"
+        ></button>
+    )
 
-    const buttonIcon = {Add: "plus", Edit: "edit", Modem: "plus", ["Add event to"]: "plus"}
-    const buttonText = {Add: "Add", Edit: "Edit", Modem: "Assign", ["Add event to"]: "Add"}
+    const CancelModalButton = () => (
+        <button
+            className='btn btn-secondary'
+            onClick={()=>{
+                setState({modalOpen: false})
+            }}
+        >
+            {t("Cancel")}
+        </button>
+    )
 
     const modalToShow = () => {
         switch (state.modalType) {
             case "Add":
                 return(
                     <ModalAdd
+                        CloseModalButton={CloseModalButton}
+                        CancelModalButton={CancelModalButton}
+
                         _crudName={_crudName}
                         formName={state.modalType}
                         localStore={localStore}
@@ -74,6 +95,9 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAn
             case "Edit":
                 return(
                     <ModalEdit
+                        CloseModalButton={CloseModalButton}
+                        CancelModalButton={CancelModalButton}
+
                         _crudName={_crudName}
                         formName={state.modalType}
                         localStore={localStore}
@@ -86,19 +110,24 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAn
             case "Modem":
                 return(
                     <ModalModem
-                        _crudName={_crudName}
-                        formName={state.modalType}
+                        CloseModalButton={CloseModalButton}
+                        CancelModalButton={CancelModalButton}
+
                         localStore={localStore}
+                        onGet={onGet}
                         onPutAndGet={onPutAndGet}
                         secondModal={secondModal}
                         setToastW={setToastW}
+                        setState={setState}
                         state={state}
-                        t={t}
                     />
                 )
             case "Add event to":
                 return(
                     <ModalAddEvent
+                        CloseModalButton={CloseModalButton}
+                        CancelModalButton={CancelModalButton}
+
                         _crudName={_crudName}
                         localStore={localStore}
                         onPost={onPost}
@@ -109,11 +138,19 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAn
                 )
             case "Details":
                 return (
-                    <ModalDetails localStore={localStore}/>
+                    <ModalDetails
+                        CloseModalButton={CloseModalButton}
+                        CancelModalButton={CancelModalButton}
+
+                        localStore={localStore}
+                    />
                 )
             case "Events":
                 return(
                     <ModalEvent
+                        CloseModalButton={CloseModalButton}
+                        CancelModalButton={CancelModalButton}
+
                         localStore={localStore}
                         onGet={onGet}
                         state={state}
@@ -127,31 +164,9 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAn
 
     return(
         <React.Fragment>
-            <div className="modal-header">
-                <h4>{t(state.modalType) + " " + t(_crudName.single)}</h4>
-                <button
-                    type="button"
-                    onClick={()=>{
-                        setState({modalOpen: false})
-                      }}
-                    className="close"
-                    aria-label="Close"
-                ></button>
-            </div>
-            <div className="modal-body">
+
                 {modalToShow()}
-            </div>
-            <div className="modal-footer">
-                <button
-                    className='btn btn-secondary'
-                    onClick={()=>{
-                        setState({modalOpen: false})
-                    }}
-                >
-                    {t("Cancel")}
-                </button>
-                <div className="ms-auto">
-                    <button
+                    {/* <button
                         className={`btn btn-${toastWaiting ? "light" : "primary btn-label"}`}
                         disabled={toastWaiting}
                         form={_crudName.cod + "_" + state.modalType}
@@ -164,9 +179,7 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAn
                             <i className={`fas fa-${buttonIcon[state.modalType]} label-icon`}></i>
                         }
                         {t(buttonText[state.modalType])}
-                    </button>
-                </div>
-            </div>
+                    </button> */}
 
             <Modal isOpen={secondModal.open} size="sm">
                         <div className="modal-header">

@@ -14,19 +14,19 @@ const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
                   <div className="col-10">
                     <div className="row">
                       <div className="col-4">
-                        <b>{t("Name")}</b><br />
-                        <b>{t("Model")}</b><br />
-                        <b>{t("Mark")}</b><br />
                         <b>{t("License plate")}</b><br />
-                        <b>{t("Platform")}</b><br />
+                        <b>{t("Mark")}</b><br />
+                        <b>{t("Model")}</b><br />
+                        <b>{t("Name")}</b><br />
+                        {/* <b>{t("Platform")}</b><br /> */}
                         <b>{t("Modem")}</b><br />
                       </div>
                       <div className="col-8">
-                        {listItem.name}<br />
-                        {listItem.model}<br />
-                        {listItem.mark}<br />
                         {listItem.placa}<br />
-                        {listItem.platform_name || "- - -"}<br />
+                        {listItem.mark}<br />
+                        {listItem.model}<br />
+                        {listItem.name}<br />
+                        {/* {listItem.platform_name || "- - -"}<br /> */}
                         {listItem.modem_code || "- - -"}<br />
                       </div>
                     </div>
@@ -55,23 +55,11 @@ const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
                                             }
                                         },
                                         {
-                                            _label: "Módem del vehículo",
+                                            _label: "Vincular módem",
                                             onClick: ()=>{
                                                 setState({
                                                     modalOpen: true,
                                                     modalType: "Modem",
-                                                    elementSelected: listItem
-                                                })
-                                            }
-                                        },
-                                        {
-                                            _label: "Ver eventos",
-                                            onClick: ()=>{
-                                                onGet({saveAs: "eventList", url: "event/car/" + listItem.id})
-                                                setState({
-                                                    modalType: "Events",
-                                                    modalOpen: true,
-                                                    modalSize: "lg",
                                                     elementSelected: listItem
                                                 })
                                             }
@@ -86,6 +74,18 @@ const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
                                                 })
                                             }
                                         },
+                                        {
+                                          _label: "Ver eventos",
+                                          onClick: ()=>{
+                                              onGet({saveAs: "eventList", url: "event/car/" + listItem.id})
+                                              setState({
+                                                  modalType: "Events",
+                                                  modalOpen: true,
+                                                  modalSize: "lg",
+                                                  elementSelected: listItem
+                                              })
+                                          }
+                                      }
                                     ]}
                                 />
                   </div>

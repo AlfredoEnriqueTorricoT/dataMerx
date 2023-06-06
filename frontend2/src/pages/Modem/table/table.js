@@ -5,7 +5,7 @@ import { OptionsButton, THeaderSorter } from 'components/tableElements';
 
 const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) => {
     return(
-            <div className="grayScroll table-responsive" style={{maxHeight: "55vh", overflow: "auto"}}>
+            <div className="grayScroll table-responsive" style={{height: "52vh", overflow: "auto"}}>
                 <table className="table table-striped">
                     <THeaderSorter
                       sorter={sorter}
@@ -77,6 +77,16 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                                                 }
                                             },
                                             {
+                                                _label: "Añadir evento",
+                                                onClick: ()=>{
+                                                    setState({
+                                                        modalOpen: true,
+                                                        modalType: "Add event to",
+                                                        elementSelected: listItem
+                                                    })
+                                                }
+                                            },
+                                            {
                                                 _label: "Ver eventos",
                                                 onClick: ()=>{
                                                     onGet({saveAs: "eventList", url: "event/modem/" + listItem.id})
@@ -84,16 +94,6 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                                                         modalOpen: true,
                                                         modalType: "Events",
                                                         modalSize: "lg",
-                                                        elementSelected: listItem
-                                                    })
-                                                }
-                                            },
-                                            {
-                                                _label: "Añadir evento",
-                                                onClick: ()=>{
-                                                    setState({
-                                                        modalOpen: true,
-                                                        modalType: "Add event to",
                                                         elementSelected: listItem
                                                     })
                                                 }

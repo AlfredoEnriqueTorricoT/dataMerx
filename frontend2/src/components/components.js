@@ -56,6 +56,23 @@ export const SpinnerL = () => {
     );
   };
 
+  export const SearchBar = props => {
+    const { children, ...rest } = props;
+  
+    return (
+      <div className="d-inline-block">
+        <div className="input-group">
+          <input
+            {...rest}
+          />
+          <div className="input-group-append">
+            {children}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
  export const getThisDate = (_data) => {
   const meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
   let theDate = new Date(_data)

@@ -93,19 +93,23 @@ function* putAndGetCarSaga(action) {
     response = yield call(AxiosServices.PUT, {payload: action.payload, url: action.url})
 
     try {
-      if (response.data.status == 200) {
-        console.log("SUCCESS: ", response);
+      if (response.response.status == 200) {
         yield put(
           getCar({
             saveAs: action.saveAs,
             url: action.urlToGet || action.url,
           })
         )
+      } else if (response.response.status == 432) {
+        console.log("ASOJDOPASKDP");
+        yield put(
+          updateCarStorage({status: 432, message: (response.response.data.message || "Error inesperado (432 without message)")})
+        )
       } else {
         yield put(updateCarStorage({status: response.data.status, message: (response.data.message || "")}))
       }  
     } catch (error) {
-      yield put(updateCarStorage({status: response.response.status}))
+      yield put(updateCarStorage({status: response.data.status}))
     }
     
   } catch (error) {

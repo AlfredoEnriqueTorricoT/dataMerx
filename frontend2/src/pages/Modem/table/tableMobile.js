@@ -74,18 +74,6 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                                                 }
                                             },
                                             {
-                                                _label: "Ver eventos",
-                                                onClick: ()=>{
-                                                    onGet({saveAs: "eventList", url: "event/modem/" + listItem.id})
-                                                    setState({
-                                                        modalOpen: true,
-                                                        modalType: "Events",
-                                                        modalSize: "lg",
-                                                        elementSelected: listItem
-                                                    })
-                                                }
-                                            },
-                                            {
                                                 _label: "Añadir evento",
                                                 onClick: ()=>{
                                                     setState({
@@ -94,7 +82,19 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                                                         elementSelected: listItem
                                                     })
                                                 }
-                                            }
+                                            },
+                                            {
+                                              _label: "Ver eventos",
+                                              onClick: ()=>{
+                                                  onGet({saveAs: "eventList", url: "event/modem/" + listItem.id})
+                                                  setState({
+                                                      modalOpen: true,
+                                                      modalType: "Events",
+                                                      modalSize: "lg",
+                                                      elementSelected: listItem
+                                                  })
+                                              }
+                                          }
                                         ]}
                                     />
                     {/* <center>

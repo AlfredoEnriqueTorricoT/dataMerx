@@ -5,7 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import {FormikInput, FormikSelect, isEmail, isUrl} from "components/formElements"
 
 
-const ModalAdd = ({_crudName, formName, localStore, onPost, setToastW, t}) => {
+const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, formName, localStore, onPost, setToastW, t}) => {
     const [carImages, setCarImages] = useState({})
   
     const genericId = _crudName.cod + "_" + formName + "_"
@@ -44,92 +44,111 @@ const ModalAdd = ({_crudName, formName, localStore, onPost, setToastW, t}) => {
 
     return(
         <React.Fragment>
-            <Formik
-                onSubmit={submitFunction}
-                initialValues={{
-                    mark: "",
-                    model: "",
-                    placa: "",
-                    platform_id: "",
-                }}
-                validate={validateFunction}
-            >
-                {({errors})=>(
-                    <Form id={_crudName.cod + "_" + formName}>
-                        {/* <FormikInput
-                          label={t("Name")}
-                          inputName="name"
-                          type="text"
-                          required={true}
-                          groupId ={genericId}
-                        /> */}
-                        <FormikInput
-                          label={t("Mark")}
-                          inputName="mark"
-                          type="text"
-                          required={true}
-                          groupId ={genericId}
-                        />
-                        <FormikInput
-                          label={t("Model")}
-                          inputName="model"
-                          type="text"
-                          required={true}
-                          groupId ={genericId}
-                        />
-                        <FormikInput
-                          label={t("License plate")}
-                          inputName="placa"
-                          type="text"
-                          required={true}
-                          groupId ={genericId}
-                        />
-                        <FormikSelect
-                            label={t("Platform")}
-                            inputName="platform_id"
+            <div className="modal-header">
+              <h4>Añadir vehículo</h4>
+              <CloseModalButton />
+            </div>
+
+            <div className="modal-body">
+              <Formik
+                  onSubmit={submitFunction}
+                  initialValues={{
+                      mark: "",
+                      model: "",
+                      placa: "",
+                      platform_id: "",
+                  }}
+                  validate={validateFunction}
+              >
+                  {({errors})=>(
+                      <Form id={_crudName.cod + "_" + formName}>
+                          {/* <FormikInput
+                            label={t("Name")}
+                            inputName="name"
+                            type="text"
+                            required={true}
                             groupId ={genericId}
-                        >
-                            <option hidden value="">{t("Select a platform")}</option>
-                            {localStore.platformList.length ? 
-                                localStore.platformList.map((platform, idx) => (
-                                    <option key={"mO-"+idx} value={platform.id}>{platform.name}</option>
-                                )) :
-                                <option className='text-secondary' disabled value="">{t("No platforms")}</option>
-                            }
-                        </FormikSelect>
-                        <div className="row mb-1">
-                          <label
-                            htmlFor="car_Add_images"
-                            className="col-3 col-form-label"
-                            >
-                            Añadir imagenes
-                            <p className="text-danger d-inline-block">(*)</p>
-                          </label>
-                          <div className="col-9">
-                            <Field
-                              className="form-control"
-                              id="car_Add_images"
-                              multiple
-                              name="images"
-                              onChange={i => {
-                                setCarImages(i.target.files);
-                              }}
-                              type="file"
-                            />
-                            <ErrorMessage name="images">
-                              {msg => <h6 className="text-danger">{t(msg)}</h6>}
-                            </ErrorMessage>
+                          /> */}
+                          <FormikInput
+                            label={t("Mark")}
+                            inputName="mark"
+                            type="text"
+                            required={true}
+                            groupId ={genericId}
+                          />
+                          <FormikInput
+                            label={t("Model")}
+                            inputName="model"
+                            type="text"
+                            required={true}
+                            groupId ={genericId}
+                          />
+                          <FormikInput
+                            label={t("License plate")}
+                            inputName="placa"
+                            type="text"
+                            required={true}
+                            groupId ={genericId}
+                          />
+                          <FormikSelect
+                              label={t("Platform")}
+                              inputName="platform_id"
+                              groupId ={genericId}
+                          >
+                              <option hidden value="">{t("Select a platform")}</option>
+                              {localStore.platformList.length ? 
+                                  localStore.platformList.map((platform, idx) => (
+                                      <option key={"mO-"+idx} value={platform.id}>{platform.name}</option>
+                                  )) :
+                                  <option className='text-secondary' disabled value="">{t("No platforms")}</option>
+                              }
+                          </FormikSelect>
+                          <div className="row mb-1">
+                            <label
+                              htmlFor="car_Add_images"
+                              className="col-3 col-form-label"
+                              >
+                              Añadir imagenes
+                              <p className="text-danger d-inline-block">(*)</p>
+                            </label>
+                            <div className="col-9">
+                              <Field
+                                className="form-control"
+                                id="car_Add_images"
+                                multiple
+                                name="images"
+                                onChange={i => {
+                                  setCarImages(i.target.files);
+                                }}
+                                type="file"
+                              />
+                              <ErrorMessage name="images">
+                                {msg => <h6 className="text-danger">{t(msg)}</h6>}
+                              </ErrorMessage>
+                            </div>
                           </div>
-                        </div>
-                    </Form>
-                )}
-            </Formik>
+                      </Form>
+                  )}
+                </Formik>
+              </div>
+
+              <div className="modal-footer">
+                <CancelModalButton />
+                <div className="ms-auto">
+                  <button className="btn btn-success btn-label" form={_crudName.cod + "_" + formName}>
+                    Añadir
+                    <i className="fas fa-plus label-icon"></i>
+                  </button>
+                </div>
+              </div>
         </React.Fragment>
     )
 }
 
 ModalAdd.propTypes = {
     _crudName: PropTypes.object,
+    CloseModalButton: PropTypes.any,
+    CancelModalButton: PropTypes.any,
     formName: PropTypes.string,
     localStore: PropTypes.object,
     onPost: PropTypes.func,
