@@ -88,7 +88,7 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
                 </button>
                 <div className="ms-auto">
                     <button
-                        className={`btn btn-${toastWaiting ? "light" : "primary btn-label"}`}
+                        className={`btn dm-button text-light btn-label`}
                         disabled={toastWaiting}
                         form={_crudName.cod + "_" + state.modalType}
                         type="submit"

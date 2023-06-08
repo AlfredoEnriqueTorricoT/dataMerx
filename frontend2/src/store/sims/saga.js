@@ -43,13 +43,13 @@ function* postSimSaga(action) {
 
   try {
     response = yield call(AxiosServices.POST, {payload: action.payload, url: action.url})
-
+    console.log(response);
     try {
       if (response.data.status == 200) {
         yield put(updateSimStorage({
-          payload: response.response.data.data,
+          payload: response.data.data,
           saveAs: action.saveAs,
-          status: response.response.data.status}))
+          status: response.data.status}))
       } else {
         yield put(updateSimStorage({status: response.response.data.message}))
       }

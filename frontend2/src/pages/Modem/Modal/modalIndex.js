@@ -156,7 +156,7 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onGet, onPost, onPutAn
                 </button>
                 <div className="ms-auto">
                     <button
-                        className={`btn btn-${toastWaiting ? "light" : "primary btn-label"}`}
+                        className={`btn dm-button text-light btn-label`}
                         hidden={state.modalType == "Details" || state.modalType == "Events"}
                         disabled={toastWaiting}
                         form={_crudName.cod + "_" + state.modalType}
@@ -200,7 +200,7 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onGet, onPost, onPutAn
                             </button>
                             <div className="ms-auto">
                                 <button
-                                    className={`btn btn-${localStore.status == "waiting response" ? "light" : "primary btn-label"}`}
+                                    className={`btn dm-button text-light btn-label`}
                                     disabled={localStore.status == "waiting response"}
                                     form={_crudName.cod + "_" + state.modalType}
                                 >

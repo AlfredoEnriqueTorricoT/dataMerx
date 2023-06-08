@@ -8,27 +8,30 @@ import { SpinnerL } from 'components/components'
 import { ErrorTable } from 'components/tableElements'
 import { showToast } from 'components/toast'
 
+import ModalModemConfirm from './modalModemConfirm'
 
-const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onPutAndGet, secondModal, setState, state}) => {
+const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onPut, secondModal, setState, state}) => {
     const [imei, setImei] = useState("")
+    const [carName, setCarName] = useState("")
     const [modemId, setModemId] = useState(0)
     const [mDataStatus, setMDataStatus] = useState(0)//-1 error, 0 loading, 1 success
+    const [tableStatus, setTableStatus] = useState(-2)//-2 init, -1 error, 0 loading, 1 success
     const [toastW, setToastW] = useState(false)
-    const [tableStatus, setTableStatus] = useState(-1)//-2 error, -1 init, 0 loading, 1 success
+    const [secondModalOpen, setSecondModalOpen] = useState(false)
     
     useEffect(()=>{
         setModemId(state.elementSelected.modem_id || 0)
     }, [])
 
     useEffect(()=>{
-        if (tableStatus == 0 && localStore.status != "waiting response") {
-            if (localStore.status == 200) setTableStatus(1)
-            else setTableStatus(2)
-        }
-        
         if (mDataStatus == 0 && localStore.status != "waiting response") {
             if (localStore.status == 200) setMDataStatus(1)
             else setMDataStatus(-1)
+        }
+
+        if (tableStatus == 0 && localStore.status != "waiting response") {
+            if (localStore.status == 200) setTableStatus(1)
+            else setTableStatus(-1)
         }
         
         if (toastW && localStore.status != "waiting response") {
@@ -38,8 +41,10 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
                     message: "El módem ha sido vinculado"
                 })
                 setState({modalOpen: false})
-            }
-            else if (localStore.status == 432) {
+            } else if (localStore.status == 232) {
+                setToastW(false)
+                setSecondModalOpen(true)
+            } else if (localStore.status == 432) {
                 showToast({
                     type: "info",
                     message: localStore.message
@@ -56,16 +61,55 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
         }
     }, [localStore.status])
 
-    const ShowTable = () => {
-        switch (tableStatus) {
-            case -2:
-                return(<ErrorTable cod={localStore.status} retryFunction={searchFunction} />)
+    const ShowActiveModem = () => {
+        switch (mDataStatus) {
             case -1:
                 return(
-                    <center><h4>
-                        Ingrese el imei del módem    
-                    </h4></center>
+                    <ErrorTable cod={localStore.status} retryFunction={()=>onGet({saveAs: "carDetails", url: "car/details/" + state.elementSelected.id})} />
                 )
+            case 0:
+                return(
+                    <SpinnerL />
+                )
+            case 1:
+                return(
+                    <React.Fragment>
+                        <div className="row">
+                            <div className="col">
+                                <center>
+                                    Código
+                                    <br />
+                                    <b>{localStore.carDetails.modem.code}</b>
+                                </center>
+                            </div>
+                            <div className="col">
+                                <center>
+                                    Imei
+                                    <br />
+                                    <b>{localStore.carDetails.modem.imei}</b>
+                                </center>
+                            </div>
+                            <div className="col">
+                                <center>
+                                    Marca
+                                    <br />
+                                    <b>{localStore.carDetails.modem.mark_id}</b>
+                                </center>
+                            </div>
+                        </div>
+                        <br />
+                    </React.Fragment>
+                )
+
+            default:
+                break;
+        }
+    }
+
+    const ShowTable = () => {
+        switch (tableStatus) {
+            case -1:
+                return(<ErrorTable cod={localStore.status} retryFunction={searchFunction} />)
             case 0:
                 return(<SpinnerL />)
             case 1:
@@ -76,35 +120,33 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
                                 <tr>
                                     <th>Código</th>
                                     <th>Imei</th>
-                                    <th>Número</th>
                                     <th>Selec.</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                    {
-                                        localStore.modemList.length ?
-                                            localStore.modemList.map((modem, idx) => (
-                                                <tr key={idx}>
-                                                    <td>{modem.code}</td>
-                                                    <td>{modem.imei}</td>
-                                                    <td>{modem.sim_number || "- - -"}</td>
-                                                    <td>
-                                                        <input
-                                                            className="form-check-input"
-                                                            checked={modemId == modem.id}
-                                                            onChange={()=>setModemId(modem.id)}
-                                                            type="radio"
-                                                        />
-                                                    </td>
-                                                </tr>
-                                            ))
-                                        :
-                                        <tr>
-                                            <td colSpan="3">
-                                                <h4 className='text-secondary'>No hay módems que coincidan con su busqueda</h4>
-                                            </td>
-                                        </tr>
-                                    }
+                                {
+                                    localStore.modemList.length && mDataStatus == 1 ?
+                                        localStore.modemList.map((modem, idx) => (
+                                            modem.id != state.elementSelected.modem_id ? <tr key={idx}>
+                                                <td>{modem.code}</td>
+                                                <td>{modem.imei}</td>
+                                                <td>
+                                                    <input
+                                                        className="form-check-input"
+                                                        checked={modemId == modem.id}
+                                                        onChange={()=>setModemId(modem.id)}
+                                                        type="radio"
+                                                    />
+                                                </td>
+                                            </tr> : ""
+                                        ))
+                                    :
+                                    <tr>
+                                        <td colSpan="3">
+                                            <h4 className='text-secondary'>No hay módems que coincidan con su busqueda</h4>
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -113,54 +155,7 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
                 break;
         }
     }
-
-    const ShowData = ({title, data}) => {
-        return(
-            <div className="row my-0">
-                <p className='my-0'><b>{title}: </b>{data}</p>
-            </div>
-        )
-    }
-
-    const ShowModemAssigned = () => {
-        switch (mDataStatus) {
-            case -1:
-                return(
-                    <ErrorTable cod={localStore.status} retryFunction={()=>onGet({saveAs: "carDetails", url: "car/details/" + listItem.id})} />
-                )
-            case 0:
-                return(
-                    <SpinnerL />
-                )
-            case 1:
-                return(
-                    <div className="card bg-success bg-soft">
-                        <div className="card-body">
-                            {state.elementSelected.modem_id ?
-                                <div className="row">
-                                    <div className="col">
-                                        <ShowData title={"Código"} data={localStore.carDetails.modem.code} />
-                                        <ShowData title={"Imei"} data={localStore.carDetails.modem.imei} />
-                                    </div>
-                                    <div className="col">
-                                        <ShowData title={"Mark id"} data={localStore.carDetails.modem.mark_id} />
-                                        <ShowData title={"Sim id"} data={localStore.carDetails.modem.sim_id || "Sin sim"} />
-                                    </div>
-                                </div>
-                                :
-                                <center className="my-1">
-                                    <h4 className="text-secondary">Ningún sim vinculado</h4>
-                                </center>
-                            }
-                        </div>
-                    </div>
-                )
-        
-            default:
-                break;
-        }
-    }
-
+    
     const searchFunction = () => {
         setTableStatus(0)
         onGet({
@@ -174,17 +169,15 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
 
       const values = {
         id: state.elementSelected.id,
-        modem_id: modemId
+        modem_id: modemId,
+        name: carName,
+        confirm: secondModalOpen
       }
 
-      onPutAndGet({
-        saveAs: "carList",
-        payload: {
-            ...values,
-            confirm: secondModal.open
-        },
+      onPut({
+        saveAs: "UNUSED-DATA",
+        payload: values,
         url: "car/update-modem",
-        urlToGet: "car"
         })
     }
 
@@ -192,18 +185,30 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
         <React.Fragment>
             <div className="modal-header">
                 <h4>Vincular módem</h4>
+                <button
+                    type='button'
+                    onClick={
+                    ()=>console.log(state.elementSelected)
+                    }
+                >
+                log
+                </button>
                 <CloseModalButton />
             </div>
         
             <div className="modal-body">
-                <div className="row">
-                    <label className="form-label col-4 pt-4">
-                        <b>Módem vinculado:</b>
-                    </label>
-                    <div className="col-8">
-                        <ShowModemAssigned />
+                <ShowActiveModem />
+                <center>
+                    <div className="d-inline-block">
+                        <input
+                            className="form-control"
+                            onChange={i=>setCarName(i.target.value)}
+                            type="text"
+                            placeholder='Nombre del usuario'
+                            value={carName}
+                        />
                     </div>
-                </div>
+                </center>
                 <br />
                 <center>
                     <SearchBar
@@ -214,7 +219,7 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
                         value={imei}
                     >
                         <button
-                          className="btn btn-primary"
+                          className="btn dm-button text-light"
                           disabled={imei == ""}
                           onClick={searchFunction}
                         >
@@ -234,8 +239,8 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
                 <CancelModalButton />
                 <div className="ms-auto">
                     <button
-                        className="btn btn-success btn-label"
-                        disabled={modemId == 0}
+                        className="btn dm-button text-light btn-label"
+                        disabled={modemId == 0 || toastW}
                         onClick={assignModem}
                     >
                         Asignar
@@ -243,6 +248,13 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
                     </button>
                 </div>
             </div>
+
+            <ModalModemConfirm
+                assignModem={assignModem}
+                localStore={localStore}
+                modalOpen={secondModalOpen}
+                setModalOpen={setSecondModalOpen}
+            />
         </React.Fragment>
     )
 }
@@ -250,11 +262,10 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
 ModalModem.propTypes = {
     CancelModalButton: PropTypes.any,
     CloseModalButton: PropTypes.any,
-    CloseModal: PropTypes.any,
     formName: PropTypes.string,
     localStore: PropTypes.object,
     onGet: PropTypes.func,
-    onPutAndGet: PropTypes.func,
+    onPut: PropTypes.func,
     secondModal: PropTypes.object,
     setState: PropTypes.func,
     setToastW: PropTypes.func,

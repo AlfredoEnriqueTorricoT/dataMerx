@@ -10,7 +10,7 @@ import {
 } from "./actionTypes"
 
 const INITIAL_CAR = {
-    status: "waiting response",
+    status: 200,
     message: "",
     carList: [],
     modemList: [],

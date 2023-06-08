@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { OptionsButton, MobileDataShow } from 'components/tableElements'
+import { EmptyData, OptionsButton, MobileDataShow } from 'components/tableElements'
 
 const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
     return(
@@ -32,11 +32,11 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                       />
                       <MobileDataShow
                         title="Marca de módem"
-                        desc={listItem.mBrand_name || "- - -"}
+                        desc={listItem.mBrand_name || <EmptyData />}
                       />
                       <MobileDataShow
                         title="Número"
-                        desc={listItem.sim_number || "- - -"}
+                        desc={listItem.sim_number || <EmptyData />}
                       />
                     </div>
                   </div>

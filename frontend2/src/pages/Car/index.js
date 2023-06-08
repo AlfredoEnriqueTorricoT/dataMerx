@@ -48,12 +48,6 @@ const CarPage = ({
         _zetState({...state, ...data})
     }
 
-    useEffect(()=>{
-        // onGet({ saveAs: _crudName.cod + "List", url: "car" })
-        onGet({ saveAs: "modemList", url: "modem" })
-        onGet({ saveAs: "platformList", url: "platform" })
-    }, [])
-
     return(
         <React.Fragment>
             <div className="page-content mb-0 pb-0">
@@ -87,6 +81,7 @@ const CarPage = ({
                     localStore={localStore}
                     onGet={onGet}
                     onPost={onPost}
+                    onPut={onPut}
                     onPostAndGet={onPostAndGet}
                     onPutAndGet={onPutAndGet}
                     setState={setState}

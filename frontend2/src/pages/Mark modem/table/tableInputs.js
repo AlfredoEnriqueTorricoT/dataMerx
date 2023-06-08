@@ -10,7 +10,7 @@ const TableInputs = ({_crudName, filter, setFilter, setState, t}) => {
         
             <div className="ms-auto">
                 <button
-                  className="btn btn-sm btn-success btn-label waves-effect waves-light"
+                  className="btn btn-sm dm-button text-light btn-label waves-effect waves-light"
                   onClick={()=>{
                     setState({modalOpen: true, modalType: "Add"})
                   }}

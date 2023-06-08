@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { OptionsButton } from 'components/tableElements'
+import { EmptyData, OptionsButton } from 'components/tableElements'
 
 const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
     return(
@@ -25,9 +25,9 @@ const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
                         {listItem.placa}<br />
                         {listItem.mark}<br />
                         {listItem.model}<br />
-                        {listItem.name}<br />
+                        {listItem.name || <EmptyData />}<br />
                         {/* {listItem.platform_name || "- - -"}<br /> */}
-                        {listItem.modem_code || "- - -"}<br />
+                        {listItem.modem_code || <EmptyData />}<br />
                       </div>
                     </div>
                   </div>

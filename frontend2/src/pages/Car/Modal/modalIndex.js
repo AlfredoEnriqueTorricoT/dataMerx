@@ -9,7 +9,7 @@ import ModalAddEvent from './modalAddEvent';
 import ModalDetails from './modalDetails';
 import ModalEvent from './Modal events/modalEvents';
 
-const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAndGet, setState, state, t}) => {
+const ModalIndex = ({_crudName, localStore, onGet, onPost, onPut, onPostAndGet, onPutAndGet, setState, state, t}) => {
     const [secondModal, setSecondModal] = useState({open: false})
     const [toastWaiting, setToastW] = useState(false)
 
@@ -115,7 +115,7 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAn
 
                         localStore={localStore}
                         onGet={onGet}
-                        onPutAndGet={onPutAndGet}
+                        onPut={onPut}
                         secondModal={secondModal}
                         setToastW={setToastW}
                         setState={setState}
@@ -180,49 +180,6 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAn
                         }
                         {t(buttonText[state.modalType])}
                     </button> */}
-
-            <Modal isOpen={secondModal.open} size="sm">
-                        <div className="modal-header">
-                            <h4>{t("Modem already assigned")}</h4>
-                            <button
-                                type="button"
-                                onClick={()=>{
-                                    setSecondModal({open: false});
-                                    setToastW(false)
-                                  }}
-                                className="close"
-                                aria-label="Close"
-                            ></button>
-                        </div>
-                        <div className="modal-body">
-                            {localStore.message}
-                        </div>
-                        <div className="modal-footer">
-                            <button
-                                className="btn btn-secondary"
-                                onClick={()=>{
-                                    setSecondModal({open: false})
-                                    setToastW(false)
-                                }}
-                            >
-                                {t("Cancel")}
-                            </button>
-                            <div className="ms-auto">
-                                <button
-                                    className={`btn btn-${localStore.status == "waiting response" ? "light" : "primary btn-label"}`}
-                                    disabled={localStore.status == "waiting response"}
-                                    form={_crudName.cod + "_" + state.modalType}
-                                >
-                                    {
-                                        localStore.status == "waiting response" ?
-                                        <i className="bx bx-loader bx-spin font-size-16 align-middle me-2"></i> :
-                                        <i className="fas fa-plus label-icon"></i>
-                                    }
-                                    {t("Assign")}
-                                </button>
-                            </div>
-                        </div>
-            </Modal>
         </React.Fragment>
     )
 }
@@ -232,6 +189,7 @@ ModalIndex.propTypes = {
     localStore: PropTypes.object,
     onGet: PropTypes.func,
     onPost: PropTypes.func,
+    onPut: PropTypes.func,
     onPostAndGet: PropTypes.func,
     onPutAndGet: PropTypes.func,
     setState: PropTypes.func,

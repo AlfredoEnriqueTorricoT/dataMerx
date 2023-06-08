@@ -49,7 +49,7 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAn
     }
 
     const buttonText = {Add: "Add", Edit: "Edit", ["Add event to"]: "Add"}
-    const buttonColor = {Add: "success", Edit: "primary", ["Add event to"]: "success"}
+    // const buttonColor = {Add: "success", Edit: "primary", ["Add event to"]: "success"}
     const modalIcon = {Add: "plus", Edit: "edit", ["Add event to"]: "plus"}
 
     const modalToShow = () => {
@@ -125,7 +125,7 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAn
                 </button>
                 <div className="ms-auto">
                     <button
-                        className={`btn btn-${buttonColor[state.modalType]} btn-label`}
+                        className={`btn dm-button text-light btn-label`}
                         disabled={localStore.status == "waiting response"}
                         form={_crudName.cod + "_" + state.modalType}
                         hidden={state.modalType == "Details" || state.modalType == "Events"}

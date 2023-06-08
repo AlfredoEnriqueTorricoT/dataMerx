@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { OptionsButton } from 'components/tableElements';
-import { THeaderSorter } from 'components/tableElements';
+import { EmptyData, OptionsButton, THeaderSorter } from 'components/tableElements';
 
 const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) => {
     return(
@@ -34,8 +33,8 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                 <td>{listItem.placa}</td>
                                 <td>{listItem.mark}</td>
                                 <td>{listItem.model}</td>
-                                <td>{listItem.name || "- - -"}</td>
-                                <td>{listItem.modem_code || "- - -"}</td>
+                                <td>{listItem.name || <EmptyData />}</td>
+                                <td>{listItem.modem_code || <EmptyData />}</td>
                                 <td>
                                 <OptionsButton
                                     buttonsList={[

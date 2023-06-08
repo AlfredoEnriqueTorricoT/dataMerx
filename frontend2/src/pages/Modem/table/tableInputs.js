@@ -26,7 +26,7 @@ const TableInputs = ({onGet, setState, setTableStatus, status, t}) => {
               />
               <div className="input-group-append">
                 <button
-                  className="btn btn-primary"
+                  className="btn dm-button text-light"
                   disabled={status == "waiting response" || imei == ""}
                   onClick={searchFunction}
                 >
@@ -41,7 +41,7 @@ const TableInputs = ({onGet, setState, setTableStatus, status, t}) => {
         
             <div className="ms-auto">
                 <button
-                  className="btn btn-sm btn-success btn-label waves-effect waves-light"
+                  className="btn btn-sm dm-button text-light btn-label waves-effect waves-light"
                   onClick={()=>{
                     setState({modalOpen: true, modalType: "Add"})
                   }}

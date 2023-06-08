@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { OptionsButton, THeaderSorter } from 'components/tableElements';
+import { EmptyData, OptionsButton, THeaderSorter } from 'components/tableElements';
 
 const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) => {
     return(
@@ -41,8 +41,8 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                                   {listItem.active}
                                 </span>
                                 </td>
-                                <td>{listItem.mBrand_name}</td>
-                                <td>{listItem.sim_number || "- - -"}</td>
+                                <td>{listItem.mBrand_name || <EmptyData />}</td>
+                                <td>{listItem.sim_number || <EmptyData />}</td>
                                 <td>
                                     <OptionsButton
                                         buttonsList={[

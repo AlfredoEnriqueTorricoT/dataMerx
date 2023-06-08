@@ -143,7 +143,7 @@ const ModalAddEvent = ({_crudName, CloseModalButton, CancelModalButton, localSto
           <div className="modal-footer">
             <CancelModalButton />
             <div className="ms-auto">
-              <button className="btn btn-primary btn-label" form={_crudName.cod + "_" + formName}>
+              <button className="btn dm-button text-light btn-label" form={_crudName.cod + "_" + formName}>
                 Añadir
                 <i className="fas fa-plus label-icon"></i>
               </button>

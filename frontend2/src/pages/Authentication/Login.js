@@ -41,11 +41,11 @@ class Login extends Component {
             <Row className="justify-content-center">
               <Col md={8} lg={6} xl={5}>
                 <Card className="overflow-hidden">
-                  <div className="bg-primary bg-soft">
+                  <div className="bg-success bg-soft">
                     <Row>
                       <Col className="col-7">
-                        <div className="text-primary p-4">
-                          <h5 className="text-primary">Welcome Back !</h5>
+                        <div className="dm-text p-4">
+                          <h5 className="dm-text">Welcome Back !</h5>
                           <p>Sign in to continue to Skote.</p>
                         </div>
                       </Col>
@@ -131,7 +131,7 @@ class Login extends Component {
                             </div>
                             <div className="mb-3">
                               <Label for="password" className="form-label">
-                                Password
+                                Contraseña
                               </Label>
                               <div className="input-group auth-pass-inputgroup">
                                 <Field
@@ -160,7 +160,7 @@ class Login extends Component {
                             />
                             </div>
                             
-                            <div className="form-check">
+                            {/* <div className="form-check">
                               <input
                                 type="checkbox"
                                 className="form-check-input"
@@ -172,15 +172,15 @@ class Login extends Component {
                               >
                                 Remember me
                               </label>
-                            </div>
+                            </div> */}
 
                             <div className="mt-3 d-grid">
                               <button
-                                className="btn btn-primary btn-block"
+                                className="btn dm-button text-light btn-block"
                                 disabled={this.props.loading}
                                 type="submit"
                               >
-                                {this.props.loading ? "Loading" : "Log In"}
+                                {this.props.loading ? "Procesando" : "Iniciar sesión"}
                               </button>
                             </div>
 

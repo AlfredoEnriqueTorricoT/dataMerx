@@ -112,4 +112,8 @@ const OptionsButton = ({buttonsList}) => {
   )
 }
 
-export {ErrorTable, SearchBar, OptionsButton, MobileDataShow, THeaderSorter}
+const EmptyData = () => (
+  <span className="badge badge-pill badge-soft-secondary font-size-12">--</span>
+)
+
+export {EmptyData, ErrorTable, SearchBar, OptionsButton, MobileDataShow, THeaderSorter}

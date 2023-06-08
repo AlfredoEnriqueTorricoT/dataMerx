@@ -86,24 +86,54 @@ function* postAndGetCarSaga(action) {
   }
 }
 
+function* putCarSaga(action) {
+  let response;
+
+  try {
+    response = yield call(AxiosServices.PUT, {payload: action.payload, url: action.url})
+    try {
+      if (response.data.status == 200) {
+        yield put(
+          updateCarStorage({
+            status: response.data.status,
+            saveAs: action.saveAs,
+            payload: response.data
+          })
+        )
+      } else if (response.data.status == 432) {
+        yield put(
+          updateCarStorage({status: 432, message: (response.data.message || "Error inesperado (432 without message)")})
+        )
+      } else {
+        yield put(updateCarStorage({status: response.data.status, message: (response.data.message || "")}))
+      }  
+    } catch (error) {
+      yield put(updateCarStorage({status: response.data.status}))
+    }
+    
+  } catch (error) {
+    console.log("resp:", response);
+    console.log("error:", error);
+    yield put(updateCarStorage({status: "Unexpected error"}))
+  }
+}
+
 function* putAndGetCarSaga(action) {
   let response;
 
   try {
     response = yield call(AxiosServices.PUT, {payload: action.payload, url: action.url})
-
     try {
-      if (response.response.status == 200) {
+      if (response.data.status == 200) {
         yield put(
           getCar({
             saveAs: action.saveAs,
             url: action.urlToGet || action.url,
           })
         )
-      } else if (response.response.status == 432) {
-        console.log("ASOJDOPASKDP");
+      } else if (response.data.status == 432) {
         yield put(
-          updateCarStorage({status: 432, message: (response.response.data.message || "Error inesperado (432 without message)")})
+          updateCarStorage({status: 432, message: (response.data.message || "Error inesperado (432 without message)")})
         )
       } else {
         yield put(updateCarStorage({status: response.data.status, message: (response.data.message || "")}))
@@ -122,6 +152,7 @@ function* putAndGetCarSaga(action) {
 function* carSaga() {
   yield takeEvery(GET_CAR, getCarSaga)
   yield takeEvery(POST_CAR, postCarSaga)
+  yield takeEvery(PUT_CAR, putCarSaga)
   yield takeEvery(POST_AND_GET_CAR, postAndGetCarSaga)
   yield takeEvery(PUT_AND_GET_CAR, putAndGetCarSaga)
 }

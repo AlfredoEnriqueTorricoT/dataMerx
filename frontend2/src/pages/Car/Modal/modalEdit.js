@@ -91,7 +91,7 @@ const ModalEdit = ({_crudName, CloseModalButton, CancelModalButton, localStore, 
             <div className="modal-footer">
                 <CancelModalButton />
                 <div className="ms-auto">
-                    <button className="btn btn-primary btn-label" form={_crudName.cod + "_" + _formName}>
+                    <button className="btn dm-button text-light btn-label" form={_crudName.cod + "_" + _formName}>
                         Editar
                         <i className="fas fa-edit label-icon"></i>
                     </button>
