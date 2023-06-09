@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 
 import {FormikInput, FormikSelect} from "components/formElements"
 
-const ModalAddEvent = ({_crudName, CloseModalButton, CancelModalButton, localStore, onPost, setToastW, state, t}) => {
+const ModalAddEvent = ({_crudName, CloseModalButton, CancelModalButton, localStore, onPost, setToastW, state, t, toastWaiting}) => {
     const [eventImages, setEventImages] = useState([])
     const formName = "Add event to"
     const genericId = _crudName.cod + "_" + formName + "_"
@@ -143,7 +143,7 @@ const ModalAddEvent = ({_crudName, CloseModalButton, CancelModalButton, localSto
           <div className="modal-footer">
             <CancelModalButton />
             <div className="ms-auto">
-              <button className="btn dm-button text-light btn-label" form={_crudName.cod + "_" + formName}>
+              <button className="btn dm-button text-light btn-label" disabled={toastWaiting} form={_crudName.cod + "_" + formName}>
                 Añadir
                 <i className="fas fa-plus label-icon"></i>
               </button>
@@ -162,6 +162,7 @@ ModalAddEvent.propTypes = {
     setToastW: PropTypes.func,
     state: PropTypes.object,
     t: PropTypes.func,
+    toastWaiting: PropTypes.bool,
 }
 
 export default ModalAddEvent

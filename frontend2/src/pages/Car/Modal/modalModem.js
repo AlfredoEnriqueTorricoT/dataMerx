@@ -73,6 +73,7 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
                 )
             case 1:
                 return(
+                    localStore.carDetails.modem ?
                     <React.Fragment>
                         <div className="row">
                             <div className="col">
@@ -99,6 +100,10 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
                         </div>
                         <br />
                     </React.Fragment>
+                    : 
+                    <center>
+                        <h4 className="text-secondary">Sin módem asignado</h4>
+                    </center>
                 )
 
             default:
@@ -185,19 +190,11 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
         <React.Fragment>
             <div className="modal-header">
                 <h4>Vincular módem</h4>
-                <button
-                    type='button'
-                    onClick={
-                    ()=>console.log(state.elementSelected)
-                    }
-                >
-                log
-                </button>
                 <CloseModalButton />
             </div>
         
             <div className="modal-body">
-                <ShowActiveModem />
+                    <ShowActiveModem /> :
                 <center>
                     <div className="d-inline-block">
                         <input

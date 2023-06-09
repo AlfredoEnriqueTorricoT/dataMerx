@@ -90,6 +90,7 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPut, onPostAndGet, 
                         setState={setState}
                         setToastW={setToastW}
                         t={t}
+                        toastWaiting={toastWaiting}
                         />
                 )
             case "Edit":
@@ -105,6 +106,7 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPut, onPostAndGet, 
                         setToastW={setToastW}
                         state={state}
                         t={t}
+                        toastWaiting={toastWaiting}
                     />
                 )
             case "Modem":
@@ -134,6 +136,7 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPut, onPostAndGet, 
                         setToastW={setToastW}
                         state={state}
                         t={t}
+                        toastWaiting={toastWaiting}
                     />
                 )
             case "Details":

@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 
 import {FormikInput, FormikSelect, isEmail, isUrl} from "components/formElements"
 
-const ModalEdit = ({_crudName, CloseModalButton, CancelModalButton, localStore, onPutAndGet, setToastW, state, t}) => {
+const ModalEdit = ({_crudName, CloseModalButton, CancelModalButton, localStore, onPutAndGet, setToastW, state, t, toastWaiting}) => {
 
     const _formName = "Edit"
     const genericId = _crudName.cod + "_" + _formName + "_"
@@ -91,7 +91,7 @@ const ModalEdit = ({_crudName, CloseModalButton, CancelModalButton, localStore, 
             <div className="modal-footer">
                 <CancelModalButton />
                 <div className="ms-auto">
-                    <button className="btn dm-button text-light btn-label" form={_crudName.cod + "_" + _formName}>
+                    <button className="btn dm-button text-light btn-label" disabled={toastWaiting} form={_crudName.cod + "_" + _formName}>
                         Editar
                         <i className="fas fa-edit label-icon"></i>
                     </button>
@@ -110,6 +110,7 @@ ModalEdit.propTypes = {
     setToastW: PropTypes.func,
     state: PropTypes.object,
     t: PropTypes.func,
+    toastWaiting: PropTypes.bool
 }
 
 export default ModalEdit

@@ -48,6 +48,10 @@ const CarPage = ({
         _zetState({...state, ...data})
     }
 
+    useEffect(()=>{
+        onGet({ saveAs: "platformList", url: "platform" })
+    }, [])
+
     return(
         <React.Fragment>
             <div className="page-content mb-0 pb-0">
