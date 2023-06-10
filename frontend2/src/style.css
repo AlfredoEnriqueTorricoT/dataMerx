@@ -98,10 +98,27 @@ body::-webkit-scrollbar {
     color: #00A79D !important;
   }
 
+  .dm-text-light {
+    color: #c8c8c8 !important;
+  }
+
   .dm-button {
     background-color: #00A79D !important;
   }
   
   .dm-button:disabled {
     background-color: #c8c8c8 !important;
+  }
+
+  .dm-link a {
+    color: #c8c8c8 !important;
+  }
+  .dm-link a i {
+    color: #c8c8c8 !important;
+  }
+  .dm-link :hover {
+    color: #f0f0f0 !important;
+  }
+  .dm-link :hover .dm-link-icon {
+    color: #f0f0f0 !important;
   }

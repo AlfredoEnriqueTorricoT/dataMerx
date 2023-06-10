@@ -107,8 +107,8 @@ class SidebarContent extends Component {
         <SimpleBar className="h-100" ref={this.refDiv}>
           <div id="sidebar-menu">
             <ul className="metismenu list-unstyled" id="side-menu">
-              <li className="menu-title">{this.props.t("Menu")}</li>
-              <li>
+              <li className="menu-title dm-text-light">{this.props.t("Menu")}</li>
+              <li className="dm-link">
                 {/* <Link to="/#" className="has-arrow">
                   <i className="bx bx-home-circle" />
                   <span className="badge rounded-pill bg-info float-end">
@@ -117,7 +117,7 @@ class SidebarContent extends Component {
                   <span>{this.props.t("Dashboards")}</span>
                 </Link> */}
                 <Link to="/car">
-                  <i className="fas fa-car" />
+                  <i className="fas fa-car dm-link-icon" />
                   <span>Vehículos</span>
                 </Link>
                 {/* <ul className="sub-menu">
@@ -129,39 +129,39 @@ class SidebarContent extends Component {
                   </li>
                 </ul> */}
               </li>              
-              <li>
+              <li className="dm-link">
                 <Link to="/modem">
-                  <i className="fas fa-hdd" />
+                  <i className="fas fa-hdd dm-link-icon" />
                   <span>Módems</span>
                 </Link>
               </li>
-              <li>
+              <li className="dm-link">
                 <Link to="/sims">
-                  <i className="fas fa-sim-card" />
+                  <i className="fas fa-sim-card dm-link-icon" />
                   <span>Sims</span>
                 </Link>
               </li>
-              <li>
+              <li className="dm-link">
                 <Link to="/clients">
-                  <i className="fas fa-users" />
+                  <i className="fas fa-users dm-link-icon" />
                   <span>Clientes</span>
                 </Link>
               </li>
-              <li>
+              <li className="dm-link">
                 <Link to="/mark-modem">
-                  <i className="fas fa-list"></i>
+                  <i className="fas fa-list dm-link-icon"></i>
                   <span>Marcas de módem</span>
                 </Link>
               </li>
-              <li>
+              <li className="dm-link">
                 <Link to="/platform">
-                  <i className="fas fa-city"></i>
+                  <i className="fas fa-city dm-link-icon"></i>
                   <span>Plataformas</span>
                 </Link>
               </li>
-              <li>
+              <li className="dm-link">
                 <Link to="/users">
-                  <i className="fas fa-user-tie" />
+                  <i className="fas fa-user-tie dm-link-icon" />
                   <span>Usuarios</span>
                 </Link>
               </li>
