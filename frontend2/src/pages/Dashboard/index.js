@@ -16,7 +16,7 @@ class Dashboard extends Component {
 
   render() {
     //meta title
-    document.title = "Dashboard | Skote - React Admin & Dashboard Template";
+    document.title = "Síguelo";
 
     return (
       <React.Fragment>

@@ -49,6 +49,7 @@ const ClientPage = ({
     }
 
     useEffect(()=>{
+        document.title = "Síguelo | Clientes";
         // onGet({ saveAs: _crudName.cod + "List", url: "client" })
         onGet({ saveAs: "modemList", url: "modem" })
         onGet({ saveAs: "platformList", url: "platform" })

@@ -47,6 +47,7 @@ const SimPage = ({
     }
 
     useEffect(()=>{
+        document.title = "Síguelo | Sims";
         // onGet({ saveAs: _crudName.cod + "List", url: "sim" })
         onGet({ saveAs: "modemList", url: "modem" })
         onGet({ saveAs: "carList", url: "car" })

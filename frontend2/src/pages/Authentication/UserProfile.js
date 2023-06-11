@@ -24,6 +24,7 @@ class UserProfile extends Component {
   }
 
   componentDidMount() {
+    document.title = "Síguelo | Perfíl";
     if (localStorage.getItem("authUser")) {
       const obj = JSON.parse(localStorage.getItem("authUser"));
       const userData = JSON.parse(localStorage.getItem("userData"));

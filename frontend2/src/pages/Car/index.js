@@ -49,6 +49,7 @@ const CarPage = ({
     }
 
     useEffect(()=>{
+        document.title = "Síguelo | Vehículos";
         onGet({ saveAs: "platformList", url: "platform" })
     }, [])
 

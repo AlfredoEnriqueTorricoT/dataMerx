@@ -49,6 +49,7 @@ const ModemPage = ({
     }
 
     useEffect(()=>{
+        document.title = "Síguelo | Módems";
         // onGet({ saveAs: _crudName.cod + "List", url: "modem" })
         onGet({ saveAs: "modemBrandList", url: "modem-mark" })
         onGet({ saveAs: "carList", url: "car" })

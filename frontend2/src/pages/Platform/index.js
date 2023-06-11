@@ -47,6 +47,7 @@ const PlatformPage = ({
     }
 
     useEffect(()=>{
+        document.title = "Síguelo | Plataformas";
         onGet({ saveAs: _crudName.cod + "List", url: "platform" })
     }, [])
 

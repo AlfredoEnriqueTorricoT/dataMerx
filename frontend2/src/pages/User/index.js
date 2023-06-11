@@ -44,6 +44,7 @@ const UserPage = ({
     }
 
     useEffect(()=>{
+        document.title = "Síguelo | Usuarios";
         onGet({ saveAs: _crudName.cod + "List", url: "user" })
     }, [])
 

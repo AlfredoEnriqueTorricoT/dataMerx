@@ -44,6 +44,7 @@ const MarkModemPage = ({
     }
 
     useEffect(()=>{
+        document.title = "Síguelo | Marcas de módem";
         onGet({ saveAs: _crudName.cod + "List", url: "modem-mark" })
     }, [])
 
