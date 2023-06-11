@@ -42,6 +42,8 @@ class ModemController extends Controller
                     ["table", "=", "m"],
                     ["table_id", "=", $modem["id"]],
                 ])->get("url");
+                $modem->sim;
+                $modem->modems_mark;
             }
 
 
@@ -106,10 +108,10 @@ class ModemController extends Controller
                 "car" => null
             ]);
         }
-
+        $modem->modems_mark;
         $sim = SimController::byId($modem["sim_id"]);
         $car = CarController::byModemId($modem["id"]);
-
+        $car->platform;
 
         $obj = [
             "sim" => $sim,

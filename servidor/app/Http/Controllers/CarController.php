@@ -37,6 +37,7 @@ class CarController extends Controller
                     ["table", "=", "c"],
                     ["table_id", "=", $car["id"]],
                 ])->get("url");
+                $car->modem;
             }
 
 
@@ -111,6 +112,7 @@ class CarController extends Controller
     public function details($id)
     {
         $car = CarController::byId($id);
+        
         if($car == null){
             return Res::responseSuccess([
                 "sim" => null,
@@ -118,12 +120,12 @@ class CarController extends Controller
                 "car" => null
             ]);
         }
-
+        $car->platform;
         $modem = ModemController::byId($car["modem_id"]);
 
         $sim = null;
         if($modem != null) {
-
+            $modem->modems_mark;
             $sim = SimController::byId($modem["sim_id"]);
         }
 
