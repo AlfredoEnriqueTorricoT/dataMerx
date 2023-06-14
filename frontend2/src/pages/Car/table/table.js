@@ -15,7 +15,7 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                         {name: t("Mark"), arrow: true},
                         {name: t("Model"), arrow: true},
                         {name: t("Name"), arrow: true},
-                        {name: t("Modem"), arrow: true},
+                        {name: "Módem id", arrow: true},
                         {name: t("Actions"), arrow: false}
                       ]}
                      />
@@ -34,7 +34,7 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                 <td>{listItem.mark}</td>
                                 <td>{listItem.model}</td>
                                 <td>{listItem.name || <EmptyData />}</td>
-                                <td>{listItem.modem_code || <EmptyData />}</td>
+                                <td>{listItem.modem_id || <EmptyData />}</td>
                                 <td>
                                 <OptionsButton
                                     buttonsList={[

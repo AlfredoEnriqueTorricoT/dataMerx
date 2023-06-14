@@ -121,12 +121,12 @@ const ModalDetails = ({CloseModalButton, CancelModalButton, localStore}) => {
                                     <div className="col">
                                         <ShowData title={"Nombre"} data={localStore.carDetails.car.name} />
                                         <ShowData title={"Placa"} data={localStore.carDetails.car.placa} />
-                                        <ShowData title={"Módem"} data={localStore.carDetails.car.modem_id || "- - -"} />
+                                        {/* <ShowData title={"Módem"} data={localStore.carDetails.car.modem_id || "- - -"} /> */}
+                                        <ShowData title={"Plataforma"} data={localStore.carDetails.car.platform ? localStore.carDetails.car.platform.name : "- - -"} />
                                     </div>
                                     <div className="col">
                                         <ShowData title={"Marca"} data={localStore.carDetails.car.mark} />
                                         <ShowData title={"Modelo"} data={localStore.carDetails.car.model} />
-                                        <ShowData title={"Plataforma"} data={localStore.carDetails.car.platform_id || "- - -"} />
                                     </div>
                                     
                                 </div>
@@ -144,8 +144,8 @@ const ModalDetails = ({CloseModalButton, CancelModalButton, localStore}) => {
                                         <ShowData title={"Imei"} data={localStore.carDetails.modem.imei} />
                                     </div>
                                     <div className="col">
+                                        <ShowData title="Nombre de la marca" data={localStore.carDetails.modem.modems_mark ? localStore.carDetails.modem.modems_mark.name : "Sin sim"} />
                                         <ShowData title={"Mark id"} data={localStore.carDetails.modem.mark_id} />
-                                        <ShowData title={"Sim id"} data={localStore.carDetails.modem.sim_id || "Sin sim"} />
                                     </div>
                                 </div>
                             </div> : ""}

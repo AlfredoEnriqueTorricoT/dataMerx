@@ -97,7 +97,7 @@ const ModalEdit = ({_crudName, CancelModalButton, CloseModalButton, localStore, 
             <div className="modal-footer">
                 <CancelModalButton />
                 <div className="ms-auto">
-                    <button className="btn dm-button btn-label text-light" disabled={toastWaiting}>
+                    <button className="btn dm-button btn-label text-light" disabled={toastWaiting} form={_crudName.cod + "_" + _formName} type="submit">
                         Editar
                         <i className="fas fa-edit label-icon"></i>
                     </button>

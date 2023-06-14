@@ -19,7 +19,7 @@ const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
                         <b>{t("Model")}</b><br />
                         <b>{t("Name")}</b><br />
                         {/* <b>{t("Platform")}</b><br /> */}
-                        <b>{t("Modem")}</b><br />
+                        <b>Módem id</b><br />
                       </div>
                       <div className="col-8">
                         {listItem.placa}<br />
@@ -27,7 +27,7 @@ const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
                         {listItem.model}<br />
                         {listItem.name || <EmptyData />}<br />
                         {/* {listItem.platform_name || "- - -"}<br /> */}
-                        {listItem.modem_code || <EmptyData />}<br />
+                        {listItem.modem_id || <EmptyData />}<br />
                       </div>
                     </div>
                   </div>

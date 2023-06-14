@@ -190,7 +190,7 @@ const ModalSim = ({CancelModalButton, CloseModalButton, localStore, onGet, onPut
         
             <div className="modal-body">
                     <ShowActiveModem />
-                <center>
+                {/* <center>
                     <div className="d-inline-block">
                         <input
                             className="form-control"
@@ -200,7 +200,7 @@ const ModalSim = ({CancelModalButton, CloseModalButton, localStore, onGet, onPut
                             value={simName}
                         />
                     </div>
-                </center>
+                </center> */}
                 <br />
                 <center>
                     <SearchBar

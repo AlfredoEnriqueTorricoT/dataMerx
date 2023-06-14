@@ -25,7 +25,10 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
 
     useEffect(()=>{
         if (mDataStatus == 0 && localStore.status != "waiting response") {
-            if (localStore.status == 200) setMDataStatus(1)
+            if (localStore.status == 200) {
+                setMDataStatus(1)
+                setCarName(localStore.carDetails.car ? localStore.carDetails.car.name : "")
+            }
             else setMDataStatus(-1)
         }
 
@@ -101,12 +104,12 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
     }
 
     const ShowTable = () => {
-        switch (tableStatus) {
-            case -1:
-                return(<ErrorTable cod={localStore.status} retryFunction={searchFunction} />)
-            case 0:
-                return(<SpinnerL />)
-            case 1:
+        // switch (tableStatus) {
+        //     case -1:
+        //         return(<ErrorTable cod={localStore.status} retryFunction={searchFunction} />)
+        //     case 0:
+        //         return(<SpinnerL />)
+        //     case 1:
                 return(
                     localStore.modemList.length && mDataStatus == 1 ?
                         localStore.modemList.map((modem, idx) => (
@@ -144,9 +147,9 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
                             </div>
                         </div>
                 )
-            default:
-                break;
-        }
+        //     default:
+        //         break;
+        // }
     }
     
     const searchFunction = () => {
@@ -182,42 +185,55 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
             </div>
         
             <div className="modal-body">
-                    <ShowActiveModem /> :
-                <center>
-                    <div className="d-inline-block">
-                        <input
-                            className="form-control"
-                            onChange={i=>setCarName(i.target.value)}
-                            type="text"
-                            placeholder='Nombre del usuario'
-                            value={carName}
-                        />
-                    </div>
-                </center>
-                <br />
-                <center>
-                    <SearchBar
-                        type="text"
-                        className="form-control"
-                        onChange={i => setImei(i.target.value)}
-                        placeholder="Buscar por imei..."
-                        value={imei}
-                    >
-                        <button
-                          className="btn dm-button text-light"
-                          disabled={imei == ""}
-                          onClick={searchFunction}
-                        >
-                            {
-                                tableStatus == 0 ?
-                                <i className="bx bx-loader bx-spin"></i> :
-                                <i className="fas fa-search"></i>
-                            }
-                        </button>
-                    </SearchBar>
-                </center>
-                <br />
-                <ShowTable />
+                {mDataStatus == -1 ?
+                    <ErrorTable cod={localStore.status} retryFunction={()=>onGet({saveAs: "carDetails", url: "car/details/" + state.elementSelected.id})} />
+                    : ""
+                }
+                {mDataStatus == 0 ?
+                    <SpinnerL /> : ""
+                }
+                {
+                    mDataStatus == 1 ?
+                    <React.Fragment>
+                        <ShowActiveModem /> :
+                        <center>
+                            <div className="d-inline-block">
+                                <input
+                                    className="form-control"
+                                    onChange={i=>setCarName(i.target.value)}
+                                    type="text"
+                                    placeholder='Nombre en plataforma'
+                                    value={carName}
+                                />
+                            </div>
+                        </center>
+                        <br />
+                        <center>
+                            <SearchBar
+                                type="text"
+                                className="form-control"
+                                onChange={i => setImei(i.target.value)}
+                                placeholder="Buscar por imei..."
+                                value={imei}
+                            >
+                                <button
+                                  className="btn dm-button text-light"
+                                  disabled={imei == ""}
+                                  onClick={searchFunction}
+                                >
+                                    {
+                                        tableStatus == 0 ?
+                                        <i className="bx bx-loader bx-spin"></i> :
+                                        <i className="fas fa-search"></i>
+                                    }
+                                </button>
+                            </SearchBar>
+                        </center>
+                        <br />
+                        <ShowTable />
+                    </React.Fragment>
+                : ""
+                }
             </div>
 
             <div className="modal-footer">

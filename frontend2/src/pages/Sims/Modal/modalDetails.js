@@ -141,12 +141,12 @@ const ModalDetails = ({localStore}) => {
                             <div className="col">
                                     <ShowData title={"Nombre"} data={localStore.simDetails.car.name} />
                                     <ShowData title={"Placa"} data={localStore.simDetails.car.placa} />
-                                    <ShowData title={"Módem"} data={localStore.simDetails.car.modem_id} />
+                                    {/* <ShowData title={"Módem"} data={localStore.simDetails.car.modem_id} /> */}
+                                    <ShowData title={"Plataforma"} data={localStore.simDetails.car.platform_id || "- - -"} />
                                 </div>
                                 <div className="col">
                                     <ShowData title={"Marca"} data={localStore.simDetails.car.mark} />
                                     <ShowData title={"Modelo"} data={localStore.simDetails.car.model} />
-                                    <ShowData title={"Plataforma"} data={localStore.simDetails.car.platform_id || "- - -"} />
                                 </div>
                             </div>
                         </div> : ""}
@@ -164,7 +164,7 @@ const ModalDetails = ({localStore}) => {
                                 </div>
                                 <div className="col">
                                     <ShowData title={"Mark id"} data={localStore.simDetails.modem.mark_id} />
-                                    <ShowData title={"Sim id"} data={localStore.simDetails.modem.sim_id || "- - -"} />
+                                    {/* <ShowData title={"Sim id"} data={localStore.simDetails.modem.sim_id || "- - -"} /> */}
                                 </div>
                             </div>
                         </div> : ""}

@@ -144,7 +144,7 @@ const ModalAddEvent = ({_crudName, CancelModalButton, CloseModalButton, localSto
             <div className="modal-footer">
               <CancelModalButton />
               <div className="ms-auto">
-                <button className="btn dm-button btn-label text-light" disabled={toastWaiting}>
+                <button className="btn dm-button btn-label text-light" disabled={toastWaiting} form={_crudName.cod + "_" + formName} type="submit">
                   Añadir
                   <i className="fas fa-plus label-icon"></i>
                 </button>
