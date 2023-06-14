@@ -75,27 +75,16 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
                 return(
                     localStore.carDetails.modem ?
                     <React.Fragment>
-                        <div className="row">
-                            <div className="col">
+                        <div className="bg-secondary bg-soft row">
+                            <div className="col-4">
                                 <center>
-                                    Código
-                                    <br />
-                                    <b>{localStore.carDetails.modem.code}</b>
+                                    <i className="fas fa-hdd mt-3"></i>
                                 </center>
                             </div>
-                            <div className="col">
-                                <center>
-                                    Imei
-                                    <br />
-                                    <b>{localStore.carDetails.modem.imei}</b>
-                                </center>
-                            </div>
-                            <div className="col">
-                                <center>
-                                    Marca
-                                    <br />
-                                    <b>{localStore.carDetails.modem.mark_id}</b>
-                                </center>
+                            <div className="col-8">
+                                <b>{localStore.carDetails.modem.imei}</b>
+                                <br />
+                                <p className="my-0">{localStore.carDetails.modem.mark_id} {localStore.carDetails.modem.code}</p>
                             </div>
                         </div>
                         <br />
@@ -119,42 +108,41 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
                 return(<SpinnerL />)
             case 1:
                 return(
-                    <div className="table-responsive">
-                        <table className="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Código</th>
-                                    <th>Imei</th>
-                                    <th>Selec.</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    localStore.modemList.length && mDataStatus == 1 ?
-                                        localStore.modemList.map((modem, idx) => (
-                                            modem.id != state.elementSelected.modem_id ? <tr key={idx}>
-                                                <td>{modem.code}</td>
-                                                <td>{modem.imei}</td>
-                                                <td>
-                                                    <input
-                                                        className="form-check-input"
-                                                        checked={modemId == modem.id}
-                                                        onChange={()=>setModemId(modem.id)}
-                                                        type="radio"
-                                                    />
-                                                </td>
-                                            </tr> : ""
-                                        ))
-                                    :
-                                    <tr>
-                                        <td colSpan="3">
-                                            <h4 className='text-secondary'>No hay módems que coincidan con su busqueda</h4>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                    localStore.modemList.length && mDataStatus == 1 ?
+                        localStore.modemList.map((modem, idx) => (
+                            modem.id != state.elementSelected.modem_id ?
+                                    <div className={`row py-1 ${idx%2 == 0 ? "" : "bg-secondary bg-soft"}`} key={idx}>
+                                        <div className="col-2">
+                                            <center>
+                                                <i className="fas fa-hdd mt-3"></i>
+                                            </center>
+                                        </div>
+                                        <div className="col-8">
+                                            <b>{modem.imei}</b>
+                                            <br />
+                                            <p className="my-0">{modem.mark_id}</p>
+                                        </div>
+                                        <div className="col-2">
+                                            <center>
+                                                <input
+                                                    className="form-check-input mt-3"
+                                                    checked={modemId == modem.id}
+                                                    onChange={()=>setModemId(modem.id)}
+                                                    type="radio"
+                                                />
+                                            </center>
+                                        </div>
+                                    </div>
+                             : ""
+                        ))
+                    :
+                        <div className="card">
+                            <div className="card-body">
+                                <center>
+                                    <h4 className='text-secondary'>No hay módems que coincidan con su busqueda</h4>    
+                                </center>    
+                            </div>
+                        </div>
                 )
             default:
                 break;

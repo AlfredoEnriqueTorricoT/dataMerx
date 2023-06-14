@@ -41,7 +41,7 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                                   {listItem.active}
                                 </span>
                                 </td>
-                                <td>{listItem.mBrand_name || <EmptyData />}</td>
+                                <td>{listItem.mark_modem_name || <EmptyData />}</td>
                                 <td>{listItem.sim_number || <EmptyData />}</td>
                                 <td>
                                     <OptionsButton
@@ -69,6 +69,7 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                                             {
                                                 _label: "Tarjeta sim",
                                                 onClick: ()=>{
+                                                    onGet({saveAs: "modemDetails", url: "modem/details/" + listItem.id})
                                                     setState({
                                                         modalOpen: true,
                                                         modalType: "Sim",

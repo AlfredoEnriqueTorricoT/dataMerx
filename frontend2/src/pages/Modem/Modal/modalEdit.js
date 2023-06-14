@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 
 import {FormikInput, FormikSelect, isEmail, isUrl} from "components/formElements"
 
-const ModalEdit = ({_crudName, localStore, onPutAndGet, setToastW, state, t}) => {
+const ModalEdit = ({_crudName, CancelModalButton, CloseModalButton, localStore, onPutAndGet, setToastW, state, t, toastWaiting}) => {
 
     const _formName = "Edit"
     const genericId = _crudName.cod + "_" + _formName + "_"
@@ -32,6 +32,12 @@ const ModalEdit = ({_crudName, localStore, onPutAndGet, setToastW, state, t}) =>
 
     return(
         <React.Fragment>
+            <div className="modal-header">
+                <h4>Editar módem</h4>
+                <CloseModalButton />
+            </div>
+
+            <div className="modal-body">
             <Formik
                 onSubmit={submitFunc}
                 initialValues={{
@@ -86,17 +92,31 @@ const ModalEdit = ({_crudName, localStore, onPutAndGet, setToastW, state, t}) =>
                     </Form>
                 )}
             </Formik>
+            </div>
+
+            <div className="modal-footer">
+                <CancelModalButton />
+                <div className="ms-auto">
+                    <button className="btn dm-button btn-label text-light" disabled={toastWaiting}>
+                        Editar
+                        <i className="fas fa-edit label-icon"></i>
+                    </button>
+                </div>
+            </div>
         </React.Fragment>
     )
 }
 
 ModalEdit.propTypes = {
     _crudName: PropTypes.object,
+    CancelModalButton: PropTypes.any,
+    CloseModalButton: PropTypes.any,
     localStore: PropTypes.object,
     onPutAndGet: PropTypes.func,
     setToastW: PropTypes.func,
     state: PropTypes.object,
     t: PropTypes.func,
+    toastWaiting: PropTypes.bool,
 }
 
 export default ModalEdit

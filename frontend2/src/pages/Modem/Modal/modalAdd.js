@@ -5,7 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import {FormikInput, FormikSelect, isEmail, isUrl} from "components/formElements"
 
 
-const ModalAdd = ({_crudName, formName, localStore, onPost, setToastW, t}) => {
+const ModalAdd = ({_crudName, CancelModalButton, CloseModalButton, formName, localStore, onPost, setToastW, t, toastWaiting}) => {
     const [modemImages, setModemImages] = useState(false)
   
     const genericId = _crudName.cod + "_" + formName + "_"
@@ -42,6 +42,12 @@ const ModalAdd = ({_crudName, formName, localStore, onPost, setToastW, t}) => {
 
     return(
         <React.Fragment>
+          <div className="modal-header">
+            <h4>Añadir módem</h4>
+            <CloseModalButton />
+          </div>
+
+          <div className="modal-body">
             <Formik
                 onSubmit={submitFunction}
                 initialValues={{
@@ -110,17 +116,31 @@ const ModalAdd = ({_crudName, formName, localStore, onPost, setToastW, t}) => {
                     </Form>
                 )}
             </Formik>
+            </div>
+
+            <div className="modal-footer">
+              <CancelModalButton />
+              <div className="ms-auto">
+                <button className="btn dm-button btn-label text-light" disabled={toastWaiting}>
+                  Añadir
+                  <i className="fas fa-plus label-icon"></i>
+                </button>
+              </div>
+            </div>
         </React.Fragment>
     )
 }
 
 ModalAdd.propTypes = {
     _crudName: PropTypes.object,
+    CancelModalButton: PropTypes.any,
+    CloseModalButton: PropTypes.any,
     formName: PropTypes.string,
     localStore: PropTypes.object,
     onPost: PropTypes.func,
     setToastW: PropTypes.func,
     t: PropTypes.func,
+    toastWaiting: PropTypes.bool
 }
 
 export default ModalAdd

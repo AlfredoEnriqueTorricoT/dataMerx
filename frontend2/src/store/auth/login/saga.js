@@ -14,6 +14,7 @@ function* loginUser({ payload: { user, history } }) {
   let response
   try {
     response = yield call(AxiosServices.axLogin, user)
+    console.log(response);
     if (response.data.status == 200) {
       yield put(loginSuccess())
       localStorage.setItem("userToken", response.data.data.token)

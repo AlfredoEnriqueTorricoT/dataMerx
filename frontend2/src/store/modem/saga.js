@@ -19,7 +19,7 @@ function* getModemSaga(action) {
   let response;
   try {
     response = yield call(AxiosServices.GET, action.url)
-
+console.log(response);
     try {
       if (response.data.status == 200) {
         yield put(updateModemStorage({

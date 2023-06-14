@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 
 import {FormikInput, FormikSelect} from "components/formElements"
 
-const ModalAddEvent = ({_crudName, localStore, onPost, setToastW, state, t}) => {
+const ModalAddEvent = ({_crudName, CancelModalButton, CloseModalButton, localStore, onPost, setToastW, state, t, toastWaiting}) => {
     const [eventImages, setEventImages] = useState([])
   
     const formName = "Add event to"
@@ -56,6 +56,12 @@ const ModalAddEvent = ({_crudName, localStore, onPost, setToastW, state, t}) => 
 
     return(
         <React.Fragment>
+            <div className="modal-header">
+              <h4>Añadir evento</h4>
+              <CloseModalButton />
+            </div>
+
+            <div className="modal-body">
             <Formik
                 onSubmit={submitFunction}
                 initialValues={{
@@ -133,17 +139,31 @@ const ModalAddEvent = ({_crudName, localStore, onPost, setToastW, state, t}) => 
                     </Form>
                 )}
             </Formik>
+            </div>
+
+            <div className="modal-footer">
+              <CancelModalButton />
+              <div className="ms-auto">
+                <button className="btn dm-button btn-label text-light" disabled={toastWaiting}>
+                  Añadir
+                  <i className="fas fa-plus label-icon"></i>
+                </button>
+              </div>
+            </div>
         </React.Fragment>
     )
 }
 
 ModalAddEvent.propTypes = {
     _crudName: PropTypes.object,
+    CancelModalButton: PropTypes.any,
+    CloseModalButton: PropTypes.any,
     localStore: PropTypes.object,
     onPost: PropTypes.func,
     setToastW: PropTypes.func,
     state: PropTypes.object,
     t: PropTypes.func,
+    toastWaiting: PropTypes.bool,
 }
 
 export default ModalAddEvent

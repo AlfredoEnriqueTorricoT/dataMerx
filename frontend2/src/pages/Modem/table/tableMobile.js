@@ -32,7 +32,7 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                       />
                       <MobileDataShow
                         title="Marca de módem"
-                        desc={listItem.mBrand_name || <EmptyData />}
+                        desc={listItem.mark_modem_name || <EmptyData />}
                       />
                       <MobileDataShow
                         title="Número"
