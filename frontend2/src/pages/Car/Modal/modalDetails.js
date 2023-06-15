@@ -144,7 +144,7 @@ const ModalDetails = ({CloseModalButton, CancelModalButton, localStore}) => {
                                         <ShowData title={"Imei"} data={localStore.carDetails.modem.imei} />
                                     </div>
                                     <div className="col">
-                                        <ShowData title="Nombre de la marca" data={localStore.carDetails.modem.modems_mark ? localStore.carDetails.modem.modems_mark.name : "Sin sim"} />
+                                        <ShowData title="Marca" data={localStore.carDetails.modem.modems_mark ? localStore.carDetails.modem.modems_mark.name : "Sin sim"} />
                                         <ShowData title={"Mark id"} data={localStore.carDetails.modem.mark_id} />
                                     </div>
                                 </div>
