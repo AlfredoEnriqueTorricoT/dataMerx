@@ -83,7 +83,8 @@ class ModemController extends Controller
             if($modem == null){
                 return null;
             }
-
+            $modem->modems_mark;
+            $modem->platform;
             $modem->images = Images::where([
                 ["table", "=", "m"],
                 ["table_id", "=", $modem["id"]],
@@ -111,7 +112,9 @@ class ModemController extends Controller
         $modem->modems_mark;
         $sim = SimController::byId($modem["sim_id"]);
         $car = CarController::byModemId($modem["id"]);
-        $car->platform;
+        if($car != null){
+            $car->platform;
+        }
 
         $obj = [
             "sim" => $sim,

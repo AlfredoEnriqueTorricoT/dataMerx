@@ -77,6 +77,7 @@ class SimController extends Controller
         $car = null;
         if($modem != null) {
             $car = CarController::byModemId($modem["id"]);
+            $car->platform;
         }
 
         $obj = [
