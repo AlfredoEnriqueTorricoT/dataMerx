@@ -85,9 +85,9 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
                                 </center>
                             </div>
                             <div className="col-8">
-                                <b>{localStore.carDetails.modem.imei}</b>
+                                <b>Imei: {localStore.carDetails.modem.imei}</b>
                                 <br />
-                                <p className="my-0">{localStore.carDetails.modem.mark_id} {localStore.carDetails.modem.code}</p>
+                                <p className="my-0"><b>Marca: </b>{localStore.carDetails.modem.mark_id} <b>Código: </b>{localStore.carDetails.modem.code}</p>
                             </div>
                         </div>
                         <br />
@@ -104,12 +104,12 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
     }
 
     const ShowTable = () => {
-        // switch (tableStatus) {
-        //     case -1:
-        //         return(<ErrorTable cod={localStore.status} retryFunction={searchFunction} />)
-        //     case 0:
-        //         return(<SpinnerL />)
-        //     case 1:
+        switch (tableStatus) {
+            case -1:
+                return(<ErrorTable cod={localStore.status} retryFunction={searchFunction} />)
+            case 0:
+                return(<SpinnerL />)
+            case 1:
                 return(
                     localStore.modemList.length && mDataStatus == 1 ?
                         localStore.modemList.map((modem, idx) => (
@@ -121,9 +121,9 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
                                             </center>
                                         </div>
                                         <div className="col-8">
-                                            <b>{modem.imei}</b>
+                                            <b>Imei: {modem.imei}</b>
                                             <br />
-                                            <p className="my-0">{modem.mark_id}</p>
+                                            <p className="my-0"><b>Marca: </b>{modem.mark_id} <b>Código: </b>{modem.code}</p>
                                         </div>
                                         <div className="col-2">
                                             <center>
@@ -147,9 +147,9 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
                             </div>
                         </div>
                 )
-        //     default:
-        //         break;
-        // }
+            default:
+                break;
+        }
     }
     
     const searchFunction = () => {

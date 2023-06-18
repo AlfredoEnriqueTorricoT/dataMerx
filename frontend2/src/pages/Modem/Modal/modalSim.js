@@ -82,9 +82,9 @@ const ModalSim = ({CancelModalButton, CloseModalButton, localStore, onGet, onPut
                                 </center>
                             </div>
                             <div className="col-8">
-                                <b>{localStore.modemDetails.sim.number}</b>
+                                <b>Número: {localStore.modemDetails.sim.number}</b>
                                 <br />
-                                <p className="my-0">{localStore.modemDetails.sim.imei} {localStore.modemDetails.sim.code}</p>
+                                <p className="my-0"><b>Imei: </b>{localStore.modemDetails.sim.imei} <b>Código: </b>{localStore.modemDetails.sim.code}</p>
                             </div>
                         </div>
                         <br />
@@ -118,9 +118,9 @@ const ModalSim = ({CancelModalButton, CloseModalButton, localStore, onGet, onPut
                                             </center>
                                         </div>
                                         <div className="col-8">
-                                            <b>{sim.number}</b>
+                                            <b>Número: {sim.number}</b>
                                             <br />
-                                            <p className="my-0">{sim.imei} {sim.code}</p>
+                                            <p className="my-0"><b>Imei: </b>{sim.imei} <b>Código: </b>{sim.code}</p>
                                         </div>
                                         <div className="col-2">
                                             <center>
