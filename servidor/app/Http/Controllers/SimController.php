@@ -97,10 +97,11 @@ class SimController extends Controller
         try {
 
             $countSimRepeat = Sim::where("imei", $request->imei)->get()->count();
-
             if ($countSimRepeat > 0) {
                 return Res::responseError432("Imei ya registrado.", null);
             }
+
+            
 
             $obj = Sim::create($request->all());
 
@@ -127,10 +128,17 @@ class SimController extends Controller
         //echo $request->bearerToken();
         try {
 
-            $countSimRepeat = Sim::where("imei", $request->imei)->get()->count();
-
-            if ($countSimRepeat > 0) {
+            $countImeiRepeat = Sim::where("imei", $request->imei)->get()->count();
+            if ($countImeiRepeat > 0) {
                 return Res::responseError432("Imei ya registrado.", null);
+            }
+
+            $countNumberRepeat = Sim::where("number", $request->number)->get()->count();
+            if ($countNumberRepeat > 0) {
+                return Res::responseError432("Número ya registrado.", null);
+            }
+            if(strlen($request->number) != 8){
+                return Res::responseError432("El número de telefono debe tener 8 digitos.", null);
             }
 
             $obj = Sim::create($request->all());
@@ -191,6 +199,19 @@ class SimController extends Controller
         try {
             if ($request->id == "") {
                 return Res::responseErrorNoId();
+            }
+
+            $countImeiRepeat = Sim::where("imei", $request->imei)->get()->count();
+            if ($countImeiRepeat > 0) {
+                return Res::responseError432("Imei ya registrado.", null);
+            }
+
+            $countNumberRepeat = Sim::where("number", $request->number)->get()->count();
+            if ($countNumberRepeat > 0) {
+                return Res::responseError432("Número ya registrado.", null);
+            }
+            if(strlen($request->number) != 8){
+                return Res::responseError432("El número de telefono debe tener 8 digitos.", null);
             }
 
             $obj = Sim::find($request->id);
