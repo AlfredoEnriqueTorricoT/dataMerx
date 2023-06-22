@@ -50,14 +50,14 @@ class CarController extends Controller
     public function indexSearchPlacaForAssign($placa, $client_id)
     {
         try {
-            
+
             //$list = Car::where("placa", "like", '%' . $placa . '%')->get();
             $sql = "select c.* from (select * from cars where placa like '%$placa%') c
             left join (select * from client_cars where client_id = $client_id) cc on c.id = cc.car_id
             where cc.id is  null;";
 
             $list = collect(DB::select($sql));
-        
+
             return Res::responseSuccess($list);
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
@@ -70,7 +70,7 @@ class CarController extends Controller
 
             $car = Car::find($id);
 
-            if($car == null){
+            if ($car == null) {
                 return null;
             }
 
@@ -92,7 +92,7 @@ class CarController extends Controller
         try {
             $car = Car::where("modem_id", $modemId)->first();
 
-            if($car == null){
+            if ($car == null) {
                 return null;
             }
 
@@ -112,8 +112,8 @@ class CarController extends Controller
     public function details($id)
     {
         $car = CarController::byId($id);
-        
-        if($car == null){
+
+        if ($car == null) {
             return Res::responseSuccess([
                 "sim" => null,
                 "modem" => null,
@@ -124,7 +124,7 @@ class CarController extends Controller
         $modem = ModemController::byId($car["modem_id"]);
 
         $sim = null;
-        if($modem != null) {
+        if ($modem != null) {
             $modem->modems_mark;
             $sim = SimController::byId($modem["sim_id"]);
         }
@@ -145,6 +145,17 @@ class CarController extends Controller
         try {
             $request->sim_id = null;
             $obj = Car::create($request->all());
+
+            
+            $countPlacaRepeat = Car::where("placa", $request->placa)->get()->count();
+            if ($countPlacaRepeat > 0) {
+                return Res::responseError432("La placa ya esta registrada.", null);
+            }
+
+            if(!$this->isPlacaSuccess($request->placa)){
+                return Res::responseError432("El número de la placa es incorrecto.", null);
+            }
+
 
             $event = [
                 "title" => "Registro",
@@ -168,6 +179,16 @@ class CarController extends Controller
     {
         try {
             $request->sim_id = null;
+
+            $countPlacaRepeat = Car::where("placa", $request->placa)->get()->count();
+            if ($countPlacaRepeat > 0) {
+                return Res::responseError432("La placa ya esta registrada.", null);
+            }
+
+            if(!$this->isPlacaSuccess($request->placa)){
+                return Res::responseError432("El número de la placa es incorrecto.", null);
+            }
+
             $obj = Car::create($request->all());
 
             $event = [
@@ -279,7 +300,8 @@ class CarController extends Controller
     }
 
 
-    public function event(Request $request){
+    public function event(Request $request)
+    {
         $modem_id = null;
         $car_id = $request->all()["id"];
         $sim_id =  null;
@@ -287,16 +309,14 @@ class CarController extends Controller
         $car = Car::find($car_id);
 
         //$car = null;
-        if($car != null){
+        if ($car != null) {
 
             $modem = Modem::find($car->modem_id);
             $modem_id = $car->modem_id;
             $car_id = $car["id"];
-            if($modem != null){
+            if ($modem != null) {
                 $sim_id = $modem->sim_id;
             }
-
-
         }
 
         $element = [
@@ -308,7 +328,6 @@ class CarController extends Controller
         $evento = EventController::storeUpload($request, $element);
 
         return Res::responseSuccess($evento);
-
     }
 
     public function update(Request $request)
@@ -330,5 +349,12 @@ class CarController extends Controller
         } catch (\Exception $ex) {
             return Res::responseError($ex->getMessage());
         }
+    }
+
+
+    function isPlacaSuccess($placa)
+    {
+        $patron = "/^[A-Z]{3}-[0-9]{3,4}$/";
+        return preg_match($patron, $placa);
     }
 }

@@ -45,7 +45,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
-            return Res::responseError432("Correo o contraseña incorrepto", null);
+            return Res::responseError432("Correo o contraseña incorrecto", null);
         }
         $user = User::where('email', $request['email'])->firstOrFail();
         $token = $user->createToken('auth_token')->plainTextToken;

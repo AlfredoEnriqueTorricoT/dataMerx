@@ -21,6 +21,7 @@ class ModemController extends Controller
     {
         try {
             $list = Modem::all();
+            
             foreach ($list as $moden) {
                 $moden["platform"] = $moden->platform;
                 $moden["sim"] = $moden->sim;
@@ -44,6 +45,7 @@ class ModemController extends Controller
                 ])->get("url");
                 $modem->sim;
                 $modem->modems_mark;
+                $modem->platform;
             }
 
 

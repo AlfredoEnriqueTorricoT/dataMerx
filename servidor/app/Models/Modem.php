@@ -33,4 +33,5 @@ class Modem extends Model
     public function modems_mark(){
         return $this->hasOne(ModemsMark::class, "id", "mark_id");
     }
+
 }
