@@ -35,7 +35,7 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAn
 
         if (localStore.status == 432)
             showToast({
-                type: "warning",
+                type: "info",
                 message: localStore.message
             })
         else
@@ -58,6 +58,7 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAn
                 return(
                     <ModalAdd
                         _crudName={_crudName}
+                        localStore={localStore}
                         onPost={onPost}
                         setState={setState}
                         t={t}

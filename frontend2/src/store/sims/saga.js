@@ -43,7 +43,7 @@ function* postSimSaga(action) {
 
   try {
     response = yield call(AxiosServices.POST, {payload: action.payload, url: action.url})
-    console.log(response);
+
     try {
       if (response.data.status == 200) {
         yield put(updateSimStorage({
@@ -51,7 +51,7 @@ function* postSimSaga(action) {
           saveAs: action.saveAs,
           status: response.data.status}))
       } else {
-        yield put(updateSimStorage({status: response.response.data.message}))
+        yield put(updateSimStorage({status: response.data.status, message: response.data.message}))
       }
     } catch (error) {
       if (response.response.data.status == 200) {
@@ -60,7 +60,7 @@ function* postSimSaga(action) {
           saveAs: action.saveAs,
           status: response.response.data.status}))
       } else {
-        yield put(updateSimStorage({status: response.response.data.message}))
+        yield put(updateSimStorage({status: response.response.data.status, message: response.response.data.message}))
       }
     }
   } catch (error) {

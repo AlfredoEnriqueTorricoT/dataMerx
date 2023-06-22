@@ -190,14 +190,6 @@ class Login extends Component {
                     </div>
                   </CardBody>
                 </Card>
-                <div className="mt-5 text-center">
-                  <p>
-                    Don&apos;t have an account ?
-                    <Link to="register" className="fw-medium text-primary">
-                      Register Now
-                    </Link>
-                  </p>
-                </div>
               </Col>
             </Row>
           </Container>

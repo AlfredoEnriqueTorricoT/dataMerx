@@ -1,14 +1,15 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 
-const ModalAdd = ({_crudName, onPost, t}) => {
-  const [simImages, setSimImages] = useState([]) 
+const ModalAdd = ({_crudName, localStore, onPost, t}) => {
+  const [simImages, setSimImages] = useState([])
   
     const validateFunction = values => {
         let errors = {}
 
         if (!values.number) errors.number = "Enter the sim number"
+        if (values.number.toString().length != 8) errors.number = "El número de teléfono debe ser de 8 dígitos"
         if (!values.code) errors.code = "Enter the sim code"
         if (!values.imei) errors.imei = "Enter the sim imei"
         if (!simImages) errors.images = "Seleccione una o varias imagenes"
@@ -145,6 +146,7 @@ const ModalAdd = ({_crudName, onPost, t}) => {
 
 ModalAdd.propTypes = {
     _crudName: PropTypes.object,
+    localStore: PropTypes.object,
     onPost: PropTypes.func,
     t: PropTypes.func,
 }
