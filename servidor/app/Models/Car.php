@@ -32,9 +32,10 @@ class Car extends Model
 
     public function __toString()
     {
+        $propiedades = $this->toArray();
         $cadena = '';
-        foreach ($this->fillable as $propiedad) {
-            $cadena .= $this->{$propiedad} . ', ';
+        foreach ($propiedades as $clave => $valor) {
+            $cadena .= $clave . ': ' . $valor . ', ';
         }
         return rtrim($cadena, ', ');
     }
