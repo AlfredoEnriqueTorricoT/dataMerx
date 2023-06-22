@@ -146,13 +146,13 @@ class CarController extends Controller
             $request->sim_id = null;
             $obj = Car::create($request->all());
 
-            
+
             $countPlacaRepeat = Car::where("placa", $request->placa)->get()->count();
             if ($countPlacaRepeat > 0) {
                 return Res::responseError432("La placa ya esta registrada.", null);
             }
 
-            if(!$this->isPlacaSuccess($request->placa)){
+            if (!$this->isPlacaSuccess($request->placa)) {
                 return Res::responseError432("El número de la placa es incorrecto.", null);
             }
 
@@ -185,8 +185,8 @@ class CarController extends Controller
                 return Res::responseError432("La placa ya esta registrada.", null);
             }
 
-            if(!$this->isPlacaSuccess($request->placa)){
-                return Res::responseError432("El número de la placa es incorrecto.", null);
+            if (!$this->isPlacaSuccess($request->placa)) {
+                return Res::responseError432("El número de la placa es invalido.", null);
             }
 
             $obj = Car::create($request->all());
@@ -339,9 +339,34 @@ class CarController extends Controller
 
             $obj = Car::find($request->id);
 
+            if ($obj["placa"] != $request->placa) {
+                $countPlacaRepeat = Car::where("placa", $request->placa)->get()->count();
+                if ($countPlacaRepeat > 0) {
+                    return Res::responseError432("La placa ya esta registrada.", null);
+                }
+            }
+
+
+            if (!$this->isPlacaSuccess($request->placa)) {
+                return Res::responseError432("El número de la placa es invalido.", null);
+            }
+
             if ($obj == null) {
                 return Res::responseErrorNoData();
             }
+
+            $event = [
+                "title" => "Datos del autos modificado",
+                "detail" => $obj,
+                "type_id" => 1,
+                "car_id" => $obj["id"],
+                "modem_id" => null,
+                "sim_id" => null,
+                "platform_id" => $obj->platform_id,
+                "user_id" => auth()->user()->id
+            ];
+            EventController::_store($event);
+
             $obj->fill($request->json()->all());
             $obj->save();
 

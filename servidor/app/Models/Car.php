@@ -29,4 +29,13 @@ class Car extends Model
     public function modem(){
         return $this->hasOne(Modem::class, "id", "modem_id");
     }
+
+    public function __toString()
+    {
+        $cadena = '';
+        foreach ($this->fillable as $propiedad) {
+            $cadena .= $this->{$propiedad} . ', ';
+        }
+        return rtrim($cadena, ', ');
+    }
 }
