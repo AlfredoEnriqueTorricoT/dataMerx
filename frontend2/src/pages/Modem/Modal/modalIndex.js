@@ -44,7 +44,7 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onGet, onPost, onPut, 
 
         if (localStore.status == 432)
             showToast({
-                type: "warning",
+                type: "info",
                 message: localStore.message
             })
         else
@@ -110,7 +110,7 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onGet, onPost, onPut, 
                         _crudName={_crudName}
                         formName={state.modalType}
                         localStore={localStore}
-                        onPutAndGet={onPutAndGet}
+                        onPut={onPut}
                         setState={setState}
                         setToastW={setToastW}
                         state={state}

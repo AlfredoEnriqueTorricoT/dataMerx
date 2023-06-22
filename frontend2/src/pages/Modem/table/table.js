@@ -15,7 +15,7 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                         {name: "Imei", arrow: true},
                         {name: "Estado", arrow: true},
                         {name: "Marca de módem", arrow: true},
-                        {name: "Número", arrow: true},
+                        {name: "Plataforma", arrow: true},
                         {name: "Acciones", arrow: false}
                       ]}
                      />
@@ -42,7 +42,7 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                                 </span>
                                 </td>
                                 <td>{listItem.mark_modem_name || <EmptyData />}</td>
-                                <td>{listItem.sim_number || <EmptyData />}</td>
+                                <td>{listItem.platform_name || <EmptyData />}</td>
                                 <td>
                                     <OptionsButton
                                         buttonsList={[

@@ -4,15 +4,16 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 
 import {FormikInput, FormikSelect, isEmail, isUrl} from "components/formElements"
 
-const ModalEdit = ({_crudName, CancelModalButton, CloseModalButton, localStore, onPutAndGet, setToastW, state, t, toastWaiting}) => {
+const ModalEdit = ({_crudName, CancelModalButton, CloseModalButton, localStore, onPut, setToastW, state, t, toastWaiting}) => {
 
     const _formName = "Edit"
     const genericId = _crudName.cod + "_" + _formName + "_"
 
     const validateFunction = values => {
         let errors = {}
-
+        console.log(state.elementSelected);
         if (!values.imei) errors.imei = t("Enter the modem imei")
+        if (values.imei.toString().length != 15) errors.imei = t("El imei debe tener 15 dígitos")
         if (!values.code) errors.code = t("Enter the modem code")
         if (!values.mark_id) errors.mark_id = t("Select a modem brand")
 
@@ -24,8 +25,8 @@ const ModalEdit = ({_crudName, CancelModalButton, CloseModalButton, localStore, 
 
       let act = active == t("active") ? 1 : 0
 
-      onPutAndGet({
-        saveAs: _crudName.cod + "List",
+      onPut({
+        saveAs: "UNUSED-DATA",
         payload: {...values, active: act},
         url: "modem"})
     }
@@ -45,7 +46,8 @@ const ModalEdit = ({_crudName, CancelModalButton, CloseModalButton, localStore, 
                   code: state.elementSelected.code,
                   imei: state.elementSelected.imei,
                   mark_id: state.elementSelected.mark_id,
-                  active: state.elementSelected.active
+                  active: state.elementSelected.active,
+                  platform_id: state.elementSelected.platform_id
                 }}
                 validate={validateFunction}
             >
@@ -82,6 +84,22 @@ const ModalEdit = ({_crudName, CancelModalButton, CloseModalButton, localStore, 
                             }
                         </FormikSelect>
                         <FormikSelect
+                          label="Plataforma"
+                          inputName="platform_id"
+                          required={false}
+                          groupId ={genericId}
+                        >
+                            <option hidden value="">Seleccione una plataforma</option>
+                            {
+                                localStore.platformList.length == 0 ?
+                                <option disabled className='text-secondary' value="">Sin plataformas</option>
+                                :
+                                localStore.platformList.map((platform, idx) => (
+                                    <option key={"mBO-" + idx} value={platform.id}>{platform.name}</option>
+                                ))
+                            }
+                        </FormikSelect>
+                        <FormikSelect
                           label={t("State")}
                           inputName="active"
                           groupId ={genericId}
@@ -112,7 +130,7 @@ ModalEdit.propTypes = {
     CancelModalButton: PropTypes.any,
     CloseModalButton: PropTypes.any,
     localStore: PropTypes.object,
-    onPutAndGet: PropTypes.func,
+    onPut: PropTypes.func,
     setToastW: PropTypes.func,
     state: PropTypes.object,
     t: PropTypes.func,

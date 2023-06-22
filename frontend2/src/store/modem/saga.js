@@ -19,7 +19,6 @@ function* getModemSaga(action) {
   let response;
   try {
     response = yield call(AxiosServices.GET, action.url)
-console.log(response);
     try {
       if (response.data.status == 200) {
         yield put(updateModemStorage({
@@ -45,13 +44,24 @@ function* postModemSaga(action) {
 
   try {
     response = yield call(AxiosServices.POST, {payload: action.payload, url: action.url})
-    if (response.data.status == 200) {
-      yield put(updateModemStorage({
-        payload: response.data.data,
-        saveAs: action.saveAs,
-        status: response.data.status}))
-    } else {
-      yield put(updateModemStorage({status: response.data.message}))
+    try {
+      if (response.data.status == 200) {
+        yield put(updateModemStorage({
+          payload: response.data.data,
+          saveAs: action.saveAs,
+          status: response.data.status}))
+      } else {
+        yield put(updateModemStorage({status: response.data.message}))
+      } 
+    } catch (error) {
+      if (response.response.data.status == 200) {
+        yield put(updateModemStorage({
+          payload: response.response.data.data,
+          saveAs: action.saveAs,
+          status: response.response.data.status}))
+      } else {
+        yield put(updateModemStorage({status: response.response.data.status, message: response.response.data.message}))
+      }
     }
   } catch (error) {
     yield put(updateModemStorage({status: error.message}))
@@ -72,10 +82,18 @@ function* putModemSaga(action) {
           status: response.data.status})
         )
       } else {
-        yield put(updateModemStorage({status: response.data.status, message: (response.data.message || "")}))
+        yield put(updateModemStorage({status: response.data.status, message: response.data.message}))
       }  
     } catch (error) {
-      yield put(updateModemStorage({status: response.response.status}))
+      if (response.response.data.status == 200) {
+        yield put(updateModemStorage({
+          payload: response.response.data.data,
+          saveAs: action.saveAs,
+          status: response.data.status})
+        )
+      } else {
+        yield put(updateModemStorage({status: response.response.data.status, message: response.response.data.message}))
+      } 
     }
     
   } catch (error) {
