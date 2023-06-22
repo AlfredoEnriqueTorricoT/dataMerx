@@ -69,7 +69,7 @@ Route::get('car/{placa}', [CarController::class,'indexSearchPlaca']);
 Route::get('car/details/{id}', [CarController::class,'details']);
 Route::post('car', [CarController::class,'store'])->middleware("auth:sanctum");
 Route::post('car/event', [CarController::class,'event']);
-Route::put('car', [CarController::class,'update']);
+Route::put('car', [CarController::class,'update'])->middleware("auth:sanctum");
 Route::put('car/update-modem', [CarController::class,'update_modem'])->middleware("auth:sanctum");
 Route::post('car-upload', [CarController::class,'storeUpload'])->middleware("auth:sanctum");
 

@@ -359,7 +359,7 @@ class CarController extends Controller
                 "title" => "Datos del autos modificado",
                 "detail" => $obj,
                 "type_id" => 1,
-                "car_id" => $obj->id,
+                "car_id" => $obj["id"],
                 "modem_id" => null,
                 "sim_id" => null,
                 "platform_id" => $obj->platform_id,
