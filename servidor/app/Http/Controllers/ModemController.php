@@ -316,9 +316,29 @@ class ModemController extends Controller
 
             $obj = Modem::find($request->id);
 
+            if ($obj["imei"] != $request->imei) {
+                $countImeiRepeat = Modem::where("imei", $request->imei)->get()->count();
+                if ($countImeiRepeat > 0) {
+                    return Res::responseError432("El imei ya esta registrada.", null);
+                }
+            }
+
             if ($obj == null) {
                 return Res::responseErrorNoData();
             }
+
+            $event = [
+                "title" => "Datos del modem modificado",
+                "detail" => $obj,
+                "type_id" => 1,
+                "car_id" => null,
+                "modem_id" => $obj["id"],
+                "sim_id" => null,
+                "platform_id" => $obj->platform_id,
+                "user_id" => auth()->user()->id
+            ];
+            EventController::_store($event);
+
             $obj->fill($request->json()->all());
             $obj->save();
 

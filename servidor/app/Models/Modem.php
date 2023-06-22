@@ -34,4 +34,15 @@ class Modem extends Model
         return $this->hasOne(ModemsMark::class, "id", "mark_id");
     }
 
+
+    public function __toString()
+    {
+        $propiedades = $this->toArray();
+        $cadena = '';
+        foreach ($propiedades as $clave => $valor) {
+            $cadena .= $clave . ': ' . $valor . ', ';
+        }
+        return rtrim($cadena, ', ');
+    }
+
 }

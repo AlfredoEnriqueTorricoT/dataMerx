@@ -18,4 +18,15 @@ class Sim extends Model
         "reception",
         "active"
     ];
+
+
+    public function __toString()
+    {
+        $propiedades = $this->toArray();
+        $cadena = '';
+        foreach ($propiedades as $clave => $valor) {
+            $cadena .= $clave . ': ' . $valor . ', ';
+        }
+        return rtrim($cadena, ', ');
+    }
 }
