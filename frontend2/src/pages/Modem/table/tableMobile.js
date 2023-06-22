@@ -35,8 +35,8 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                         desc={listItem.mark_modem_name || <EmptyData />}
                       />
                       <MobileDataShow
-                        title="Número"
-                        desc={listItem.sim_number || <EmptyData />}
+                        title="Plataforma"
+                        desc={listItem.platform_name || <EmptyData />}
                       />
                     </div>
                   </div>

@@ -14,9 +14,9 @@ const ModalAdd = ({_crudName, CancelModalButton, CloseModalButton, formName, loc
         let errors = {}
 
         if (!values.imei) errors.imei = t("Enter the modem imei")
+        if (values.imei.toString().length != 15) errors.imei = t("El imei debe tener 15 dígitos")
         if (!values.code) errors.code = t("Enter the modem code")
         if (!values.mark_id) errors.mark_id = t("Select a modem brand")
-        if (!values.platform_id) errors.platform_id = "Seleccione una plataforma"
         if (!modemImages) errors.images = "Seleccione una o varias imagenes"
 
         return errors
@@ -33,6 +33,7 @@ const ModalAdd = ({_crudName, CancelModalButton, CloseModalButton, formName, loc
         fData.append("mark_id", values.mark_id);
         fData.append("code", values.code);
         fData.append("imei", values.imei);
+        fData.append("platform_id", values.platform_id);
   
         onPost({
           saveAs: "UNUSED_DATA",
@@ -94,7 +95,7 @@ const ModalAdd = ({_crudName, CancelModalButton, CloseModalButton, formName, loc
                         <FormikSelect
                           label="Plataforma"
                           inputName="platform_id"
-                          required={true}
+                          required={false}
                           groupId ={genericId}
                         >
                             <option hidden value="">Seleccione una plataforma</option>

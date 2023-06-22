@@ -105,56 +105,52 @@ const ModalDetails = ({CancelModalButton, CloseModalButton, localStore}) => {
             {modalMode == 0 ? <SpinnerL /> : ""}
             {modalMode == 1 ?
                 <React.Fragment>
-                    <ul className="nav nav-tabs">
-                      <NavItem _num={0} _name="Módem" />
-                      <NavItem _num={1} _name="Vehículo" />
-                      <NavItem _num={2} _name="Sim" />
-                    </ul>
-                    <div className="tab-content pt-4 grayScroll" style={{maxHeight: "55vh", overflowY: "auto", overflowX: "hidden"}}>
-                        <div className={`tab-pane fade ${activeTab == 0 ? "active show" : ""}`}>
-                            {localStore.modemDetails.modem.images ?
-                                <div className="row mb-1">
-                                    <Carrousel images={localStore.modemDetails.modem.images} />
+                    <div className="chat-conversation">
+                        <div className="chat-day-title m-1">
+                            <span className='title'><b>Vehículo</b></span>
+                        </div>
+                        {localStore.modemDetails.car ?
+                        <React.Fragment>
+                            <div className="row">
+                                <div className="col">
+                                    <ShowData title={"Nombre"} data={localStore.modemDetails.car.name} />
+                                    <ShowData title={"Placa"} data={localStore.modemDetails.car.placa} />
+                                    <ShowData title={"Plataforma"} data={localStore.modemDetails.car.platform ? localStore.modemDetails.car.platform.name : "- - -"} />
                                 </div>
-                            : ""}
+                                <div className="col">
+                                    <ShowData title={"Marca"} data={localStore.modemDetails.car.mark} />
+                                    <ShowData title={"Modelo"} data={localStore.modemDetails.car.model} />
+                                </div>
+                            </div>
+                        </React.Fragment> : <center><h4 className='text-secondary mb-3'>Sin vehículo asignado</h4></center>}
+                        <React.Fragment>
+                            <div className="chat-day-title m-1">
+                                <span className='title'><b>Módem</b></span>
+                            </div>
                             <div className="row">
                                 <div className="col">
                                     <ShowData title={"Código"} data={localStore.modemDetails.modem.code} />
                                     <ShowData title={"Imei"} data={localStore.modemDetails.modem.imei} />
                                 </div>
                                 <div className="col">
-                                    <ShowData title={"Mark id"} data={localStore.modemDetails.modem.mark_id || "- - -"} />
-                                    <ShowData title={"Sim id"} data={localStore.modemDetails.modem.sim_id || "- - -"} />
+                                <ShowData title="Marca" data={localStore.modemDetails.modem.modems_mark ? localStore.modemDetails.modem.modems_mark.name : "Sin sim"} />
+                                <ShowData title="Estado" data={
+                                    <span
+                                      className={`badge font-size-11 rounded-pill badge-soft-${
+                                        localStore.modemDetails.modem.active ? "primary" : "dark"
+                                      } text-uppercase`}
+                                    >
+                                      {localStore.modemDetails.modem.active ? "ACTIVO" : "INACTIVO"}
+                                    </span>
+                                } />
                                 </div>
                             </div>
+                        </React.Fragment>
+                        <div className="chat-day-title m-1">
+                            <span className='title'><b>Sim</b></span>
                         </div>
-                        {localStore.modemDetails.car ?
-                        <div className={`tab-pane fade ${activeTab == 1 ? "active show" : ""}`}>
-                            {localStore.modemDetails.car.images ?
-                                <div className="row mb-1">
-                                    <Carrousel images={localStore.modemDetails.car.images} />
-                                </div>
-                            : ""}
-                            <div className="row">
-                                <div className="col">
-                                    <ShowData title={"Nombre"} data={localStore.modemDetails.car.name} />
-                                    <ShowData title={"Placa"} data={localStore.modemDetails.car.placa} />
-                                    <ShowData title={"Módem"} data={localStore.modemDetails.car.modem_id} />
-                                </div>
-                                <div className="col">
-                                    <ShowData title={"Marca"} data={localStore.modemDetails.car.mark} />
-                                    <ShowData title={"Modelo"} data={localStore.modemDetails.car.model} />
-                                    <ShowData title={"Plataforma"} data={localStore.modemDetails.car.platform_id || "- - -"} />
-                                </div>
-                            </div>
-                        </div> : ""}
                         {localStore.modemDetails.sim ?
-                        <div className={`tab-pane fade ${activeTab == 2 ? "active show" : ""}`}>
-                            {localStore.modemDetails.sim.images ?
-                                <div className="row mb-1">
-                                    <Carrousel images={localStore.modemDetails.sim.images} />
-                                </div>
-                            : ""}
+                        <React.Fragment>
                             <div className="row">
                                 <div className="col">
                                     <ShowData title="Número" data={localStore.modemDetails.sim.number} />
@@ -173,7 +169,7 @@ const ModalDetails = ({CancelModalButton, CloseModalButton, localStore}) => {
                                     <ShowData title="Código" data={localStore.modemDetails.sim.code} />
                                 </div>
                             </div>
-                        </div> : ""}
+                        </React.Fragment> : <center><h4 className='text-secondary mb-3'>Sin sim asignado</h4></center>}
                     </div>
                 </React.Fragment>
             : ""}

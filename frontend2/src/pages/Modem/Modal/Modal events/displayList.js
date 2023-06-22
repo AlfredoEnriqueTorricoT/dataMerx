@@ -96,14 +96,20 @@ const DisplayEventList = ({
         <div className="row">
             <div className="col-7">
                 <div className="row border-dark border-bottom">
-                    <div className="col-6">
-                        <b>Evento</b>
+                    <div className="col-5">
+                        <center>
+                            <b>Evento</b>
+                        </center>
                     </div>
                     <div className="col-3">
-                        <b>Fecha</b>
+                        <center>
+                            <b>Fecha</b>
+                        </center>
                     </div>
-                    <div className="col-3">
-                        <b>Tipo</b>
+                    <div className="col-4">
+                        <center>
+                            <b>Tipo</b>
+                        </center>
                     </div>
                 </div>
                 
@@ -117,14 +123,14 @@ const DisplayEventList = ({
                             style={{cursor: "pointer"}}
                             onClick={()=>{onGet({saveAs: "eventImage", url: "event-images/"+event.id});setIdSelected(event.id); setDetailStatus(0);}}
                             key={"eventItem-"+idx}>
-                            <div className="col-6">
+                            <div className="col-5">
                                 <b>{event.title}</b><br />
                                 <p>{event.detail}</p>
                             </div>
                             <div className="col-3 justify-content-center">
                                 {getThisDate(event.created_at)}
                             </div>
-                            <div className="col-3 align-items-center">
+                            <div className="col-4 align-items-center">
                                 <center>
                                     <span
                                       className={`badge font-size-11 rounded-pill badge-soft-${
@@ -132,7 +138,12 @@ const DisplayEventList = ({
                                       } text-uppercase`}
                                     >
                                       {badgeText[event.type_id]}
+                                      
                                     </span>
+                                    {"   "}
+                                    {event.images.length ?
+                                        <i className="fas fa-camera"></i>
+                                    : ""}
                                 </center>
                             </div>
                         </div>
