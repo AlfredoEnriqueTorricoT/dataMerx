@@ -100,11 +100,11 @@ const ModalDetails = ({localStore}) => {
             {modalMode == 1 ?
                 <React.Fragment>
                     <div className="chat-conversation">
+                        <div className="chat-day-title m-1">
+                            <span className='title'><b>Vehículo</b></span>
+                        </div>
                         {localStore.simDetails.car ?
                         <React.Fragment>
-                            <div className="chat-day-title m-1">
-                                <span className='title'><b>Vehículo</b></span>
-                            </div>
                             <div className="row">
                             <div className="col">
                                     <ShowData title={"Nombre"} data={localStore.simDetails.car.name} />
@@ -130,7 +130,15 @@ const ModalDetails = ({localStore}) => {
                                 </div>
                                 <div className="col">
                                     <ShowData title="Marca" data={localStore.simDetails.modem.modems_mark ? localStore.simDetails.modem.modems_mark.name : ""} />
-                                    <ShowData title={"Mark id"} data={localStore.simDetails.modem.mark_id} />
+                                    <ShowData title="Estado" data={
+                                        <span
+                                          className={`badge font-size-11 rounded-pill badge-soft-${
+                                            localStore.simDetails.modem.active ? "primary" : "dark"
+                                          } text-uppercase`}
+                                        >
+                                          {localStore.simDetails.modem.active ? "ACTIVO" : "INACTIVO"}
+                                        </span>
+                                    } />
                                     {/* <ShowData title={"Sim id"} data={localStore.simDetails.modem.sim_id || "- - -"} /> */}
                                 </div>
                             </div>
