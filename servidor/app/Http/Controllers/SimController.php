@@ -199,19 +199,6 @@ class SimController extends Controller
                 return Res::responseErrorNoId();
             }
 
-            /*$countImeiRepeat = Sim::where("imei", $request->imei)->get()->count();
-            if ($countImeiRepeat > 0) {
-                return Res::responseError432("Imei ya registrado.", null);
-            }
-
-            $countNumberRepeat = Sim::where("number", $request->number)->get()->count();
-            if ($countNumberRepeat > 0) {
-                return Res::responseError432("Número ya registrado.", null);
-            }
-            if(strlen($request->number) != 8){
-                return Res::responseError432("El número de telefono debe tener 8 digitos.", null);
-            }*/
-
             $obj = Sim::find($request->id);
 
             if ($obj["imei"] != $request->imei) {
@@ -235,6 +222,19 @@ class SimController extends Controller
             if ($obj == null) {
                 return Res::responseErrorNoData();
             }
+
+            $event = [
+                "title" => "Datos del sim modificado",
+                "detail" => $obj,
+                "type_id" => 1,
+                "car_id" => null,
+                "modem_id" => null,
+                "sim_id" => $obj["id"],
+                "platform_id" => $obj->platform_id,
+                "user_id" => auth()->user()->id
+            ];
+            EventController::_store($event);
+
             $obj->fill($request->json()->all());
             $obj->save();
 
