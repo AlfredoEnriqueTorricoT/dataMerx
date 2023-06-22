@@ -166,9 +166,12 @@ class ModemController extends Controller
         try {
 
             $countModemRepeat = Modem::where("imei", $request->imei)->get()->count();
-
             if ($countModemRepeat > 0) {
                 return Res::responseError432("Imei ya registrado.", null);
+            }
+
+            if (strlen($request->imei) != 15) {
+                return Res::responseError432("El imei debe tener 15 digitos.", null);
             }
 
             $request->sim_id = null;
@@ -321,6 +324,9 @@ class ModemController extends Controller
                 if ($countImeiRepeat > 0) {
                     return Res::responseError432("El imei ya esta registrada.", null);
                 }
+            }
+            if (strlen($request->imei) != 15) {
+                return Res::responseError432("El imei debe tener 15 digitos.", null);
             }
 
             if ($obj == null) {
