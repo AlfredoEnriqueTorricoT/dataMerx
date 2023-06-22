@@ -42,11 +42,12 @@ class SimController extends Controller
         }
     }
 
-    static public function byId($id){
+    static public function byId($id)
+    {
         try {
             $sim = Sim::find($id);
 
-            if($sim == null){
+            if ($sim == null) {
                 return null;
             }
 
@@ -60,12 +61,11 @@ class SimController extends Controller
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
         }
-
     }
     public function details($id)
     {
         $sim = SimController::byId($id);
-        if($sim == null){
+        if ($sim == null) {
             return Res::responseSuccess([
                 "sim" => null,
                 "modem" => null,
@@ -75,7 +75,7 @@ class SimController extends Controller
 
         $modem = ModemController::bySimId($id);
         $car = null;
-        if($modem != null) {
+        if ($modem != null) {
             $car = CarController::byModemId($modem["id"]);
             $car->platform;
         }
@@ -101,7 +101,7 @@ class SimController extends Controller
                 return Res::responseError432("Imei ya registrado.", null);
             }
 
-            
+
 
             $obj = Sim::create($request->all());
 
@@ -137,7 +137,7 @@ class SimController extends Controller
             if ($countNumberRepeat > 0) {
                 return Res::responseError432("Número ya registrado.", null);
             }
-            if(strlen($request->number) != 8){
+            if (strlen($request->number) != 8) {
                 return Res::responseError432("El número de telefono debe tener 8 digitos.", null);
             }
 
@@ -164,21 +164,21 @@ class SimController extends Controller
     }
 
 
-    public function event(Request $request){
+    public function event(Request $request)
+    {
         $modem_id = null;
         $car_id = null;
         $sim_id =  $request->all()["id"];
 
         $modem = Modem::where("sim_id", $sim_id)->first();
         $car = null;
-        if($modem != null){
+        if ($modem != null) {
             $modem_id = $modem["id"];
 
             $car = Car::where("modem_id", $modem_id)->first();
-            if($car != null){
+            if ($car != null) {
                 $car_id = $car["id"];
             }
-
         }
 
         $element = [
@@ -190,8 +190,6 @@ class SimController extends Controller
         $event = EventController::storeUpload($request, $element);
 
         return Res::responseSuccess($event);
-
-
     }
 
     public function update(Request $request)
@@ -201,7 +199,7 @@ class SimController extends Controller
                 return Res::responseErrorNoId();
             }
 
-            $countImeiRepeat = Sim::where("imei", $request->imei)->get()->count();
+            /*$countImeiRepeat = Sim::where("imei", $request->imei)->get()->count();
             if ($countImeiRepeat > 0) {
                 return Res::responseError432("Imei ya registrado.", null);
             }
@@ -212,9 +210,27 @@ class SimController extends Controller
             }
             if(strlen($request->number) != 8){
                 return Res::responseError432("El número de telefono debe tener 8 digitos.", null);
-            }
+            }*/
 
             $obj = Sim::find($request->id);
+
+            if ($obj["imei"] != $request->imei) {
+                $countImeiRepeat = Sim::where("imei", $request->imei)->get()->count();
+                if ($countImeiRepeat > 0) {
+                    return Res::responseError432("Imei ya registrado.", null);
+                }
+            }
+
+            if ($obj["number"] != $request->number) {
+                $countNumberRepeat = Sim::where("number", $request->number)->get()->count();
+                if ($countNumberRepeat > 0) {
+                    return Res::responseError432("Número ya registrado.", null);
+                }
+            }
+
+            if (strlen($request->number) != 8) {
+                return Res::responseError432("El número de telefono debe tener 8 digitos.", null);
+            }
 
             if ($obj == null) {
                 return Res::responseErrorNoData();
