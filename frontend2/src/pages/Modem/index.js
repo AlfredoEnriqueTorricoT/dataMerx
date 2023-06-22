@@ -53,6 +53,7 @@ const ModemPage = ({
         // onGet({ saveAs: _crudName.cod + "List", url: "modem" })
         onGet({ saveAs: "modemBrandList", url: "modem-mark" })
         onGet({ saveAs: "carList", url: "car" })
+        onGet({ saveAs: "platformList", url: "platform" })
         onGet({ saveAs: "simList", url: "sim" })
     }, [])
 

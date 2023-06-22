@@ -14,6 +14,7 @@ const INITIAL_MODEM = {
     message: "",
     carList: [],
     modemList: [],
+    platformList: [],
     modemBrandList: [],
     simList: [],
     eventList: []
