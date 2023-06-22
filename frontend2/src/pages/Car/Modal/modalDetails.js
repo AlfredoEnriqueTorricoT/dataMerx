@@ -105,18 +105,10 @@ const ModalDetails = ({CloseModalButton, CancelModalButton, localStore}) => {
                 {modalMode == 0 ? <SpinnerL /> : ""}
                 {modalMode == 1 ?
                     <React.Fragment>
-                        <ul className="nav nav-tabs">
-                          <NavItem _num={0} _name="Vehículo" />
-                          <NavItem _num={1} _name="Módem" />
-                          <NavItem _num={2} _name="Sim" />
-                        </ul>
-                        <div className="tab-content pt-4 grayScroll" style={{maxHeight: "55vh", overflowY: "auto", overflowX: "hidden"}}>
-                            <div className={`tab-pane fade ${activeTab == 0 ? "active show" : ""}`}>
-                                {localStore.carDetails.car.images ?
-                                    <div className="row mb-1">
-                                        <Carrousel images={localStore.carDetails.car.images} />
+                                <div className="chat-conversation">
+                                    <div className="chat-day-title m-1">
+                                        <span className='title'><b>Vehículo</b></span>
                                     </div>
-                                : ""}
                                 <div className="row">
                                     <div className="col">
                                         <ShowData title={"Nombre"} data={localStore.carDetails.car.name} />
@@ -130,14 +122,12 @@ const ModalDetails = ({CloseModalButton, CancelModalButton, localStore}) => {
                                     </div>
                                     
                                 </div>
+                            {/* </div> */}
+                            <div className="chat-day-title m-1">
+                                <span className='title'><b>Módem</b></span>
                             </div>
                             {localStore.carDetails.modem ?
-                            <div className={`tab-pane fade ${activeTab == 1 ? "active show" : ""}`}>
-                                {localStore.carDetails.modem.images ?
-                                    <div className="row mb-1">
-                                        <Carrousel images={localStore.carDetails.modem.images} />
-                                    </div>
-                                : ""}
+                            <React.Fragment>
                                 <div className="row">
                                     <div className="col">
                                         <ShowData title={"Código"} data={localStore.carDetails.modem.code} />
@@ -145,17 +135,23 @@ const ModalDetails = ({CloseModalButton, CancelModalButton, localStore}) => {
                                     </div>
                                     <div className="col">
                                         <ShowData title="Marca" data={localStore.carDetails.modem.modems_mark ? localStore.carDetails.modem.modems_mark.name : "Sin sim"} />
-                                        <ShowData title={"Mark id"} data={localStore.carDetails.modem.mark_id} />
+                                        <ShowData title="Estado" data={
+                                            <span
+                                              className={`badge font-size-11 rounded-pill badge-soft-${
+                                                localStore.carDetails.modem.active ? "primary" : "dark"
+                                              } text-uppercase`}
+                                            >
+                                              {localStore.carDetails.modem.active ? "ACTIVO" : "INACTIVO"}
+                                            </span>
+                                        } />
                                     </div>
                                 </div>
-                            </div> : ""}
+                            </React.Fragment> : <center><h4 className='text-secondary mb-3'>Sin módem asignado</h4></center>}
+                            <div className="chat-day-title m-1">
+                                <span className='title'><b>Sim</b></span>
+                            </div>
                             {localStore.carDetails.sim ?
-                            <div className={`tab-pane fade ${activeTab == 2 ? "active show" : ""}`}>
-                                {localStore.carDetails.sim.images ?
-                                    <div className="row mb-1">
-                                        <Carrousel images={localStore.carDetails.sim.images} />
-                                    </div>
-                                : ""}
+                            <React.Fragment>
                                 <div className="row">
                                     <div className="col">
                                         <ShowData title="Número" data={localStore.carDetails.sim.number} />
@@ -174,8 +170,8 @@ const ModalDetails = ({CloseModalButton, CancelModalButton, localStore}) => {
                                         <ShowData title="Código" data={localStore.carDetails.sim.code} />
                                     </div>
                                 </div>
-                            </div> : ""}
-                        </div>
+                                </React.Fragment> : <center><h4 className='text-secondary mb-3'>Sin sim asignado</h4></center>}
+                                </div>
                     </React.Fragment>
                 : ""}
                 {modalMode == 2 ? "ERROR" : ""}
