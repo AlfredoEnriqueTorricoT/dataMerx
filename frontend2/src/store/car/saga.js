@@ -45,14 +45,27 @@ function* postCarSaga(action) {
 
   try {
     response = yield call(AxiosServices.POST, {payload: action.payload, url: action.url})
-    if (response.data.status == 200) {
-      yield put(updateCarStorage({
-        payload: response.data.data,
-        saveAs: action.saveAs,
-        status: response.data.status}))
-    } else {
-      yield put(updateCarStorage({status: response.data.message}))
+    
+    try {
+      if (response.data.status == 200) {
+        yield put(updateCarStorage({
+          payload: response.data.data,
+          saveAs: action.saveAs,
+          status: response.data.status}))
+      } else {
+        yield put(updateCarStorage({status: response.data.message}))
+      }      
+    } catch (error) {
+      if (response.response.data.status == 200) {
+        yield put(updateCarStorage({
+          payload: response.response.data.data,
+          saveAs: action.saveAs,
+          status: response.response.data.status}))
+      } else {
+        yield put(updateCarStorage({status: response.response.data.status, message: response.response.data.message}))
+      }
     }
+
   } catch (error) {
     yield put(updateCarStorage({status: error.message}))
     console.log("FAIL: ", response, error, action);
@@ -108,7 +121,14 @@ function* putCarSaga(action) {
         yield put(updateCarStorage({status: response.data.status, message: (response.data.message || "")}))
       }  
     } catch (error) {
-      yield put(updateCarStorage({status: response.data.status}))
+      if (response.response.data.status == 200) {
+        yield put(updateCarStorage({
+          payload: response.response.data.data,
+          saveAs: action.saveAs,
+          status: response.response.data.status}))
+      } else {
+        yield put(updateCarStorage({status: response.response.data.status, message: response.response.data.message}))
+      }
     }
     
   } catch (error) {
