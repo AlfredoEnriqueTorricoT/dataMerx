@@ -8,6 +8,7 @@ const ModalEdit = ({_crudName, onPutAndGet, state, t}) => {
         let errors = {}
 
         if (!values.number) errors.number = "Enter the sim number"
+        if (values.number.toString().length != 8) errors.number = "El número de teléfono debe ser de 8 dígitos"
         if (!values.code) errors.code = "Enter the sim code"
         if (!values.imei) errors.imei = "Enter the sim imei"
 

@@ -159,7 +159,16 @@ function* putAndGetCarSaga(action) {
         yield put(updateCarStorage({status: response.data.status, message: (response.data.message || "")}))
       }  
     } catch (error) {
-      yield put(updateCarStorage({status: response.data.status}))
+      if (response.response.data.status == 200) {
+        yield put(
+          getCar({
+            saveAs: action.saveAs,
+            url: action.urlToGet || action.url,
+          })
+        )
+      } else {
+        yield put(updateCarStorage({status: response.response.data.status, message: response.response.data.message}))
+      }  
     }
     
   } catch (error) {

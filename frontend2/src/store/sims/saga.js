@@ -103,23 +103,37 @@ function* postAndGetSimSaga(action) {
 
 function* putAndGetSimSaga(action) {
   let response;
-  console.log("PAG: ", action);
   try {
     response = yield call(AxiosServices.PUT, {payload: action.payload, url: action.url})
-    if (response.data.status == 200) {
-      console.log("SUCCESS: ", response);
-      yield put(
-        getSim({
-          saveAs: action.saveAs,
-          saveIn: action.saveIn,
-          url: action.urlToGet || action.url,
-        })
-      )
-    } else {
-      if (response.response.status == 432)
-        yield put(updateSimStorage({status: response.response.status, message: (response.response.data.message || "")}))
-      else
-        yield put(updateSimStorage({status: "error"}))
+    try {
+      if (response.data.status == 200) {
+        console.log("SUCCESS: ", response);
+        yield put(
+          getSim({
+            saveAs: action.saveAs,
+            saveIn: action.saveIn,
+            url: action.urlToGet || action.url,
+          })
+        )
+      } else {
+        if (response.response.status == 432)
+          yield put(updateSimStorage({status: response.response.status, message: (response.response.data.message || "")}))
+        else
+          yield put(updateSimStorage({status: "error"}))
+      }
+    } catch (error) {
+      if (response.response.data.status == 200) {
+        console.log("SUCCESS: ", response);
+        yield put(
+          getSim({
+            saveAs: action.saveAs,
+            saveIn: action.saveIn,
+            url: action.urlToGet || action.url,
+          })
+        )
+      } else {
+        yield put(updateSimStorage({status: response.response.data.status, message: response.response.data.message}))
+      }
     }
   } catch (error) {
     console.log("ERROR: ", response, error, action);
