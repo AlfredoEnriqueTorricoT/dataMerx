@@ -118,11 +118,11 @@ const ModalDetails = ({localStore}) => {
                                 </div>
                             </div>
                         </React.Fragment> : <center><h4 className='text-secondary mb-3'>Sin vehículo asignado</h4></center>}
-                        {localStore.simDetails.modem ?
-                        <React.Fragment>
                             <div className="chat-day-title m-1">
                                 <span className='title'><b>Módem</b></span>
                             </div>
+                        {localStore.simDetails.modem ?
+                        <React.Fragment>
                             <div className="row">
                                 <div className="col">
                                     <ShowData title={"Código"} data={localStore.simDetails.modem.code} />
