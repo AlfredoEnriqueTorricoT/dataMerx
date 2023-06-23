@@ -8,6 +8,7 @@ import ModalSim from './modalSim';
 import {Modal} from "reactstrap"
 import ModalDetails from './modalDetails';
 import ModalEvent from './Modal events/modalEvents';
+import ModalAddImages from './modalAddImages';
 
 const ModalIndex = ({_crudName, localStore, onPostAndGet, onGet, onPost, onPut, onPutAndGet, setState, state, t}) => {
     const [toastWaiting, setToastW] = useState(false)
@@ -128,6 +129,17 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onGet, onPost, onPut, 
                         onPut={onPut}
                         setState={setState}
                         setToastW={setToastW}
+                        state={state}
+                    />
+                )
+            case "Add images":
+                return(
+                    <ModalAddImages
+                        CloseModalButton={CloseModalButton}
+                        CancelModalButton={CancelModalButton}
+                        localStore={localStore}
+                        onPost={onPost}
+                        setState={setState}
                         state={state}
                     />
                 )

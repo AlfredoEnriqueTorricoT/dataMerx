@@ -8,6 +8,7 @@ import { Modal } from 'reactstrap';
 import ModalAddEvent from './modalAddEvent';
 import ModalDetails from './modalDetails';
 import ModalEvent from './Modal events/modalEvents';
+import ModalAddImages from './modalAddImages';
 
 const ModalIndex = ({_crudName, localStore, onGet, onPost, onPut, onPostAndGet, onPutAndGet, setState, state, t}) => {
     const [secondModal, setSecondModal] = useState({open: false})
@@ -148,6 +149,18 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPut, onPostAndGet, 
                         localStore={localStore}
                     />
                 )
+                case "Add images":
+                    return(
+                        <ModalAddImages
+                            CloseModalButton={CloseModalButton}
+                            CancelModalButton={CancelModalButton}
+    
+                            localStore={localStore}
+                            onPost={onPost}
+                            setState={setState}
+                            state={state}
+                            />
+                    )
             case "Events":
                 return(
                     <ModalEvent

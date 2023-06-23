@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 
-const ModalEdit = ({_crudName, onPutAndGet, state, t}) => {
+const ModalEdit = ({_crudName, CloseModalButton, CancelModalButton, onPutAndGet, state, t}) => {
 
     const validateFunction = values => {
         let errors = {}
@@ -17,6 +17,12 @@ const ModalEdit = ({_crudName, onPutAndGet, state, t}) => {
 
     return(
         <React.Fragment>
+          <div className="modal-header">
+            <h4>Editar sim</h4>
+            <CloseModalButton />
+          </div>
+
+          <div className="modal-body">
             <Formik
                 onSubmit={values => onPutAndGet({
                   saveAs: "simList",
@@ -97,11 +103,24 @@ const ModalEdit = ({_crudName, onPutAndGet, state, t}) => {
                     </Form>
                 )}
             </Formik>
+          </div>
+
+          <div className="modal-footer">
+            <CancelModalButton />
+            <div className="ms-auto">
+              <button className='btn dm-button text-light btn-label' disabled={localStorage.status == "waiting response"} form={_crudName.cod + "_Edit"} type='submit'>
+                Añadir
+                <i className='fas fa-edit label-icon'/>
+              </button>
+            </div>
+          </div>
         </React.Fragment>
     )
 }
 
 ModalEdit.propTypes = {
+    CloseModalButton: PropTypes.any,
+    CancelModalButton: PropTypes.any,
     _crudName: PropTypes.object,
     onPutAndGet: PropTypes.func,
     state: PropTypes.func,
