@@ -17,7 +17,7 @@ return new class extends Migration
 
         Schema::create('modems', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 5);
+            $table->string('code', 8);
             $table->string('imei', 30);
             $table->boolean('active')->default(true);
 
