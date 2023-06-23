@@ -211,6 +211,33 @@ class CarController extends Controller
         }
     }
 
+
+    public function updloadImage(Request $request)
+    {
+        //echo $request->bearerToken();
+        try {
+
+            $event = [
+                "title" => "Registro",
+                "detail" => "Imagenes agregadas",
+                "type_id" => 1,
+                "car_id" => $request["id"],
+                "modem_id" => null,
+                "sim_id" => null,
+                "platform_id" => null,
+                "user_id" => auth()->user()->id
+            ];
+            $eventSave =EventController::_store($event);
+
+            
+            ImagesController::upload($request, "e", $eventSave["id"]);
+
+            return Res::responseSuccess($event);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
     public function update_modem(Request $request)
     {
         try {
