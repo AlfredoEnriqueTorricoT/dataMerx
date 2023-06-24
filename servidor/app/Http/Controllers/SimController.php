@@ -27,8 +27,8 @@ class SimController extends Controller
     {
         try {
             $list = Sim::where("number", "like", '%' . $number . '%')
-                    ->orWhere("imei", "like", '%' . $number . '%')
-                    ->get();
+                ->orWhere("imei", "like", '%' . $number . '%')
+                ->get();
 
             foreach ($list as $sim) {
                 $sim->images = Images::where([
@@ -79,7 +79,7 @@ class SimController extends Controller
         $car = null;
         if ($modem != null) {
             $car = CarController::byModemId($modem["id"]);
-            if($car != null){
+            if ($car != null) {
                 $car->platform;
             }
         }
@@ -182,14 +182,27 @@ class SimController extends Controller
                 "platform_id" => null,
                 "user_id" => auth()->user()->id
             ];
-            $eventSave =EventController::_store($event);
+            $eventSave = EventController::_store($event);
 
-            
+
             ImagesController::upload($request, "e", $eventSave["id"]);
 
             return Res::responseSuccess($event);
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
+        }
+    }
+
+    public function disable_enabled($id)
+    {
+        try {
+            $obj = Sim::find($id);
+
+            $obj->active = $obj->active ? 0 : 1;
+            $obj->save();
+            return Res::responseSuccess($obj);
+        } catch (Exception $ex) {
+            return Res::responseError($ex);
         }
     }
 

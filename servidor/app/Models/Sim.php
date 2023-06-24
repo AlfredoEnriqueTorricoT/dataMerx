@@ -13,7 +13,6 @@ class Sim extends Model
 
     protected $fillable = [
         "number",
-        "code",
         "imei",
         "reception",
         "active"
