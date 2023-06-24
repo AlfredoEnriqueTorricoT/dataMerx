@@ -1,37 +1,77 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 
-const ModalEdit = ({onPutAndGet, state, t}) => {
+import { showToast } from 'components/toast'
 
+const ModalEdit = ({ModalCancelButton, ModalCloseButton, setState, localStore, onPutAndGet, state, t}) => {
+  const [toastWaiting, setToastW] = useState(false)
+
+  useEffect(()=>{
+    if (toastWaiting && localStore.status != "waiting response") {
+      setToastW(false)
+      toastFunction()
+    }
+  }, [localStore.status])
+
+  const toastFunction = () => {
+    let itsOk = localStore.status == 200
+
+    showToast({
+      title: itsOk? "" : ("Error (" + localStore.status + ")"),
+      type: itsOk ? "success" : "warning",
+      message: itsOk ? "El usuario ha sido editado" : "El usuario no pudo ser editado"
+    })
+
+    if (itsOk) setState({modalOpen: false})
+  }
+  
     const validateFunction = values => {
         let errors = {}
 
         if (!values.name) errors.name = "Enter the user name"
         if (!values.email) errors.email = "Enter the user email"
+        if (values.password != values.repeat_password) errors.repeat_password = "La contraseña no coincide"
 
         return errors
     }
 
+    const submitFunction = values =>{
+      setToastW(true)
+      let {repeat_password, password, ...userValues} = values
+      let userPayload = userValues
+      if (password) userPayload = {...userPayload, password: password}
+
+      onPutAndGet({
+        saveAs: "userList",
+        payload: userPayload,
+        url: "user"})
+    }
+
     return(
         <React.Fragment>
+          <div className="modal-header">
+            <h4>Editar usuario</h4>
+            <ModalCloseButton />
+          </div>
+
+          <div className="modal-body">
             <Formik
-                onSubmit={values => onPutAndGet({
-                  saveAs: "modemBrandList",
-                  payload: {...values,
-                  id: state.elementSelected.id},
-                  url: "modem-mark"})}
+                onSubmit={submitFunction}
                 initialValues={{
+                    id: state.elementSelected.id,
                     name: state.elementSelected.name,
-                    email: state.elementSelected.email
+                    email: state.elementSelected.email,
+                    password: "",
+                    repeat_password: ""
                 }}
                 validate={validateFunction}
             >
                 {({errors})=>(
-                    <Form id="modemBrand_Edit">
+                    <Form id="user_edit">
                         <div className="row mb-1">
                           <label
-                            htmlFor="modemBrand_Edit_name"
+                            htmlFor="user_edit_name"
                             className="col-3 col-form-label"
                             >
                             {t("Name")}
@@ -40,7 +80,7 @@ const ModalEdit = ({onPutAndGet, state, t}) => {
                           <div className="col-9">
                             <Field
                               className="form-control"
-                              id="modemBrand_Edit_name"
+                              id="user_edit_name"
                               name="name"
                               type="text"
                             />
@@ -52,7 +92,7 @@ const ModalEdit = ({onPutAndGet, state, t}) => {
 
                         <div className="row mb-1">
                           <label
-                            htmlFor="modemBrand_Edit_detail"
+                            htmlFor="user_edit_detail"
                             className="col-3 col-form-label"
                             >
                             Correo
@@ -61,7 +101,7 @@ const ModalEdit = ({onPutAndGet, state, t}) => {
                           <div className="col-9">
                             <Field
                               className="form-control"
-                              id="modemBrand_Edit_detail"
+                              id="user_edit_detail"
                               name="email"
                               type="text"
                             />
@@ -70,14 +110,74 @@ const ModalEdit = ({onPutAndGet, state, t}) => {
                             </ErrorMessage>
                           </div>
                         </div>
+
+                        <div className="row mb-1">
+                          <label
+                            htmlFor="user_edit_password"
+                            className="col-3 col-form-label"
+                            >
+                            Nueva contraseña
+                          </label>
+                          <div className="col-9">
+                              <Field
+                                className="form-control"
+                                id="user_edit_password"
+                                name="password"
+                                type="text"
+                              />
+                            <ErrorMessage name="password">
+                              {msg => <h6 className="text-danger">{t(msg)}</h6>}
+                            </ErrorMessage>
+                          </div>
+                        </div>
+
+                        <div className="row mb-1">
+                          <label
+                            htmlFor="user_edit_repeat_password"
+                            className="col-3 col-form-label"
+                            >
+                            Repetir contraseña
+                          </label>
+                          <div className="col-9">
+                              <Field
+                                className="form-control"
+                                id="user_edit_repeat_password"
+                                name="repeat_password"
+                                type="text"
+                              />
+                            <ErrorMessage name="repeat_password">
+                              {msg => <h6 className="text-danger">{t(msg)}</h6>}
+                            </ErrorMessage>
+                          </div>
+                        </div>
                     </Form>
                 )}
             </Formik>
+          </div>
+
+          <div className="modal-footer">
+            <ModalCancelButton />
+            <div className="ms-auto">
+              <button
+                className='btn dm-button text-light btn-label'
+                disabled={toastWaiting}
+                form="user_edit"
+                type="submit"
+                >
+                Editar
+                <i className='fas fa-edit label-icon'/>
+              </button>
+            </div>
+          </div>
         </React.Fragment>
     )
 }
 
 ModalEdit.propTypes = {
+    ModalCancelButton: PropTypes.any,
+    ModalCloseButton: PropTypes.any,
+    localStore: PropTypes.any,
+    setState: PropTypes.func,
     onPutAndGet: PropTypes.func,
     state: PropTypes.func,
     t: PropTypes.func,

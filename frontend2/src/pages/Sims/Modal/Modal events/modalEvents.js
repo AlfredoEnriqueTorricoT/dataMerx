@@ -4,7 +4,7 @@ import { getThisDate, SpinnerL } from 'components/components'
 import { ErrorTable } from 'components/tableElements'
 import DisplayEventList from './displayList'
 
-const ModalEvent = ({localStore, onGet, state}) => {
+const ModalEvent = ({CloseModalButton, CancelModalButton, localStore, onGet, state}) => {
     const [modalStatus, setModalStatus] = useState(0) //0 loading, 1 success, 2 error
     const [detailStatus, setDetailStatus] = useState(-1) //-1 init, "", ...
     const [showImg, setShowImg] = useState(0)
@@ -45,6 +45,12 @@ const ModalEvent = ({localStore, onGet, state}) => {
 
     return(
         <React.Fragment>
+            <div className="modal-header">
+                <h4>Eventos del sim</h4>
+                <CloseModalButton />
+            </div>
+
+            <div className="modal-body">
             {modalStatus == 0 ? <SpinnerL /> : ""}
 
             {
@@ -70,11 +76,19 @@ const ModalEvent = ({localStore, onGet, state}) => {
             {modalStatus == 2 ?
                 <ErrorTable cod={localStore.status} retryFunction={RetryFModal} /> : ""
             }
+            </div>
+
+            <div className="modal-footer">
+                <CancelModalButton />
+                <div className="ms-auto"></div>
+            </div>
         </React.Fragment>
     )
 }
 
 ModalEvent.propTypes = {
+    CloseModalButton: PropTypes.any,
+    CancelModalButton: PropTypes.any,
     localStore: PropTypes.object,
     onGet: PropTypes.func,
     state: PropTypes.object

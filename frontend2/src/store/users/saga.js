@@ -83,18 +83,33 @@ function* putAndGetUserSaga(action) {
   console.log("PAG: ", action);
   try {
     response = yield call(AxiosServices.PUT, {payload: action.payload, url: action.url})
-    if (response.data.status == 200) {
-      console.log("SUCCESS: ", response);
-      yield put(
-        getUser({
-          saveAs: action.saveAs,
-          saveIn: action.saveIn,
-          url: action.urlToGet || action.url,
-        })
-      )
-    } else {
-      console.log("40?: ", response);
-      yield put(updateUserStorage({status: "error"}))
+    try {
+      if (response.data.status == 200) {
+        console.log("SUCCESS: ", response);
+        yield put(
+          getUser({
+            saveAs: action.saveAs,
+            saveIn: action.saveIn,
+            url: action.urlToGet || action.url,
+          })
+        )
+      } else {
+        yield put(updateUserStorage({status: "error"}))
+      } 
+    } catch (error) {
+      if (response.response.data.status == 200) {
+        console.log("SUCCESS: ", response);
+        yield put(
+          getUser({
+            saveAs: action.saveAs,
+            saveIn: action.saveIn,
+            url: action.urlToGet || action.url,
+          })
+        )
+      } else {
+        console.log("40?: ", response);
+        yield put(updateUserStorage({status: "error"}))
+      }
     }
   } catch (error) {
     console.log("ERROR: ", response, error, action);

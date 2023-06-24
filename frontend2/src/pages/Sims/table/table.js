@@ -83,6 +83,15 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                           elementSelected: mBrand
                                         })
                                       }},
+                                      {_label: "Añadir imágenes",
+                                      onClick: ()=>{
+                                        setState({
+                                          modalOpen: true,
+                                          modalSize: "md",
+                                          modalType: "Add images",
+                                          elementSelected: mBrand
+                                        })
+                                      }},
                                       {_label: "Ver eventos",
                                       onClick: ()=>{
                                         onGet({saveAs: "eventList", url: "event/sim/" + mBrand.id})

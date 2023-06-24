@@ -52,6 +52,15 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                                           elementSelected: listItem
                                         })
                                       }},
+                                      {_label: "Añadir imágenes",
+                                      onClick: ()=>{
+                                        setState({
+                                          modalOpen: true,
+                                          modalSize: "md",
+                                          modalType: "Add images",
+                                          elementSelected: listItem
+                                        })
+                                      }},
                                       {_label: "Ver eventos",
                                       onClick: ()=>{
                                         onGet({saveAs: "eventList", url: "event/sim/" + listItem.id})

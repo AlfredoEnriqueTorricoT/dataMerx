@@ -80,6 +80,17 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                             }
                                         },
                                         {
+                                            _label: "Añadir imágenes",
+                                            onClick: ()=>{
+                                                setState({
+                                                    modalType: "Add images",
+                                                    modalOpen: true,
+                                                    modalSize: "md",
+                                                    elementSelected: listItem
+                                                })
+                                            }
+                                        },
+                                        {
                                             _label: "Ver eventos",
                                             onClick: ()=>{
                                                 onGet({saveAs: "eventList", url: "event/car/" + listItem.id})

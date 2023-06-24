@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 
-const ModalAdd = ({_crudName, localStore, onPost, t}) => {
+const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, localStore, onPost, t}) => {
   const [simImages, setSimImages] = useState([])
   
     const validateFunction = values => {
@@ -36,7 +36,13 @@ const ModalAdd = ({_crudName, localStore, onPost, t}) => {
     }
 
     return(
-        <React.Fragment>          
+        <React.Fragment>
+          <div className="modal-header">
+            <h4>Añadir sim</h4>
+            <CloseModalButton />
+          </div>
+
+          <div className="modal-body">
             <Formik
                 onSubmit={values =>{
                   submitFunction(values)
@@ -140,11 +146,24 @@ const ModalAdd = ({_crudName, localStore, onPost, t}) => {
                     </Form>
                 )}
             </Formik>
+          </div>
+
+          <div className="modal-footer">
+            <CancelModalButton />
+            <div className="ms-auto">
+              <button className='btn dm-button text-light btn-label' disabled={localStore.status == "waiting response"} form={_crudName.cod + "_Add"} type="submit">
+                Añadir
+                <i className='fas fa-plus label-icon'/>
+              </button>
+            </div>
+          </div>
         </React.Fragment>
     )
 }
 
 ModalAdd.propTypes = {
+    CloseModalButton: PropTypes.any,
+    CancelModalButton: PropTypes.any,
     _crudName: PropTypes.object,
     localStore: PropTypes.object,
     onPost: PropTypes.func,

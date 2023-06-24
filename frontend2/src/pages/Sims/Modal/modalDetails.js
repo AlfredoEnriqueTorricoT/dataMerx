@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { SpinnerL } from 'components/components'
 
-const ModalDetails = ({localStore}) => {
+const ModalDetails = ({CloseModalButton, CancelModalButton, localStore}) => {
     const [modalMode, setModalMode] = useState(0) // 0 loading, 1 success, 2 error
     const [activeTab, setActiveTab] = useState(0) // sim, car, modem
     const [tabsLocked, setTabsLocked] = useState([false, false, false])
@@ -96,6 +96,12 @@ const ModalDetails = ({localStore}) => {
 
     return(
         <React.Fragment>
+            <div className="modal-header">
+                <h4>Detalles del sim</h4>
+                <CloseModalButton />
+            </div>
+
+            <div className="modal-body">
             {modalMode == 0 ? <SpinnerL /> : ""}
             {modalMode == 1 ?
                 <React.Fragment>
@@ -170,12 +176,20 @@ const ModalDetails = ({localStore}) => {
                 </React.Fragment>
             : ""}
             {modalMode == 2 ? "ERROR" : ""}
+            </div>
+
+            <div className="modal-footer">
+                <CancelModalButton />
+                <div className="ms-auto"></div>
+            </div>
         </React.Fragment>
     )
 }
 
 ModalDetails.propTypes = {
-    localStore: PropTypes.object,
+    CloseModalButton: PropTypes.any,
+    CancelModalButton: PropTypes.any,
+    localStore: PropTypes.object
 }
 
 export default ModalDetails
