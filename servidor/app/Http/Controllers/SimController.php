@@ -23,10 +23,12 @@ class SimController extends Controller
         }
     }
 
-    public function indexSearch($imei)
+    public function indexSearch($number)
     {
         try {
-            $list = Sim::where("number", "like", '%' . $imei . '%')->get();
+            $list = Sim::where("number", "like", '%' . $number . '%')
+                    ->orWhere("imei", "like", '%' . $number . '%')
+                    ->get();
 
             foreach ($list as $sim) {
                 $sim->images = Images::where([

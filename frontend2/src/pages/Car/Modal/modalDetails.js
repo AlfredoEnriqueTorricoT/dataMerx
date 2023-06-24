@@ -76,7 +76,7 @@ const ModalDetails = ({CloseModalButton, CancelModalButton, localStore}) => {
                       >
                         <img
                             className="d-block w-100 imgCover"
-                            src={"http://localhost:8000/storage/" + image.url}
+                            src={"http://app-backend.merx.bo/storage/" + image.url}
                             alt="Second slide"
                         />
                       </div>
