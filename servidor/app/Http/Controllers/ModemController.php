@@ -224,6 +224,47 @@ class ModemController extends Controller
         }
     }
 
+    public function enabled_disable(Request $request)
+    {
+        try {
+            
+            $obj = Modem::find($request->id);
+            if(is_null($obj)){
+                return Res::responseErrorNoData();
+            }
+            $event_title = "";
+            $event_type = null;
+
+            if ($obj->active) {
+                $obj->active = 0;
+                $event_title = "Modem dado de baja.";
+                $event_type = 3;
+            } else {
+                $obj->active = 1;
+                $event_title = "Modem reactivado";
+                $event_type = 2;
+            }
+
+            $event = [
+                "title" => $event_title,
+                "detail" => $request->description,
+                "type_id" => $event_type,
+                "car_id" => null,
+                "modem_id" => $request->id,
+                "sim_id" => null,
+                "platform_id" => null,
+                "user_id" => auth()->user()->id
+            ];
+            EventController::_store($event);
+
+
+            $obj->save();
+            return Res::responseSuccess($obj);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
     public function event(Request $request){
         $modem_id = $request->all()["id"];
         $car_id = null;
