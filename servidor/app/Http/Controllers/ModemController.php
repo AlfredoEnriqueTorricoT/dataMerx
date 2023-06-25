@@ -266,7 +266,7 @@ class ModemController extends Controller
     }
 
     public function event(Request $request){
-        $modem_id = $request->all()["id"];
+        $modem_id = $request["id"];
         $car_id = null;
         $sim_id =  null;
 
@@ -281,8 +281,6 @@ class ModemController extends Controller
             if($car != null){
                 $car_id = $car["id"];
             }
-
-
         }
 
         $element = [

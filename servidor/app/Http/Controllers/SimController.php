@@ -9,6 +9,8 @@ use App\Models\Modem;
 use App\Models\Sim;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Log\Logger;
+use Illuminate\Support\Facades\Log;
 
 class SimController extends Controller
 {
@@ -200,7 +202,7 @@ class SimController extends Controller
             if(is_null($obj)){
                 return Res::responseErrorNoData();
             }
-            
+
             $event_title = "";
             $event_type = null;
             if ($obj->active) {
@@ -229,6 +231,8 @@ class SimController extends Controller
             $obj->save();
             return Res::responseSuccess($obj);
         } catch (Exception $ex) {
+            
+            Log::error("Error: " . $ex->getMessage() . " ". $ex->getLine());
             return Res::responseError($ex);
         }
     }
@@ -238,7 +242,8 @@ class SimController extends Controller
     {
         $modem_id = null;
         $car_id = null;
-        $sim_id =  $request->all()["id"];
+        
+        $sim_id =  $request->id;
 
         $modem = Modem::where("sim_id", $sim_id)->first();
         $car = null;
