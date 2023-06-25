@@ -9,7 +9,7 @@ import { MobileDataShow } from 'components/tableElements'
 import {FormikInput} from "components/formElements"
 import { showToast } from 'components/toast'
 
-const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, setToastW, state, t}) => {
+const ModalCar = ({_crudName, CancelModalButton, CloseModalButton, formName, localStore, onDelete, onGet, onPost, setToastW, state, t}) => {
     // const [clientImages, setClientImages] = useState({})
     const [placa, setPlaca] = useState("")
     const [modalStatus, setModalStatus] = useState(-1) // -1 init, 0 loading, 1 success, 2 error
@@ -88,6 +88,13 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
     }
 
     return(
+      <React.Fragment>
+        <div className="modal-header">
+          <h4>Vehículos del cliente</h4>
+          <CloseModalButton />
+        </div>
+
+        <div className="modal-body">
       <div className="row">
         <div className="col-6">
           <div className="row">
@@ -254,11 +261,21 @@ const ModalCar = ({_crudName, formName, localStore, onDelete, onGet, onPost, set
             </div>
         </div>
       </div>
+      </div>
+
+      <div className="modal-footer">
+        <CancelModalButton />
+        <div className="ms-auto">
+        </div>
+      </div>
+      </React.Fragment>
     )
 }
 
 ModalCar.propTypes = {
     _crudName: PropTypes.object,
+    CancelModalButton: PropTypes.any,
+    CloseModalButton: PropTypes.any,
     formName: PropTypes.string,
     localStore: PropTypes.object,
     onDelete: PropTypes.func,

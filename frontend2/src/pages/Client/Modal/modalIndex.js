@@ -27,14 +27,14 @@ const ModalIndex = ({_crudName, localStore, onDelete, onGet, onPost, onPostAndGe
     const _432message = "The modem does not have a sim added, you need to add a sim to the modem or find another modem"
 
     const toastSuccessMessages = {
-        Add: "The car has been added",
-        Edit: "The car has been edited",
+        Add: "The user has been added",
+        Edit: "The user has been edited",
         Modem: "The modem has been assigned",
         ["Add event to"]: "The event has been registered"
     }
     const toastFailMessages = {
-        Add: "The car could not be added",
-        Edit: "The car could not be edited",
+        Add: "The user could not be added",
+        Edit: "The user could not be edited",
         Modem: "The modem could not be assigned",
         ["Add event to"]: "The event could not be registered"
     }
@@ -54,6 +54,27 @@ const ModalIndex = ({_crudName, localStore, onDelete, onGet, onPost, onPostAndGe
         if (itsOk) setState({modalOpen: false})
     }
 
+    const CloseModalButton = () => (
+        <button
+            type="button"
+            onClick={()=>{
+                setState({modalOpen: false})
+              }}
+            className="close"
+            aria-label="Close"
+        ></button>
+    )
+
+    const CancelModalButton = () => (
+        <button
+            className='btn btn-secondary'
+            onClick={()=>{
+                setState({modalOpen: false})
+            }}
+        >
+            {t("Cancel")}
+        </button>
+    )
 
     const buttonIcon = {Add: "plus", Edit: "edit", Modem: "plus", ["Add event to"]: "plus"}
     const buttonText = {Add: "Add", Edit: "Edit", Modem: "Assign", ["Add event to"]: "Add"}
@@ -63,6 +84,9 @@ const ModalIndex = ({_crudName, localStore, onDelete, onGet, onPost, onPostAndGe
             case "Add":
                 return(
                     <ModalAdd
+                        CancelModalButton={CancelModalButton}
+                        CloseModalButton={CloseModalButton}
+
                         _crudName={_crudName}
                         formName={state.modalType}
                         localStore={localStore}
@@ -75,6 +99,9 @@ const ModalIndex = ({_crudName, localStore, onDelete, onGet, onPost, onPostAndGe
             case "Vehículos del":
                 return(
                     <ModalCar
+                        CancelModalButton={CancelModalButton}
+                        CloseModalButton={CloseModalButton}
+
                         _crudName={_crudName}
                         formName={state.modalType}
                         localStore={localStore}
@@ -95,46 +122,7 @@ const ModalIndex = ({_crudName, localStore, onDelete, onGet, onPost, onPostAndGe
 
     return(
         <React.Fragment>
-            <div className="modal-header">
-                <h4>{t(state.modalType) + " " + t(_crudName.single)}</h4>
-                <button
-                    type="button"
-                    onClick={()=>{
-                        setState({modalOpen: false})
-                      }}
-                    className="close"
-                    aria-label="Close"
-                ></button>
-            </div>
-            <div className="modal-body">
-                {modalToShow()}
-            </div>
-            <div className="modal-footer">
-                <button
-                    className='btn btn-secondary'
-                    onClick={()=>{
-                        setState({modalOpen: false})
-                    }}
-                >
-                    {t("Cancel")}
-                </button>
-                <div className="ms-auto">
-                    <button
-                        className={`btn dm-button text-light btn-label`}
-                        disabled={toastWaiting}
-                        form={_crudName.cod + "_" + state.modalType}
-                        hidden={["Events", "Details", "Vehículos del"].includes(state.modalType)}
-                        type="submit"
-                    >
-                        {
-                            toastWaiting ?
-                            <i className="bx bx-loader bx-spin font-size-16 align-middle me-2"></i> :
-                            <i className={`fas fa-${buttonIcon[state.modalType]} label-icon`}></i>
-                        }
-                        {t(buttonText[state.modalType])}
-                    </button>
-                </div>
-            </div>
+            {modalToShow()}
 
             <Modal isOpen={secondModal.open} size="sm">
                         <div className="modal-header">

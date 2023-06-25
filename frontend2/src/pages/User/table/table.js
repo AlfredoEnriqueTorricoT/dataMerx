@@ -35,8 +35,8 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                     <thead>
                         <tr>
                             <th>{showHeader(t("Name"), 1)}</th>
-                            <th>{showHeader(t("Email"), 2)}</th>
-                            <th><b>{t("Actions")}</b></th>
+                            <th>{showHeader("Email", 2)}</th>
+                            <th><b>Editar</b></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,22 +53,8 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                 <td>{mBrand.name}</td>
                                 <td>{mBrand.email}</td>
                                 <td>
-                                  <OptionsButton
-                                    buttonsList={[
-                                      {
-                                        _label: "Editar usuario",
-                                        onClick: ()=>{
-                                          setState({
-                                              modalOpen: true,
-                                              modalType: "Edit",
-                                              elementSelected: mBrand
-                                          })
-                                      }
-                                      }
-                                    ]}
-                                  />
-                                    {/* <button 
-                                        className='btn btn-sm btn-primary'
+                                    <button 
+                                        className='btn btn-sm'
                                         onClick={()=>{
                                             setState({
                                                 modalOpen: true,
@@ -79,7 +65,7 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                         title='Editar usuario'
                                       >
                                         <i className="fas fa-edit"></i>
-                                    </button> */}
+                                    </button>
                                 </td>
                             </tr>
                         ))}

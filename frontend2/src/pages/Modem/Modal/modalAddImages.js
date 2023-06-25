@@ -56,7 +56,7 @@ const ModalAddImages = ({CloseModalButton, CancelModalButton, localStore, onPost
     return(
         <React.Fragment>
         <div className="modal-header">
-          <h4>Añadir evento</h4>
+          <h4>Añadir imágenes</h4>
           <CloseModalButton />
         </div>
 

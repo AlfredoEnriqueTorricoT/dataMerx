@@ -35,7 +35,7 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                         <tr>
                             <th>{showHeader(t("Name"), 1)}</th>
                             <th>{showHeader(t("Detail"), 2)}</th>
-                            <th><b>{t("Actions")}</b></th>
+                            <th><b>{"Editar"}</b></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,33 +52,17 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                 <td>{mBrand.name}</td>
                                 <td>{mBrand.detail || "- - -"}</td>
                                 <td>
-                                  <OptionsButton
-                                    buttonsList={[
-                                      {
-                                        _label: "Editar marca de módem",
-                                        onClick: ()=>{
-                                          setState({
-                                              modalOpen: true,
-                                              modalType: "Edit",
-                                              elementSelected: mBrand
-                                          })
-                                      }
-                                      }
-                                    ]}
-                                  />
-                                    {/* <button 
-                                        className='btn btn-sm btn-primary'
-                                        onClick={()=>{
-                                            setState({
-                                                modalOpen: true,
-                                                modalType: "Edit",
-                                                elementSelected: mBrand
-                                            })
-                                        }}
-                                        title='Editar marca de módem'
-                                        >
-                                        <i className="fas fa-edit"></i>
-                                    </button> */}
+                                  <button
+                                    className="btn btn-sm"
+                                    onClick={()=>setState({
+                                      modalOpen: true,
+                                      modalType: "Edit",
+                                      elementSelected: mBrand
+                                  })}
+                                  title="Editar marca de módem"
+                                  >
+                                    <i className="fas fa-edit"></i>
+                                  </button>
                                 </td>
                             </tr>
                         ))}

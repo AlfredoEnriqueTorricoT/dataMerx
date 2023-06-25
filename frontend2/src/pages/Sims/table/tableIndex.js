@@ -30,7 +30,7 @@ const TableIndex = ({_crudName, onGet, localStore, setState, t}) => {
             else setTableStatus("error")
     }, [localStore.status])
 
-    const keysToSort = ["number", "imei"]
+    const keysToSort = ["number", "imei", "active"]
 
     useEffect(()=>{
 

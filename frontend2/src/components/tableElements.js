@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 
 import {
   UncontrolledDropdown,
@@ -91,29 +91,65 @@ const ErrorTable = props => {
 const OptionsButton = ({buttonsList}) => {
   return(
     <UncontrolledDropdown>
-                        <DropdownToggle
-                          className="card-drop"
-                          tag="i"
-                          style={{ cursor: "pointer" }}
-                        >
-                          <i className="mdi mdi-dots-horizontal font-size-18" />
-                        </DropdownToggle>
-                        <DropdownMenu className="dropdown-menu-end">
-                          {buttonsList.map(({_label, ..._button}, idx) => (
-                            <DropdownItem
-                            key={"dI-" + idx}
-                            {..._button}
-                          >
-                            {_label}
-                          </DropdownItem>
-                          ))}
-                        </DropdownMenu>
-                      </UncontrolledDropdown>
+      <DropdownToggle
+        className="card-drop"
+        tag="i"
+        style={{ cursor: "pointer" }}
+      >
+        <i className="mdi mdi-dots-horizontal font-size-18" />
+      </DropdownToggle>
+      <DropdownMenu className="dropdown-menu-end">
+        {buttonsList.map(({_label, ..._button}, idx) => (
+          <DropdownItem
+          key={"dI-" + idx}
+          {..._button}
+        >
+          {_label}
+        </DropdownItem>
+        ))}
+      </DropdownMenu>
+    </UncontrolledDropdown>
   )
 }
+
+const DropdownButton = ({title, buttons, className}) => {
+  // const [active, setActive] = useState(false)
+  return (
+    <UncontrolledDropdown>
+      <DropdownToggle
+        className={`card-drop ${className}`}
+        tag="i"
+        style={{ cursor: "pointer" }}
+      >
+        {title}
+      </DropdownToggle>
+      <DropdownMenu className="dropdown-menu-end">
+      {buttons.map(({title, ..._button}, idx) => (
+          <DropdownItem
+          key={"dI-" + idx}
+          {..._button}
+        >
+          {title}
+        </DropdownItem>
+        ))}
+      </DropdownMenu>
+    </UncontrolledDropdown>
+  // <div className={`dropdown ${className}`}>
+  //   <button
+  //     className={`${buttonClassName} dropdown-toggle ${active ? "dropdown-show" : ""}`}
+  //     type="button"
+  //     onClick={()=>setActive(!active)}
+  //     >
+  //     {title}
+  //   </button>
+  //   <div className={`dropdown-menu ${active ? "show" : ""}`} aria-labelledby="dropdownMenuButton">
+  //     {children}
+  //   </div>
+  // </div>
+)}
 
 const EmptyData = () => (
   <span className="badge badge-pill badge-soft-secondary font-size-12">--</span>
 )
 
-export {EmptyData, ErrorTable, SearchBar, OptionsButton, MobileDataShow, THeaderSorter}
+export {DropdownButton, EmptyData, ErrorTable, SearchBar, OptionsButton, MobileDataShow, THeaderSorter}

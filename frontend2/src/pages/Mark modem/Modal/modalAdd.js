@@ -1,8 +1,26 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { showToast } from 'components/toast'
 
-const ModalAdd = ({onPostAndGet, t}) => {
+const ModalAdd = ({CancelModalButton, CloseModalButton, localStore, onPostAndGet, setState, t}) => {
+  const [toastW, setToastW] = useState(false)
+
+  useEffect(()=>{
+    if (toastW && localStore.status != "waiting response") {
+      if (localStore.status == 200) {
+          showToast({
+            type: "success", message: "La marca de módem ha sido añadida"
+          })
+          setState({modalOpen: false})
+        }
+      else
+        showToast({
+          type: "warning", title: "Error (" + localStore.status + ")",
+          message: "La marca de módem no pudo ser añadida"
+        })
+    }
+  }, [localStore.status])
   
     const validateFunction = values => {
         let errors = {}
@@ -13,10 +31,21 @@ const ModalAdd = ({onPostAndGet, t}) => {
         return errors
     }
 
+    const submitFunc = values => {
+      setToastW(true)
+      onPostAndGet({saveAs: "modemBrandList", payload: values, url: "modem-mark"})
+    }
+
     return(
         <React.Fragment>
+          <div className="modal-header">
+            <h4>Añadir marca de módem</h4>
+            <CloseModalButton />
+          </div>
+
+          <div className="modal-body">
             <Formik
-                onSubmit={values => onPostAndGet({saveAs: "modemBrandList", payload: values, url: "modem-mark"})}
+                onSubmit={submitFunc}
                 initialValues={{
                     name: "",
                     detail: ""
@@ -69,12 +98,32 @@ const ModalAdd = ({onPostAndGet, t}) => {
                     </Form>
                 )}
             </Formik>
+          </div>
+
+          <div className="modal-footer">
+            <CancelModalButton />
+            <div className="ms-auto">
+              <button
+                className='btn dm-button text-light btn-label'
+                disabled={toastW}
+                form='modemBrand_Add'
+                type='submit'
+              >
+                Añadir
+                <i className='fas fa-plus label-icon'/>
+              </button>
+            </div>
+          </div>
         </React.Fragment>
     )
 }
 
 ModalAdd.propTypes = {
+    CancelModalButton: PropTypes.any,
+    CloseModalButton: PropTypes.any,
+    localStore: PropTypes.any,
     onPostAndGet: PropTypes.func,
+    setState: PropTypes.func,
     t: PropTypes.func,
 }
 

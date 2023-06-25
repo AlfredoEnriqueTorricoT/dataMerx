@@ -10,7 +10,6 @@ const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, localStore, o
 
         if (!values.number) errors.number = "Enter the sim number"
         if (values.number.toString().length != 8) errors.number = "El número de teléfono debe ser de 8 dígitos"
-        if (!values.code) errors.code = "Enter the sim code"
         if (!values.imei) errors.imei = "Enter the sim imei"
         if (!simImages) errors.images = "Seleccione una o varias imagenes"
 
@@ -25,7 +24,6 @@ const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, localStore, o
       }
 
       fData.append("number", values.number);
-      fData.append("code", values.code);
       fData.append("imei", values.imei);
 
       onPost({
@@ -49,34 +47,12 @@ const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, localStore, o
                   } }
                 initialValues={{
                     number: "",
-                    code: "",
                     imei: ""
                 }}
                 validate={validateFunction}
             >
                 {({errors})=>(
                     <Form id={_crudName.cod + "_Add"}>
-                        <div className="row mb-1">
-                          <label
-                            htmlFor="sim_Add_code"
-                            className="col-3 col-form-label"
-                            >
-                            {t("Code")}
-                            <p className="text-danger d-inline-block">(*)</p>
-                          </label>
-                          <div className="col-9">
-                            <Field
-                              className="form-control"
-                              id="sim_Add_code"
-                              name="code"
-                              type="number"
-                            />
-                            <ErrorMessage name="code">
-                              {msg => <h6 className="text-danger">{t(msg)}</h6>}
-                            </ErrorMessage>
-                          </div>
-                        </div>
-
                         <div className="row mb-1">
                           <label
                             htmlFor="sim_Add_number"

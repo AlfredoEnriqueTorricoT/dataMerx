@@ -14,7 +14,7 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                       headerNames={[
                         {name: "Nombre", arrow: true},
                         {name: "C. I:", arrow: true},
-                        {name: t("Actions"), arrow: false}
+                        {name: "Ver vehículos", arrow: false}
                       ]}
                      />
                     <tbody>
@@ -31,24 +31,23 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                 <td>{listItem.fullName}</td>
                                 <td>{listItem.ci}</td>
                                 <td>
-                                    <OptionsButton
-                                        buttonsList={[
-                                            {
-                                                _label: "Ver vehículos",
-                                                onClick: ()=>{
-                                                    setState({
-                                                        elementSelected: {
-                                                            id: listItem.id,
-                                                            cars: listItem.cars
-                                                        },
-                                                        modalOpen: true,
-                                                        modalType: "Vehículos del",
-                                                        modalSize: "xl"
-                                                    })
-                                                }
-                                            }
-                                        ]}
-                                    />
+                                    <button
+                                        className="btn btm-sm"
+                                        onClick={()=>{
+                                            setState({
+                                                elementSelected: {
+                                                    id: listItem.id,
+                                                    cars: listItem.cars
+                                                },
+                                                modalOpen: true,
+                                                modalType: "Vehículos del",
+                                                modalSize: "xl"
+                                            })
+                                        }}
+                                        title="Ver vehículos del cliente"
+                                        >
+                                        <i className="fas fa-car"></i>
+                                    </button>
                                 </td>
                             </tr>
                         ))}

@@ -1,9 +1,37 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { OptionsButton } from 'components/tableElements';
+import { DropdownButton, OptionsButton } from 'components/tableElements';
 
 const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) => {
+
+  const detailsButton = (data) => {
+    onGet({saveAs: "simDetails", url: "sim/details/" + data.id})
+    setState({
+        modalOpen: true,
+        modalType: "Details"
+    })
+  }
+
+  const eventsButton = (data) => {
+    onGet({saveAs: "eventList", url: "event/sim/" + data.id})
+    setState({
+      modalOpen: true,
+      modalType: "Events",
+      modalSize: "lg",
+      elementSelected: data
+    })
+  }
+
+  const showStatus = (status) => (
+    <span
+      className={`badge font-size-11 rounded-pill badge-soft-${
+        status ? "success" : "dark"
+      } text-uppercase`}
+    >
+      {status ? "ACTIVO" : "INACTIVO"}
+    </span>
+  )
 
     const showHeader = (name, id) => {
           return (
@@ -36,6 +64,7 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                         <tr>
                             <th>{showHeader(t("Number"), 1)}</th>
                             <th>{showHeader(t("Imei"), 2)}</th>
+                            <th>{showHeader("Estado", 3)}</th>
                             <th><b>{t("Actions")}</b></th>
                         </tr>
                     </thead>
@@ -52,56 +81,51 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                             <tr key={"mBrandItem-" + idx}>
                                 <td>{mBrand.number}</td>
                                 <td>{mBrand.imei}</td>
+                                <td>{showStatus(mBrand.active)}</td>
                                 <td>
-                                  <OptionsButton
-                                    buttonsList={[
-                                      {_label: "Ver detalles",
-                                      onClick: ()=>{
-                                        onGet({saveAs: "simDetails", url: "sim/details/" + mBrand.id})
-                                        setState({
-                                            modalOpen: true,
-                                            modalType: "Details"
-                                        })
-                                      }},
-                                      {_label: "Editar sim",
-                                      onClick: ()=>{
-                                        setState({
-                                            modalOpen: true,
-                                            modalType: "Edit",
-                                            modalSize: "md",
-                                            elementSelected: mBrand
-                                        })
-                                      }},
-                                      {_label: "Añadir evento",
-                                      onClick: ()=>{
-                                        setState({
+                                  <div className="btn-group">
+                                    <button
+                                      className="btn button-sm py-0"
+                                      title='Ver detalles'
+                                      onClick={()=>detailsButton(mBrand)}  
+                                    >
+                                      <i className="fas fa-eye"></i>
+                                    </button>
+                                    <button
+                                      className="btn button-sm mx-2 py-0"
+                                      title="Ver eventos"
+                                      onClick={()=>eventsButton(mBrand)}
+                                      >
+                                      <i className="fas fa-tasks"></i>
+                                    </button>
+                                    <DropdownButton
+                                      className="btn button-sm py-0"
+                                      title={<i className="mdi mdi-dots-horizontal font-size-18" />}
+                                      buttons={[
+                                        {title: "Editar sim",
+                                        onClick: ()=>setState({
+                                          modalOpen: true,
+                                          modalType: "Edit",
+                                          modalSize: "md",
+                                          elementSelected: mBrand
+                                        })},
+                                        {title: "Añadir evento",
+                                        onClick: ()=>setState({
                                           modalOpen: true,
                                           modalSize: "md",
                                           modalType: "Add event to",
                                           elementSelected: mBrand
-                                        })
-                                      }},
-                                      {_label: "Añadir imágenes",
-                                      onClick: ()=>{
-                                        setState({
+                                        })},
+                                        {title: "Añadir imágenes",
+                                        onClick: ()=>setState({
                                           modalOpen: true,
                                           modalSize: "md",
                                           modalType: "Add images",
                                           elementSelected: mBrand
-                                        })
-                                      }},
-                                      {_label: "Ver eventos",
-                                      onClick: ()=>{
-                                        onGet({saveAs: "eventList", url: "event/sim/" + mBrand.id})
-                                        setState({
-                                          modalOpen: true,
-                                          modalType: "Events",
-                                          modalSize: "lg",
-                                          elementSelected: mBrand
-                                        })
-                                      }}
-                                    ]}
-                                  />
+                                        })},
+                                      ]}
+                                    />
+                                  </div>
                                 </td>
                             </tr>
                         ))}

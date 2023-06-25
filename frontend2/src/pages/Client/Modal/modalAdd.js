@@ -1,12 +1,29 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 
 import {FormikInput} from "components/formElements"
+import { showToast } from 'components/toast'
 
 
-const ModalAdd = ({_crudName, formName, localStore, onPost, setToastW, t}) => {
-    // const [clientImages, setClientImages] = useState({})
+const ModalAdd = ({_crudName, CancelModalButton, CloseModalButton, formName, localStore, onPost}) => {
+    const [toastW, setToastW] = useState(false)
+
+    useEffect(()=>{
+      if (toastW && localStore.status != "waiting response") {
+        if (localStore.status == 200)
+          showToast({
+            type: "success", message: "El usuario ha sido añadido"
+          })
+        else
+          showToast({
+            type: "warning", title: "Error (" + localStore.status + ")",
+            message: "El usuario no pudo ser añadido"
+          })
+
+        setToastW(false)
+      }
+    }, [localStore.status])
   
     const genericId = _crudName.cod + "_" + formName + "_"
 
@@ -21,17 +38,6 @@ const ModalAdd = ({_crudName, formName, localStore, onPost, setToastW, t}) => {
 
     const submitFunction = values => {
         setToastW(true)
-        // let fData = new FormData()
-  
-        // for (let x = 0; x < clientImages.length; x++) {
-        //   fData.append("images[]", clientImages[x]);
-        // }
-  
-        // fData.append("ci", values.name);
-        // fData.append("name", values.name);
-        // fData.append("last_name", values.name);
-        // fData.append("last_mother_name", values.name);
-  
         onPost({
           saveAs: "UNUSED_DATA",
           payload: values,
@@ -41,6 +47,12 @@ const ModalAdd = ({_crudName, formName, localStore, onPost, setToastW, t}) => {
 
     return(
         <React.Fragment>
+          <div className="modal-header">
+            <h4>Añadir cliente</h4>
+            <CloseModalButton />
+          </div>
+
+          <div className="modal-body">
             <Formik
                 onSubmit={submitFunction}
                 initialValues={{
@@ -79,44 +91,35 @@ const ModalAdd = ({_crudName, formName, localStore, onPost, setToastW, t}) => {
                           type="text"
                           groupId ={genericId}
                         />
-                        {/* <div className="row mb-1">
-                          <label
-                            htmlFor="client_Add_images"
-                            className="col-3 col-form-label"
-                            >
-                            Añadir imagenes
-                            <p className="text-danger d-inline-block">(*)</p>
-                          </label>
-                          <div className="col-9">
-                            <Field
-                              className="form-control"
-                              id="client_Add_images"
-                              multiple
-                              name="images"
-                              onChange={i => {
-                                setClientImages(i.target.files);
-                              }}
-                              type="file"
-                            />
-                            <ErrorMessage name="images">
-                              {msg => <h6 className="text-danger">{t(msg)}</h6>}
-                            </ErrorMessage>
-                          </div>
-                        </div> */}
                     </Form>
                 )}
             </Formik>
+          </div>
+
+          <div className="modal-footer">
+            <CancelModalButton />
+            <div className="ms-auto">
+              <button
+                className='btn dm-button text-light btn-label'
+                form={_crudName.cod + "_" + formName}
+                type='submit'
+                >
+                Añadir
+                <i className='fas fa-plus label-icon'/>
+              </button>
+            </div>
+          </div>
         </React.Fragment>
     )
 }
 
 ModalAdd.propTypes = {
     _crudName: PropTypes.object,
+    CancelModalButton: PropTypes.any,
+    CloseModalButton: PropTypes.any,
     formName: PropTypes.string,
     localStore: PropTypes.object,
     onPost: PropTypes.func,
-    setToastW: PropTypes.func,
-    t: PropTypes.func,
 }
 
 export default ModalAdd

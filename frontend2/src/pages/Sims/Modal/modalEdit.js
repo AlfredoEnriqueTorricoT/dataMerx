@@ -9,7 +9,6 @@ const ModalEdit = ({_crudName, CloseModalButton, CancelModalButton, onPutAndGet,
 
         if (!values.number) errors.number = "Enter the sim number"
         if (values.number.toString().length != 8) errors.number = "El número de teléfono debe ser de 8 dígitos"
-        if (!values.code) errors.code = "Enter the sim code"
         if (!values.imei) errors.imei = "Enter the sim imei"
 
         return errors
@@ -31,34 +30,12 @@ const ModalEdit = ({_crudName, CloseModalButton, CancelModalButton, onPutAndGet,
                   url: "sim"})}
                 initialValues={{
                     number: state.elementSelected.number,
-                    code: state.elementSelected.code,
                     imei: state.elementSelected.imei
                 }}
                 validate={validateFunction}
             >
                 {({errors})=>(
                     <Form id={_crudName.cod + "_Edit"}>
-                        <div className="row mb-1">
-                          <label
-                            htmlFor="sim_Add_code"
-                            className="col-3 col-form-label"
-                            >
-                            {t("Code")}
-                            <p className="text-danger d-inline-block">(*)</p>
-                          </label>
-                          <div className="col-9">
-                            <Field
-                              className="form-control"
-                              id="sim_Add_code"
-                              name="code"
-                              type="number"
-                            />
-                            <ErrorMessage name="code">
-                              {msg => <h6 className="text-danger">{t(msg)}</h6>}
-                            </ErrorMessage>
-                          </div>
-                        </div>
-
                         <div className="row mb-1">
                           <label
                             htmlFor="sim_Add_number"
