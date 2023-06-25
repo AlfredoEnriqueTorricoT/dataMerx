@@ -75,7 +75,7 @@ const DisplayEventList = ({
                       >
                         <img
                             className="d-block w-100 imgCover"
-                            src={"http://app-backend.merx.bo/storage/" + image.url}
+                            src={URL_IMAGE + image.url}
                             alt="Second slide"
                         />
                       </div>

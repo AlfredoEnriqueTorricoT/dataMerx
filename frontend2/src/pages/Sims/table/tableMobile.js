@@ -15,10 +15,6 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                       desc={listItem.number}
                     />
                     <MobileDataShow
-                      title={t("Code")}
-                      desc={listItem.code}
-                    />
-                    <MobileDataShow
                       title={"Imei"}
                       desc={listItem.imei}
                     />

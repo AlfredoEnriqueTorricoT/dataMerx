@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import { getThisDate, SpinnerL } from 'components/components'
 import { ErrorTable } from 'components/tableElements'
 
+import { URL_IMAGE } from 'store/api/AxiosServices'
+
 const DisplayEventList = ({
     activeTab,
     setActiveTab,
@@ -29,7 +31,7 @@ const DisplayEventList = ({
                         <div className="row mb-1" key={"image-"+idx}>
                             <img
                                 className="d-block w-100 imgCover"
-                                src={"http://app-backend.merx.bo/storage/" + image.url}
+                                src={URL_IMAGE + image.url}
                                 alt="Second slide"
                             />
                         </div>
@@ -74,7 +76,7 @@ const DisplayEventList = ({
                       >
                         <img
                             className="d-block w-100 imgCover"
-                            src={"http://app-backend.merx.bo/storage/" + image.url}
+                            src={URL_IMAGE + image.url}
                             alt="Second slide"
                         />
                       </div>
