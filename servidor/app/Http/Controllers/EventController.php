@@ -40,7 +40,7 @@ class EventController extends Controller
     public function car($id)
     {
         try {
-            $list = Event::where("car_id", $id)->get();
+            $list = Event::where("car_id", $id)->orderBy("id","desc")->orderBy("id","desc")->get();
 
             foreach($list as $event){
                 $event["platform"] = $event->platform;
@@ -62,7 +62,7 @@ class EventController extends Controller
     public function modem($id)
     {
         try {
-            $list = Event::where("modem_id", $id)->get();
+            $list = Event::where("modem_id", $id)->orderBy("id","desc")->get();
 
             foreach($list as $event){
                 $event["platform"] = $event->platform;
@@ -84,7 +84,7 @@ class EventController extends Controller
     public function sim($id)
     {
         try {
-            $list = Event::where("sim_id", $id)->get();
+            $list = Event::where("sim_id", $id)->orderBy("id","desc")->get();
 
             foreach($list as $event){
                 $event["platform"] = $event->platform;
@@ -124,9 +124,9 @@ class EventController extends Controller
         try {
 
             $obj = Event::create([
-                "title" => $request->all()["title"],
-                "detail" => $request->all()["detail"],
-                "type_id" => $request->all()["type_id"],
+                "title" => $request["title"],
+                "detail" => $request["detail"],
+                "type_id" => $request["type_id"],
                 "car_id" => $objId["car_id"],
                 "modem_id" => $objId["modem_id"],
                 "sim_id" => $objId["sim_id"]

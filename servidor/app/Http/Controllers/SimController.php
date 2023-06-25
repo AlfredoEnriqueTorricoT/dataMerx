@@ -9,6 +9,8 @@ use App\Models\Modem;
 use App\Models\Sim;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Log\Logger;
+use Illuminate\Support\Facades\Log;
 
 class SimController extends Controller
 {
@@ -193,15 +195,44 @@ class SimController extends Controller
         }
     }
 
-    public function disable_enabled($id)
+    public function enabled_disable(Request $request)
     {
         try {
-            $obj = Sim::find($id);
+            $obj = Sim::find($request->id);
+            if(is_null($obj)){
+                return Res::responseErrorNoData();
+            }
 
-            $obj->active = $obj->active ? 0 : 1;
+            $event_title = "";
+            $event_type = null;
+            if ($obj->active) {
+                $obj->active = 0;
+                $event_title = "Sim dado de baja";
+                $event_type = 3;
+            } else {
+                $obj->active = 1;
+                $event_title = "Sim reactivado";
+                $event_type = 2;
+            }
+
+            $event = [
+                "title" => $event_title,
+                "detail" => $request->description,
+                "type_id" => $event_type,
+                "car_id" => null,
+                "modem_id" => null,
+                "sim_id" => $request->id,
+                "platform_id" => null,
+                "user_id" => auth()->user()->id
+            ];
+            EventController::_store($event);
+
+
             $obj->save();
             return Res::responseSuccess($obj);
         } catch (Exception $ex) {
+            
+            Log::error("Error: " . $ex->getMessage() . " ". $ex->getLine());
             return Res::responseError($ex);
         }
     }
@@ -211,7 +242,8 @@ class SimController extends Controller
     {
         $modem_id = null;
         $car_id = null;
-        $sim_id =  $request->all()["id"];
+        
+        $sim_id =  $request->id;
 
         $modem = Modem::where("sim_id", $sim_id)->first();
         $car = null;

@@ -47,6 +47,7 @@ Route::put('modem', [ModemController::class,'update'])->middleware("auth:sanctum
 Route::put('modem/update-sim', [ModemController::class,'update_sim'])->middleware("auth:sanctum");
 Route::post('modem-upload', [ModemController::class,'storeUpload'])->middleware("auth:sanctum");
 Route::post('modem-upload-add', [ModemController::class,'updloadImage'])->middleware("auth:sanctum");
+Route::post('modem-enabled-disabled', [ModemController::class,'enabled_disable'])->middleware("auth:sanctum");
 
 Route::get('modem-mark', [ModemsMarkController::class,'index']);
 Route::post('modem-mark', [ModemsMarkController::class,'store']);
@@ -64,6 +65,7 @@ Route::post('sim/event', [SimController::class,'event']);
 Route::put('sim', [SimController::class,'update'])->middleware("auth:sanctum");;
 Route::post('sim-upload', [SimController::class,'storeUpload'])->middleware("auth:sanctum");
 Route::post('sim-upload-add', [SimController::class,'updloadImage'])->middleware("auth:sanctum");
+Route::post('sim-enabled-disabled', [SimController::class,'enabled_disable'])->middleware("auth:sanctum");
 
 Route::get('car', [CarController::class,'index']);
 Route::get('car/for-assign/{placa}/{client_id}', [CarController::class,'indexSearchPlacaForAssign']);
