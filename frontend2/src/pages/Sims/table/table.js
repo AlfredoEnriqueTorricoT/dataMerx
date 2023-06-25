@@ -35,8 +35,7 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                     <thead>
                         <tr>
                             <th>{showHeader(t("Number"), 1)}</th>
-                            <th>{showHeader(t("Code"), 2)}</th>
-                            <th>{showHeader(t("Imei"), 3)}</th>
+                            <th>{showHeader(t("Imei"), 2)}</th>
                             <th><b>{t("Actions")}</b></th>
                         </tr>
                     </thead>
@@ -52,7 +51,6 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                         listToShow.map((mBrand, idx)=>(
                             <tr key={"mBrandItem-" + idx}>
                                 <td>{mBrand.number}</td>
-                                <td>{mBrand.code}</td>
                                 <td>{mBrand.imei}</td>
                                 <td>
                                   <OptionsButton

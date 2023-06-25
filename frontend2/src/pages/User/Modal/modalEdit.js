@@ -6,6 +6,8 @@ import { showToast } from 'components/toast'
 
 const ModalEdit = ({ModalCancelButton, ModalCloseButton, setState, localStore, onPutAndGet, state, t}) => {
   const [toastWaiting, setToastW] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showRepeatP, setShowRepeatP] = useState(false)
 
   useEffect(()=>{
     if (toastWaiting && localStore.status != "waiting response") {
@@ -31,7 +33,7 @@ const ModalEdit = ({ModalCancelButton, ModalCloseButton, setState, localStore, o
 
         if (!values.name) errors.name = "Enter the user name"
         if (!values.email) errors.email = "Enter the user email"
-        if (values.password != values.repeat_password) errors.repeat_password = "La contraseña no coincide"
+        if (values.password != values.repeat_password) errors.repeat_password = "Las contraseñas no coinciden"
 
         return errors
     }
@@ -119,12 +121,25 @@ const ModalEdit = ({ModalCancelButton, ModalCloseButton, setState, localStore, o
                             Nueva contraseña
                           </label>
                           <div className="col-9">
+                            <div className="input-group">
                               <Field
                                 className="form-control"
                                 id="user_edit_password"
                                 name="password"
-                                type="text"
+                                type={showPassword ? "text" : "password"}
                               />
+                              <div className="input-group-append">
+                                <button
+                                  className="btn dm-button"
+                                  onClick={()=>setShowPassword(!showPassword)}
+                                  type="button"
+                                >
+                                  <i className={`fas fa-eye${showPassword ? "" : "-slash"} text-light`}>
+
+                                  </i>
+                                </button>
+                              </div>
+                            </div>
                             <ErrorMessage name="password">
                               {msg => <h6 className="text-danger">{t(msg)}</h6>}
                             </ErrorMessage>
@@ -139,12 +154,23 @@ const ModalEdit = ({ModalCancelButton, ModalCloseButton, setState, localStore, o
                             Repetir contraseña
                           </label>
                           <div className="col-9">
+                            <div className="input-group">
                               <Field
                                 className="form-control"
                                 id="user_edit_repeat_password"
                                 name="repeat_password"
-                                type="text"
+                                type={showRepeatP ? "text" : "password"}
                               />
+                              <div className="input-group-append">
+                                <button
+                                  className="btn dm-button"
+                                  onClick={()=>setShowRepeatP(!showRepeatP)}
+                                  type='button'
+                                  >
+                                <i className={`fas fa-eye${showRepeatP ? "" : "-slash"} text-light`}></i>
+                                </button>
+                              </div>
+                            </div>
                             <ErrorMessage name="repeat_password">
                               {msg => <h6 className="text-danger">{t(msg)}</h6>}
                             </ErrorMessage>

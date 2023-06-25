@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import { SpinnerL } from 'components/components'
 
+import { URL_IMAGE } from 'store/api/AxiosServices'
+
 const ModalDetails = ({CloseModalButton, CancelModalButton, localStore}) => {
     const [modalMode, setModalMode] = useState(0) // 0 loading, 1 success, 2 error
     const [activeTab, setActiveTab] = useState(0) // car, modem, sim
@@ -76,7 +78,7 @@ const ModalDetails = ({CloseModalButton, CancelModalButton, localStore}) => {
                       >
                         <img
                             className="d-block w-100 imgCover"
-                            src={"http://app-backend.merx.bo/storage/" + image.url}
+                            src={URL_IMAGE + image.url}
                             alt="Second slide"
                         />
                       </div>

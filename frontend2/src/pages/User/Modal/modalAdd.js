@@ -6,6 +6,8 @@ import { showToast } from 'components/toast'
 
 const ModalAdd = ({ModalCancelButton, ModalCloseButton, localStore, setState, onPostAndGet, t}) => {
   const [toastWaiting, setToastW] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showRepeatP, setShowRepeatP] = useState(false)
 
   useEffect(()=>{
     if (toastWaiting && localStore.status != "waiting response") {
@@ -115,12 +117,25 @@ const ModalAdd = ({ModalCancelButton, ModalCloseButton, localStore, setState, on
                             <p className="text-danger d-inline-block">(*)</p>
                           </label>
                           <div className="col-9">
+                            <div className="input-group">
                               <Field
                                 className="form-control"
                                 id="user_add_password"
                                 name="password"
-                                type="text"
+                                type={showPassword ? "text" : "password"}
                               />
+                              <div className="input-group-append">
+                                <button
+                                  className="btn dm-button"
+                                  onClick={()=>setShowPassword(!showPassword)}
+                                  type="button"
+                                >
+                                  <i className={`fas fa-eye${showPassword ? "" : "-slash"} text-light`}>
+
+                                  </i>
+                                </button>
+                              </div>
+                            </div>
                             <ErrorMessage name="password">
                               {msg => <h6 className="text-danger">{t(msg)}</h6>}
                             </ErrorMessage>
@@ -136,12 +151,23 @@ const ModalAdd = ({ModalCancelButton, ModalCloseButton, localStore, setState, on
                             <p className="text-danger d-inline-block">(*)</p>
                           </label>
                           <div className="col-9">
+                            <div className="input-group">
                               <Field
                                 className="form-control"
                                 id="user_add_repeat_password"
                                 name="repeat_password"
-                                type="text"
+                                type={showRepeatP ? "text" : "password"}
                               />
+                              <div className="input-group-append">
+                                <button
+                                  className="btn dm-button"
+                                  onClick={()=>setShowRepeatP(!showRepeatP)}
+                                  type='button'
+                                  >
+                                <i className={`fas fa-eye${showRepeatP ? "" : "-slash"} text-light`}></i>
+                                </button>
+                              </div>
+                            </div>
                             <ErrorMessage name="repeat_password">
                               {msg => <h6 className="text-danger">{t(msg)}</h6>}
                             </ErrorMessage>
