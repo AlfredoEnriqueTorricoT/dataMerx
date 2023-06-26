@@ -7,6 +7,7 @@ import ModalAddEvent from './modalAddEvent';
 import ModalDetails from './modalDetails';
 import ModalEvent from './Modal events/modalEvents';
 import ModalAddImages from './modalAddImages';
+import ModalChangeStatus from './modalChangeStatus';
 
 const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAndGet, setState, state, t}) => {
     const [toastWaiting, setToastW] = useState(false)
@@ -119,6 +120,19 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAn
                         CloseModalButton={CloseModalButton}
                         CancelModalButton={CancelModalButton}
                         localStore={localStore}
+                    />
+                )
+            case "ChangeStatus" :
+                return(
+                    <ModalChangeStatus
+                        CloseModalButton={CloseModalButton}
+                        CancelModalButton={CancelModalButton}
+                        localStore={localStore}
+                        onGet={onGet}
+                        onPost={onPost}
+                        setState={setState}
+                        state={state}
+                        t={t}
                     />
                 )
             case "Add images":

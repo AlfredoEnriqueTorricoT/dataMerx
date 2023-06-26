@@ -37,6 +37,7 @@ const ModemPage = ({
 }) => {
     const [state, _zetState] = useState({
             eventTableStatus: "loading",
+            imeiToSearch: "",
             tableMode: "modems",
             modalOpen: false,
             modalSize: "md",

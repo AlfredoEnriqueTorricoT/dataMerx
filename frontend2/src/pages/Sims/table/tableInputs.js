@@ -6,6 +6,7 @@ const TableInputs = ({onGet, setState, setTableStatus, status, t}) => {
 
   const searchFunction = () => {
     onGet({saveAs: "simList", url: "sim/"+imei})
+    setState({numberToSearch: imei})
     setTableStatus("loading")
   }
 

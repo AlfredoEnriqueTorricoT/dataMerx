@@ -6,6 +6,7 @@ const TableInputs = ({onGet, setState, setTableStatus, status, t}) => {
 
   const searchFunction = () => {
     setTableStatus(1)
+    setState({imeiToSearch: imei})
     onGet({
       saveAs: "modemList",
       url: "modem/" + imei
