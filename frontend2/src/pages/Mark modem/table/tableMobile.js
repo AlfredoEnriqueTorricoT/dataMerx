@@ -21,35 +21,17 @@ const TableMobile = ({_crudName, listToShow, setState, t}) => {
                     </div>
                   </div>
                   <div className="col-2">
-                    <OptionsButton
-                        buttonsList={[
-                          {
-                            _label: "Editar",
-                            onClick: ()=>{
-                              setState({
-                                  modalOpen: true,
-                                  modalType: "Edit",
-                                  elementSelected: listItem
-                              })
-                          }
-                          }
-                        ]}
-                      />
-                    {/* <center>
                     <button
-                        className='btn btn-sm btn-primary mb-1'
-                        onClick={()=>{
-                            setState({
-                                modalOpen: true,
-                                modalType: "Edit",
-                                elementSelected: listItem
-                            })
-                        }}
-                        title='Editar marca de módem'
+                          className="btn btn-sm"
+                          onClick={()=>setState({
+                            modalOpen: true,
+                            modalType: "Edit",
+                            elementSelected: listItem
+                        })}
+                        title="Editar marca de módem"
                         >
-                        <i className="fas fa-edit"></i>
-                    </button>
-                    </center> */}
+                          <i className="fas fa-edit"></i>
+                      </button>
                   </div>
                   {
                     listToShow.length -1 > idx ?

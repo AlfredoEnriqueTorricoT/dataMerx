@@ -1,14 +1,42 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { EmptyData, OptionsButton, MobileDataShow } from 'components/tableElements'
+import { DropdownButton, EmptyData } from 'components/tableElements'
 
 const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
+
+  const MobileDataShow = ({title, desc}) => {
+    return(
+      <div className="row mb-1">
+        <div className="col-5"><b>{title}</b></div>
+        <div className="col-7">{desc}</div>
+      </div>
+    )
+  }
+
+  const detailsButton = data => {
+    onGet({saveAs: "modemDetails", url: "modem/details/" + data.id})
+    setState({
+        modalOpen: true,
+        modalType: "Details"
+    })
+}
+
+const eventsButton = data => {
+    onGet({saveAs: "eventList", url: "event/modem/" + data.id})
+    setState({
+        modalOpen: true,
+        modalType: "Events",
+        modalSize: "lg",
+        elementSelected: data
+    })
+}
+
     return(
       <React.Fragment>
         {listToShow.length ?
         listToShow.map((listItem, idx)=>(
                 <div className="row" key={_crudName.cod + "Item-" + idx}>
-                  <div className="col-10">
+                  <div className="col-8">
                     <div className="row">
                       <MobileDataShow
                         title="Código"
@@ -40,73 +68,86 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                       />
                     </div>
                   </div>
-                  <div className="col-2">
-                  <OptionsButton
-                                        buttonsList={[
-                                            {
-                                                _label: "Ver detalles",
-                                                onClick: ()=>{
-                                                    onGet({saveAs: "modemDetails", url: "modem/details/" + listItem.id})
-                                                    setState({
-                                                        modalOpen: true,
-                                                        modalType: "Details"
-                                                    })
-                                                }
-                                            },
-                                            {
-                                                _label: "Editar módem",
-                                                onClick: ()=>{
-                                                    setState({
-                                                        modalOpen: true,
-                                                        modalType: "Edit",
-                                                        elementSelected: listItem
-                                                    })
-                                                }
-                                            },
-                                            {
-                                                _label: "Tarjeta sim",
-                                                onClick: ()=>{
-                                                    setState({
-                                                        modalOpen: true,
-                                                        modalType: "Sim",
-                                                        elementSelected: listItem
-                                                    })
-                                                }
-                                            },
-                                            {
-                                                _label: "Añadir evento",
-                                                onClick: ()=>{
-                                                    setState({
-                                                        modalOpen: true,
-                                                        modalType: "Add event to",
-                                                        elementSelected: listItem
-                                                    })
-                                                }
-                                            },
-                                            {
-                                              _label: "Añadir imágenes",
-                                              onClick: ()=>{
-                                                  setState({
-                                                      modalOpen: true,
-                                                      modalType: "Add images",
-                                                      elementSelected: listItem
-                                                  })
-                                              }
-                                            },
-                                            {
-                                              _label: "Ver eventos",
-                                              onClick: ()=>{
-                                                  onGet({saveAs: "eventList", url: "event/modem/" + listItem.id})
-                                                  setState({
-                                                      modalOpen: true,
-                                                      modalType: "Events",
-                                                      modalSize: "lg",
-                                                      elementSelected: listItem
-                                                  })
-                                              }
-                                          }
-                                        ]}
+                  <div className="col-4">
+                  <div className="btn-group">
+                                    <button
+                                      className="btn button-sm py-0"
+                                      title='Ver detalles'
+                                      onClick={()=>detailsButton(listItem)}  
+                                    >
+                                      <i className="fas fa-eye"></i>
+                                    </button>
+                                    <button
+                                      className="btn button-sm mx-1 py-0"
+                                      title="Ver eventos"
+                                      onClick={()=>eventsButton(listItem)}
+                                      >
+                                      <i className="fas fa-tasks"></i>
+                                    </button>
+                                    <DropdownButton
+                                      className="btn button-sm py-0"
+                                      title={<i className="mdi mdi-dots-horizontal font-size-18" />}
+                                      buttons={[
+                                        {
+                                            title: "Editar módem",
+                                            onClick: ()=>{
+                                                setState({
+                                                    modalOpen: true,
+                                                    modalType: "Edit",
+                                                    modalSize: "md",
+                                                    elementSelected: listItem
+                                                })
+                                            }
+                                        },
+                                        {
+                                            title: "Tarjeta sim",
+                                            onClick: ()=>{
+                                                onGet({saveAs: "modemDetails", url: "modem/details/" + listItem.id})
+                                                setState({
+                                                    modalOpen: true,
+                                                    modalType: "Sim",
+                                                    modalSize: "md",
+                                                    elementSelected: listItem
+                                                })
+                                            }
+                                        },
+                                        {
+                                            title: (listItem.active == "activo" ? "Desactivar" : "Activar") + " módem",
+                                            onClick: ()=>{
+                                                onGet({saveAs: "modemDetails", url: "modem/details/" + listItem.id})
+                                                setState({
+                                                    modalOpen: true,
+                                                    modalType: "ChangeStatus",
+                                                    modalSize: "md",
+                                                    elementSelected: listItem
+                                                })
+                                            }
+                                        },
+                                        {
+                                            title: "Añadir evento",
+                                            onClick: ()=>{
+                                                setState({
+                                                    modalOpen: true,
+                                                    modalType: "Add event to",
+                                                    modalSize: "md",
+                                                    elementSelected: listItem
+                                                })
+                                            }
+                                        },
+                                        {
+                                            title: "Añadir imágenes",
+                                            onClick: ()=>{
+                                                setState({
+                                                    modalOpen: true,
+                                                    modalType: "Add images",
+                                                    modalSize: "md",
+                                                    elementSelected: listItem
+                                                })
+                                            }
+                                        }
+                                      ]}
                                     />
+                                    </div>
                   </div>
                   {
                     listToShow.length -1 > idx ?
