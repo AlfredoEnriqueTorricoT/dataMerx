@@ -1,15 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { OptionsButton, MobileDataShow } from 'components/tableElements'
+import { DropdownButton, MobileDataShow } from 'components/tableElements'
 
 const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
+
+  const detailsButton = (data) => {
+    onGet({saveAs: "simDetails", url: "sim/details/" + data.id})
+    setState({
+        modalOpen: true,
+        modalType: "Details"
+    })
+  }
+
+  const eventsButton = (data) => {
+    onGet({saveAs: "eventList", url: "event/sim/" + data.id})
+    setState({
+      modalOpen: true,
+      modalType: "Events",
+      modalSize: "lg",
+      elementSelected: data
+    })
+  }
 
     return(
       <React.Fragment>
         {listToShow.length ?
         listToShow.map((listItem, idx)=>(
                 <div className="row" key={_crudName.cod + "Item-" + idx}>
-                  <div className="col-10">
+                  <div className="col-8">
                     <MobileDataShow
                       title={t("Number")}
                       desc={listItem.number}
@@ -19,56 +37,57 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                       desc={listItem.imei}
                     />
                   </div>
-                  <div className="col-2 mt-3">
-                  <OptionsButton
-                                    buttonsList={[
-                                      {_label: "Ver detalles",
-                                      onClick: ()=>{
-                                        onGet({saveAs: "simDetails", url: "sim/details/" + listItem.id})
-                                        setState({
-                                            modalOpen: true,
-                                            modalType: "Details"
-                                        })
-                                      }},
-                                      {_label: "Editar sim",
-                                      onClick: ()=>{
-                                        setState({
-                                            modalOpen: true,
-                                            modalType: "Edit",
-                                            modalSize: "md",
-                                            elementSelected: listItem
-                                        })
-                                      }},
-                                      {_label: "Añadir evento",
-                                      onClick: ()=>{
-                                        setState({
+                  <div className="col-4 mt-3">
+                  <div className="btn-group">
+                                    <button
+                                      className="btn button-sm py-0"
+                                      title='Ver detalles'
+                                      onClick={()=>detailsButton(listItem)}  
+                                    >
+                                      <i className="fas fa-eye"></i>
+                                    </button>
+                                    <button
+                                      className="btn button-sm mx-1 py-0"
+                                      title="Ver eventos"
+                                      onClick={()=>eventsButton(listItem)}
+                                      >
+                                      <i className="fas fa-tasks"></i>
+                                    </button>
+                                    <DropdownButton
+                                      className="btn button-sm py-0"
+                                      title={<i className="mdi mdi-dots-horizontal font-size-18" />}
+                                      buttons={[
+                                        {title: "Editar sim",
+                                        onClick: ()=>setState({
+                                          modalOpen: true,
+                                          modalType: "Edit",
+                                          modalSize: "md",
+                                          elementSelected: listItem
+                                        })},
+                                        {title: (listItem.active ? "Desactivar" : "Activar") + " sim",
+                                        onClick: ()=>setState({
+                                          modalOpen: true,
+                                          modalType: "ChangeStatus",
+                                          modalSize: "md",
+                                          elementSelected: listItem
+                                        })},
+                                        {title: "Añadir evento",
+                                        onClick: ()=>setState({
                                           modalOpen: true,
                                           modalSize: "md",
                                           modalType: "Add event to",
                                           elementSelected: listItem
-                                        })
-                                      }},
-                                      {_label: "Añadir imágenes",
-                                      onClick: ()=>{
-                                        setState({
+                                        })},
+                                        {title: "Añadir imágenes",
+                                        onClick: ()=>setState({
                                           modalOpen: true,
                                           modalSize: "md",
                                           modalType: "Add images",
                                           elementSelected: listItem
-                                        })
-                                      }},
-                                      {_label: "Ver eventos",
-                                      onClick: ()=>{
-                                        onGet({saveAs: "eventList", url: "event/sim/" + listItem.id})
-                                        setState({
-                                          modalOpen: true,
-                                          modalType: "Events",
-                                          modalSize: "lg",
-                                          elementSelected: listItem
-                                        })
-                                      }}
-                                    ]}
-                                  />
+                                        })},
+                                      ]}
+                                    />
+                                  </div>
                   </div>
                   {
                     listToShow.length -1 > idx ?

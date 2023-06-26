@@ -106,6 +106,18 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                                             }
                                         },
                                         {
+                                            title: (listItem.active == "activo" ? "Desactivar" : "Activar") + " módem",
+                                            onClick: ()=>{
+                                                onGet({saveAs: "modemDetails", url: "modem/details/" + listItem.id})
+                                                setState({
+                                                    modalOpen: true,
+                                                    modalType: "ChangeStatus",
+                                                    modalSize: "md",
+                                                    elementSelected: listItem
+                                                })
+                                            }
+                                        },
+                                        {
                                             title: "Añadir evento",
                                             onClick: ()=>{
                                                 setState({

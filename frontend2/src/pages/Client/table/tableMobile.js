@@ -24,24 +24,23 @@ const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
                     </div>
                   </div>
                   <div className="col-2">
-                    <OptionsButton
-                        buttonsList={[
-                            {
-                                _label: "Ver vehículos",
-                                onClick: ()=>{
-                                    setState({
-                                        elementSelected: {
-                                            id: listItem.id,
-                                            cars: listItem.cars
-                                        },
-                                        modalOpen: true,
-                                        modalType: "Vehículos del",
-                                        modalSize: "xl"
-                                    })
-                                }
-                            }
-                        ]}
-                    />
+                    <button
+                        className="btn btm-sm"
+                        onClick={()=>{
+                            setState({
+                                elementSelected: {
+                                    id: listItem.id,
+                                    cars: listItem.cars
+                                },
+                                modalOpen: true,
+                                modalType: "Vehículos del",
+                                modalSize: "xl"
+                            })
+                        }}
+                        title="Ver vehículos del cliente"
+                        >
+                        <i className="fas fa-car"></i>
+                    </button>
                   </div>
                   {
                     listToShow.length -1 > idx ?

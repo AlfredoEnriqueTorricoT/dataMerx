@@ -109,6 +109,13 @@ const Table = ({_crudName, onGet, listToShow, setSorter, setState, sorter, t}) =
                                           modalSize: "md",
                                           elementSelected: mBrand
                                         })},
+                                        {title: (mBrand.active ? "Desactivar" : "Activar") + " sim",
+                                        onClick: ()=>setState({
+                                          modalOpen: true,
+                                          modalType: "ChangeStatus",
+                                          modalSize: "md",
+                                          elementSelected: mBrand
+                                        })},
                                         {title: "Añadir evento",
                                         onClick: ()=>setState({
                                           modalOpen: true,

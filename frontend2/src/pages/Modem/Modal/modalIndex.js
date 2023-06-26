@@ -9,6 +9,7 @@ import {Modal} from "reactstrap"
 import ModalDetails from './modalDetails';
 import ModalEvent from './Modal events/modalEvents';
 import ModalAddImages from './modalAddImages';
+import ModalChangeStatus from './modalChangeStatus';
 
 const ModalIndex = ({_crudName, localStore, onPostAndGet, onGet, onPost, onPut, onPutAndGet, setState, state, t}) => {
     const [toastWaiting, setToastW] = useState(false)
@@ -155,6 +156,22 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onGet, onPost, onPut, 
                         state={state}
                         t={t}
                         toastWaiting={toastWaiting}
+                    />
+                )
+            case "ChangeStatus":
+                return(
+                    <ModalChangeStatus
+                    _crudName={_crudName}
+                    CancelModalButton={CancelModalButton}
+                    CloseModalButton={CloseModalButton}
+                    formName={state.modalType}
+                    localStore={localStore}
+                    onGet={onGet}
+                    onPost={onPost}
+                    setToastW={setToastW}
+                    state={state}
+                    setState={setState}
+                    toastWaiting={toastWaiting}
                     />
                 )
             case "Details":

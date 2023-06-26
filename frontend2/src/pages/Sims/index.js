@@ -38,6 +38,7 @@ const SimPage = ({
             modalOpen: false,
             modalSize: "md",
             modalType: "Add",
+            numberToSearch: "",
             tableMode: "sims",
             elementSelected: {}
     })

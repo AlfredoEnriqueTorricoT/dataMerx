@@ -33,8 +33,10 @@ const TableIndex = ({_crudName, onGet, localStore, setState, t}) => {
     const keysToSort = ["number", "imei", "active"]
 
     useEffect(()=>{
-
-    }, [localStore.status])
+        console.log(localStore.simList);
+        if (localStore.status == 200)
+            setTableFiltered(localStore.simList)
+    }, [localStore.simList])
 
     useEffect(()=>{
         let _keys = keysToSort[Math.abs(sorter) -1]
