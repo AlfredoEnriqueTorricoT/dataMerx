@@ -230,6 +230,7 @@ class SimController extends Controller
 
             $obj->save();
             return Res::responseSuccess($obj);
+
         } catch (Exception $ex) {
             
             Log::error("Error: " . $ex->getMessage() . " ". $ex->getLine());
