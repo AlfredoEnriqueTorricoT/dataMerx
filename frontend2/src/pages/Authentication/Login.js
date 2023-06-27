@@ -88,11 +88,8 @@ class Login extends Component {
                       <Formik
                         enableReinitialize={true}
                         initialValues={{
-                          email:
-                            (this.state && this.state.email) ||
-                            "admin@themesbrand.com",
-                          password:
-                            (this.state && this.state.password) || "123456",
+                          email: "",
+                          password: "",
                         }}
                         validationSchema={Yup.object().shape({
                           email: Yup.string().required(
