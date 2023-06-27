@@ -138,6 +138,39 @@ class CarController extends Controller
         return Res::responseSuccess($obj);
     }
 
+    public function remove_modem ($modem_id){
+        $obj = Car::find($modem_id);
+        $modem_id = $obj->modem_id;
+
+        if($modem_id == null){
+            return Res::responseError432("No se ha encontrado modem en el auto", $obj);
+        }
+
+        $modem = Modem::find($modem_id);
+
+        $sim_id = null;
+        if($modem != null){
+            $sim_id = $modem->sim_id;
+        }
+
+        $obj->modem_id = null;
+        $obj->save();
+
+        $event = [
+            "title" => "Modem retirado del auto",
+            "detail" => "El modem $modem->imei se ha retirado del auto $obj->placa ($obj->id)",
+            "type_id" => 1,
+            "car_id" => $obj->id,
+            "modem_id" => $modem_id,
+            "sim_id" => $sim_id,
+            "platform_id" => null,
+            "user_id" => auth()->user()->id
+        ];
+        EventController::_store($event);
+
+        return Res::responseSuccess($obj);
+    }
+
 
 
     public function store(Request $request)

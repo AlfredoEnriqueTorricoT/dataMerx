@@ -36,13 +36,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register', [AuthController::class, 'register'])->middleware("auth:sanctum");
 
-Route::get('modem', [ModemController::class,'index']);
-Route::get('modem/{imei}', [ModemController::class,'indexSearch']);
-Route::get('modem/details/{id}', [ModemController::class,'details']);
+Route::get('modem', [ModemController::class,'index'])->middleware("auth:sanctum");;
+Route::get('modem/{imei}', [ModemController::class,'indexSearch'])->middleware("auth:sanctum");;
+Route::get('modem/details/{id}', [ModemController::class,'details'])->middleware("auth:sanctum");;
+Route::get('modem/remove-sim/{id}', [ModemController::class,'remove_sim'])->middleware("auth:sanctum");;
 Route::post('modem', [ModemController::class,'store'])->middleware("auth:sanctum");
-Route::post('modem/event', [ModemController::class,'event']);
+Route::post('modem/event', [ModemController::class,'event'])->middleware("auth:sanctum");;
 Route::put('modem', [ModemController::class,'update'])->middleware("auth:sanctum");
 Route::put('modem/update-sim', [ModemController::class,'update_sim'])->middleware("auth:sanctum");
 Route::post('modem-upload', [ModemController::class,'storeUpload'])->middleware("auth:sanctum");
@@ -67,10 +68,11 @@ Route::post('sim-upload', [SimController::class,'storeUpload'])->middleware("aut
 Route::post('sim-upload-add', [SimController::class,'updloadImage'])->middleware("auth:sanctum");
 Route::post('sim-enabled-disabled', [SimController::class,'enabled_disable'])->middleware("auth:sanctum");
 
-Route::get('car', [CarController::class,'index']);
-Route::get('car/for-assign/{placa}/{client_id}', [CarController::class,'indexSearchPlacaForAssign']);
-Route::get('car/{placa}', [CarController::class,'indexSearchPlaca']);
-Route::get('car/details/{id}', [CarController::class,'details']);
+Route::get('car', [CarController::class,'index'])->middleware("auth:sanctum");
+Route::get('car/for-assign/{placa}/{client_id}', [CarController::class,'indexSearchPlacaForAssign'])->middleware("auth:sanctum");
+Route::get('car/{placa}', [CarController::class,'indexSearchPlaca'])->middleware("auth:sanctum");
+Route::get('car/details/{id}', [CarController::class,'details'])->middleware("auth:sanctum");
+Route::get('car/remove-modem/{id}', [CarController::class,'remove_modem'])->middleware("auth:sanctum");
 Route::post('car', [CarController::class,'store'])->middleware("auth:sanctum");
 Route::post('car/event', [CarController::class,'event']);
 Route::put('car', [CarController::class,'update'])->middleware("auth:sanctum");

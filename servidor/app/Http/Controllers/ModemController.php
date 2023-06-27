@@ -127,6 +127,38 @@ class ModemController extends Controller
         return Res::responseSuccess($obj);
     }
 
+    public function remove_sim ($modem_id){
+        $obj = Modem::find($modem_id);
+        $sim_id = $obj->sim_id;
+
+        if($sim_id == null){
+            return Res::responseError432("No se ha encontrado sim en el modem", $obj);
+        }
+
+        $sim = Sim::find($sim_id);
+
+        $obj->sim_id = null;
+        $obj->save();
+
+        $car = Car::where("modem_id", $obj->id)->first();
+        $car_id = null;
+        if($car != null){
+            $car_id = $car->id;
+        }
+        $event = [
+            "title" => "Sim retirado del modem",
+            "detail" => "El sim $sim->number se ha retirado del modem $obj->imei",
+            "type_id" => 1,
+            "car_id" => $car_id,
+            "modem_id" => $obj->id,
+            "sim_id" => $sim_id,
+            "platform_id" => null,
+            "user_id" => auth()->user()->id
+        ];
+        EventController::_store($event);
+
+        return Res::responseSuccess($obj);
+    }
 
 
     public function store(Request $request)
