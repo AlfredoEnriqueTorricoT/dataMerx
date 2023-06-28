@@ -73,6 +73,7 @@ Route::get('car/for-assign/{placa}/{client_id}', [CarController::class,'indexSea
 Route::get('car/{placa}', [CarController::class,'indexSearchPlaca'])->middleware("auth:sanctum");
 Route::get('car/details/{id}', [CarController::class,'details'])->middleware("auth:sanctum");
 Route::get('car/remove-modem/{id}', [CarController::class,'remove_modem'])->middleware("auth:sanctum");
+Route::get('car/test/{id}', [CarController::class,'getElements'])->middleware("auth:sanctum");
 Route::post('car', [CarController::class,'store'])->middleware("auth:sanctum");
 Route::post('car/event', [CarController::class,'event']);
 Route::put('car', [CarController::class,'update'])->middleware("auth:sanctum");

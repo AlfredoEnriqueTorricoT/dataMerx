@@ -6,6 +6,7 @@ use App\Http\Res;
 use App\Models\Car;
 use App\Models\Images;
 use App\Models\Modem;
+use App\Models\Sim;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -138,40 +139,67 @@ class CarController extends Controller
         return Res::responseSuccess($obj);
     }
 
-    public function remove_modem ($modem_id){
+    public function remove_modem($modem_id)
+    {
         $obj = Car::find($modem_id);
-        $modem_id = $obj->modem_id;
-
-        if($modem_id == null){
+        
+        if ($obj->modem_id == null) {
             return Res::responseError432("No se ha encontrado modem en el auto", $obj);
         }
 
-        $modem = Modem::find($modem_id);
 
-        $sim_id = null;
-        if($modem != null){
-            $sim_id = $modem->sim_id;
-        }
-
-        $obj->modem_id = null;
-        $obj->save();
-
+        $elements = $this->getElements($obj);
         $event = [
             "title" => "Modem retirado del auto",
-            "detail" => "El modem $modem->imei se ha retirado del auto $obj->placa ($obj->id)",
+            "detail" => "El modem {$elements['modem']['imei']} se ha retirado del auto $obj->placa",
             "type_id" => 1,
             "car_id" => $obj->id,
-            "modem_id" => $modem_id,
-            "sim_id" => $sim_id,
+            "modem_id" => $elements["modem"]["id"],
+            "sim_id" => $elements["sim"]["id"],
             "platform_id" => null,
             "user_id" => auth()->user()->id
         ];
         EventController::_store($event);
 
+
+        $obj->modem_id = null;
+        $obj->save();
+
+        
+
+        
+
         return Res::responseSuccess($obj);
     }
 
+    public function getElements($car)
+    {
+        $modem = Modem::find($car->modem_id);
+        $modem_id = null;
+        $modem_imei = null;
+        $sim_id = null;
+        $sim_number = null;
+        if ($modem != null) {
+            $modem_id = $modem->id;
+            $modem_imei = $modem->imei;
+            if ($modem->sim_id != null) {
+                $sim = Sim::find($modem->sim_id);
+                $sim_id = $sim->id;
+                $sim_number = $sim->number;
+            }
+        }
 
+        return [
+            "modem" => [
+                "id" => $modem_id,
+                "imei" => $modem_imei
+            ],
+            "sim" => [
+                "id" => $sim_id,
+                "number" => $sim_number
+            ]
+        ];
+    }
 
     public function store(Request $request)
     {
@@ -260,9 +288,9 @@ class CarController extends Controller
                 "platform_id" => null,
                 "user_id" => auth()->user()->id
             ];
-            $eventSave =EventController::_store($event);
+            $eventSave = EventController::_store($event);
 
-            
+
             ImagesController::upload($request, "e", $eventSave["id"]);
 
             return Res::responseSuccess($event);
