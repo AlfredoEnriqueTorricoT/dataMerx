@@ -9,6 +9,7 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
         onGet({saveAs: "modemDetails", url: "modem/details/" + data.id})
         setState({
             modalOpen: true,
+            modalSize: "md",
             modalType: "Details"
         })
     }
