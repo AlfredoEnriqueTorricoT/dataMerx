@@ -18,7 +18,11 @@ function* loginUser({ payload: { user, history } }) {
     if (response.data.status == 200) {
       yield put(loginSuccess())
       localStorage.setItem("userToken", response.data.data.token)
-      let aUser = {name: response.data.data.name, email: response.data.data.email}
+      let aUser = {name: response.data.data.name, email: response.data.data.email, auth: response.data.data.privilege}
+      console.log(aUser);
+      console.log(response);
+      console.log(response.data);
+      console.log(response.data.data.privilege);
       localStorage.setItem("authUser", JSON.stringify(aUser))
       localStorage.setItem("userData", JSON.stringify(aUser))
       history.push("/car")

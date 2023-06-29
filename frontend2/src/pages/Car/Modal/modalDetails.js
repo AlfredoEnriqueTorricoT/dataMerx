@@ -169,7 +169,7 @@ const ModalDetails = ({CloseModalButton, CancelModalButton, localStore}) => {
                                             {localStore.carDetails.sim.active ? "ACTIVO" : "INACTIVO"}
                                           </span>
                                         } />
-                                        <ShowData title="Código" data={localStore.carDetails.sim.code} />
+                                        {/* <ShowData title="Código" data={localStore.carDetails.sim.code} /> */}
                                     </div>
                                 </div>
                                 </React.Fragment> : <center><h4 className='text-secondary mb-3'>Sin sim asignado</h4></center>}

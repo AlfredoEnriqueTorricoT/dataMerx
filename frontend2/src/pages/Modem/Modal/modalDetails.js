@@ -168,7 +168,7 @@ const ModalDetails = ({CancelModalButton, CloseModalButton, localStore}) => {
                                         {localStore.modemDetails.sim.active ? "ACTIVO" : "INACTIVO"}
                                       </span>
                                     } />
-                                    <ShowData title="Código" data={localStore.modemDetails.sim.code} />
+                                    {/* <ShowData title="Código" data={localStore.modemDetails.sim.code} /> */}
                                 </div>
                             </div>
                         </React.Fragment> : <center><h4 className='text-secondary mb-3'>Sin sim asignado</h4></center>}

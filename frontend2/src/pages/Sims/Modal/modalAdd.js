@@ -1,9 +1,28 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { showToast } from 'components/toast'
 
-const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, localStore, onPost, t}) => {
+const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, localStore, onPost, setState, t}) => {
   const [simImages, setSimImages] = useState([])
+  const [toastW, setToastW] = useState(false)
+
+  useEffect(()=>{
+    if (toastW && localStore.status != "waiting response") {
+      if (localStore.status == 200) {
+        showToast({
+          type: "success", message: "El sim ha sido añadido"
+        })
+        setState({modalOpen: false})
+      } else {
+        showToast({
+          type: "warning", message: "El sim no pudo ser añadido",
+          title: "Error (" + localStore.status + ")"
+        })
+      }
+      setToastW(false)
+    }
+  }, [localStore.status])
   
     const validateFunction = values => {
         let errors = {}
@@ -17,6 +36,7 @@ const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, localStore, o
     }
     
     const submitFunction = values => {
+      setToastW(true)
       let fData = new FormData()
 
       for (let x = 0; x < simImages.length; x++) {
@@ -143,6 +163,7 @@ ModalAdd.propTypes = {
     _crudName: PropTypes.object,
     localStore: PropTypes.object,
     onPost: PropTypes.func,
+    setState: PropTypes.func,
     t: PropTypes.func,
 }
 

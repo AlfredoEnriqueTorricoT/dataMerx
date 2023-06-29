@@ -159,12 +159,14 @@ class SidebarContent extends Component {
                   <span>Plataformas</span>
                 </Link>
               </li>
+              {(JSON.parse(localStorage.getItem("userData"))).auth == 0 ? 
               <li className="dm-link">
                 <Link to="/users">
                   <i className="fas fa-user-tie dm-link-icon" />
                   <span>Usuarios</span>
                 </Link>
               </li>
+              : ""}
             </ul>
           </div>
         </SimpleBar>

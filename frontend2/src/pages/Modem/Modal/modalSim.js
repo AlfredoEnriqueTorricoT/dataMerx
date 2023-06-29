@@ -17,7 +17,9 @@ const ModalSim = ({CancelModalButton, CloseModalButton, localStore, onGet, onPut
     const [mDataStatus, setMDataStatus] = useState(0)//-1 error, 0 loading, 1 success
     const [tableStatus, setTableStatus] = useState(-2)//-2 init, -1 error, 0 loading, 1 success
     const [toastW, setToastW] = useState(false)
+    const [toastWDel, setToastWDel] = useState(false)
     const [secondModalOpen, setSecondModalOpen] = useState(false)
+    const [hasASim, setHasASim] = useState(false)
     
     useEffect(()=>{
         setSimId(state.elementSelected.sim_id || 0)
@@ -25,7 +27,11 @@ const ModalSim = ({CancelModalButton, CloseModalButton, localStore, onGet, onPut
 
     useEffect(()=>{
         if (mDataStatus == 0 && localStore.status != "waiting response") {
-            if (localStore.status == 200) setMDataStatus(1)
+            if (localStore.status == 200){
+                setMDataStatus(1)
+                if (localStore.modemDetails.sim) setHasASim(true)
+                else setHasASim(false)
+            }
             else setMDataStatus(-1)
         }
 
@@ -38,7 +44,7 @@ const ModalSim = ({CancelModalButton, CloseModalButton, localStore, onGet, onPut
             if (localStore.status == 200) {
                 showToast({
                     type: "success",
-                    message: "El módem ha sido vinculado"
+                    message: "El sim ha sido vinculado"
                 })
                 setState({modalOpen: false})
             } else if (localStore.status == 232) {
@@ -53,11 +59,26 @@ const ModalSim = ({CancelModalButton, CloseModalButton, localStore, onGet, onPut
             else {
                 showToast({
                     type: "warning",
-                    message: "El módem no pudo ser vinculado (" + localStore.status + ")"
+                    message: "El sim no pudo ser vinculado (" + localStore.status + ")"
                 })
             }
 
             setToastW(false)
+        }
+
+        if (toastWDel && localStore.status != "waiting response") {
+            if (localStore.status == 200) {
+                showToast({
+                    type: "success", message: "El sim ha sido desvinculado"
+                })
+                setHasASim(false)
+            }
+            else 
+                showToast({
+                    type: "success", message: "El sim no pudo ser desvinculado",
+                    title: "Error (" + localStore.status + ")"
+                })
+            setToastWDel(false)
         }
     }, [localStore.status])
 
@@ -72,29 +93,42 @@ const ModalSim = ({CancelModalButton, CloseModalButton, localStore, onGet, onPut
                     <SpinnerL />
                 )
             case 1:
-                return(
-                    localStore.modemDetails.sim ?
-                    <React.Fragment>
-                        <div className="bg-secondary bg-soft row">
-                            <div className="col-4">
-                                <center>
-                                    <i className="fas fa-sim-card mt-3"></i>
-                                </center>
+                if (hasASim)
+                    return(
+                        <React.Fragment>
+                            <div className="bg-secondary bg-soft row">
+                                <div className="col-2">
+                                    <center>
+                                        <i className="fas fa-sim-card mt-3"></i>
+                                    </center>
+                                </div>
+                                <div className="col-8">
+                                    <b>Número: {localStore.modemDetails.sim.number}</b>
+                                    <br />
+                                    <p className="my-0"><b>Imei: </b>{localStore.modemDetails.sim.imei} <b>Código: </b>{localStore.modemDetails.sim.code}</p>
+                                </div>
+                                <div className="col-2">
+                                    <center>
+                                        <button
+                                            className='btn'
+                                            disabled={localStore.status == "waiting response"}
+                                            onClick={removeSim}
+                                            type='button'
+                                            title='Desvincular sim'
+                                            >
+                                            <i className="fas fa-times"></i>
+                                        </button>
+                                    </center>
+                                </div>
                             </div>
-                            <div className="col-8">
-                                <b>Número: {localStore.modemDetails.sim.number}</b>
-                                <br />
-                                <p className="my-0"><b>Imei: </b>{localStore.modemDetails.sim.imei} <b>Código: </b>{localStore.modemDetails.sim.code}</p>
-                            </div>
-                        </div>
-                        <br />
-                    </React.Fragment>
-                    : 
+                            <br />
+                        </React.Fragment>
+                    )
+                else return(
                     <center>
-                        <h4 className="text-secondary">Sin módem asignado</h4>
+                        <h4 className="text-secondary">Sin sim asignado</h4>
                     </center>
                 )
-
             default:
                 break;
         }
@@ -178,6 +212,14 @@ const ModalSim = ({CancelModalButton, CloseModalButton, localStore, onGet, onPut
         saveAs: "UNUSED-DATA",
         payload: values,
         url: "modem/update-sim",
+        })
+    }
+
+    const removeSim = () => {
+        setToastWDel(true)
+        onGet({
+            saveAs: "UNUSED-DATA",
+            url: "modem/remove-sim/" + localStore.modemDetails.sim.id
         })
     }
 

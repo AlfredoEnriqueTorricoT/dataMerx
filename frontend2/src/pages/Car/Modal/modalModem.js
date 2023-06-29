@@ -17,7 +17,9 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
     const [mDataStatus, setMDataStatus] = useState(0)//-1 error, 0 loading, 1 success
     const [tableStatus, setTableStatus] = useState(-2)//-2 init, -1 error, 0 loading, 1 success
     const [toastW, setToastW] = useState(false)
+    const [toastWDel, setToastWDel] = useState(false)
     const [secondModalOpen, setSecondModalOpen] = useState(false)
+    const [hasAModem, setHasAModem] = useState(false)
     
     useEffect(()=>{
         setModemId(state.elementSelected.modem_id || 0)
@@ -28,6 +30,8 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
             if (localStore.status == 200) {
                 setMDataStatus(1)
                 setCarName(localStore.carDetails.car ? localStore.carDetails.car.name : "")
+                if (localStore.carDetails.modem) setHasAModem(true)
+                else setHasAModem(false)
             }
             else setMDataStatus(-1)
         }
@@ -62,6 +66,21 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
 
             setToastW(false)
         }
+
+        if (toastWDel && localStore.status != "waiting response") {
+            if (localStore.status == 200) {
+                showToast({
+                    type: "success", message: "El módem ha sido desvinculado"
+                })
+                setHasAModem(false)
+            }
+            else 
+                showToast({
+                    type: "success", message: "El módem no pudo ser desvinculado",
+                    title: "Error (" + localStore.status + ")"
+                })
+            setToastWDel(false)
+        }
     }, [localStore.status])
 
     const ShowActiveModem = () => {
@@ -75,29 +94,48 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
                     <SpinnerL />
                 )
             case 1:
+                if (hasAModem)
+                    return(
+                        <React.Fragment>
+                            <div className="bg-secondary bg-soft row">
+                                <div className="col-2">
+                                    <center>
+                                        <i className="fas fa-hdd mt-3"></i>
+                                    </center>
+                                </div>
+                                <div className="col-8">
+                                    <b>Imei: {localStore.carDetails.modem.imei}</b>
+                                    <br />
+                                    <p className="my-0"><b>Marca: </b>{localStore.carDetails.modem.mark_id} <b>Código: </b>{localStore.carDetails.modem.code}</p>
+                                </div>
+                                <div className="col-2">
+                                    <center>
+                                        <button
+                                            className='btn'
+                                            disabled={localStore.status == "waiting response"}
+                                            onClick={removeModem}
+                                            type='button'
+                                            title='Desvincular módem'
+                                            >
+                                            <i className="fas fa-times"></i>
+                                        </button>
+                                    </center>
+                                </div>
+                            </div>
+                            <br />
+                        </React.Fragment>
+                    )
+                    else return(
+                        <center>
+                            <h4 className="text-secondary">Sin módem asignado</h4>
+                        </center>
+                    )
+            case 2:
                 return(
-                    localStore.carDetails.modem ?
-                    <React.Fragment>
-                        <div className="bg-secondary bg-soft row">
-                            <div className="col-4">
-                                <center>
-                                    <i className="fas fa-hdd mt-3"></i>
-                                </center>
-                            </div>
-                            <div className="col-8">
-                                <b>Imei: {localStore.carDetails.modem.imei}</b>
-                                <br />
-                                <p className="my-0"><b>Marca: </b>{localStore.carDetails.modem.mark_id} <b>Código: </b>{localStore.carDetails.modem.code}</p>
-                            </div>
-                        </div>
-                        <br />
-                    </React.Fragment>
-                    : 
                     <center>
                         <h4 className="text-secondary">Sin módem asignado</h4>
                     </center>
                 )
-
             default:
                 break;
         }
@@ -176,6 +214,15 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
         url: "car/update-modem",
         })
     }
+
+    const removeModem = () => {
+        setToastWDel(true)
+        onGet({
+            saveAs: "UNUSED-DATA",
+            url: "car/remove-modem/" + localStore.carDetails.modem.id
+        })
+    }
+
 
     return(
         <React.Fragment>
