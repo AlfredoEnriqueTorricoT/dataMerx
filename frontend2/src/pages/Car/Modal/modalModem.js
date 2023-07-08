@@ -277,7 +277,9 @@ const ModalModem = ({CancelModalButton, CloseModalButton, localStore, onGet, onP
                             </SearchBar>
                         </center>
                         <br />
-                        <ShowTable />
+                        <div className="grayScroll" style={{maxHeight: "35vh", overflowX: "hidden", overflowY: "auto"}}>
+                            <ShowTable />
+                        </div>
                     </React.Fragment>
                 : ""
                 }

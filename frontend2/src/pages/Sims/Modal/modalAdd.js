@@ -47,7 +47,7 @@ const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, localStore, o
       fData.append("imei", values.imei);
 
       onPost({
-        saveAs: "simList",
+        saveAs: "UNUSED-DATA",
         payload: fData,
         url: "sim-upload",
       })

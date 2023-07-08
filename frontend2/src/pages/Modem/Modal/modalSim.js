@@ -219,7 +219,7 @@ const ModalSim = ({CancelModalButton, CloseModalButton, localStore, onGet, onPut
         setToastWDel(true)
         onGet({
             saveAs: "UNUSED-DATA",
-            url: "modem/remove-sim/" + localStore.modemDetails.sim.id
+            url: "modem/remove-sim/" + localStore.modemDetails.modem.id
         })
     }
 
@@ -232,17 +232,6 @@ const ModalSim = ({CancelModalButton, CloseModalButton, localStore, onGet, onPut
         
             <div className="modal-body">
                     <ShowActiveModem />
-                {/* <center>
-                    <div className="d-inline-block">
-                        <input
-                            className="form-control"
-                            onChange={i=>setSimName(i.target.value)}
-                            type="text"
-                            placeholder='Nombre del usuario'
-                            value={simName}
-                        />
-                    </div>
-                </center> */}
                 <br />
                 <center>
                     <SearchBar
@@ -266,7 +255,9 @@ const ModalSim = ({CancelModalButton, CloseModalButton, localStore, onGet, onPut
                     </SearchBar>
                 </center>
                 <br />
-                <ShowTable />
+                <div className="grayScroll" style={{maxHeight: "35vh", overflowX: "hidden", overflowY: "auto"}}>
+                    <ShowTable />
+                </div>
             </div>
 
             <div className="modal-footer">
