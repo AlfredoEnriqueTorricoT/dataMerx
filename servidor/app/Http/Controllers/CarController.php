@@ -467,7 +467,7 @@ class CarController extends Controller
 
     function isPlacaSuccess($placa)
     {
-        $patron = "/^[A-Z]{3}-[0-9]{3,4}$/";
+        $patron = "/^[0-9]{3,4}-[A-Z]{3}$/";
         return preg_match($patron, $placa);
     }
 }

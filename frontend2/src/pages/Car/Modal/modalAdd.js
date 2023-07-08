@@ -17,7 +17,7 @@ const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, formName, loc
         if (!values.mark) errors.mark = t("Enter the car mark")
         if (!values.model) errors.model = t("Enter the car model")
         if (!values.placa) errors.placa = t("Enter the car license plate")
-        if (!(/^[A-Z]{3}-[0-9]{3,4}$/.test(values.placa))) errors.placa = "La placa ingresada no es válida"
+        if (!(/^[0-9]{3,4}-[A-Z]{3}$/.test(values.placa))) errors.placa = "La placa ingresada no es válida 000-AAA"
         if (!carImages) errors.images = "Seleccione una o varias imagenes"
 
         return errors
