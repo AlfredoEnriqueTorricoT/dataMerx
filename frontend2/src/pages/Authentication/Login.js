@@ -128,7 +128,7 @@ class Login extends Component {
                             </div>
                             <div className="mb-3">
                               <Label for="password" className="form-label">
-                                Contraseña
+                                Contraseñas
                               </Label>
                               <div className="input-group auth-pass-inputgroup">
                                 <Field

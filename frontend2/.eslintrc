@@ -1,10 +1,8 @@
 {
-  "rules": {
-    "no-undef": "off",
-    "react/prop-types" : "off"
-  },
   "extends": [
-    "plugin:react/recommended"
+    // Elimina "eslint-config-react-app" si no es necesario
+    "eslint-config-react-app"
+    //"plugin:react/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": 6,
