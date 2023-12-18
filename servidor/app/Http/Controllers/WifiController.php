@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Res;
+use App\Models\Platform;
 use App\Models\Wifi;
 use Exception;
 use Illuminate\Http\Request;
@@ -10,10 +11,10 @@ use Illuminate\Http\Request;
 class WifiController extends Controller
 {
     //
-    public function index()
+    public function index($platform_id)
     {
         try {
-            $list = Wifi::all();
+            $list = Wifi::where(Wifi::COL_PLATFORM_ID, $platform_id)->get();
             return Res::responseSuccess($list);
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
@@ -25,8 +26,13 @@ class WifiController extends Controller
     public function store(Request $request)
     {
         try {
+            $request->validate([
+                'ssid' => 'required',
+                'password' => 'required',
+                'platform_id' => 'required'
+            ]);
+            
             $obj = Wifi::create($request->all());
-
             return Res::responseSuccess($obj);
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());

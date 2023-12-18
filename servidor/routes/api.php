@@ -11,6 +11,7 @@ use App\Http\Controllers\ModemsMarkController;
 use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\SimController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WatchController;
 use App\Http\Controllers\WifiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -93,6 +94,9 @@ Route::post('event-upload', [EventController::class,'storeUpload']);
 Route::get('platform', [PlatformController::class,'index']);
 Route::post('platform', [PlatformController::class,'store']);
 Route::put('platform', [PlatformController::class,'update']);
+Route::get('platforms/{platform_id}/wifis', [PlatformController::class, 'index']);
+Route::post('platforms/{platform}/wifis', [PlatformController::class,'storeWifi']);
+Route::put('platforms/wifi', [PlatformController::class,'update']);
 
 Route::get('client/{ci}', [ClientController::class,'indexSearch']);
 Route::post('client', [ClientController::class,'store']);
@@ -104,7 +108,13 @@ Route::delete('client-car/{obj}', [ClientCarController::class,'destroy']);
 Route::post('images', [ImagesController::class,'upload']);
 
 
-Route::get('wifi', [WifiController::class,'index']);
+Route::get('watch/{platform_id}', [WatchController::class,'index']);
+Route::get('watch/{watch}/get_wifi', [WatchController::class,'get_wifi']);
+Route::post('watch', [WatchController::class,'store']);
+Route::put('watch', [WatchController::class,'update']);
+
+Route::get('wifi/{platform_id}', [WifiController::class,'index']);
 Route::post('wifi', [WifiController::class,'store']);
 Route::put('wifi', [WifiController::class,'update']);
-Route::delete('wifi/{obj}', [WifiController::class,'destroy']);
+
+

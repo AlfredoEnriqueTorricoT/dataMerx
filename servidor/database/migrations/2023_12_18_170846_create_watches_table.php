@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('wifis', function (Blueprint $table) {
+        Schema::create('watches', function (Blueprint $table) {
             $table->id();
-            $table->text("ssid");
-            $table->text("password");
-            $table->bigInteger('platform_id')->nullable()->unsigned();
+            $table->string('imei');
+            $table->unsignedBigInteger('modem_id')->nullable();
 
-            $table->foreign('platform_id')->references('id')->on('platforms')
+            $table->foreign('modem_id')->references('id')->on('modems')
                 ->onUpdate('cascade');
+            $table->timestamps();
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wifis');
+        Schema::dropIfExists('watches');
     }
 };
