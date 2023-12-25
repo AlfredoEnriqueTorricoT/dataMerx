@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { OptionsButton, THeaderSorter } from 'components/tableElements';
 
-const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
+const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) => {
     return(
             <div className="grayScroll table-responsive" style={{maxHeight: "55vh", overflow: "auto"}}>
                 <table className="table table-striped">
@@ -47,6 +47,20 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                       >
                                         <i className="fas fa-edit"></i>
                                     </button>
+                                    <button 
+                                        className='btn btn-sm'
+                                        onClick={()=>{
+                                          onGet({url: "wifi/" + listItem.id, saveAs: "wifiList"})
+                                            setState({
+                                                modalOpen: true,
+                                                modalType: "Wifi",
+                                                elementSelected: listItem
+                                            })
+                                        }}
+                                        title='Ver redes wi-fi'
+                                      >
+                                        <i className="fas fa-wifi"></i>
+                                    </button>
                                 </td>
                             </tr>
                         ))}
@@ -59,6 +73,7 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
 Table.propTypes = {
     _crudName: PropTypes.object,
     listToShow: PropTypes.object,
+    onGet: PropTypes.func,
     setSorterer: PropTypes.func,
     setState: PropTypes.func,
     sorterer: PropTypes.number,

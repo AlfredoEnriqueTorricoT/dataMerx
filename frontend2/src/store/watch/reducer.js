@@ -1,69 +1,71 @@
 import {
-    GET_PLATFORM,
-    POST_PLATFORM,
-    PUT_PLATFORM,
-    DELETE_PLATFORM,
-    POST_AND_GET_PLATFORM,
-    PUT_AND_GET_PLATFORM,
-    DELETE_AND_GET_PLATFORM,
-    UPDATE_PLATFORM_STORAGE,
+    GET_WATCH,
+    POST_WATCH,
+    PUT_WATCH,
+    DELETE_WATCH,
+    POST_AND_GET_WATCH,
+    PUT_AND_GET_WATCH,
+    DELETE_AND_GET_WATCH,
+    UPDATE_WATCH_STORAGE,
 } from "./actionTypes"
 
-const INITIAL_PLATFORM = {
-    status: "waiting response",
-    platformList: [],
-    wifiList: [],
+const INITIAL_WATCH = {
+    status: 200,
+    message: "",
+    watchList: [],
+    eventList: []
 }
 
-const Platform = (state = INITIAL_PLATFORM, action) => {
+const Watch = (state = INITIAL_WATCH, action) => {
     switch (action.type) {
-        case GET_PLATFORM:
+        case GET_WATCH:
             return {
                 ...state,
                 status: "waiting response"
             }
             
-        case POST_PLATFORM:
+        case POST_WATCH:
             return {
                 ...state,
                 status: "waiting response"
             }
 
-        case PUT_PLATFORM:
+        case PUT_WATCH:
             return {
                 ...state,
                 status: "waiting response"
             }
 
-        case DELETE_PLATFORM:
+        case DELETE_WATCH:
             return {
                 ...state,
                 status: "waiting response"
             }
 
-        case POST_AND_GET_PLATFORM:
+        case POST_AND_GET_WATCH:
             return {
                 ...state,
                 status: "waiting response"
             }
 
-        case PUT_AND_GET_PLATFORM:
+        case PUT_AND_GET_WATCH:
             return {
                 ...state,
                 status: "waiting response"
             }
 
-        case DELETE_AND_GET_PLATFORM:
+        case DELETE_AND_GET_WATCH:
             return {
                 ...state,
                 status: "waiting response"
             }
 
-        case UPDATE_PLATFORM_STORAGE:
+        case UPDATE_WATCH_STORAGE:
             return {
                 ...state,
                 [action.saveAs]: action.payload,
-                status: action.status
+                status: action.status,
+                message: action.message || ""
             }
 
         default:
@@ -71,4 +73,4 @@ const Platform = (state = INITIAL_PLATFORM, action) => {
     }
 }
 
-export default Platform
+export default Watch

@@ -8,22 +8,24 @@ import { Modal } from "reactstrap"
 import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 import {
-    getPlatform as petitionGet,
-    postPlatform as petitionPost,
-    putPlatform as petitionPut,
-    deletePlatform as petitionDelete,
-    postAndGetPlatform as petitionPostAndGet,
-    putAndGetPlatform as petitionPutAndGet,
-    deleteAndGetPlatform as petitionDeleteAndGet,
-} from "store/platform/actions"
+    getWatch as petitionGet,
+    postWatch as petitionPost,
+    putWatch as petitionPut,
+    deleteWatch as petitionDelete,
+    postAndGetWatch as petitionPostAndGet,
+    putAndGetWatch as petitionPutAndGet,
+    deleteAndGetWatch as petitionDeleteAndGet,
+} from "store/watch/actions"
+import { getPlatform } from "store/platform/actions"
 import TableIndex from "./table/tableIndex"
 import ModalIndex from "./Modal/modalIndex"
+import EventsTableIndex from "./events/tableIndex"
 import { ErrorTable } from "components/tableElements"
 import { SpinnerL } from "components/components"
 
-const _crudName = {single: "platform", multiple: "platforms", cod: "platform"}
+const _crudName = {single: "watch", multiple: "watches", cod: "watch"}
 
-const PlatformPage = ({
+const WatchPage = ({
     localStore,
     onGet,
     onPost,
@@ -32,14 +34,18 @@ const PlatformPage = ({
     onPostAndGet,
     onPutAndGet,
     onDeleteAndGet,
+    onGetPlatform,
+    platformStore,
     t
 }) => {
     const [state, _zetState] = useState({
+            eventTableStatus: "loading",
+            imeiToSearch: "",
+            tableMode: "watches",
             modalOpen: false,
             modalSize: "md",
             modalType: "Add",
             elementSelected: {},
-            tableStatus: "loading"
     })
 
     const setState = (data) => {
@@ -47,42 +53,36 @@ const PlatformPage = ({
     }
 
     useEffect(()=>{
-        document.title = "Síguelo | Plataformas";
-        onGet({ saveAs: _crudName.cod + "List", url: "platform" })
+        document.title = "Síguelo | Relojes";
+        // onGet({ saveAs: "simList", url: "sim" })
     }, [])
-
-    useEffect(()=>{
-        if (state.tableStatus == "loading" && localStore.status != "waiting response") {
-            if (localStore.status == 200) setState({tableStatus: "success"})
-            else setState({tableStatus: "error"})
-        }
-    }, [localStore.status])
 
     return(
         <React.Fragment>
             <div className="page-content mb-0 pb-0">
                 <div className="container">
                     <Breadcrumbs title="Cuadros de mando" breadcrumbItem={t(_crudName.multiple)} />
-                    {state.tableStatus == "loading" ? <SpinnerL /> : ""}
-                    {state.tableStatus == "success" ?
-                        <TableIndex
+                    <div className="tab-content">
+                        <div className={`tab-pane fade ${state.tableMode == "watches" ? "show active" : ""}`}>
+
+                                <TableIndex
+                                    _crudName={_crudName}
+                                    localStore={localStore}
+                                    onGet={onGet}
+                                    setState={setState}
+                                    state={state}
+                                    t={t} />
+                        </div>
+                        <div className={`tab-pane fade ${state.tableMode == "events" ? "show active" : ""}`}>
+                            <EventsTableIndex
                             _crudName={_crudName}
                             localStore={localStore}
                             onGet={onGet}
                             setState={setState}
-                            t={t} /> : ""
-                    }
-                    {state.tableStatus == "error" ?
-                        <ErrorTable
-                            cod={localStore.status}
-                            retryFunction={()=>{
-                                onGet({ saveAs: _crudName.cod + "List", url: "platform" });
-                                setState({tableStatus: "loading"})
-                            }}
-                        >
-                            {t("Retry")}
-                        </ErrorTable> : ""
-                    }
+                            state={state}
+                            t={t} />
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -90,10 +90,14 @@ const PlatformPage = ({
                 <ModalIndex
                     _crudName={_crudName}
                     localStore={localStore}
-                    onGet={petitionGet}
-                    onPost={petitionPost}
                     onPostAndGet={onPostAndGet}
+                    onGet={onGet}
+                    onPost={onPost}
+                    onPut={onPut}
+                    onDeleteAndGet={onDeleteAndGet}
                     onPutAndGet={onPutAndGet}
+                    onGetPlatform={onGetPlatform}
+                    platformStore={platformStore}
                     setState={setState}
                     state={state}
                     t={t}
@@ -103,7 +107,7 @@ const PlatformPage = ({
     )
 }
 
-PlatformPage.propTypes = {
+WatchPage.propTypes = {
     localStore: PropTypes.object,
     onGet: PropTypes.func,
     onPost: PropTypes.func,
@@ -116,7 +120,8 @@ PlatformPage.propTypes = {
 }
 
 const mapStateToProps = state => ({
-    localStore: state.Platform
+    localStore: state.Watch,
+    platformStore: state.Platform
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -127,6 +132,7 @@ const mapDispatchToProps = dispatch => ({
     onPostAndGet: data => dispatch(petitionPostAndGet(data)),
     onPutAndGet: data => dispatch(petitionPutAndGet(data)),
     onDeleteAndGet: data => dispatch(petitionDeleteAndGet(data)),
+    onGetPlatform: data => dispatch(getPlatform(data))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(PlatformPage))
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(WatchPage))

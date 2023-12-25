@@ -5,7 +5,17 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import {FormikInput, isEmail, isUrl} from "components/formElements"
 
 
-const ModalAdd = ({_crudName, formName, onPostAndGet, setToastW, t}) => {
+const ModalAdd = ({
+    _crudName,
+    formName,
+    FooterButtonClose,
+    HeaderButtonClose,
+    onPostAndGet,
+    setToastW,
+    state,
+    toastWaiting,
+    t
+  }) => {
   
     const genericId = _crudName.cod + "_" + formName + "_"
 
@@ -38,6 +48,12 @@ const ModalAdd = ({_crudName, formName, onPostAndGet, setToastW, t}) => {
 
     return(
         <React.Fragment>
+          <div className='modal-header'>
+            <h4>{t("Add")} {t("platform")}</h4>
+            <HeaderButtonClose />
+          </div>
+
+          <div className='modal-body'>
             <Formik
                 onSubmit={submitFunc}
                 initialValues={{
@@ -87,6 +103,27 @@ const ModalAdd = ({_crudName, formName, onPostAndGet, setToastW, t}) => {
                     </Form>
                 )}
             </Formik>
+          </div>
+
+          <div className='modal-footer'>
+            <FooterButtonClose />
+            <div className='ms-auto'>
+                  <button
+                    className='btn dm-button text-light btn-label'
+                    disabled={toastWaiting}
+                    form={_crudName.cod + "_" + state.modalType}
+                    type='submit'
+                  >
+                    {t("Add")}
+                    {
+                      toastWaiting ?
+                        <i className="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+                        :
+                        <i className='fas fa-plus label-icon' />  
+                    }
+                  </button>
+            </div>
+          </div>
         </React.Fragment>
     )
 }
@@ -94,8 +131,12 @@ const ModalAdd = ({_crudName, formName, onPostAndGet, setToastW, t}) => {
 ModalAdd.propTypes = {
     _crudName: PropTypes.object,
     formName: PropTypes.string,
+    FooterButtonClose: PropTypes.func,
+    HeaderButtonClose: PropTypes.func,
     onPostAndGet: PropTypes.func,
     setToastW: PropTypes.func,
+    state: PropTypes.object,
+    toastWaiting: PropTypes.func,
     t: PropTypes.func,
 }
 

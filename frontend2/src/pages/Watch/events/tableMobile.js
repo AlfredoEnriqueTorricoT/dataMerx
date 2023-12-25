@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { OptionsButton, MobileDataShow } from 'components/tableElements'
+import { MobileDataShow } from 'components/tableElements'
 
-const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
+const TableMobile = ({_crudName, listToShow, setState, t}) => {
 
     return(
       <React.Fragment>
@@ -11,25 +11,21 @@ const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
                 <div className="row" key={_crudName.cod + "Item-" + idx}>
                   <div className="col-10">
                     <MobileDataShow
-                      title={t("Name")}
-                      desc={listItem.name}
+                      title={t("Number")}
+                      desc={listItem.number}
                     />
                     <MobileDataShow
-                      title={t("Detail")}
-                      desc={listItem.detail || "- - -"}
+                      title={t("Code")}
+                      desc={listItem.code}
                     />
                     <MobileDataShow
-                      title={t("Page web")}
-                      desc={listItem.url}
-                    />
-                    <MobileDataShow
-                      title="Email"
-                      desc={listItem.email}
+                      title={"Imei"}
+                      desc={listItem.imei}
                     />
                   </div>
                   <div className="col-2">
-                    <button 
-                        className='btn btn-sm'
+                    <button
+                        className='btn btn-sm btn-primary'
                         onClick={()=>{
                             setState({
                                 modalOpen: true,
@@ -37,8 +33,7 @@ const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
                                 elementSelected: listItem
                             })
                         }}
-                        title='Editar plataforma'
-                      >
+                        >
                         <i className="fas fa-edit"></i>
                     </button>
                   </div>
@@ -70,7 +65,6 @@ const TableMobile = ({_crudName, listToShow, onGet, setState, t}) => {
 TableMobile.propTypes = {
     _crudName: PropTypes.object,
     listToShow: PropTypes.object,
-    onGet: PropTypes.func,
     setSorterer: PropTypes.func,
     setState: PropTypes.func,
     sorterer: PropTypes.number,

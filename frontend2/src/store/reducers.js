@@ -24,6 +24,7 @@ import Car from "./car/reducer"
 import Modem from "./modem/reducer"
 import Event from "./event/reducer"
 import Client from "./clients/reducer"
+import Watch from "./watch/reducer"
 
 const rootReducer = combineReducers({
   // public
@@ -41,7 +42,8 @@ const rootReducer = combineReducers({
   Users,
   Modem,
   Event,
-  Client
+  Client,
+  Watch
 })
 
 export default rootReducer

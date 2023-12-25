@@ -43,7 +43,7 @@ Route::get('modem', [ModemController::class,'index'])->middleware("auth:sanctum"
 Route::get('modem/{imei}', [ModemController::class,'indexSearch'])->middleware("auth:sanctum");;
 Route::get('modem/details/{id}', [ModemController::class,'details'])->middleware("auth:sanctum");;
 Route::get('modem/remove-sim/{id}', [ModemController::class,'remove_sim'])->middleware("auth:sanctum");;
-Route::post('modem', [ModemController::class,'store'])->middleware("auth:sanctum");
+Route::post('modem', [ModemController::class,'store']);
 Route::post('modem/event', [ModemController::class,'event'])->middleware("auth:sanctum");;
 Route::put('modem', [ModemController::class,'update'])->middleware("auth:sanctum");
 Route::put('modem/update-sim', [ModemController::class,'update_sim'])->middleware("auth:sanctum");
@@ -107,14 +107,13 @@ Route::delete('client-car/{obj}', [ClientCarController::class,'destroy']);
 
 Route::post('images', [ImagesController::class,'upload']);
 
-
 Route::get('watch/{platform_id}', [WatchController::class,'index']);
 Route::get('watch/{watch}/get_wifi', [WatchController::class,'get_wifi']);
 Route::post('watch', [WatchController::class,'store']);
+Route::post('watch/getDataConfigForWatch', [WatchController::class,'getDataConfigForWatch']);
 Route::put('watch', [WatchController::class,'update']);
+Route::delete('watch/{watch}', [WatchController::class,'destroy']);
 
 Route::get('wifi/{platform_id}', [WifiController::class,'index']);
 Route::post('wifi', [WifiController::class,'store']);
 Route::put('wifi', [WifiController::class,'update']);
-
-

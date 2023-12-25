@@ -4,7 +4,9 @@ import ModalAdd from './modalAdd';
 import ModalEdit from './modalEdit';
 import { showToast } from 'components/toast';
 
-const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState, state, t}) => {
+import ModalWifi from './modalWifi';
+
+const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAndGet, setState, state, t}) => {
     const [toastWaiting, setToastW] = useState(false)
 
     useEffect(()=>{
@@ -28,7 +30,27 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
         if (itsOk) setState({modalOpen: false})
     }
 
-    const modalIcon = {Add: "plus", Edit: "edit"}
+    const HeaderButtonClose = () => (
+        <button
+        type="button"
+        onClick={()=>{
+            setState({modalOpen: false})
+          }}
+        className="close"
+        aria-label="Close"
+        ></button>
+    )
+
+    const FooterButtonClose = () => (
+        <button
+            className='btn btn-secondary'
+            onClick={()=>{
+                setState({modalOpen: false})
+            }}
+        >
+            {t("Close")}
+        </button>
+    )
 
     const modalToShow = () => {
         switch (state.modalType) {
@@ -37,9 +59,13 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
                     <ModalAdd
                         _crudName={_crudName}
                         formName={state.modalType}
+                        FooterButtonClose = {FooterButtonClose}
+                        HeaderButtonClose={HeaderButtonClose}
                         onPostAndGet={onPostAndGet}
+                        state={state}
                         setState={setState}
                         setToastW={setToastW}
+                        toastWaiting={toastWaiting}
                         t={t}
                         />
                 )
@@ -48,10 +74,28 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
                     <ModalEdit
                         _crudName={_crudName}
                         formName={state.modalType}
+                        FooterButtonClose = {FooterButtonClose}
+                        HeaderButtonClose={HeaderButtonClose}
                         onPutAndGet={onPutAndGet}
                         setState={setState}
                         setToastW={setToastW}
+                        toastWaiting={toastWaiting}
                         state={state}
+                        t={t}
+                    />
+                )
+            case "Wifi":
+                return(
+                    <ModalWifi
+                        _crudName={_crudName}
+                        elementSelected={state.elementSelected}
+                        FooterButtonClose = {FooterButtonClose}
+                        HeaderButtonClose={HeaderButtonClose}
+                        localStore={localStore}
+                        onGet={onGet}
+                        onPost={onPost}
+                        onPostAndGet={onPostAndGet}
+                        setToastW={setToastW}
                         t={t}
                     />
                 )
@@ -63,45 +107,7 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
 
     return(
         <React.Fragment>
-            <div className="modal-header">
-                <h4>{t(state.modalType) + " " + t(_crudName.single)}</h4>
-                <button
-                    type="button"
-                    onClick={()=>{
-                        setState({modalOpen: false})
-                      }}
-                    className="close"
-                    aria-label="Close"
-                ></button>
-            </div>
-            <div className="modal-body">
                 {modalToShow()}
-            </div>
-            <div className="modal-footer">
-                <button
-                    className='btn btn-secondary'
-                    onClick={()=>{
-                        setState({modalOpen: false})
-                    }}
-                >
-                    {t("Cancel")}
-                </button>
-                <div className="ms-auto">
-                    <button
-                        className={`btn dm-button text-light btn-label`}
-                        disabled={toastWaiting}
-                        form={_crudName.cod + "_" + state.modalType}
-                        type="submit"
-                    >
-                        {
-                            toastWaiting ?
-                            <i className="bx bx-loader bx-spin font-size-16 align-middle me-2"></i> :
-                            <i className={`fas fa-${modalIcon[state.modalType]} label-icon`}></i>
-                        }
-                        {t(state.modalType)}
-                    </button>
-                </div>
-            </div>
         </React.Fragment>
     )
 }
@@ -109,6 +115,8 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
 ModalIndex.propTypes = {
     _crudName: PropTypes.object,
     localStore: PropTypes.object,
+    onGet: PropTypes.func,
+    onPost: PropTypes.func,
     onPostAndGet: PropTypes.func,
     onPutAndGet: PropTypes.func,
     setState: PropTypes.func,

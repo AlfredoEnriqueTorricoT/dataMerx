@@ -15,10 +15,13 @@ return new class extends Migration
     {
         Schema::create('watches', function (Blueprint $table) {
             $table->id();
+            $table->string('code');
             $table->string('imei');
-            $table->unsignedBigInteger('modem_id')->nullable();
+            $table->string('device_name')->nullable();
+            $table->integer('siguelo_device_id')->nullable();
+            $table->unsignedBigInteger('platform_id')->nullable();
 
-            $table->foreign('modem_id')->references('id')->on('modems')
+            $table->foreign('platform_id')->references('id')->on('platforms')
                 ->onUpdate('cascade');
             $table->timestamps();
         });

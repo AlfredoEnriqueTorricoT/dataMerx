@@ -142,6 +142,12 @@ class SidebarContent extends Component {
                 </Link>
               </li>
               <li className="dm-link">
+                <Link to="/watch">
+                  <i className="fas fa-watch dm-link-icon" />
+                  <span>Relojes</span>
+                </Link>
+              </li>
+              <li className="dm-link">
                 <Link to="/clients">
                   <i className="fas fa-users dm-link-icon" />
                   <span>Clientes</span>
