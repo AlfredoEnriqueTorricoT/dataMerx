@@ -48,8 +48,24 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                   <div className="col-8">
                     <div className="row">
                       <MobileDataShow
+                        title="Código"
+                        desc={listItem.code}
+                      />
+                      <MobileDataShow
                         title="Imei"
                         desc={listItem.imei}
+                      />
+                      <MobileDataShow
+                        title="Nombre"
+                        desc={listItem.device_name || "- - -"}
+                      />
+                      <MobileDataShow
+                        title="Device id"
+                        desc={listItem.siguelo_device_id || "- - -"}
+                      />
+                      <MobileDataShow
+                        title="Platform"
+                        desc={listItem.platform_id || "- - -"}
                       />
                     </div>
                   </div>

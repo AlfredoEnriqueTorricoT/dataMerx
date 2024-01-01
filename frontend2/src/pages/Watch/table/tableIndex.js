@@ -29,6 +29,10 @@ const TableIndex = ({_crudName, onGet, localStore, setState, t}) => {
         const newList = 
             localStore.watchList.map(watch => ({
                 id: watch.id,
+                code: watch.code,
+                device_name: watch.device_name,
+                siguelo_device_id: watch.siguelo_device_id,
+                platform_id: watch.platform_id,
                 imei: watch.imei,
                 modem_id: watch.modem_id,
             }))

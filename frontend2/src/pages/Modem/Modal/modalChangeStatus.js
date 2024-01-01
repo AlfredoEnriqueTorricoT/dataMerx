@@ -79,9 +79,7 @@ const ModalChangeStatus = ({_crudName, CancelModalButton, CloseModalButton, form
                               name="description"
                               as="textArea"
                             />
-                            <ErrorMessage name="description">
-                              {msg => <h6 className="text-danger">{t(msg)}</h6>}
-                            </ErrorMessage>
+                            
                           </div>
                         </div>
                     </Form>

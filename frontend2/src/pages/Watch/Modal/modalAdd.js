@@ -12,8 +12,8 @@ const ModalAdd = ({_crudName, CancelModalButton, CloseModalButton, formName, loc
     const validateFunction = values => {
         let errors = {}
 
+        if (!values.code) errors.code = t("Enter the watch code")
         if (!values.imei) errors.imei = t("Enter the watch imei")
-        if (!values.modem_imei) errors.imei = t("Enter the modem imei")
 
         return errors
     }
@@ -39,25 +39,23 @@ const ModalAdd = ({_crudName, CancelModalButton, CloseModalButton, formName, loc
             <Formik
                 onSubmit={submitFunction}
                 initialValues={{
-                    imei: "",
                     code: "",
-                    mark_id: "",
-                    platform_id: "",
+                    imei: "",
                 }}
                 validate={validateFunction}
             >
                 {({errors})=>(
                     <Form id={_crudName.cod + "_" + formName}>
                       <FormikInput
-                          label="Imei"
-                          inputName="imei"
-                          type="number"
+                          label={t("Code")}
+                          inputName="code"
+                          type="text"
                           required={true}
                           groupId ={genericId}
                         />
                       <FormikInput
-                          label="Módem imei"
-                          inputName="modem_imei"
+                          label="Imei"
+                          inputName="imei"
                           type="number"
                           required={true}
                           groupId ={genericId}

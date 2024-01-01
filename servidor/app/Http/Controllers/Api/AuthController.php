@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\UserPermissionController;
 use App\Http\Res;
 use App\Models\User;
+use App\Models\UserPermission;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,7 +54,13 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         $user->token = $token;
+
+        $userPermissions = new UserPermissionController();
+        
+        $user->permissions = $userPermissions->getAllPermission($user->id);
         unset($user->id);
+
+        
 
         return Res::responseSuccess($user);
     }

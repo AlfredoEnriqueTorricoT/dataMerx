@@ -117,6 +117,7 @@ class SimController extends Controller
                 "type_id" => 1,
                 "car_id" => null,
                 "modem_id" => null,
+                "watch_id" => null,
                 "sim_id" => $obj->id,
                 "platform_id" => null,
                 "user_id" => auth()->user()->id

@@ -30,7 +30,6 @@ const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, localStore, o
         if (!values.number) errors.number = "Enter the sim number"
         if (values.number.toString().length != 8) errors.number = "El número de teléfono debe ser de 8 dígitos"
         if (!values.imei) errors.imei = "Enter the sim imei"
-        if (!simImages) errors.images = "Seleccione una o varias imagenes"
 
         return errors
     }
@@ -121,7 +120,6 @@ const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, localStore, o
                             className="col-3 col-form-label"
                             >
                             Añadir imagenes
-                            <p className="text-danger d-inline-block">(*)</p>
                           </label>
                           <div className="col-9">
                             <Field
@@ -134,9 +132,6 @@ const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, localStore, o
                               }}
                               type="file"
                             />
-                            <ErrorMessage name="images">
-                              {msg => <h6 className="text-danger">{t(msg)}</h6>}
-                            </ErrorMessage>
                           </div>
                         </div>
                     </Form>

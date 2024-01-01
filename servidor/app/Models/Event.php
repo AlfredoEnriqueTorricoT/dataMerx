@@ -16,6 +16,7 @@ class Event extends Model
         "car_id",
         "modem_id",
         "sim_id",
+        "watch_id",
         "platform_id",
         "user_id"
     ];

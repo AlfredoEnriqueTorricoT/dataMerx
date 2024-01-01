@@ -11,6 +11,7 @@ use App\Http\Controllers\ModemsMarkController;
 use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\SimController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserPermissionController;
 use App\Http\Controllers\WatchController;
 use App\Http\Controllers\WifiController;
 use Illuminate\Http\Request;
@@ -59,6 +60,9 @@ Route::get('user', [UserController::class,'index']);
 Route::post('user', [UserController::class,'store']);
 Route::put('user', [UserController::class,'update']);
 
+Route::get('user-permission/{user_id}', [UserPermissionController::class,'index']);
+Route::post('user-permission', [UserPermissionController::class,'createAndDelete']);
+
 Route::get('sim', [SimController::class,'index']);
 Route::get('sim/{imei}', [SimController::class,'indexSearch']);
 Route::get('sim/details/{id}', [SimController::class,'details']);
@@ -86,6 +90,7 @@ Route::post('car-upload-add', [CarController::class,'updloadImage'])->middleware
 Route::get('event/car/{id}', [EventController::class,'car']);
 Route::get('event/modem/{id}', [EventController::class,'modem']);
 Route::get('event/sim/{id}', [EventController::class,'sim']);
+Route::get('event/watch/{id}', [EventController::class,'watch']);
 Route::get('event/{type}/{id}', [EventController::class,'index']);
 Route::get('event-images/{id}', [EventController::class,'images']);
 Route::post('event', [EventController::class,'store']);
@@ -109,8 +114,10 @@ Route::post('images', [ImagesController::class,'upload']);
 
 Route::get('watch/{platform_id}', [WatchController::class,'index']);
 Route::get('watch/{watch}/get_wifi', [WatchController::class,'get_wifi']);
+Route::get('watch/code/{code}', [WatchController::class,'getConfigByCode']);
 Route::post('watch', [WatchController::class,'store']);
 Route::post('watch/getDataConfigForWatch', [WatchController::class,'getDataConfigForWatch']);
+Route::post("watch/event", [WatchController::class, "event"]);
 Route::put('watch', [WatchController::class,'update']);
 Route::delete('watch/{watch}', [WatchController::class,'destroy']);
 

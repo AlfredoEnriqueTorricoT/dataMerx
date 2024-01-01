@@ -14,7 +14,17 @@ use Illuminate\Http\Request;
 
 class WatchController extends Controller
 {
-
+    public function getConfigByCode($code){
+        $watch = Watch::where(Watch::COL_CODE, $code)->first();
+        $wifi = Wifi::where(Wifi::COL_PLATFORM_ID, $watch->platform_id)->get([
+            Wifi::COL_SSID,
+            Wifi::COL_PASSWORD,
+        ]);
+        
+        $watch->wifi = $wifi;
+        $watch = $watch->only(['device_name', 'siguelo_device_id', 'wifi']);
+        return Res::responseSuccess($watch);
+    }
 
     public function getDataConfigForWatch(Request $request)
     {
@@ -36,6 +46,7 @@ class WatchController extends Controller
             if($count > 0){
                 //echo $peticion["response"][0]["id"]. " -> ". $peticion["response"][0]["text1"];
                 $watch->update([
+                    Watch::COL_PLATFORM_ID => $request->platform_id,
                     Watch::COL_SIGUELO_DEVICE_ID => $peticion["response"][0]["id"],
                     Watch::COL_DEVICE_NAME => $peticion["response"][0]["text1"],
                 ]);
@@ -69,6 +80,19 @@ class WatchController extends Controller
         }
     }
 
+    public function event(Request $request){
+        $element = [
+            "watch_id" => $request->watch_id,
+            "sim_id" => null,
+            "modem_id" => null,
+            "car_id" => null
+        ];
+
+        $event = EventController::storeUpload($request, $element);
+
+        return Res::responseSuccess($event);
+    }
+
     public function get_wifi(Watch $watch)
     {
         try {
@@ -94,9 +118,9 @@ class WatchController extends Controller
     {
         //echo $request->bearerToken();
         try {
-            
             $obj = Watch::create($request->all());
 
+            
             return Res::responseSuccess($obj);
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());

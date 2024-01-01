@@ -36,15 +36,15 @@ const ModalIndex = ({
     }, [localStore.status])
 
     const toastSuccessMessages = {
-        Add: "The modem has been added",
-        Edit: "The modem has been edited",
-        Sim: "The sim has been assigned",
+        Add: "The watch has been added",
+        Edit: "The watch has been edited",
+        Settings: "El reloj ha sido configurado",
         ["Add event to"]: "The event has been registered"
     }
     const toastFailMessages = {
-        Add: "The modem could not be added",
-        Edit: "The modem could not be edited",
-        Sim: "The sim could not be assigned",
+        Add: "The watch could not be added",
+        Edit: "The watch could not be edited",
+        Settings: "El reloj no pudo ser configurado",
         ["Add event to"]: "The event could not be registered"
     }
 
@@ -150,10 +150,11 @@ const ModalIndex = ({
                         CancelModalButton={CancelModalButton}
                         CloseModalButton={CloseModalButton}
                         localStore={localStore}
-                        onPut={onPut}
+                        onPostAndGet={onPostAndGet}
                         onGetPlatform={onGetPlatform}
                         platformStore={platformStore}
                         setState={setState}
+                        setToastW={setToastW}
                         state={state}
                         t={t}
                         toastWaiting={toastWaiting}

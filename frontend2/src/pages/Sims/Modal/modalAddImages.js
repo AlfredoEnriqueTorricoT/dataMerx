@@ -89,9 +89,7 @@ const ModalAddImages = ({CloseModalButton, CancelModalButton, localStore, onPost
                             }}
                             type="file"
                           />
-                          <ErrorMessage name="images">
-                            {msg => <h6 className="text-danger">{t(msg)}</h6>}
-                          </ErrorMessage>
+                          
                         </div>
                       </div>                        
                   </Form>

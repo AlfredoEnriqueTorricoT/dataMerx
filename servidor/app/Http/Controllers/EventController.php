@@ -104,6 +104,29 @@ class EventController extends Controller
     }
 
 
+    public function watch($id)
+    {
+        try {
+            $list = Event::where("watch_id", $id)->orderBy("id","desc")->get();
+
+            foreach($list as $event){
+                $event["platform"] = $event->platform;
+                $event["car"] = $event->car;
+                $event["modem"] = $event->modem;
+                $event["sim"] = $event->sim;
+                $event["images"] = Images::where([
+                    ["table", "=", "e"],
+                    ["table_id", "=", $event->id]
+                ])->get("url");
+            }
+
+            return Res::responseSuccess($list);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
+
 
     public function store(Request $request)
     {
@@ -129,9 +152,10 @@ class EventController extends Controller
                 "type_id" => $request["type_id"],
                 "car_id" => $objId["car_id"],
                 "modem_id" => $objId["modem_id"],
-                "sim_id" => $objId["sim_id"]
+                "sim_id" => $objId["sim_id"],
+                "watch_id" => $objId["watch_id"],
             ]);
-
+            
             ImagesController::upload($request, "e", $obj["id"]);
 
             return $obj;

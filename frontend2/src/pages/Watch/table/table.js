@@ -39,7 +39,11 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                       sorter={sorter}
                       setSorter={setSorter}
                       headerNames={[
+                        {name: "Código", arrow: true},
                         {name: "Imei", arrow: true},
+                        {name: "Nombre", arrow: true},
+                        {name: "Device id", arrow: true},
+                        {name: "Plataforma", arrow: true},
                         {name: "Acciones", arrow: false}
                       ]}
                      />
@@ -54,7 +58,11 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                           </tr> :
                         listToShow.map((listItem, idx)=>(
                             <tr key={_crudName.cod + "Item-" + idx}>
+                                <td>{listItem.code}</td>
                                 <td>{listItem.imei}</td>
+                                <td>{listItem.device_name || "- - -"}</td>
+                                <td>{listItem.siguelo_device_id || "- - -"}</td>
+                                <td>{listItem.platform_id || "- - -"}</td>
                                 <td>
                                     <div className="btn-group">
                                     <button

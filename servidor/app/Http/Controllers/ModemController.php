@@ -215,6 +215,7 @@ class ModemController extends Controller
                 "type_id" => 1,
                 "car_id" => null,
                 "modem_id" => $obj->id,
+                "watch_id" => null,
                 "sim_id" => null,
                 "platform_id" => null,
                 "user_id" => auth()->user()->id
@@ -318,7 +319,8 @@ class ModemController extends Controller
         $element = [
             "sim_id" => $sim_id,
             "modem_id" => $modem_id,
-            "car_id" => $car_id
+            "car_id" => $car_id,
+            "watch_id" => null
         ];
 
         $event = EventController::storeUpload($request, $element);

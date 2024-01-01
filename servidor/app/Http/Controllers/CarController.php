@@ -395,7 +395,6 @@ class CarController extends Controller
         $sim_id =  null;
 
         $car = Car::find($car_id);
-
         //$car = null;
         if ($car != null) {
 
@@ -406,13 +405,13 @@ class CarController extends Controller
                 $sim_id = $modem->sim_id;
             }
         }
-
+        
         $element = [
             "sim_id" => $sim_id,
             "modem_id" => $modem_id,
-            "car_id" => $car_id
+            "car_id" => $car_id,
+            "watch_id" => null,
         ];
-
         $evento = EventController::storeUpload($request, $element);
 
         return Res::responseSuccess($evento);

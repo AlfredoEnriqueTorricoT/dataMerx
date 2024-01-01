@@ -17,7 +17,6 @@ const ModalAdd = ({_crudName, CancelModalButton, CloseModalButton, formName, loc
         if (values.imei.toString().length != 15) errors.imei = t("El imei debe tener 15 dígitos")
         if (!values.code) errors.code = t("Enter the modem code")
         if (!values.mark_id) errors.mark_id = t("Select a modem brand")
-        if (!modemImages) errors.images = "Seleccione una o varias imagenes"
 
         return errors
     }
@@ -61,7 +60,7 @@ const ModalAdd = ({_crudName, CancelModalButton, CloseModalButton, formName, loc
                 validate={validateFunction}
             >
                 {({errors})=>(
-                    <Form id={_crudName.cod + "_" + formName}>
+                    <Form id="modalAddModem">
                       <FormikInput
                         label={t("Code")}
                         inputName="code"
@@ -114,7 +113,6 @@ const ModalAdd = ({_crudName, CancelModalButton, CloseModalButton, formName, loc
                             className="col-3 col-form-label"
                             >
                             Añadir imagenes
-                            <p className="text-danger d-inline-block">(*)</p>
                           </label>
                           <div className="col-9">
                             <Field
@@ -127,9 +125,6 @@ const ModalAdd = ({_crudName, CancelModalButton, CloseModalButton, formName, loc
                               }}
                               type="file"
                             />
-                            <ErrorMessage name="images">
-                              {msg => <h6 className="text-danger">{t(msg)}</h6>}
-                            </ErrorMessage>
                           </div>
                         </div>
                     </Form>
@@ -140,7 +135,7 @@ const ModalAdd = ({_crudName, CancelModalButton, CloseModalButton, formName, loc
             <div className="modal-footer">
               <CancelModalButton />
               <div className="ms-auto">
-                <button className="btn dm-button btn-label text-light" disabled={toastWaiting} form={_crudName.cod + "_" + formName} type="submit">
+                <button className="btn dm-button btn-label text-light" disabled={toastWaiting} form="modalAddModem" type="submit">
                   Añadir
                   <i className="fas fa-plus label-icon"></i>
                 </button>

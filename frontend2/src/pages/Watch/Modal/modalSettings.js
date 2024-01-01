@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 
@@ -9,13 +9,14 @@ const ModalSettings = ({
     CancelModalButton,
     CloseModalButton,
     localStore,
-    onPut,
+    onPostAndGet,
     onGetPlatform,
     platformStore,
     setToastW,
     state,
     t,
     toastWaiting}) => {
+    const [switchState, setSwitchState] = useState(false)
 
     useEffect(()=>{
         getPlatforms()
@@ -23,7 +24,7 @@ const ModalSettings = ({
 
     const getPlatforms = () => {
         if (platformStore.platformList.length == 0)
-            onGetPlatform({ saveAs: _crudName.cod + "List", url: "platform" })
+            onGetPlatform({ saveAs: "platformList", url: "platform" })
     }
 
     const _formName = "Setting"
@@ -32,40 +33,29 @@ const ModalSettings = ({
     const validateFunction = values => {
         let errors = {}
 
-        if (!values.platform_id) errors.imei = t("Select a platform")
+        if (!values.platform_id) errors.platform_id = t("Select a platform")
         if (!values.device_imei) errors.device_imei = t("Enter the device imei")
 
         return errors
     }
 
-    const submitFunc = ({active, ...values}) => {
+    const submitFunc = (values) => {
       setToastW(true)
 
-      let act = active == t("active") ? 1 : 0
-
-      onPut({
-        saveAs: "UNUSED-DATA",
-        payload: {...values, active: act},
-        url: "watch"})
+      onPostAndGet({
+        saveAs: "watchList",
+        urlToGet: "watch/" + state.imeiToSearch,
+        payload: values,
+        url: "watch/getDataConfigForWatch"})
     }
 
-    const defaultOption = () => {
-        if (platformStore.status == "waiting_response")
-            return (t("Loading") + " " + t("platforms") + "...")
-        if (platformStore.status == 200)
-            return t("Select a platform")
-    }
-
-    const ShowPlatforms = () => {
-        if (platformStore.length)
-            return(
-                platformStore.map((platform, idx)=>(
-                    <option key={idx} value={platform.id}>{platform.name}</option>
-                ))
-            )
-        else
-            return (<option disabled>Sin plataformas</option>)
-    }
+    const ShowPlatforms = () => (
+        platformStore.platformList.length ?
+            platformStore.platformList.map((platform, idx)=>(
+                <option key={idx} value={platform.id}>{platform.name}</option>
+            )) :
+            <option disabled>Sin plataformas</option>
+    )
 
     return(
         <React.Fragment>
@@ -79,11 +69,8 @@ const ModalSettings = ({
                 onSubmit={submitFunc}
                 initialValues={{
                   id: state.elementSelected.id,
-                  code: state.elementSelected.code,
-                  imei: state.elementSelected.imei,
-                  mark_id: state.elementSelected.mark_id,
-                  active: state.elementSelected.active,
-                  platform_id: state.elementSelected.platform_id
+                  device_imei: "",
+                  platform_id: ""
                 }}
                 validate={validateFunction}
             >
@@ -95,7 +82,11 @@ const ModalSettings = ({
                           required={true}
                           groupId ={genericId}
                         >
-                            <option value="" hidden>{defaultOption()}</option>
+                            <option disabled value="" hidden>{
+                                platformStore.status == "waiting response" ?
+                                    (t("Loading") + " " + t("platforms") + "...") :
+                                    "Seleccione una plataforma"    
+                            }</option>
                             <ShowPlatforms />
                         </FormikSelect>
                         <FormikInput
@@ -128,7 +119,7 @@ ModalSettings.propTypes = {
     CancelModalButton: PropTypes.any,
     CloseModalButton: PropTypes.any,
     localStore: PropTypes.object,
-    onPut: PropTypes.func,
+    onPostAndGet: PropTypes.func,
     setToastW: PropTypes.func,
     state: PropTypes.object,
     t: PropTypes.func,

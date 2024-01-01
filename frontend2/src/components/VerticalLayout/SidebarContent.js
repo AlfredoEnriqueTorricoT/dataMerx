@@ -143,7 +143,7 @@ class SidebarContent extends Component {
               </li>
               <li className="dm-link">
                 <Link to="/watch">
-                  <i className="fas fa-watch dm-link-icon" />
+                  <i className="fas fa-stopwatch dm-link-icon" />
                   <span>Relojes</span>
                 </Link>
               </li>
@@ -153,25 +153,27 @@ class SidebarContent extends Component {
                   <span>Clientes</span>
                 </Link>
               </li>
-              <li className="dm-link">
-                <Link to="/mark-modem">
-                  <i className="fas fa-list dm-link-icon"></i>
-                  <span>Marcas de módem</span>
-                </Link>
-              </li>
+              {(JSON.parse(localStorage.getItem("userData"))).auth === 0 ? 
+                <li className="dm-link">
+                  <Link to="/mark-modem">
+                    <i className="fas fa-list dm-link-icon"></i>
+                    <span>Marcas de módem</span>
+                  </Link>
+                </li>
+              : ""}
               <li className="dm-link">
                 <Link to="/platform">
                   <i className="fas fa-city dm-link-icon"></i>
                   <span>Plataformas</span>
                 </Link>
               </li>
-              {(JSON.parse(localStorage.getItem("userData"))).auth == 0 ? 
-              <li className="dm-link">
-                <Link to="/users">
-                  <i className="fas fa-user-tie dm-link-icon" />
-                  <span>Usuarios</span>
-                </Link>
-              </li>
+              {(JSON.parse(localStorage.getItem("userData"))).auth === 0 ? 
+                <li className="dm-link">
+                  <Link to="/users">
+                    <i className="fas fa-user-tie dm-link-icon" />
+                    <span>Usuarios</span>
+                  </Link>
+                </li>
               : ""}
             </ul>
           </div>

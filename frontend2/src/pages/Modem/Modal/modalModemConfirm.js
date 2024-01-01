@@ -13,7 +13,7 @@ const ModalModemConfirm = ({assignModem, modalOpen, setModalOpen, localStore}) =
                     type="button"
                     onClick={()=>{
                         setModalOpen(false);
-                        setToastW(false)
+                        //setToastW(false)
                       }}
                     className="close"
                     aria-label="Close"
@@ -27,7 +27,7 @@ const ModalModemConfirm = ({assignModem, modalOpen, setModalOpen, localStore}) =
                     className="btn btn-secondary"
                     onClick={()=>{
                         setModalOpen(false)
-                        setToastW(false)
+                        //setToastW(false)
                     }}
                 >
                     Cancelar

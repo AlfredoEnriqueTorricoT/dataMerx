@@ -44,6 +44,7 @@ function* postModemSaga(action) {
 
   try {
     response = yield call(AxiosServices.POST, {payload: action.payload, url: action.url})
+    console.log(action);
     try {
       if (response.data.status == 200) {
         yield put(updateModemStorage({

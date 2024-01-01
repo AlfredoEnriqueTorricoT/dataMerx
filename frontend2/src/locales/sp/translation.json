@@ -43,6 +43,8 @@
   "INACTIVE": "INACTIVO",
   "inactive": "inactivo",
   "Informative": "Informativo",
+  "Loading": "Cargando",
+  "loading": "cargando",
 
   "Mark": "Marca",
   "Model": "Modelo",
@@ -136,6 +138,7 @@
   "The plaform could not be deleted": "La plataforma no pudo ser eliminada",
   "The plaform has been deleted": "La plataforma ha sido eliminada",
   "The watch could not be deleted": "El reloj no pudo ser eliminado",
+  "The watch has been assigned": "El reloj ha sido configurado",
   "The watch has been deleted": "El reloj ha sido eliminado",
   "The wifi could not be added": "El wifi no pudo ser añadido",
   "The wifi has been added": "El wifi ha sido añadido",

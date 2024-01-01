@@ -18,7 +18,6 @@ const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, formName, loc
         if (!values.model) errors.model = t("Enter the car model")
         if (!values.placa) errors.placa = t("Enter the car license plate")
         if (!(/^[0-9]{3,4}-[A-Z]{3}$/.test(values.placa))) errors.placa = "La placa ingresada no es válida 000-AAA"
-        if (!carImages) errors.images = "Seleccione una o varias imagenes"
 
         return errors
     }
@@ -110,7 +109,6 @@ const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, formName, loc
                               className="col-3 col-form-label"
                               >
                               Añadir imagenes
-                              <p className="text-danger d-inline-block">(*)</p>
                             </label>
                             <div className="col-9">
                               <Field
@@ -123,9 +121,6 @@ const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, formName, loc
                                 }}
                                 type="file"
                               />
-                              <ErrorMessage name="images">
-                                {msg => <h6 className="text-danger">{t(msg)}</h6>}
-                              </ErrorMessage>
                             </div>
                           </div>
                       </Form>

@@ -37,14 +37,6 @@ class Layout extends Component {
   }
 
   componentDidMount() {
-    const title = props.location.pathname;
-    let currentage = title.charAt(1).toUpperCase() + title.slice(2);
-
-    document.title =
-      currentage + " | Skote - React Admin & Dashboard Template";
-  } [props.location.pathname];   
-
-  componentDidMount() {
 
     document.body.addEventListener("click", this.hideRightbar, true);
 

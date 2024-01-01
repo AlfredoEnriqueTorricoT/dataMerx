@@ -133,7 +133,7 @@ class FirebaseAuthBackend {
             reject(this._handleError(error))
           })
       } else {
-        reject(this._handleError(error))
+        //reject(this._handleError(error))
       }
     })
   }

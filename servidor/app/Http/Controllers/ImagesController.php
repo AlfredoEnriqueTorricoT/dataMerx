@@ -31,6 +31,7 @@ class ImagesController extends Controller
             $image->url = $ruta . "/" . $nameImage;
             $image->table = $table;
             $image->table_id = $table_id;
+            echo " _ ". "public/" . $ruta . "/", $nameImage;
             $image->save();
         }
     }
