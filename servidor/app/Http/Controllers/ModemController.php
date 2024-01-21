@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Res;
+use App\Services\ResponsabilityServices;
 use App\Models\Car;
 use App\Models\Images;
 use App\Models\Modem;
+use App\Models\ResponsabilityHistory;
 use App\Models\Sim;
+use App\Models\User;
+use App\Services\ModemServices;
 use Exception;
+use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +25,9 @@ class ModemController extends Controller
     public function index()
     {
         try {
-            $list = Modem::all();
+            $user_id = auth()->user()->id;
+            $list = Modem::where(Modem::COL_USER_SUCCESSOR_ID, $user_id)
+                ->orWhere(Modem::COL_USER_RESPONSABILITY_ID, $user_id)->get();
             
             foreach ($list as $moden) {
                 $moden["platform"] = $moden->platform;
@@ -452,4 +459,53 @@ class ModemController extends Controller
             return Res::responseError($ex->getMessage());
         }
     }
+
+
+    // ------------- RESPONSABILIDADES
+
+
+
+    public function transferRequest(Request $request){
+        
+        $modem = $request["middleware_modem"];
+        
+        $modemServices = new ModemServices();
+        $modemServices->updateForTransforRequest(
+            $modem,
+            auth()->user()->id,
+            $request->user_successor_id,
+            $request->observation
+        );
+
+        return Res::responseSuccess($modem);
+
+
+    }
+
+    public function transferConfirm(Request $request, ModemServices $modemServices){
+        $modem = $request["middleware_modem"];
+        $modemServices->updateForTransfer($modem, auth()->user()->id, ResponsabilityHistory::STATUS_CONFIRMADO);
+        return Res::responseSuccess($modem);
+    }
+
+    public function transferAnulado(Request $request, ModemServices $modemServices){
+        $modem = $request["middleware_modem"];
+        $modemServices->updateForTransfer($modem, auth()->user()->id, ResponsabilityHistory::STATUS_ANULADO);
+        return Res::responseSuccess($modem);
+    }
+
+    public function transferCancel(Request $request, ModemServices $modemServices)
+    {
+        $modem = $request["middleware_modem"];
+        $modemServices->updateForTransfer($modem, auth()->user()->id, ResponsabilityHistory::STATUS_CANCELAR);
+        return Res::responseSuccess($modem);
+    }
+
+    public function transferAnular(Request $request, ModemServices $modemServices)
+    {
+        $modem = $request["middleware_modem"];
+        $modemServices->updateForTransfer($modem, auth()->user()->id, ResponsabilityHistory::STATUS_ANULADO);
+        return Res::responseSuccess($modem);
+    }
+    
 }

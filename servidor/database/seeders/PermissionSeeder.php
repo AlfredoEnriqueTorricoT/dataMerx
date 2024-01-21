@@ -45,5 +45,18 @@ class PermissionSeeder extends Seeder
             "name" => "cars",
             "details" => "_"
         ]);
+
+
+        Permission::create([
+            "name" => "mark_modems",
+            "details" => "_"
+        ]);
+
+        Permission::create([
+            "name" => "responsability_admin",
+            "details" => "_"
+        ]);
+
+
     }
 }

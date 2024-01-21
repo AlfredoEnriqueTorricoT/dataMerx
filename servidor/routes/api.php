@@ -51,6 +51,10 @@ Route::put('modem/update-sim', [ModemController::class,'update_sim'])->middlewar
 Route::post('modem-upload', [ModemController::class,'storeUpload'])->middleware("auth:sanctum");
 Route::post('modem-upload-add', [ModemController::class,'updloadImage'])->middleware("auth:sanctum");
 Route::post('modem-enabled-disabled', [ModemController::class,'enabled_disable'])->middleware("auth:sanctum");
+Route::post('modem/transfer_request', [ModemController::class,'transferRequest'])->middleware(["auth:sanctum", "canTransferModem"]);
+Route::post('modem/transfer_confirm', [ModemController::class,'transferConfirm'])->middleware(["auth:sanctum", "canTransferRespondeModem"]);
+Route::post('modem/transfer_cancel', [ModemController::class,'transferConfirm'])->middleware(["auth:sanctum", "canTransferRespondeModem"]);
+Route::post('modem/transfer_anular', [ModemController::class,'transferConfirm'])->middleware(["auth:sanctum", "canTransferRespondeModem"]);
 
 Route::get('modem-mark', [ModemsMarkController::class,'index']);
 Route::post('modem-mark', [ModemsMarkController::class,'store']);
