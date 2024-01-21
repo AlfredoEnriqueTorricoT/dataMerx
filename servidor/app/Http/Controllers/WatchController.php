@@ -75,8 +75,11 @@ class WatchController extends Controller
         try {
             $list = Watch::where(Watch::COL_IMEI, 'like', '%' . $imei . '%')->get();
             foreach($list as $watch){
-                $platform = Platform::findOrFail($watch->platform_id);
-                $watch->platform_name = $platform->name;
+                if(!isset($watch->platform_id)){
+                    $platform = Platform::findOrFail($watch->platform_id);
+                    $watch->platform_name = $platform->name;
+                }
+                
             }
             return Res::responseSuccess($list);
         } catch (Exception $ex) {
