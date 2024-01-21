@@ -20,9 +20,9 @@ class CanTransferModemMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        
         $modem = Modem::findOrFail($request->id);
         $user_id =  auth()->user()->id;
-
         if($modem[Modem::COL_IS_PENDING]){
             $user_successor = User::findOrFail($request->user_successor_id);
             $user_reponsability = User::findOrFail(auth()->user()->id);
@@ -31,15 +31,15 @@ class CanTransferModemMiddleware
                 null
             );
         }
-
         
         if($modem[Modem::COL_USER_RESPONSABILITY_ID] == $user_id){
             $request["middleware_modem"] = $modem;
             return $next($request);
         }
-
+        
         $permissionService = new PermissionService();
         if($permissionService->hasPermission($user_id, "responsability_admin")){
+            $request["middleware_modem"] = $modem;
             return $next($request);
         }
 

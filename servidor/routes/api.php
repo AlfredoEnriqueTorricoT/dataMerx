@@ -40,12 +40,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', [AuthController::class, 'register'])->middleware("auth:sanctum");
 
-Route::get('modem', [ModemController::class,'index'])->middleware("auth:sanctum");;
+Route::get('modem', [ModemController::class,'index'])->middleware("auth:sanctum");
+Route::get('modem/details/{id}', [ModemController::class,'details'])->middleware("auth:sanctum");
+Route::get('modem/remove-sim/{id}', [ModemController::class,'remove_sim'])->middleware("auth:sanctum");
 Route::get('modem/{imei}', [ModemController::class,'indexSearch'])->middleware("auth:sanctum");;
-Route::get('modem/details/{id}', [ModemController::class,'details'])->middleware("auth:sanctum");;
-Route::get('modem/remove-sim/{id}', [ModemController::class,'remove_sim'])->middleware("auth:sanctum");;
-Route::post('modem', [ModemController::class,'store']);
+Route::post('modem', [ModemController::class,'store'])->middleware("auth:sanctum");
 Route::post('modem/event', [ModemController::class,'event'])->middleware("auth:sanctum");;
+Route::post('modem/filter', [ModemController::class,'filterByPatformAndResponsabilityTags'])->middleware("auth:sanctum");
 Route::put('modem', [ModemController::class,'update'])->middleware("auth:sanctum");
 Route::put('modem/update-sim', [ModemController::class,'update_sim'])->middleware("auth:sanctum");
 Route::post('modem-upload', [ModemController::class,'storeUpload'])->middleware("auth:sanctum");
@@ -53,8 +54,8 @@ Route::post('modem-upload-add', [ModemController::class,'updloadImage'])->middle
 Route::post('modem-enabled-disabled', [ModemController::class,'enabled_disable'])->middleware("auth:sanctum");
 Route::post('modem/transfer_request', [ModemController::class,'transferRequest'])->middleware(["auth:sanctum", "canTransferModem"]);
 Route::post('modem/transfer_confirm', [ModemController::class,'transferConfirm'])->middleware(["auth:sanctum", "canTransferRespondeModem"]);
-Route::post('modem/transfer_cancel', [ModemController::class,'transferConfirm'])->middleware(["auth:sanctum", "canTransferRespondeModem"]);
-Route::post('modem/transfer_anular', [ModemController::class,'transferConfirm'])->middleware(["auth:sanctum", "canTransferRespondeModem"]);
+Route::post('modem/transfer_cancel', [ModemController::class,'transferCancel'])->middleware(["auth:sanctum", "canTransferRespondeModem"]);
+Route::post('modem/transfer_anular', [ModemController::class,'transferAnular'])->middleware(["auth:sanctum", "canTransferAnularRequestModem"]);
 
 Route::get('modem-mark', [ModemsMarkController::class,'index']);
 Route::post('modem-mark', [ModemsMarkController::class,'store']);

@@ -28,7 +28,7 @@ class ModemController extends Controller
             $user_id = auth()->user()->id;
             $list = Modem::where(Modem::COL_USER_SUCCESSOR_ID, $user_id)
                 ->orWhere(Modem::COL_USER_RESPONSABILITY_ID, $user_id)->get();
-            
+
             foreach ($list as $moden) {
                 $moden["platform"] = $moden->platform;
                 $moden["sim"] = $moden->sim;
@@ -67,7 +67,7 @@ class ModemController extends Controller
         try {
             $modem = Modem::find($id);
 
-            if($modem == null){
+            if ($modem == null) {
                 return null;
             }
 
@@ -89,7 +89,7 @@ class ModemController extends Controller
         try {
             $modem = Modem::where("sim_id", $simId)->first();
 
-            if($modem == null){
+            if ($modem == null) {
                 return null;
             }
             $modem->modems_mark;
@@ -121,7 +121,7 @@ class ModemController extends Controller
         $modem->modems_mark;
         $sim = SimController::byId($modem["sim_id"]);
         $car = CarController::byModemId($modem["id"]);
-        if($car != null){
+        if ($car != null) {
             $car->platform;
         }
 
@@ -134,11 +134,12 @@ class ModemController extends Controller
         return Res::responseSuccess($obj);
     }
 
-    public function remove_sim ($modem_id){
+    public function remove_sim($modem_id)
+    {
         $obj = Modem::find($modem_id);
         $sim_id = $obj->sim_id;
 
-        if($sim_id == null){
+        if ($sim_id == null) {
             return Res::responseError432("No se ha encontrado sim en el modem", $obj);
         }
 
@@ -149,7 +150,7 @@ class ModemController extends Controller
 
         $car = Car::where("modem_id", $obj->id)->first();
         $car_id = null;
-        if($car != null){
+        if ($car != null) {
             $car_id = $car->id;
         }
         $event = [
@@ -171,33 +172,28 @@ class ModemController extends Controller
     public function store(Request $request)
     {
         //echo $request->bearerToken();
-        try {
 
-            $countModemRepeat = Modem::where("imei", $request->imei)->get()->count();
+        $countModemRepeat = Modem::where("imei", $request->imei)->get()->count();
 
-            if ($countModemRepeat > 0) {
-                return Res::responseError432("Imei ya registrado.", null);
-            }
-
-            $request->sim_id = null;
-            $obj = Modem::create($request->all());
-
-            $event = [
-                "title" => "Registro",
-                "detail" => "Modem registrado",
-                "type_id" => 1,
-                "car_id" => null,
-                "modem_id" => $obj->id,
-                "sim_id" => null,
-                "platform_id" => null,
-                "user_id" => auth()->user()->id
-            ];
-            EventController::_store($event);
-
-            return Res::responseSuccess($obj);
-        } catch (Exception $ex) {
-            return Res::responseError($ex->getMessage());
+        if ($countModemRepeat > 0) {
+            return Res::responseError432("Imei ya registrado.", null);
         }
+        
+        $obj = Modem::create($request->all());
+
+        $event = [
+            "title" => "Registro",
+            "detail" => "Modem registrado",
+            "type_id" => 1,
+            "car_id" => null,
+            "modem_id" => $obj->id,
+            "sim_id" => null,
+            "platform_id" => null,
+            "user_id" => auth()->user()->id
+        ];
+        EventController::_store($event);
+
+        return Res::responseSuccess($obj);
     }
     public function storeUpload(Request $request)
     {
@@ -227,9 +223,9 @@ class ModemController extends Controller
                 "platform_id" => null,
                 "user_id" => auth()->user()->id
             ];
-            $eventSave =EventController::_store($event);
+            $eventSave = EventController::_store($event);
 
-            
+
             ImagesController::upload($request, "e", $eventSave["id"]);
 
             return Res::responseSuccess($obj);
@@ -253,9 +249,9 @@ class ModemController extends Controller
                 "platform_id" => null,
                 "user_id" => auth()->user()->id
             ];
-            $eventSave =EventController::_store($event);
+            $eventSave = EventController::_store($event);
 
-            
+
             ImagesController::upload($request, "e", $eventSave["id"]);
 
             return Res::responseSuccess($event);
@@ -267,9 +263,9 @@ class ModemController extends Controller
     public function enabled_disable(Request $request)
     {
         try {
-            
+
             $obj = Modem::find($request->id);
-            if(is_null($obj)){
+            if (is_null($obj)) {
                 return Res::responseErrorNoData();
             }
             $event_title = "";
@@ -305,7 +301,8 @@ class ModemController extends Controller
         }
     }
 
-    public function event(Request $request){
+    public function event(Request $request)
+    {
         $modem_id = $request["id"];
         $car_id = null;
         $sim_id =  null;
@@ -313,12 +310,12 @@ class ModemController extends Controller
         $modem = Modem::find($modem_id);
 
         $car = null;
-        if($modem != null){
+        if ($modem != null) {
             $modem_id = $modem["id"];
             $sim_id = $modem["sim_id"];
 
             $car = Car::where("modem_id", $modem_id)->first();
-            if($car != null){
+            if ($car != null) {
                 $car_id = $car["id"];
             }
         }
@@ -465,10 +462,11 @@ class ModemController extends Controller
 
 
 
-    public function transferRequest(Request $request){
-        
+    public function transferRequest(Request $request)
+    {
+
         $modem = $request["middleware_modem"];
-        
+
         $modemServices = new ModemServices();
         $modemServices->updateForTransforRequest(
             $modem,
@@ -478,17 +476,31 @@ class ModemController extends Controller
         );
 
         return Res::responseSuccess($modem);
-
-
     }
 
-    public function transferConfirm(Request $request, ModemServices $modemServices){
+    public function filterByPatformAndResponsabilityTags(Request $request){
+        $filter = [];
+        if($request[Modem::COL_PLATFORM_ID] != 0){
+            $filter[Modem::COL_PLATFORM_ID] =  $request->platform_id;
+        }
+        if($request[Modem::COL_USER_RESPONSABILITY_ID] != 0){
+            $filter[Modem::COL_USER_RESPONSABILITY_ID] = $request[Modem::COL_USER_RESPONSABILITY_ID];
+        }
+
+        $list = Modem::where($filter)->get();
+
+        return Res::responseSuccess($list);
+    }
+
+    public function transferConfirm(Request $request, ModemServices $modemServices)
+    {
         $modem = $request["middleware_modem"];
         $modemServices->updateForTransfer($modem, auth()->user()->id, ResponsabilityHistory::STATUS_CONFIRMADO);
         return Res::responseSuccess($modem);
     }
 
-    public function transferAnulado(Request $request, ModemServices $modemServices){
+    public function transferAnulado(Request $request, ModemServices $modemServices)
+    {
         $modem = $request["middleware_modem"];
         $modemServices->updateForTransfer($modem, auth()->user()->id, ResponsabilityHistory::STATUS_ANULADO);
         return Res::responseSuccess($modem);
@@ -507,5 +519,4 @@ class ModemController extends Controller
         $modemServices->updateForTransfer($modem, auth()->user()->id, ResponsabilityHistory::STATUS_ANULADO);
         return Res::responseSuccess($modem);
     }
-    
 }

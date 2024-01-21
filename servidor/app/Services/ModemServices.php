@@ -41,7 +41,7 @@ class ModemServices
         $modem[Modem::COL_RESPONSABILITY_ID] = null;
         $modem[Modem::COL_IS_PENDING] = false;
         $modem->save();
-        
+
         return $modem;
     }
 }

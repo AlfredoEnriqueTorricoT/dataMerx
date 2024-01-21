@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'canTransferModem' => \App\Http\Middleware\CanTransferModemMiddleware::class,
         'canTransferRespondeModem' => \App\Http\Middleware\CanTransferResponseModemMiddleware::class,
+        'canTransferAnularRequestModem' => \App\Http\Middleware\CanTransferModemAnularMiddleware::class,
     ];
 }

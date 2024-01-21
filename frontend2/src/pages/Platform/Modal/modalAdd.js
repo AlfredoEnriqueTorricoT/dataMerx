@@ -25,8 +25,6 @@ const ModalAdd = ({
         if (!values.name) errors.name = t("Enter the platform name")
         if (!values.url) errors.url = t("Enter the platform page web")
           else if (!isUrl(values.url)) errors.url = t("Enter a page web")
-        if (!values.email) errors.email = t("Enter the platform email")
-          else if (!isEmail(values.email)) errors.email = t("Enter a email")
 
         return errors
     }
@@ -91,7 +89,6 @@ const ModalAdd = ({
                           label="Email"
                           inputName="email"
                           type="text"
-                          required={true}
                           groupId ={genericId}
                         />
                         <FormikInput
