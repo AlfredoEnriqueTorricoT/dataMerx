@@ -62,7 +62,7 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                                 <td>{listItem.imei}</td>
                                 <td>{listItem.device_name || "- - -"}</td>
                                 <td>{listItem.siguelo_device_id || "- - -"}</td>
-                                <td>{listItem.platform_id || "- - -"}</td>
+                                <td>{listItem.platform_name || "- - -"}</td>
                                 <td>
                                     <div className="btn-group">
                                     <button

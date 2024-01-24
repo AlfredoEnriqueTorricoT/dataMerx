@@ -58,6 +58,7 @@
   "Modem brands": "Marcas de módem",
   "modem brands": "marcas de módem",
   "Modem sim": "Sim del módem",
+  "My modems": "Mis módems",
   
   "Name": "Nombre",
   "name": "nombre",
@@ -69,6 +70,7 @@
   "No cars found": "No se encontraron vehículos",
   "No modem brands found": "No se encontraron marcas de módem",
   "No sims found": "No se encontraron sims",
+  "No wifi found": "No se encontraron redes wi-fi",
   
   "Owner": "Propietario",
   
@@ -99,6 +101,7 @@
   "Select a platform": "Seleccione una plataforma",
   "Select a modem": "Seleccione un módem",
   "Select a sim": "Seleccione un sim",
+  "Select a user": "Seleccione un usuario",
   "Select the car platform": "Seleccione la plataforma del vehículo",
   "Select the type of event": "Seleccione el tipo de evento",
   "Sim already assigned": "Sim ya asignado",

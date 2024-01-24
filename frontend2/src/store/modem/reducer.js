@@ -3,6 +3,8 @@ import {
     POST_MODEM,
     PUT_MODEM,
     DELETE_MODEM,
+    POST_AND_UPDATE_PENDING_MODEM,
+    UPDATE_PENDING_MODEM,
     POST_AND_GET_MODEM,
     PUT_AND_GET_MODEM,
     DELETE_AND_GET_MODEM,
@@ -44,6 +46,22 @@ const Modem = (state = INITIAL_MODEM, action) => {
             return {
                 ...state,
                 status: "waiting response"
+            }
+
+        case POST_AND_UPDATE_PENDING_MODEM:
+            return {
+                ...state,
+                status: "waiting response"
+            }
+        case UPDATE_PENDING_MODEM:
+            return {
+                ...state,
+                status: 200,
+                modemList: state.modemList.map(element => 
+                    element.id == action.idToUpdate ?
+                        {...element, is_pending: !element.is_pending} :
+                        element
+                )
             }
 
         case POST_AND_GET_MODEM:

@@ -5,6 +5,8 @@ import { DropdownButton, EmptyData, THeaderSorter } from 'components/tableElemen
 
 const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) => {
 
+    const userId = JSON.parse(localStorage.getItem("authUser")).id
+
     const detailsButton = data => {
         onGet({saveAs: "modemDetails", url: "modem/details/" + data.id})
         setState({
@@ -49,7 +51,10 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                             </td>
                           </tr> :
                         listToShow.map((listItem, idx)=>(
-                            <tr key={_crudName.cod + "Item-" + idx}>
+                            <tr
+                                className={listItem.user_successor_id == userId ? ("dm-background" + (idx%2 == 0 ? "" : "-2")) : ""}
+                                key={_crudName.cod + "Item-" + idx}
+                            >
                                 <td>{listItem.code}</td>
                                 <td>{listItem.imei}</td>
                                 <td>{listItem.mark_modem_name || <EmptyData />}</td>
@@ -135,6 +140,17 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                                                 setState({
                                                     modalOpen: true,
                                                     modalType: "Add images",
+                                                    modalSize: "md",
+                                                    elementSelected: listItem
+                                                })
+                                            }
+                                        },
+                                        {
+                                            title: listItem.is_pending ? "Anular transferencia" : "Transferir",
+                                            onClick: ()=>{
+                                                setState({
+                                                    modalOpen: true,
+                                                    modalType: listItem.is_pending ? "CancelTransfer" : "Transfer",
                                                     modalSize: "md",
                                                     elementSelected: listItem
                                                 })

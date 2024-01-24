@@ -88,14 +88,50 @@ body::-webkit-scrollbar {
     transition: all .5s;
   }
 
+  .liGrayScroll::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  
+  .liGrayScroll::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 2px;
+  }
+  
+  .liGrayScroll::-webkit-scrollbar-thumb:hover {
+    background: #bbb;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+  }
+  
+  .liGrayScroll::-webkit-scrollbar-track {
+    background: #fff0;
+    border-radius: 2px;
+  }
+
   .imgCover {
     height: 100%;
     width: 100%;
     object-fit: cover;
   }
 
+  .invisible-input {
+    border: none;
+    width: 100%;
+  }
+
+  .dm-background {
+    background-color: #28d8cc;
+  }
+  .dm-background-2 {
+    background-color: #47faee;
+  }
+
   .dm-text {
     color: #00A79D !important;
+  }
+
+  .dm-text:disabled {
+    color: #c8c8c8 !important;
   }
 
   .dm-text-light {
@@ -104,6 +140,25 @@ body::-webkit-scrollbar {
 
   .dm-button {
     background-color: #00A79D !important;
+  }
+
+  .dm-button:hover {
+    background-color: #009389 !important;
+  }
+  
+  .dm-button-outline {
+    border-color: #00A79D !important;
+    color: #00A79D !important;
+  }
+
+  .dm-button-outline:hover {
+    border-color: #009389 !important;
+    color: #009389 !important;
+  }
+
+  .dm-button-outline:disabled {
+    border-color: #c8c8c8 !important;
+    color: #c8c8c8 !important;
   }
   
   .dm-button:disabled {

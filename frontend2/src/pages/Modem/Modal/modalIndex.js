@@ -10,8 +10,24 @@ import ModalDetails from './modalDetails';
 import ModalEvent from './Modal events/modalEvents';
 import ModalAddImages from './modalAddImages';
 import ModalChangeStatus from './modalChangeStatus';
+import ModalFilter from './modalFilter';
+import ModalTransfer from './modalTransfer';
+import ModalCancelTransfer from './modalCancelTransfer';
 
-const ModalIndex = ({_crudName, localStore, onPostAndGet, onGet, onPost, onPut, onPutAndGet, setState, state, t}) => {
+const ModalIndex = ({
+    _crudName,
+    localStore,
+    onPostAndGet,
+    onGet,
+    onPost,
+    onPut,
+    onPutAndGet,
+    userStore,
+    postAndUpdate,
+    setState,
+    state,
+    t
+}) => {
     const [toastWaiting, setToastW] = useState(false)
     const [secondModal, setSecondModal] = useState({open: false})
 
@@ -161,17 +177,55 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onGet, onPost, onPut, 
             case "ChangeStatus":
                 return(
                     <ModalChangeStatus
-                    _crudName={_crudName}
-                    CancelModalButton={CancelModalButton}
-                    CloseModalButton={CloseModalButton}
-                    formName={state.modalType}
-                    localStore={localStore}
-                    onGet={onGet}
-                    onPost={onPost}
-                    setToastW={setToastW}
-                    state={state}
-                    setState={setState}
-                    toastWaiting={toastWaiting}
+                        _crudName={_crudName}
+                        CancelModalButton={CancelModalButton}
+                        CloseModalButton={CloseModalButton}
+                        formName={state.modalType}
+                        localStore={localStore}
+                        onGet={onGet}
+                        onPost={onPost}
+                        setToastW={setToastW}
+                        state={state}
+                        setState={setState}
+                        toastWaiting={toastWaiting}
+                    />
+                )
+            case "Filter":
+                return(
+                    <ModalFilter
+                        CancelModalButton={CancelModalButton}
+                        CloseModalButton={CloseModalButton}
+                        localStore={localStore}
+                        setState={setState}
+                        onPost={onPost}
+                        t={t}
+                        userStore={userStore}
+                    />
+                )
+            case "Transfer":
+                return(
+                    <ModalTransfer
+                        CancelModalButton={CancelModalButton}
+                        CloseModalButton={CloseModalButton}
+                        localStore={localStore}
+                        setState={setState}
+                        state={state}
+                        postAndUpdate={postAndUpdate}
+                        t={t}
+                        userStore={userStore}
+                    />
+                )
+            case "CancelTransfer":
+                return(
+                    <ModalCancelTransfer
+                        CancelModalButton={CancelModalButton}
+                        CloseModalButton={CloseModalButton}
+                        localStore={localStore}
+                        setState={setState}
+                        state={state}
+                        postAndUpdate={postAndUpdate}
+                        t={t}
+                        userStore={userStore}
                     />
                 )
             case "Details":
@@ -201,6 +255,8 @@ ModalIndex.propTypes = {
     onPost: PropTypes.func,
     onPut: PropTypes.func,
     onPutAndGet: PropTypes.func,
+    postAndUpdate: PropTypes.func,
+    userStore: PropTypes.object,
     setState: PropTypes.func,
     state: PropTypes.object,
     t: PropTypes.func

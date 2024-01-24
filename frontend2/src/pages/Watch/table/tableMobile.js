@@ -65,7 +65,7 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
                       />
                       <MobileDataShow
                         title="Platform"
-                        desc={listItem.platform_id || "- - -"}
+                        desc={listItem.platform_name || "- - -"}
                       />
                     </div>
                   </div>

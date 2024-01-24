@@ -51,6 +51,14 @@ class Modem extends Model
         return $this->hasOne(ModemsMark::class, "id", "mark_id");
     }
 
+    public function responsability(){
+        return $this->belongsTo(User::class, self::COL_USER_RESPONSABILITY_ID, "id");
+    }
+
+    public function successor(){
+        return $this->belongsTo(User::class, self::COL_USER_SUCCESSOR_ID, "id");
+    }
+
 
     public function __toString()
     {

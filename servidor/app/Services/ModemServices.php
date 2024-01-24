@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Services\ResponsabilityServices;
+use App\Models\Images;
 use App\Models\Modem;
 use App\Models\Responsability;
 use App\Models\ResponsabilityHistory;
@@ -10,6 +11,24 @@ use App\Services\ResponsabilityServices as ServicesResponsabilityServices;
 
 class ModemServices
 {
+
+    public function getWithFormt($list){
+        foreach ($list as $modem) {
+            $modem->images = Images::where([
+                ["table", "=", "m"],
+                ["table_id", "=", $modem["id"]],
+            ])->get("url");
+            $modem->sim;
+            $modem->modems_mark;
+            $modem->platform;
+            $modem->responsability;
+            $modem->successor;
+        }
+
+        
+    }
+
+
     public function _searchByImei($imei)
     {
         $modem = Modem::where("imei", $imei)->first();

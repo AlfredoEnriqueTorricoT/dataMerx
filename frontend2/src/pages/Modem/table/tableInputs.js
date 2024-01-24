@@ -1,63 +1,129 @@
 import React, {useState} from "react"
 import PropTypes from "prop-types"
 
-const TableInputs = ({onGet, setState, setTableStatus, status, t}) => {
+const TableInputs = ({onGet, onPost, setState, setTableStatus, state, status, t}) => {
   const [imei, setImei] = useState("")
+
+  const addUser = () => setState({modalOpen: true, modalType: "Add"})
+  const openFilter = () => setState({modalOpen: true, modalType: "Filter"})
+  
+  const searchMyModems = () => {
+    setTableStatus(1)
+    onGet({
+      saveAs: "modemList",
+      url: "modem"
+    })
+    setState({lastSearch: "my"})
+  }
 
   const searchFunction = () => {
     setTableStatus(1)
-    setState({imeiToSearch: imei})
-    onGet({
-      saveAs: "modemList",
-      url: "modem/" + imei
-    })
+    setState({imeiToSearch: imei, lastSearch: "imei"})
+
+    if (state.filters) {
+      let payload = {user_responsability_id: 0, platform_id: 0};
+      state.filters.forEach(element => {
+        element.type == "user" ?
+          payload.user_responsability_id = element.id :
+          payload.platform_id = element.id
+      })
+
+      onPost({
+        saveAs: "modemList",
+        payload: payload,
+        url: "modem/filter"
+      })
+    }
+    else {
+      onGet({
+        saveAs: "modemList",
+        url: "modem/" + imei
+      })
+    }
+  }
+
+  const checkActive = name => 
+    state.lastSearch == name ? " text-light" : "-outline"
+
+  const removeFilter = filt => {
+    let newFilters = [...state.filters]
+    newFilters = newFilters.filter(filtro => filtro != filt)
+    setState({filters: newFilters})
   }
 
     return(
-        <div className="d-flex flex-wrap mb-3">
-          <div className="d-inline-block">
-            <div className="input-group">
-              <input
-                type="number"
-                className="form-control"
-                min={0}
-                onChange={i => setImei(i.target.value)}
-                placeholder="Buscar por imei..."
-                value={imei}
-              />
-              <div className="input-group-append">
-                <button
-                  className="btn dm-button text-light"
-                  disabled={status == "waiting response" || imei == ""}
-                  onClick={searchFunction}
-                >
-                  {status == "waiting response" && imei != "" ?
-                  <i className="bx bx-loader bx-spin"></i> :
-                  <i className="fas fa-search"></i>}
-                </button>
-              </div>
+        <div className="d-flex col mb-3" style={{maxHeight: "35px"}}>
+          <button
+            className={`btn dm-button${checkActive("my")}`}
+            style={{minWidth: "110px"}}
+            onClick={searchMyModems}
+          >
+            {t("My modems")}
+          </button>
+
+          {/* <span className="badge badge-info">
+                  CHESSE
+                </span> */}
+
+          <div className="input-group row-4 mx-2">
+            <div class="form-control d-flex lilGrayScroll" style={{maxWidth: "300px", maxHeight: "35px", overflowY: "none", overflowX: "none"}}>
+              {
+                state.filters.length?
+                state.filters.map((filt, idx) => (
+                  <span
+                    className="badge text-light dm-button me-1"
+                    onClick={()=>removeFilter(filt)}
+                    style={{cursor: "pointer"}}
+                  >
+                    {filt.name + "   "} <i class="fas fa-times"></i>
+                  </span>
+                ))
+                :
+                <input
+                  type="number"
+                  className="invisible-input"
+                  min={0}
+                  onChange={i => setImei(i.target.value)}
+                  placeholder={state.filters.length ? "" : "Buscar por imei..."}
+                  // style={{maxWidth: "200px", maxHeight: "35px"}}
+                  value={imei}
+                />
+              }
+            </div>
+            <div className="input-group-append">
+              <button
+                className={`btn dm-button${checkActive("imei")}`}
+                disabled={status == "waiting response" || (imei == "" && state.filters.length == 0)}
+                title="Buscar por imei"
+                onClick={searchFunction}
+              >
+                <i className="fas fa-search"></i>
+              </button>
+              <button
+                className={`btn dm-button${checkActive("filter")}`}
+                disabled={status == "waiting response"}
+                title="Filtros"
+                onClick={openFilter}
+              >
+                <i className="fas fa-filter"></i>
+              </button>
             </div>
           </div>
-
-        
-            <div className="ms-auto">
-                <button
-                  className="btn btn-sm dm-button text-light btn-label waves-effect waves-light"
-                  onClick={()=>{
-                    setState({modalOpen: true, modalType: "Add"})
-                  }}
-                >
-                    <i className="fas fa-plus label-icon"></i>
-                  {t("Add")}
-                </button>
-            </div>
-        </div>)
+          
+          <button className="btn row-2 btn-label dm-button text-light" onClick={addUser}>
+            {t("Add")}
+            <i class="fas fa-plus label-icon"></i>
+          </button>
+        </div>
+  )
 }
 
 TableInputs.propTypes = {
     onGet: PropTypes.func,
+    onPost: PropTypes.func,
     setState: PropTypes.func,
     setTableStatus: PropTypes.func,
+    state: PropTypes.object,
     status: PropTypes.any,
     t: PropTypes.func
 }

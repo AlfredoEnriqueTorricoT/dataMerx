@@ -55,7 +55,7 @@ const ModalWifi = ({
                               <tr>
                                 <td colSpan="5">
                                   <h4 className="text-secondary">
-                                    {t("No " + _crudName.multiple + " found")}
+                                    {t("No wi-fi found")}
                                   </h4>
                                 </td>
                               </tr> :

@@ -33,6 +33,7 @@ const TableIndex = ({_crudName, onGet, localStore, setState, t}) => {
                 device_name: watch.device_name,
                 siguelo_device_id: watch.siguelo_device_id,
                 platform_id: watch.platform_id,
+                platform_name: watch.platform_name,
                 imei: watch.imei,
                 modem_id: watch.modem_id,
             }))

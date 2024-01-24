@@ -144,6 +144,17 @@ const eventsButton = data => {
                                                     elementSelected: listItem
                                                 })
                                             }
+                                        },
+                                        {
+                                          title: "Transferir",
+                                          onClick: ()=>{
+                                              setState({
+                                                  modalOpen: true,
+                                                  modalType: "Transfer",
+                                                  modalSize: "md",
+                                                  elementSelected: listItem
+                                              })
+                                          }
                                         }
                                       ]}
                                     />

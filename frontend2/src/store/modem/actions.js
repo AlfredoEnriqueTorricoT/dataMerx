@@ -3,6 +3,8 @@ import {
     POST_MODEM,
     PUT_MODEM,
     DELETE_MODEM,
+    POST_AND_UPDATE_PENDING_MODEM,
+    UPDATE_PENDING_MODEM,
     POST_AND_GET_MODEM,
     PUT_AND_GET_MODEM,
     DELETE_AND_GET_MODEM,
@@ -26,6 +28,15 @@ export const putModem = data => ({
 
 export const deleteModem = data => ({
     type: DELETE_MODEM,
+    ...data
+})
+
+export const postAndUpdatePendingModem = data => ({
+    type: POST_AND_UPDATE_PENDING_MODEM,
+    ...data
+})
+export const updatePendingModem = data => ({
+    type: UPDATE_PENDING_MODEM,
     ...data
 })
 

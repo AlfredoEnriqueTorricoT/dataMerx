@@ -24,42 +24,25 @@ class ModemController extends Controller
     //
     public function index()
     {
-        try {
-            $user_id = auth()->user()->id;
-            $list = Modem::where(Modem::COL_USER_SUCCESSOR_ID, $user_id)
-                ->orWhere(Modem::COL_USER_RESPONSABILITY_ID, $user_id)->get();
+        $user_id = auth()->user()->id;
+        $list = Modem::where(Modem::COL_USER_SUCCESSOR_ID, $user_id)
+            ->orWhere(Modem::COL_USER_RESPONSABILITY_ID, $user_id)
+            ->orderBy(Modem::COL_USER_SUCCESSOR_ID, 'ASC')->get();
 
-            foreach ($list as $moden) {
-                $moden["platform"] = $moden->platform;
-                $moden["sim"] = $moden->sim;
-                $moden["modems_mark"] = $moden->modems_mark;
-            }
-            return Res::responseSuccess($list);
-        } catch (Exception $ex) {
-            return Res::responseError($ex->getMessage());
-        }
+        $modemService = new ModemServices();
+        $modemService->getWithFormt($list);
+
+        return Res::responseSuccess($list);
     }
 
     public function indexSearch($imei)
     {
-        try {
-            $list = Modem::where("imei", "like", '%' . $imei . '%')->get();
+        $list = Modem::where("imei", "like", '%' . $imei . '%')->get();
 
-            foreach ($list as $modem) {
-                $modem->images = Images::where([
-                    ["table", "=", "m"],
-                    ["table_id", "=", $modem["id"]],
-                ])->get("url");
-                $modem->sim;
-                $modem->modems_mark;
-                $modem->platform;
-            }
+        $modemService = new ModemServices();
+        $modemService->getWithFormt($list);
 
-
-            return Res::responseSuccess($list);
-        } catch (Exception $ex) {
-            return Res::responseError($ex->getMessage());
-        }
+        return Res::responseSuccess($list);
     }
 
     public static function byId($id)
@@ -178,7 +161,7 @@ class ModemController extends Controller
         if ($countModemRepeat > 0) {
             return Res::responseError432("Imei ya registrado.", null);
         }
-        
+
         $obj = Modem::create($request->all());
 
         $event = [
@@ -478,12 +461,13 @@ class ModemController extends Controller
         return Res::responseSuccess($modem);
     }
 
-    public function filterByPatformAndResponsabilityTags(Request $request){
+    public function filterByPatformAndResponsabilityTags(Request $request)
+    {
         $filter = [];
-        if($request[Modem::COL_PLATFORM_ID] != 0){
+        if ($request[Modem::COL_PLATFORM_ID] != 0) {
             $filter[Modem::COL_PLATFORM_ID] =  $request->platform_id;
         }
-        if($request[Modem::COL_USER_RESPONSABILITY_ID] != 0){
+        if ($request[Modem::COL_USER_RESPONSABILITY_ID] != 0) {
             $filter[Modem::COL_USER_RESPONSABILITY_ID] = $request[Modem::COL_USER_RESPONSABILITY_ID];
         }
 
