@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->string("detail")->nullable();
+            $table->enum("device", ["modem", "watch"]);
             $table->boolean("active")->default(true);
             $table->timestamps();
         });

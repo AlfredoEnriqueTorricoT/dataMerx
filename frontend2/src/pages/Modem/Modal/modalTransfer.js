@@ -50,6 +50,7 @@ const ModalTransfer = ({
         saveAs: "UNUSED-DATA",
         payload: values,
         url: "modem/transfer_request",
+        dataToUpdate: {is_pending: 1, user_successor_id: values.user_successor_id}
       })
       setToastW(true)
       }

@@ -144,7 +144,7 @@ function* postAndUpdatePendingModem(action) {
       if (response.data.status == 200) {
         yield put(
           updatePendingModem({
-            idToUpdate: action.payload.id
+            action: {dataToUpdate: action.payload.dataToUpdate}
           })
         )
       } else {

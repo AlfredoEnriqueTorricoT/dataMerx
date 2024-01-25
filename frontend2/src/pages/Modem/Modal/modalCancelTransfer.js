@@ -40,7 +40,8 @@ const ModalCancelTransfer = ({
     postAndUpdate({
       saveAs: "UNUSED_DATA",
       url: "modem/transfer_anular",
-      payload: {id: state.elementSelected.id}
+      payload: {id: state.elementSelected.id},
+      dataToUpdate: {is_pending: 0, user_successor_id: null}
     })
     setToastW(true)
   }

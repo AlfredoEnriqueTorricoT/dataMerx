@@ -40,7 +40,8 @@ const ModalTransferRequest = ({
     postAndUpdate({
       saveAs: "UNUSED_DATA",
       url: "modem/transfer_cancel",
-      payload: {id: state.elementSelected.id}
+      payload: {id: state.elementSelected.id},
+      dataToUpdate: {is_pending: 0, user_successor_id: null}
     })
     setToastW(true)
   }
@@ -49,7 +50,8 @@ const ModalTransferRequest = ({
     postAndUpdate({
       saveAs: "UNUSED_DATA",
       url: "modem/transfer_confirm",
-      payload: {id: state.elementSelected.id}
+      payload: {id: state.elementSelected.id},
+      dataToUpdate: {is_pending: 0, user_successor_id: null}
     })
     setToastW(true)
   }

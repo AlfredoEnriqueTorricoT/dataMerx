@@ -59,7 +59,7 @@ const Modem = (state = INITIAL_MODEM, action) => {
                 status: 200,
                 modemList: state.modemList.map(element => 
                     element.id == action.idToUpdate ?
-                        {...element, is_pending: !element.is_pending} :
+                        {...element, ...action.dataToUpdate} :
                         element
                 )
             }
