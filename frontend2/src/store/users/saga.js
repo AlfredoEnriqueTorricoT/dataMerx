@@ -41,7 +41,7 @@ function* postUserSaga(action) {
   let response;
 
   try {
-    response = yield call(AxiosServices.POST, action.url)
+    response = yield call(AxiosServices.POST, {payload: action.payload, url: action.url})
     if (response.data.status == 200) {
       yield put(updateUserStorage({
         payload: response.data.data,
@@ -58,7 +58,7 @@ function* postUserSaga(action) {
 
 function* postAndGetUserSaga(action) {
   let response;
-  console.log(action);
+
   try {
     response = yield call(AxiosServices.POST, {payload: action.payload, url: action.url})
     console.log(response);
@@ -118,6 +118,7 @@ function* putAndGetUserSaga(action) {
 
 function* userSaga() {
   yield takeEvery(GET_USER, getUserSaga)
+  yield takeEvery(POST_USER, postUserSaga)
   yield takeEvery(POST_AND_GET_USER, postAndGetUserSaga)
   yield takeEvery(PUT_AND_GET_USER, putAndGetUserSaga)
 }

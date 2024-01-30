@@ -37,7 +37,9 @@ const TableIndex = ({_crudName, onGet, onPost, localStore, setState, state, t}) 
                 mark_modem_name: modem.modems_mark ? modem.modems_mark.name : null,
                 mark_id: modem.modems_mark ? modem.modems_mark.id : null,
                 is_pending: modem.is_pending,
+                user_responsability_id: modem.user_responsability_id,
                 user_successor_id: modem.user_successor_id,
+                responsability: modem.responsability,
                 sim_number: modem.sim ? modem.sim.number : null,
             }))
             

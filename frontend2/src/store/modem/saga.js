@@ -45,7 +45,7 @@ function* postModemSaga(action) {
 
   try {
     response = yield call(AxiosServices.POST, {payload: action.payload, url: action.url})
-    console.log(action);
+
     try {
       if (response.data.status == 200) {
         yield put(updateModemStorage({
@@ -144,7 +144,7 @@ function* postAndUpdatePendingModem(action) {
       if (response.data.status == 200) {
         yield put(
           updatePendingModem({
-            action: {dataToUpdate: action.payload.dataToUpdate}
+            dataToUpdate: action.dataToUpdate
           })
         )
       } else {

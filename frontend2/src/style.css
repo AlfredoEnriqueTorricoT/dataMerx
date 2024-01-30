@@ -118,14 +118,7 @@ body::-webkit-scrollbar {
     border: none;
     width: 100%;
   }
-
-  .dm-background {
-    background-color: #28d8cc;
-  }
-  .dm-background-2 {
-    background-color: #47faee;
-  }
-
+  
   .dm-text {
     color: #00A79D !important;
   }

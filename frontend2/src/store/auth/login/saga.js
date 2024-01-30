@@ -24,9 +24,11 @@ function* loginUser({ payload: { user, history } }) {
         email: response.data.data.email,
         auth: response.data.data.privilege
       }
+      let pUser = response.data.data.permissions.map(perm => perm.name)
 
       localStorage.setItem("authUser", JSON.stringify(aUser))
       localStorage.setItem("userData", JSON.stringify(aUser))
+      localStorage.setItem("userPermission", JSON.stringify(pUser))
       history.push("/car")
     } else {
       yield put(apiError("Correo o contraseña incorrectos"))

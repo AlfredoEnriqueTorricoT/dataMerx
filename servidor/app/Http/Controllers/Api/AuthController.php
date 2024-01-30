@@ -58,7 +58,6 @@ class AuthController extends Controller
         $userPermissions = new UserPermissionController();
         
         $user->permissions = $userPermissions->getAllPermission($user->id);
-        unset($user->id);
 
         
 

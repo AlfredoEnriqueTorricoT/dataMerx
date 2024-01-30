@@ -11,7 +11,8 @@ import {
 
 const INITIAL_DATA = {
     status: "waiting response",
-    userList: []
+    userList: [],
+    permissionsList: []
 }
 
 const Users = (state = INITIAL_DATA, action) => {

@@ -4,6 +4,8 @@ import { DropdownButton, EmptyData } from 'components/tableElements'
 
 const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
 
+  const userId = JSON.parse(localStorage.getItem("authUser")).id
+
   const MobileDataShow = ({title, desc}) => {
     return(
       <div className="row mb-1">
@@ -12,6 +14,15 @@ const TableMobile = ({_crudName, onGet, listToShow, setState, t}) => {
       </div>
     )
   }
+
+  const confirmRequest = data => {
+    setState({
+        elementSelected: data,
+        modalOpen: true,
+        modalSize: "md",
+        modalType: "TransferRequest"
+    })
+}
 
   const detailsButton = data => {
     onGet({saveAs: "modemDetails", url: "modem/details/" + data.id})
@@ -35,7 +46,7 @@ const eventsButton = data => {
       <React.Fragment>
         {listToShow.length ?
         listToShow.map((listItem, idx)=>(
-                <div className="row" key={_crudName.cod + "Item-" + idx}>
+                <div className="row" style={listItem.user_successor_id == userId ? {background: "#C5E7E4"} : {}} key={_crudName.cod + "Item-" + idx}>
                   <div className="col-8">
                     <div className="row">
                       <MobileDataShow
@@ -70,6 +81,13 @@ const eventsButton = data => {
                   </div>
                   <div className="col-4">
                   <div className="btn-group">
+                                    {listItem.user_successor_id == userId ? <button
+                                      className="btn btn-success button-sm py-0"
+                                      title='Solicitud de transferencia'
+                                      onClick={()=>confirmRequest(listItem)} 
+                                    >
+                                      <i class="fas fa-exchange-alt"></i>
+                                    </button> : ""}
                                     <button
                                       className="btn button-sm py-0"
                                       title='Ver detalles'

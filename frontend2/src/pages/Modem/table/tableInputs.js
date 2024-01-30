@@ -20,7 +20,7 @@ const TableInputs = ({onGet, onPost, setState, setTableStatus, state, status, t}
     setTableStatus(1)
     setState({imeiToSearch: imei, lastSearch: "imei"})
 
-    if (state.filters) {
+    if (state.filters.length) {
       let payload = {user_responsability_id: 0, platform_id: 0};
       state.filters.forEach(element => {
         element.type == "user" ?

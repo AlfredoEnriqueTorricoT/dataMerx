@@ -13,6 +13,7 @@ import ModalChangeStatus from './modalChangeStatus';
 import ModalFilter from './modalFilter';
 import ModalTransfer from './modalTransfer';
 import ModalCancelTransfer from './modalCancelTransfer';
+import ModalTransferRequest from './modalTransferRequest';
 
 const ModalIndex = ({
     _crudName,
@@ -218,6 +219,19 @@ const ModalIndex = ({
             case "CancelTransfer":
                 return(
                     <ModalCancelTransfer
+                        CancelModalButton={CancelModalButton}
+                        CloseModalButton={CloseModalButton}
+                        localStore={localStore}
+                        setState={setState}
+                        state={state}
+                        postAndUpdate={postAndUpdate}
+                        t={t}
+                        userStore={userStore}
+                    />
+                )
+            case "TransferRequest":
+                return(
+                    <ModalTransferRequest
                         CancelModalButton={CancelModalButton}
                         CloseModalButton={CloseModalButton}
                         localStore={localStore}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { OptionsButton } from 'components/tableElements';
 
-const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
+const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) => {
 
     const showHeader = (name, id) => {
           return (
@@ -66,6 +66,23 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
                                       >
                                         <i className="fas fa-edit"></i>
                                     </button>
+                                    <button 
+                                        className='btn btn-sm'
+                                        onClick={()=>{
+                                            onGet({
+                                              saveAs: "permissionsList",
+                                              url: "user-permission/" + mBrand.id
+                                            })
+                                            setState({
+                                                modalOpen: true,
+                                                modalType: "Permission",
+                                                elementSelected: mBrand
+                                            })
+                                        }}
+                                        title='Permisos de usuario'
+                                      >
+                                        <i className="fas fa-tasks"></i>
+                                    </button>
                                 </td>
                             </tr>
                         ))}
@@ -78,6 +95,7 @@ const Table = ({_crudName, listToShow, setSorter, setState, sorter, t}) => {
 Table.propTypes = {
     _crudName: PropTypes.object,
     listToShow: PropTypes.object,
+    onGet: PropTypes.func,
     setSorterer: PropTypes.func,
     setState: PropTypes.func,
     sorterer: PropTypes.number,

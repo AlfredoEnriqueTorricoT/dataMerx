@@ -17,6 +17,10 @@ const ModalTransferRequest = ({
   userStore
 }) => { 
   const [toastWaiting, setToastW] = useState(false)
+  const [requestAcepted, setRequestAcepted] = useState(0)
+
+  const successMessage = ["La solicitud ha sido rechazada", "La solicitud ha sido aceptada"]
+  const errorMessage = ["La solicitud no pudo ser rechazada (", "La solicitud no pudo ser aceptada ("]
 
   useEffect(()=>{
     if (toastWaiting && localStore.status != "waiting response") {
@@ -24,34 +28,46 @@ const ModalTransferRequest = ({
         setState({modalOpen: false})
         showToast({
           type: "success",
-          message: "El módem ha sido transferido"
+          message: successMessage[requestAcepted]
+        })
+      } else if (localStore.status == 432) {
+        showToast({
+          type: "info",
+          message: localStore.message
         })
       }
       else {
         showToast({
           type: "warning",
-          message: "El módem no pudo ser transferido ("+ localStore.status +")"
+          message: errorMessage[requestAcepted] + localStore.status +")"
         })
       }
     }
   }, [localStore.status])
 
   const cancelTransfer = () => {
+    setRequestAcepted(0)
     postAndUpdate({
       saveAs: "UNUSED_DATA",
       url: "modem/transfer_cancel",
       payload: {id: state.elementSelected.id},
-      dataToUpdate: {is_pending: 0, user_successor_id: null}
+      dataToUpdate: {id: state.elementSelected.id, is_pending: 0, user_successor_id: null}
     })
     setToastW(true)
   }
   
   const completeTransfer = () => {
+    setRequestAcepted(1)
     postAndUpdate({
       saveAs: "UNUSED_DATA",
       url: "modem/transfer_confirm",
       payload: {id: state.elementSelected.id},
-      dataToUpdate: {is_pending: 0, user_successor_id: null}
+      dataToUpdate: {
+        id: state.elementSelected.id,
+        is_pending: 0,
+        user_responsabilty_id: state.elementSelected.user_successor_id,
+        user_successor_id: null
+      }
     })
     setToastW(true)
   }
@@ -65,18 +81,27 @@ const ModalTransferRequest = ({
 
           <div className="modal-body">
             <h4>
-              El usuario <code>user</code> quiere asignarte como responsable del módem
+              El usuario <b>{state.elementSelected.responsability.name
+                // userStore.userList.filter(user => user.id == state.elementSelected.user_responsability_id)[0].name
+              }</b> quiere asignarte como responsable del módem
             </h4>
           </div>
 
             <div className="modal-footer">
-              <CancelModalButton />
+              <button
+                  className="btn btn-secondary"
+                  onClick={()=>{
+                      setState({modalOpen: false})
+                  }}
+              >
+                  {t("Close")}
+              </button>
               <div className="ms-auto">
                 <button className="btn btn-danger btn-label text-light" disabled={toastWaiting} onClick={cancelTransfer}>
                   Rechazar
                   <i className="fas fa-times label-icon"></i>
                 </button>
-                <button className="btn dm-button btn-label text-light" disabled={toastWaiting} onClick={completeTransfer}>
+                <button className="btn dm-button btn-label text-light ms-2" disabled={toastWaiting} onClick={completeTransfer}>
                   Aceptar
                   <i className="fas fa-check label-icon"></i>
                 </button>

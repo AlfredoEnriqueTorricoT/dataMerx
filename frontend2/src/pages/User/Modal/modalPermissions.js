@@ -5,7 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { showToast } from 'components/toast'
 import { SpinnerL } from 'components/components'
 
-const ModalPermissions = ({ModalCancelButton, ModalCloseButton, setState, getUser, localStore, onPost, state, t}) => {
+const ModalPermissions = ({ModalCancelButton, ModalCloseButton, getUser, localStore, onPost, state, t}) => {
   const [activePermissions, setActivePermissions] = useState([])
   const [modalStatus, setModalStatus] = useState(0) // 0: waiting, 1: success, 2: error
 
@@ -34,6 +34,10 @@ const ModalPermissions = ({ModalCancelButton, ModalCloseButton, setState, getUse
     {name: "Cars", code: "cars"},
   ]
 
+  const settingsPermissions = [
+    {name: "Admin", code: "responsability_admin"}
+  ]
+
     const checkFunction = e => {
       if (activePermissions.includes(e)) {
         setActivePermissions(activePermissions.filter(item => item !== e))
@@ -51,23 +55,46 @@ const ModalPermissions = ({ModalCancelButton, ModalCloseButton, setState, getUse
           return <SpinnerL />
         case 1:
           return(
-            permissions.map((permission, idx)=>(
-              <div className='col-6' key={idx}>
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    checked={activePermissions.includes(permission.code)}
-                    id={"permission-" + idx}
-                    onChange={()=>checkFunction(permission.code)}
-                    name={permission.name}
-                    type="checkbox"
-                  />
-                  <label className="form-check-label" htmlFor={"permission-" + idx}>
-                    {t(permission.name)}
-                  </label>
-                </div>
-              </div>
-            ))
+            <React.Fragment>
+              <h4 className='mb-0'>Vistas</h4>
+              {permissions.map((permission, idx)=>(
+                  <div className='col-6' key={idx}>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        checked={activePermissions.includes(permission.code)}
+                        id={"permission-" + idx}
+                        onChange={()=>checkFunction(permission.code)}
+                        name={permission.name}
+                        type="checkbox"
+                      />
+                      <label className="form-check-label" htmlFor={"permission-" + idx}>
+                        {t(permission.name)}
+                      </label>
+                    </div>
+                  </div>
+                ))
+              }
+              <h4 className='mt-4 mb-0'>Configuraciones</h4>
+              {settingsPermissions.map((permission, idx)=>(
+                  <div className='col-6' key={idx}>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        checked={activePermissions.includes(permission.code)}
+                        id={"permission-" + idx}
+                        onChange={()=>checkFunction(permission.code)}
+                        name={permission.name}
+                        type="checkbox"
+                      />
+                      <label className="form-check-label" htmlFor={"permission-" + idx}>
+                        {t(permission.name)}
+                      </label>
+                    </div>
+                  </div>
+                ))
+              }
+            </React.Fragment>
           )
         case 2:
           return(

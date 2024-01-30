@@ -8,7 +8,7 @@ import { SpinnerL } from "components/components"
 import { tableFilter, tableSorter } from "components/tableFilter"
 import { ErrorTable } from "components/tableElements"
 
-const TableIndex = ({_crudName, localStore, setState, t}) => {
+const TableIndex = ({_crudName, localStore, onGet, setState, t}) => {
     const [filter, setFilter] = useState("")
     const [tableStatus, setTableStatus] = useState("loading")
     const [sorter, zetSorter] = useState(1)
@@ -61,6 +61,7 @@ const TableIndex = ({_crudName, localStore, setState, t}) => {
                             <Table
                                 _crudName={_crudName}
                                 listToShow={tableFiltered}
+                                onGet={onGet}
                                 setSorter={setSorter}
                                 setState={setState}
                                 sorter={sorter}
@@ -80,6 +81,7 @@ const TableIndex = ({_crudName, localStore, setState, t}) => {
 TableIndex.propTypes = {
     _crudName: PropTypes.object,
     localStore: PropTypes.object,
+    onGet: PropTypes.func,
     setState: PropTypes.func,
     t: PropTypes.func
 }

@@ -18,6 +18,8 @@ const ModalTransfer = ({
 }) => { 
   const [toastWaiting, setToastW] = useState(false)
 
+  const userId = JSON.parse(localStorage.getItem("authUser")).id
+
   useEffect(()=>{
     if (toastWaiting && localStore.status != "waiting response") {
       if (localStore.status == 200) {
@@ -25,6 +27,11 @@ const ModalTransfer = ({
         showToast({
           type: "success",
           message: "La solicitud de trasferencia ha sido realizada"
+        })
+      } else if (localStore.status == 432) {
+        showToast({
+          type: "info",
+          message: localStore.message
         })
       }
       else {
@@ -50,7 +57,7 @@ const ModalTransfer = ({
         saveAs: "UNUSED-DATA",
         payload: values,
         url: "modem/transfer_request",
-        dataToUpdate: {is_pending: 1, user_successor_id: values.user_successor_id}
+        dataToUpdate: {id: values.id, is_pending: 1, user_successor_id: values.user_successor_id}
       })
       setToastW(true)
       }
@@ -82,10 +89,11 @@ const ModalTransfer = ({
                         >
                             <option hidden value={0}>{t("Select a user")}</option>
                             {
-                                userStore.userList.length == 0 ?
+                                (userStore.userList.length - 1) == 0 ?
                                 <option disabled className='text-secondary' value="">{t("No ") + t("users")}</option>
                                 :
                                 userStore.userList.map((user, idx) => (
+                                  user.id == userId ? "" :
                                     <option key={"mBO-" + idx} value={user.id}>{user.name}</option>
                                 ))
                             }

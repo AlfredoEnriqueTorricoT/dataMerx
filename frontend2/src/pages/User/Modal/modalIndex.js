@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import ModalAdd from './modalAdd';
 import ModalEdit from './modalEdit';
 import { showToast } from 'components/toast';
+import ModalPermissions from './modalPermissions';
 
-const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState, state, t}) => {
+const ModalIndex = ({_crudName, getUser, onPost, localStore, onPostAndGet, onPutAndGet, setState, state, t}) => {
 
     const ModalCloseButton = () => (
         <button
@@ -57,6 +58,18 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
                         t={t}
                     />
                 )
+            case "Permission":
+                return(
+                    <ModalPermissions
+                        ModalCancelButton={ModalCancelButton}
+                        ModalCloseButton={ModalCloseButton}
+                        getUser={getUser}
+                        localStore={localStore}
+                        onPost={onPost}
+                        state={state}
+                        t={t}
+                    />
+                )
                 
             default:
                 break;
@@ -72,7 +85,9 @@ const ModalIndex = ({_crudName, localStore, onPostAndGet, onPutAndGet, setState,
 
 ModalIndex.propTypes = {
     _crudName: PropTypes.object,
+    getUser: PropTypes.object,
     localStore: PropTypes.object,
+    onPost: PropTypes.func,
     onPostAndGet: PropTypes.func,
     onPutAndGet: PropTypes.func,
     setState: PropTypes.func,

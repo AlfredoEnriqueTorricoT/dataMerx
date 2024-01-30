@@ -26,6 +26,11 @@ const ModalCancelTransfer = ({
           type: "success",
           message: "La solicitud de trasferencia ha sido anulada"
         })
+      }  else if (localStore.status == 432) {
+        showToast({
+          type: "info",
+          message: localStore.message
+        })
       }
       else {
         showToast({
@@ -41,7 +46,7 @@ const ModalCancelTransfer = ({
       saveAs: "UNUSED_DATA",
       url: "modem/transfer_anular",
       payload: {id: state.elementSelected.id},
-      dataToUpdate: {is_pending: 0, user_successor_id: null}
+      dataToUpdate: {id: state.elementSelected.id, is_pending: 0, user_successor_id: null}
     })
     setToastW(true)
   }

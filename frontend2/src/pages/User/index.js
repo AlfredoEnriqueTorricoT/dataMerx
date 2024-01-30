@@ -56,6 +56,7 @@ const UserPage = ({
                     <TableIndex
                         _crudName={_crudName}
                         localStore={localStore}
+                        onGet={onGet}
                         setState={setState}
                         t={t} />
                 </div>
@@ -65,6 +66,8 @@ const UserPage = ({
                 <ModalIndex
                     _crudName={_crudName}
                     localStore={localStore}
+                    getUser={petitionGet}
+                    onPost={onPost}
                     onPostAndGet={onPostAndGet}
                     onPutAndGet={onPutAndGet}
                     setState={setState}
