@@ -5,6 +5,7 @@ import { showToast } from 'components/toast'
 
 const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, localStore, onPost, setState, t}) => {
   const [simImages, setSimImages] = useState([])
+  const [imei, setImei] = useState("")
   const [toastW, setToastW] = useState(false)
 
   useEffect(()=>{
@@ -29,7 +30,7 @@ const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, localStore, o
 
         if (!values.number) errors.number = "Enter the sim number"
         if (values.number.toString().length != 8) errors.number = "El número de teléfono debe ser de 8 dígitos"
-        if (!values.imei) errors.imei = "Enter the sim imei"
+        if (!imei) errors.imei = "Enter the sim imei"
 
         return errors
     }
@@ -43,7 +44,7 @@ const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, localStore, o
       }
 
       fData.append("number", values.number);
-      fData.append("imei", values.imei);
+      fData.append("imei", imei);
 
       onPost({
         saveAs: "UNUSED-DATA",
@@ -106,7 +107,9 @@ const ModalAdd = ({_crudName, CloseModalButton, CancelModalButton, localStore, o
                               className="form-control"
                               id="sim_Add_imei"
                               name="imei"
+                              onChange={i=>setImei(i.target.value)}
                               type="number"
+                              value={imei}
                             />
                             <ErrorMessage name="imei">
                               {msg => <h6 className="text-danger">{t(msg)}</h6>}

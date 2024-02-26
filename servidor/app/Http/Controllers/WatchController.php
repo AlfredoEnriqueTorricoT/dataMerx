@@ -12,23 +12,42 @@ use App\Services\ModemServices;
 use Exception;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isEmpty;
+
 class WatchController extends Controller
 {
-    public function getConfigByCode($code){
+    public function getConfigByCode($code)
+    {
         $watch = Watch::where(Watch::COL_CODE, $code)->first();
-        $wifi = Wifi::where(Wifi::COL_PLATFORM_ID, $watch->platform_id)->get([
-            Wifi::COL_SSID,
-            Wifi::COL_PASSWORD,
-        ]);
+        if(!isEmpty($watch)){
+            Res::responseError("No se encontro el reloj");
+        }
+        $watch->url = null;
+        $watch->credencial = null;
+        if ($watch[Watch::COL_PLATFORM_ID]) {
+            $wifi = Wifi::where(Wifi::COL_PLATFORM_ID, $watch->platform_id)->get([
+                Wifi::COL_SSID,
+                Wifi::COL_PASSWORD,
+            ]);
+            $watch->wifi = $wifi;
+
+            $platform = Platform::find($watch[Watch::COL_PLATFORM_ID]);
+
+            $splitPlatformUrl = explode("//", $platform->url);
+            
+            $watch->protocol = $splitPlatformUrl[0];
+            $watch->url = $splitPlatformUrl[1];
+            $watch->credencial = $platform->credencial;
+        }
+
         
-        $watch->wifi = $wifi;
-        $watch = $watch->only(['device_name', 'siguelo_device_id', 'wifi']);
+        $watch = $watch->only(['device_name', 'siguelo_device_id', 'url', 'credencial', 'protocol', 'wifi']);
         return Res::responseSuccess($watch);
     }
 
     public function getDataConfigForWatch(Request $request)
     {
-        
+
         $httpSiguelo = new HttpSiguelo();
         $data = [
             "texto" => "getDeviceByImei",
@@ -37,13 +56,13 @@ class WatchController extends Controller
 
         $watch = Watch::find($request->id);
         $platform = Platform::find($request->platform_id);
-        
+
         $peticion = $httpSiguelo->sendPeticion($platform, "/api/aux/dataSiguelo", $data);
 
-        if($peticion["status"] == "success" ){
+        if ($peticion["status"] == "success") {
             $count = count($peticion["response"]);
-            
-            if($count > 0){
+
+            if ($count > 0) {
                 //echo $peticion["response"][0]["id"]. " -> ". $peticion["response"][0]["text1"];
                 $watch->update([
                     Watch::COL_PLATFORM_ID => $request->platform_id,
@@ -57,9 +76,9 @@ class WatchController extends Controller
             }
         } else {
             $__status = $peticion['status'];
-            return Res::responseError432("Error en la petición con estado $__status.", $peticion["data"]);
+            return Res::responseError432("Error en la petición con estado $__status.", $peticion);
         }
-        
+
         return Res::responseSuccess($peticion);
         /*
         $wath->update([
@@ -74,12 +93,11 @@ class WatchController extends Controller
     {
         try {
             $list = Watch::where(Watch::COL_IMEI, 'like', '%' . $imei . '%')->get();
-            foreach($list as $watch){
-                if(isset($watch->platform_id)){
+            foreach ($list as $watch) {
+                if (isset($watch->platform_id)) {
                     $platform = Platform::findOrFail($watch->platform_id);
                     $watch->platform_name = $platform->name;
                 }
-                
             }
             return Res::responseSuccess($list);
         } catch (Exception $ex) {
@@ -87,7 +105,8 @@ class WatchController extends Controller
         }
     }
 
-    public function event(Request $request){
+    public function event(Request $request)
+    {
         $element = [
             "watch_id" => $request->watch_id,
             "sim_id" => null,
@@ -127,7 +146,7 @@ class WatchController extends Controller
         try {
             $obj = Watch::create($request->all());
 
-            
+
             return Res::responseSuccess($obj);
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
@@ -146,7 +165,7 @@ class WatchController extends Controller
             if ($obj == null) {
                 return Res::responseErrorNoData();
             }
-            
+
             $obj->fill($request->all());
             $obj->save();
 

@@ -96,6 +96,7 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAn
                         CancelModalButton={CancelModalButton}
                         _crudName={_crudName}
                         onPutAndGet={onPutAndGet}
+                        localStore={localStore}
                         setState={setState}
                         state={state}
                         t={t}

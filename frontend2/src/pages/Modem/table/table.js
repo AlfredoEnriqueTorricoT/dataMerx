@@ -7,6 +7,7 @@ import { DropdownButton, EmptyData, THeaderSorter } from 'components/tableElemen
 const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) => {
 
     const userId = JSON.parse(localStorage.getItem("authUser")).id
+    const resAdmin = JSON.parse(localStorage.getItem("userPermission")).includes("responsability_admin")
 
     const confirmRequest = data => {
         setState({
@@ -209,7 +210,7 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                                         },
                                         {
                                             title: listItem.is_pending ? "Anular transferencia" : "Transferir",
-                                            hidden: listItem.user_responsability_id != userId,
+                                            hidden: listItem.user_responsability_id != userId || !( resAdmin && listItem.user_responsability_id == null),
                                             onClick: ()=>{
                                                 setState({
                                                     modalOpen: true,

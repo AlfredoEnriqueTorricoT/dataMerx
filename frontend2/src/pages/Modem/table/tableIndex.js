@@ -5,21 +5,17 @@ import TableInputs from "./tableInputs"
 import Table from "./table"
 import TableMobile from "./tableMobile"
 
-import { useMediaQuery } from "react-responsive"
-
 import { tableFilter, tableSorter } from "components/tableFilter"
 import { SpinnerL } from "components/components"
 
 const keysToSort = ["code", "imei", "active", "mBrand_name"]
 
-const TableIndex = ({_crudName, onGet, onPost, localStore, setState, state, t}) => {
+const TableIndex = ({_crudName, isTabletOrMobile, onGet, onPost, localStore, setState, state, t}) => {
     const [mList, setMList] = useState([])
     const [sorter, zetSorter] = useState(1)
     const [tableStatus, setTableStatus] = useState(1) //0 init, 1 loading, 2 success, 3 error
     
     const [tableFiltered, setTableFiltered] = useState([])
-
-    const isTabletOrMobile = useMediaQuery({ query: "(max-width: 760px)" });
 
     const setSorter = numero => {
         Math.abs(sorter) === numero ? zetSorter(sorter * -1) : zetSorter(numero)
@@ -72,6 +68,7 @@ const TableIndex = ({_crudName, onGet, onPost, localStore, setState, state, t}) 
                     {t("List of") + " " + t(_crudName.multiple)}
                 </div>
                 <TableInputs
+                    isTabletOrMobile={isTabletOrMobile}
                     onGet={onGet}
                     onPost={onPost}
                     setState={setState}
@@ -130,6 +127,7 @@ TableIndex.propTypes = {
     _crudName: PropTypes.object,
     onGet: PropTypes.func,
     onPost: PropTypes.func,
+    isTabletOrMobile: PropTypes.bool,
     localStore: PropTypes.object,
     setState: PropTypes.func,
     state: PropTypes.object,

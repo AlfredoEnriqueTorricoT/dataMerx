@@ -196,7 +196,7 @@ const eventsButton = data => {
                 </div>
         )) :
         <center>
-          <h4 className="text-secondary my-5">{t("No " + _crudName.multple + " found")}</h4>
+          <h4 className="text-secondary my-5">{t("No modems found")}</h4>
         </center>
         }
       </React.Fragment>

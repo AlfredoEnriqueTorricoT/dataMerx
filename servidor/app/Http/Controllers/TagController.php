@@ -3,22 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TagRequest;
 use App\Http\Res;
+use App\Http\Services\TagService;
 use App\Models\Tag;
 use App\Services\TagUserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TagController extends Controller
 {
     //
-    public function index(){
-        $list = Tag::all();
-        return Res::responseSuccess($list);
+    public function index($device, TagService $tagService){
+        
+        return Res::responseSuccess(
+            $tagService->getByUser(auth()->user()->id, $device)
+        );
     }
 
-    public function store(Request $request, TagUserService $tagUserService){
-        $obj = Tag::create($request->all());
-        $tagUserService->store($obj->id, auth()->user()->id);
+    public function store(TagRequest $request, TagService $tagService){
+        $obj = $tagService->create($request->all(), auth()->user()->id);
         return Res::responseSuccess($obj);
     }
 
@@ -28,10 +32,4 @@ class TagController extends Controller
         return Res::responseSuccess($tag);
     }
 
-    public function deleteLogic(Tag $tag){
-        $tag[Tag::COL_ACTIVE] = false;
-        $tag->save();
-        return Res::responseSuccess(Tag::all());
-    }
-    
 }

@@ -23,6 +23,7 @@ import ModalIndex from "./Modal/modalIndex"
 import EventsTableIndex from "./events/tableIndex"
 import { ErrorTable } from "components/tableElements"
 import { SpinnerL } from "components/components"
+import { useMediaQuery } from "react-responsive"
 
 const _crudName = {single: "modem", multiple: "modems", cod: "modem"}
 
@@ -56,6 +57,8 @@ const ModemPage = ({
         _zetState({...state, ...data})
     }
 
+    const isTabletOrMobile = useMediaQuery({ query: "(max-width: 760px)" });
+
     useEffect(()=>{
         document.title = "Síguelo | Módems";
         onGetUsers({ saveAs: "userList", url: "user" })
@@ -77,6 +80,7 @@ const ModemPage = ({
                                 <TableIndex
                                     _crudName={_crudName}
                                     localStore={localStore}
+                                    isTabletOrMobile={isTabletOrMobile}
                                     onGet={onGet}
                                     onPost={onPost}
                                     setState={setState}
@@ -100,6 +104,7 @@ const ModemPage = ({
                 <ModalIndex
                     _crudName={_crudName}
                     localStore={localStore}
+                    isTabletOrMobile={isTabletOrMobile}
                     onPostAndGet={onPostAndGet}
                     onGet={onGet}
                     onPost={onPost}

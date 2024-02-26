@@ -11,9 +11,11 @@ use App\Http\Controllers\ModemsMarkController;
 use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\SimController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\TagUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPermissionController;
 use App\Http\Controllers\WatchController;
+use App\Http\Controllers\WatchLogController;
 use App\Http\Controllers\WifiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -131,7 +133,13 @@ Route::get('wifi/{platform_id}', [WifiController::class,'index']);
 Route::post('wifi', [WifiController::class,'store']);
 Route::put('wifi', [WifiController::class,'update']);
 
-Route::get('tag', [TagController::class, 'index'])->middleware("auth:sanctum");
+Route::get('tag/{device}', [TagController::class, 'index'])->middleware("auth:sanctum");
 Route::post('tag', [TagController::class, 'store'])->middleware("auth:sanctum");
 Route::put('tag/{tag}', [TagController::class, 'update'])->middleware("auth:sanctum");
 Route::delete('tag/{tag}', [TagController::class, 'deleteLogic'])->middleware("auth:sanctum");
+
+Route::get('tag_user/check/{id}', [TagUserController::class, 'activeDesactive'])->middleware("auth:sanctum");
+
+
+Route::get('watch_log/{macAddress}', [WatchLogController::class, 'index']);
+Route::get('watch_log/create/{macAddress}', [WatchLogController::class, 'store']);

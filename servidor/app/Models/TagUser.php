@@ -13,9 +13,11 @@ class TagUser extends Model
 
     const COL_TAG_ID = "tag_id";
     const COL_USER_ID = "user_id";
+    const COL_ACTIVE = "active";
 
     public $fillable = [
         self::COL_TAG_ID,
         self::COL_USER_ID,
+        self::COL_ACTIVE,
     ];
 }

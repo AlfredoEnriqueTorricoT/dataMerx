@@ -1,12 +1,17 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import PropTypes from "prop-types"
 
-const TableInputs = ({onGet, onPost, setState, setTableStatus, state, status, t}) => {
+const TableInputs = ({isTabletOrMobile, onGet, onPost, setState, setTableStatus, state, status, t}) => {
   const [imei, setImei] = useState("")
 
   const addUser = () => setState({modalOpen: true, modalType: "Add"})
   const openFilter = () => setState({modalOpen: true, modalType: "Filter"})
   
+  useEffect(()=>{
+    setImei(imei)
+    console.log(state.lastSearch);
+  }, [isTabletOrMobile])
+
   const searchMyModems = () => {
     setTableStatus(1)
     onGet({
@@ -45,6 +50,9 @@ const TableInputs = ({onGet, onPost, setState, setTableStatus, state, status, t}
   const checkActive = name => 
     state.lastSearch == name ? " text-light" : "-outline"
 
+  const checkActiveFilter = () => 
+    (state.lastSearch == "filter" || (isTabletOrMobile && state.lastSearch == "my")) ? " text-light" : "-outline"
+
   const removeFilter = filt => {
     let newFilters = [...state.filters]
     newFilters = newFilters.filter(filtro => filtro != filt)
@@ -53,6 +61,7 @@ const TableInputs = ({onGet, onPost, setState, setTableStatus, state, status, t}
 
     return(
         <div className="d-flex col mb-3" style={{maxHeight: "35px"}}>
+          {isTabletOrMobile ? "" :
           <button
             className={`btn dm-button${checkActive("my")}`}
             style={{minWidth: "110px"}}
@@ -60,6 +69,7 @@ const TableInputs = ({onGet, onPost, setState, setTableStatus, state, status, t}
           >
             {t("My modems")}
           </button>
+          }
 
           {/* <span className="badge badge-info">
                   CHESSE
@@ -100,7 +110,7 @@ const TableInputs = ({onGet, onPost, setState, setTableStatus, state, status, t}
                 <i className="fas fa-search"></i>
               </button>
               <button
-                className={`btn dm-button${checkActive("filter")}`}
+                className={`btn dm-button${checkActiveFilter()}`}
                 disabled={status == "waiting response"}
                 title="Filtros"
                 onClick={openFilter}
@@ -110,8 +120,8 @@ const TableInputs = ({onGet, onPost, setState, setTableStatus, state, status, t}
             </div>
           </div>
           
-          <button className="btn row-2 btn-label dm-button text-light" onClick={addUser}>
-            {t("Add")}
+          <button className={`btn row-2 ${isTabletOrMobile ? "" : "btn-label"} dm-button text-light`} onClick={addUser}>
+            {isTabletOrMobile ? "" : t("Add")}
             <i class="fas fa-plus label-icon"></i>
           </button>
         </div>
@@ -119,6 +129,7 @@ const TableInputs = ({onGet, onPost, setState, setTableStatus, state, status, t}
 }
 
 TableInputs.propTypes = {
+    isTabletOrMobile: PropTypes.bool,
     onGet: PropTypes.func,
     onPost: PropTypes.func,
     setState: PropTypes.func,

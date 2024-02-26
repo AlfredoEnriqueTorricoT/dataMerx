@@ -9,8 +9,10 @@ import {FormikInput, FormikSelect, isEmail, isUrl} from "components/formElements
 const ModalFilter = ({
   CancelModalButton,
   CloseModalButton,
+  isTabletOrMobile,
   localStore,
   setState,
+  onGet,
   onPost,
   t,
   userStore
@@ -20,7 +22,7 @@ const ModalFilter = ({
 
   useEffect(()=>{
     if (toastWaiting && localStore.status != "waiting response") {
-      if (localStore.status == 200) setState({modalOpen: false, lastSearch: "filter", filters: filtersSelected})
+      if (localStore.status == 200) setState({modalOpen: false, lastSearch: filtersSelected.length == 0 ? "my" : "filter", filters: filtersSelected})
       else {
         showToast({
           type: "warning",
@@ -39,6 +41,14 @@ const ModalFilter = ({
         }
 
         return errors
+    }
+
+    const searchMyModems = () => {
+      onGet({
+        saveAs: "modemList",
+        url: "modem"
+      })
+      setToastW(true)
     }
 
     const submitFunction = values => {
@@ -79,6 +89,17 @@ const ModalFilter = ({
             >
                 {({errors})=>(
                     <Form id="modalAddModem">
+                        {isTabletOrMobile ?
+                        <button
+                          className={`btn dm-button text-light col-12 mb-2`}
+                          disabled={toastWaiting}
+                          // style={{minWidth: "110px"}}
+                          onClick={searchMyModems}
+                        >
+                          {t("My modems")}
+                        </button> : ""
+                        }
+
                         <FormikSelect
                           label="Plataforma"
                           inputName="platform_id"
@@ -137,6 +158,8 @@ ModalFilter.propTypes = {
     formName: PropTypes.string,
     localStore: PropTypes.object,
     setState: PropTypes.func,
+    isTabletOrMobile: PropTypes.bool,
+    onGet: PropTypes.func,
     onPost: PropTypes.func,
     userStore: PropTypes.object,
     setToastW: PropTypes.func,

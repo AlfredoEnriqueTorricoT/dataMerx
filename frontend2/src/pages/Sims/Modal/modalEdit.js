@@ -1,17 +1,54 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 
-const ModalEdit = ({_crudName, CloseModalButton, CancelModalButton, onPutAndGet, state, t}) => {
+import { showToast } from 'components/toast'
+
+const ModalEdit = ({_crudName, CloseModalButton, CancelModalButton, localStore, setState, onPutAndGet, state, t}) => {
+    const [imei, setImei] = useState("")
+    const [toastW, setToastW] = useState(false)
+
+    useEffect(()=>{
+      setImei(state.elementSelected.imei)
+    }, [])
+
+    useEffect(()=>{
+      if (toastW && localStore.status != "waiting response") {
+        if (localStore.status == 200) {
+          showToast({
+            type: "success", message: "El sim ha sido editado"
+          })
+          setState({modalOpen: false})
+        } else {
+          showToast({
+            type: "warning", message: "El sim no pudo ser editado",
+            title: "Error (" + localStore.status + ")"
+          })
+        }
+        setToastW(false)
+      }
+    }, [localStore.status])
 
     const validateFunction = values => {
+
         let errors = {}
 
         if (!values.number) errors.number = "Enter the sim number"
         if (values.number.toString().length != 8) errors.number = "El número de teléfono debe ser de 8 dígitos"
-        if (!values.imei) errors.imei = "Enter the sim imei"
+        if (!imei) errors.imei = "Enter the sim imei"
 
         return errors
+    }
+
+    const submitFunc = values => {
+      onPutAndGet({
+        saveAs: "simList",
+        payload: {...values,
+        imei: imei,
+        id: state.elementSelected.id},
+        url: "sim"})
+
+        setToastW(true)
     }
 
     return(
@@ -23,11 +60,7 @@ const ModalEdit = ({_crudName, CloseModalButton, CancelModalButton, onPutAndGet,
 
           <div className="modal-body">
             <Formik
-                onSubmit={values => onPutAndGet({
-                  saveAs: "simList",
-                  payload: {...values,
-                  id: state.elementSelected.id},
-                  url: "sim"})}
+                onSubmit={submitFunc}
                 initialValues={{
                     number: state.elementSelected.number,
                     imei: state.elementSelected.imei
@@ -69,8 +102,10 @@ const ModalEdit = ({_crudName, CloseModalButton, CancelModalButton, onPutAndGet,
                             <Field
                               className="form-control"
                               id="sim_Add_imei"
+                              onChange={i=>setImei(i.target.value)}
                               name="imei"
                               type="number"
+                              value={imei}
                             />
                             <ErrorMessage name="imei">
                               {msg => <h6 className="text-danger">{t(msg)}</h6>}
@@ -85,7 +120,7 @@ const ModalEdit = ({_crudName, CloseModalButton, CancelModalButton, onPutAndGet,
           <div className="modal-footer">
             <CancelModalButton />
             <div className="ms-auto">
-              <button className='btn dm-button text-light btn-label' disabled={localStorage.status == "waiting response"} form={_crudName.cod + "_Edit"} type='submit'>
+              <button className='btn dm-button text-light btn-label' disabled={toastW} form={_crudName.cod + "_Edit"} type='submit'>
                 Añadir
                 <i className='fas fa-edit label-icon'/>
               </button>
@@ -99,6 +134,8 @@ ModalEdit.propTypes = {
     CloseModalButton: PropTypes.any,
     CancelModalButton: PropTypes.any,
     _crudName: PropTypes.object,
+    localStore: PropTypes.object,
+    setState: PropTypes.func,
     onPutAndGet: PropTypes.func,
     state: PropTypes.func,
     t: PropTypes.func,

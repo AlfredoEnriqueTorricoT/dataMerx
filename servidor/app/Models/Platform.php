@@ -18,6 +18,7 @@ class Platform extends Model
         "url",
         "email",
         "password",
+        "credencial",
         "active"
     ];
 }

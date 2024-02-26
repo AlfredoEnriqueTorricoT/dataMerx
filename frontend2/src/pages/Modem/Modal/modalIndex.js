@@ -18,6 +18,7 @@ import ModalTransferRequest from './modalTransferRequest';
 const ModalIndex = ({
     _crudName,
     localStore,
+    isTabletOrMobile,
     onPostAndGet,
     onGet,
     onPost,
@@ -196,8 +197,10 @@ const ModalIndex = ({
                     <ModalFilter
                         CancelModalButton={CancelModalButton}
                         CloseModalButton={CloseModalButton}
+                        isTabletOrMobile={isTabletOrMobile}
                         localStore={localStore}
                         setState={setState}
+                        onGet={onGet}
                         onPost={onPost}
                         t={t}
                         userStore={userStore}
@@ -264,6 +267,7 @@ const ModalIndex = ({
 ModalIndex.propTypes = {
     _crudName: PropTypes.object,
     localStore: PropTypes.object,
+    isTabletOrMobile: PropTypes.bool,
     onPostAndGet: PropTypes.func,
     onGet: PropTypes.func,
     onPost: PropTypes.func,
