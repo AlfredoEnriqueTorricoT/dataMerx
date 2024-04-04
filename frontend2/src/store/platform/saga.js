@@ -40,6 +40,30 @@ function* getPlatformSaga(action) {
   }
 }
 
+function* deletePlatformSaga(action) {
+  let response;
+  try {
+    response = yield call(AxiosServices.DELETE, {url: action.url})
+
+    try {
+      if (response.data.status == 204) {
+        yield put(updatePlatformStorage({
+          payload: action.payload,
+          saveAs: action.saveAs,
+          status: response.data.status}))
+      } else {
+        yield put(updatePlatformStorage({status: response.data.status}))
+      }  
+    } catch (error) {
+      yield put(updatePlatformStorage({status: response.response.status}))
+    }
+    
+} catch (error) {
+  console.log("error:", error);
+  yield put(updatePlatformStorage({status: "Unexpected error"}))
+  }
+}
+
 function* postAndGetPlatformSaga(action) {
   let response;
   try {
@@ -98,6 +122,7 @@ function* putAndGetPlatformSaga(action) {
 
 function* platformSaga() {
   yield takeEvery(GET_PLATFORM, getPlatformSaga)
+  yield takeEvery(DELETE_PLATFORM, deletePlatformSaga)
   yield takeEvery(POST_AND_GET_PLATFORM, postAndGetPlatformSaga)
   yield takeEvery(PUT_AND_GET_PLATFORM, putAndGetPlatformSaga)
 }

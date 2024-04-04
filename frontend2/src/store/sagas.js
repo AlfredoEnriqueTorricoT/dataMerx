@@ -17,6 +17,10 @@ import modemSaga from "./modem/saga"
 import eventSaga from "./event/saga"
 import clientSaga from "./clients/saga"
 import watchSaga from "./watch/saga"
+import tagSaga from "./tags/saga"
+import reportDeviceSaga from "./report-device/saga"
+import ReportDeviceSigueloSaga from "./report-device-siguelo/saga"
+import PlatformCountSaga from "./platform-count/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -37,5 +41,9 @@ export default function* rootSaga() {
     fork(eventSaga),
     fork(clientSaga),
     fork(watchSaga),
+    fork(tagSaga),
+    fork(reportDeviceSaga),
+    fork(ReportDeviceSigueloSaga),
+    fork(PlatformCountSaga)
   ])
 }

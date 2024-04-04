@@ -5,6 +5,7 @@ import { Modal } from 'reactstrap'
 import ModalAddWifi from './modalAddWifi'
 import { THeaderSorter } from 'components/tableElements'
 import { SpinnerL } from 'components/components'
+import { showToast } from 'components/toast'
 
 
 const ModalWifi = ({
@@ -14,14 +15,25 @@ const ModalWifi = ({
     elementSelected,
     localStore,
     onPost,
+    onDelete,
     onPostAndGet,
     setToastW,
     setState, t
 }) => {
     const [modalOpen, setModalOpen] = useState(false)
     const [modalMode, setModalMode] = useState("Add")
+    const [tWaiting, setTWaiting] = useState(false)
     const [tableState, setTableState] = useState(0)
     const [sorter, setSorter] = useState(1)
+
+    useEffect(()=>{
+        if (tWaiting && localStore.status != "waiting response") {
+            if (localStore.status != 204) {
+                showToast({type: "warning", title: "Error (" + localStore.status + ")", message: t("No se ha podido eliminar la red wi-fi")})
+            }
+            setTWaiting(false)
+        }
+    }, [localStore.status])
 
     useEffect(()=>{
         if (tableState == 0 && localStore.status != "waiting response") {
@@ -65,16 +77,18 @@ const ModalWifi = ({
                                     <td>
                                         <button 
                                             className='btn btn-sm'
-                                            // onClick={()=>{
-                                            //     setState({
-                                            //         modalOpen: true,
-                                            //         modalType: "Wifi",
-                                            //         elementSelected: listItem
-                                            //     })
-                                            // }}
+                                            disabled={tWaiting}
+                                            onClick={()=>{
+                                                onDelete({
+                                                    url: "wifi/" + listItem.id,
+                                                    saveAs: "wifiList",
+                                                    payload: localStore.wifiList.filter((item, index)=>item.id != listItem.id)
+                                                })
+                                                setTWaiting({tWaiting: true})
+                                            }}
                                             title='Eliminar red wi-fi'
                                           >
-                                            <i className="fas fa-trash-alt"></i>
+                                            <i className="fas fa-trash-alt text-danger"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -145,6 +159,7 @@ ModalWifi.propTypes = {
     formName: PropTypes.string,
     localStore: PropTypes.object,
     onPost: PropTypes.func,
+    onDelete: PropTypes.func,
     onPostAndGet: PropTypes.func,
     setToastW: PropTypes.func,
     setState: PropTypes.func,

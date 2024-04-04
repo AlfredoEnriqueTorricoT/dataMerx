@@ -30,6 +30,7 @@ class WatchController extends Controller
                 Wifi::COL_PASSWORD,
             ]);
             $watch->wifi = $wifi;
+            $watch->wifi_count = count($wifi);
 
             $platform = Platform::find($watch[Watch::COL_PLATFORM_ID]);
 
@@ -41,7 +42,7 @@ class WatchController extends Controller
         }
 
         
-        $watch = $watch->only(['device_name', 'siguelo_device_id', 'url', 'credencial', 'protocol', 'wifi']);
+        $watch = $watch->only(['device_name', 'siguelo_device_id', 'url', 'credencial', 'protocol', 'wifi', 'wifi_count']);
         return Res::responseSuccess($watch);
     }
 

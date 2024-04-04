@@ -18,6 +18,6 @@ class TagUser extends Model
     public $fillable = [
         self::COL_TAG_ID,
         self::COL_USER_ID,
-        self::COL_ACTIVE,
+        self::COL_ACTIVE
     ];
 }

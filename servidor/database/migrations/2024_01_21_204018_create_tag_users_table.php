@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('tag_users', function (Blueprint $table) {
             $table->id();
-            $table->boolean("active")->default(1);
+            $table->boolean("active")->default(true);
             $table->unsignedBigInteger("tag_id");
             $table->unsignedBigInteger("user_id");
 

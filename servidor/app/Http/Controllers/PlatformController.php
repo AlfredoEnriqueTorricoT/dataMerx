@@ -7,6 +7,7 @@ use App\Models\Platform;
 use App\Models\Wifi;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PlatformController extends Controller
 {
@@ -19,6 +20,13 @@ class PlatformController extends Controller
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());
         }
+    }
+
+    public function countDevice(){
+        $sql = "SELECT p.name, m_c.count from (SELECT platform_id, COUNT(platform_id) as count  FROM `modems` GROUP by platform_id) m_c
+        join platforms p on p.id = m_c.platform_id;";
+        $count = DB::select($sql);
+        return Res::responseSuccess($count);
     }
 
     public function getWifi($platform_id)

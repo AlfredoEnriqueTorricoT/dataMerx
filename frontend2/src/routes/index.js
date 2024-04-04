@@ -23,6 +23,10 @@ import ModemPage from "pages/Modem"
 import EventPage from "pages/Events";
 import ClientPage from "pages/Client"
 import WatchPage from "pages/Watch";
+import TagsPage from "pages/Tags";
+import ReportDevicePage from "pages/ReportDevice";
+import ReportDeviceOfSiguelo from "pages/ReportDeviceOfSiguelo";
+import ConteoPlataformas from "pages/ConteoPlataformas";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -34,6 +38,10 @@ const authProtectedRoutes = [
   { path: "/modem", component: ModemPage },
   { path: "/clients", component: ClientPage },
   { path: "/watch", component: WatchPage },
+  { path: "/tags", component: TagsPage },
+  { path: "/report_device", component: ReportDevicePage },
+  { path: "/report_device_of_siguelo", component: ReportDeviceOfSiguelo },
+  { path: "/platform_count", component: ConteoPlataformas },
   // { path: "/event", component: EventPage },
 
   //profile

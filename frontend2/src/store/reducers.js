@@ -25,6 +25,10 @@ import Modem from "./modem/reducer"
 import Event from "./event/reducer"
 import Client from "./clients/reducer"
 import Watch from "./watch/reducer"
+import Tag from "./tags/reducer"
+import ReportDevice from "./report-device/reducer"
+import ReportDeviceSiguelo from "./report-device-siguelo/reducer"
+import PlatformCountReducer from "./platform-count/reducer"
 
 const rootReducer = combineReducers({
   // public
@@ -43,7 +47,11 @@ const rootReducer = combineReducers({
   Modem,
   Event,
   Client,
-  Watch
+  Watch,
+  Tag,
+  ReportDevice,
+  ReportDeviceSiguelo,
+  PlatformCountReducer
 })
 
 export default rootReducer

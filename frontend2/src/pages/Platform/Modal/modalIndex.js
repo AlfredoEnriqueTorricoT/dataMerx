@@ -6,7 +6,7 @@ import { showToast } from 'components/toast';
 
 import ModalWifi from './modalWifi';
 
-const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAndGet, setState, state, t}) => {
+const ModalIndex = ({_crudName, localStore, onGet, onPost, onDelete, onPostAndGet, onPutAndGet, setState, state, t}) => {
     const [toastWaiting, setToastW] = useState(false)
 
     useEffect(()=>{
@@ -94,6 +94,7 @@ const ModalIndex = ({_crudName, localStore, onGet, onPost, onPostAndGet, onPutAn
                         localStore={localStore}
                         onGet={onGet}
                         onPost={onPost}
+                        onDelete={onDelete}
                         onPostAndGet={onPostAndGet}
                         setToastW={setToastW}
                         t={t}
@@ -117,6 +118,7 @@ ModalIndex.propTypes = {
     localStore: PropTypes.object,
     onGet: PropTypes.func,
     onPost: PropTypes.func,
+    onDelete: PropTypes.func,
     onPostAndGet: PropTypes.func,
     onPutAndGet: PropTypes.func,
     setState: PropTypes.func,

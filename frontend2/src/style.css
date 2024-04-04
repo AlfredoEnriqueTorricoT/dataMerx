@@ -170,3 +170,10 @@ body::-webkit-scrollbar {
   .dm-link :hover .dm-link-icon {
     color: #f0f0f0 !important;
   }
+
+
+
+  .flex-center {
+    display: flex;
+    justify-content: space-evenly;  
+  }

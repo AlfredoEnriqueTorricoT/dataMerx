@@ -12,9 +12,9 @@ import { Link } from "react-router-dom";
 //i18n
 import { withTranslation } from "react-i18next";
 
-const CheckPermission = ({permissionName, children}) => {
+const CheckPermission = ({ permissionName, children }) => {
   if (JSON.parse(localStorage.getItem("userPermission")).includes(permissionName))
-    return(children)
+    return (children)
 }
 class SidebarContent extends Component {
   constructor(props) {
@@ -113,13 +113,13 @@ class SidebarContent extends Component {
             <ul className="metismenu list-unstyled" id="side-menu">
               <li className="menu-title dm-text-light">{this.props.t("Menu")}</li>
               <CheckPermission permissionName="cars">
-              <li className="dm-link">
-                <Link to="/car">
-                  <i className="fas fa-car dm-link-icon" />
-                  <span>Vehículos</span>
-                </Link>
-              </li>            
-              </CheckPermission>  
+                <li className="dm-link">
+                  <Link to="/car">
+                    <i className="fas fa-car dm-link-icon" />
+                    <span>Vehículos</span>
+                  </Link>
+                </li>
+              </CheckPermission>
               <CheckPermission permissionName="modems">
                 <li className="dm-link">
                   <Link to="/modem">
@@ -129,20 +129,20 @@ class SidebarContent extends Component {
                 </li>
               </CheckPermission>
               <CheckPermission permissionName="sims">
-              <li className="dm-link">
-                <Link to="/sims">
-                  <i className="fas fa-sim-card dm-link-icon" />
-                  <span>Sims</span>
-                </Link>
-              </li>
+                <li className="dm-link">
+                  <Link to="/sims">
+                    <i className="fas fa-sim-card dm-link-icon" />
+                    <span>Sims</span>
+                  </Link>
+                </li>
               </CheckPermission>
               <CheckPermission permissionName="watchs">
-              <li className="dm-link">
-                <Link to="/watch">
-                  <i className="fas fa-stopwatch dm-link-icon" />
-                  <span>Relojes</span>
-                </Link>
-              </li>
+                <li className="dm-link">
+                  <Link to="/watch">
+                    <i className="fas fa-stopwatch dm-link-icon" />
+                    <span>Relojes</span>
+                  </Link>
+                </li>
               </CheckPermission>
               <li className="dm-link">
                 <Link to="/clients">
@@ -150,14 +150,14 @@ class SidebarContent extends Component {
                   <span>Clientes</span>
                 </Link>
               </li>
-              {(JSON.parse(localStorage.getItem("userData"))).auth === 0 ? 
+              {(JSON.parse(localStorage.getItem("userData"))).auth === 0 ?
                 <li className="dm-link">
                   <Link to="/mark-modem">
                     <i className="fas fa-list dm-link-icon"></i>
                     <span>Marcas de módem</span>
                   </Link>
                 </li>
-              : ""}
+                : ""}
               <CheckPermission permissionName="platforms">
                 <li className="dm-link">
                   <Link to="/platform">
@@ -166,14 +166,45 @@ class SidebarContent extends Component {
                   </Link>
                 </li>
               </CheckPermission>
-              {(JSON.parse(localStorage.getItem("userData"))).auth === 0 ? 
+              <li className="dm-link">
+                <Link to="/tags">
+                  <i className="fas fa-tag dm-link-icon"></i>
+                  <span>Tags</span>
+                </Link>
+              </li>
+
+              <li className="dm-link">
+                <Link to="#" className="has-arrow">
+                  <i className="fas fa-file dm-link-icon"></i>
+                  <span>Reportes</span>
+                </Link>
+                <ul className="sub-menu" aria-expanded="false">
+                  <li className="dm-link">
+                    <Link to="/report_device">
+                      <i className="fas fa-file dm-link-icon"></i>
+                      <span>Modems</span>
+                    </Link>
+                    <Link to="/report_device_of_siguelo">
+                      <i className="fas fa-file dm-link-icon"></i>
+                      <span>Buscar por imei</span>
+                    </Link>
+                    <Link to="/platform_count">
+                      <i className="fas fa-file dm-link-icon"></i>
+                      <span>Conteo de plataformas</span>
+                    </Link>
+                  </li>
+                </ul>
+              </li>
+
+
+              {(JSON.parse(localStorage.getItem("userData"))).auth === 0 ?
                 <li className="dm-link">
                   <Link to="/users">
                     <i className="fas fa-user-tie dm-link-icon" />
                     <span>Usuarios</span>
                   </Link>
                 </li>
-              : ""}
+                : ""}
             </ul>
           </div>
         </SimpleBar>

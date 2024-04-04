@@ -9,6 +9,7 @@ use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\ModemController;
 use App\Http\Controllers\ModemsMarkController;
 use App\Http\Controllers\PlatformController;
+use App\Http\Controllers\SigueloController;
 use App\Http\Controllers\SimController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TagUserController;
@@ -103,8 +104,10 @@ Route::get('event/{type}/{id}', [EventController::class,'index']);
 Route::get('event-images/{id}', [EventController::class,'images']);
 Route::post('event', [EventController::class,'store']);
 Route::post('event-upload', [EventController::class,'storeUpload']);
+Route::post('event/server-siguelo', [EventController::class,'eventServerSiguelo']);
 
 Route::get('platform', [PlatformController::class,'index']);
+Route::get('platform/count', [PlatformController::class,'countDevice']);
 Route::post('platform', [PlatformController::class,'store']);
 Route::put('platform', [PlatformController::class,'update']);
 Route::get('platforms/{platform_id}/wifis', [PlatformController::class, 'index']);
@@ -132,14 +135,24 @@ Route::delete('watch/{watch}', [WatchController::class,'destroy']);
 Route::get('wifi/{platform_id}', [WifiController::class,'index']);
 Route::post('wifi', [WifiController::class,'store']);
 Route::put('wifi', [WifiController::class,'update']);
+Route::delete('wifi/{wifi}', [WifiController::class,'destroy']);
 
-Route::get('tag/{device}', [TagController::class, 'index'])->middleware("auth:sanctum");
+Route::get('tag', [TagController::class, 'index'])->middleware("auth:sanctum");
 Route::post('tag', [TagController::class, 'store'])->middleware("auth:sanctum");
 Route::put('tag/{tag}', [TagController::class, 'update'])->middleware("auth:sanctum");
 Route::delete('tag/{tag}', [TagController::class, 'deleteLogic'])->middleware("auth:sanctum");
 
 Route::get('tag_user/check/{id}', [TagUserController::class, 'activeDesactive'])->middleware("auth:sanctum");
+Route::get('tag_user', [TagUserController::class, 'getByUser'])->middleware("auth:sanctum");
+Route::get('tag_user/assign/{tag_id}', [TagUserController::class, 'getUserIdAssign'])->middleware("auth:sanctum");
+Route::post('tag_user/add', [TagUserController::class, 'addUser'])->middleware("auth:sanctum");
+Route::post('tag_user/delete', [TagUserController::class, 'deleteUser'])->middleware("auth:sanctum");
 
 
 Route::get('watch_log/{macAddress}', [WatchLogController::class, 'index']);
-Route::get('watch_log/create/{macAddress}', [WatchLogController::class, 'store']);
+Route::get('watch_log/create/{macAddress}', [WatchLogController::class, 'store']);    
+
+
+Route::post('siguelo/getByImei', [SigueloController::class, 'getDeviceByPlatforms']);
+Route::post('siguelo/getCountByDate', [SigueloController::class, 'getDevicesCountByPlatforms']);
+Route::post('siguelo/getImeiByDate', [SigueloController::class, 'getImeiByDate']);

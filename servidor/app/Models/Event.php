@@ -9,16 +9,26 @@ class Event extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        "title",
-        "detail",
-        "type_id",
-        "car_id",
-        "modem_id",
-        "sim_id",
-        "watch_id",
-        "platform_id",
-        "user_id"
+    const COL_TITLE = "title";
+    const COL_DETAIL = "detail";
+    const COL_TYPE_ID = "type_id";
+    const COL_CAR_ID = "car_id";
+    const COL_MODEM_ID = "modem_id";
+    const COL_SIM_ID = "sim_id";
+    const COL_WATCH_ID = "watch_id";
+    const COL_PLATFORM_ID = "platform_id";
+    const COL_USER_ID = "user_id";
+
+    public $fillable = [
+        self::COL_TITLE,
+        self::COL_DETAIL,
+        self::COL_TYPE_ID,
+        self::COL_CAR_ID,
+        self::COL_MODEM_ID,
+        self::COL_SIM_ID,
+        self::COL_WATCH_ID,
+        self::COL_PLATFORM_ID,
+        self::COL_USER_ID
     ];
 
     public function car()

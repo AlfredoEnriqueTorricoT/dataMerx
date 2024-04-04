@@ -6,8 +6,11 @@ use App\Http\Res;
 use App\Models\Car;
 use App\Models\Event;
 use App\Models\Images;
+use App\Models\Modem;
+use App\Models\Platform;
 use Exception;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\AssignOp\Mod;
 
 class EventController extends Controller
 {
@@ -209,5 +212,28 @@ class EventController extends Controller
         } catch (\Exception $ex) {
             return Res::responseError($ex->getMessage());
         }
+    }
+
+
+
+    public function eventServerSiguelo(Request $request){
+        $modem = Modem::where("imei", $request->imei)->first();
+        
+        $path = explode("," ,$request->platform)[2];
+        $platform = Platform::where("url", "like","%".$path)->first();
+
+        if($platform){
+            $modem[Modem::COL_PLATFORM_ID] = $platform->id;
+            $modem->save();
+            
+            Event::create([
+                Event::COL_MODEM_ID => $modem->id,
+                Event::COL_TITLE => "Modem reasignación de plataforma",
+                Event::COL_DETAIL => "Se traspaso el modem a la plataform ".$platform->name,
+                Event::COL_TYPE_ID => 1,
+            ]);
+        }
+
+        return $platform;
     }
 }

@@ -60,10 +60,11 @@ class WifiController extends Controller
         }
     }
 
-    public function destroy(Wifi $obj)
+    public function destroy(Wifi $wifi)
     {
         try {
-            $obj->delete();
+            $wifi->delete();
+        
             return Res::responseSuccessDelete();
         } catch (Exception $ex) {
             return Res::responseError($ex->getMessage());

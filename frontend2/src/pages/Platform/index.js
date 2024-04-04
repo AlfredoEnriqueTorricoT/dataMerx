@@ -92,6 +92,7 @@ const PlatformPage = ({
                     localStore={localStore}
                     onGet={petitionGet}
                     onPost={petitionPost}
+                    onDelete={onDelete}
                     onPostAndGet={onPostAndGet}
                     onPutAndGet={onPutAndGet}
                     setState={setState}
