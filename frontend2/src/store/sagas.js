@@ -16,7 +16,6 @@ import carSaga from "./car/saga"
 import modemSaga from "./modem/saga"
 import eventSaga from "./event/saga"
 import clientSaga from "./clients/saga"
-import watchSaga from "./watch/saga"
 import tagSaga from "./tags/saga"
 import reportDeviceSaga from "./report-device/saga"
 import ReportDeviceSigueloSaga from "./report-device-siguelo/saga"
@@ -40,7 +39,6 @@ export default function* rootSaga() {
     fork(modemSaga),
     fork(eventSaga),
     fork(clientSaga),
-    fork(watchSaga),
     fork(tagSaga),
     fork(reportDeviceSaga),
     fork(ReportDeviceSigueloSaga),

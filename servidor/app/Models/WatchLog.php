@@ -17,4 +17,10 @@ class WatchLog extends Model
         self::COL_MAC_ADDRESS,
         self::COL_WATCH_ID
     ];
+
+    // name watch
+    public function watch()
+    {
+        return $this->hasOne(Watch::class);
+    }
 }

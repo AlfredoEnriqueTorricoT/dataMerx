@@ -35,13 +35,13 @@ class WatchController extends Controller
             $platform = Platform::find($watch[Watch::COL_PLATFORM_ID]);
 
             $splitPlatformUrl = explode("//", $platform->url);
-            
+
             $watch->protocol = $splitPlatformUrl[0];
             $watch->url = $splitPlatformUrl[1];
             $watch->credencial = $platform->credencial;
         }
 
-        
+
         $watch = $watch->only(['device_name', 'siguelo_device_id', 'url', 'credencial', 'protocol', 'wifi', 'wifi_count']);
         return Res::responseSuccess($watch);
     }
@@ -94,6 +94,22 @@ class WatchController extends Controller
     {
         try {
             $list = Watch::where(Watch::COL_IMEI, 'like', '%' . $imei . '%')->get();
+            foreach ($list as $watch) {
+                if (isset($watch->platform_id)) {
+                    $platform = Platform::findOrFail($watch->platform_id);
+                    $watch->platform_name = $platform->name;
+                }
+            }
+            return Res::responseSuccess($list);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
+    public function indexAll()
+    {
+        try {
+            $list = Watch::all();
             foreach ($list as $watch) {
                 if (isset($watch->platform_id)) {
                     $platform = Platform::findOrFail($watch->platform_id);

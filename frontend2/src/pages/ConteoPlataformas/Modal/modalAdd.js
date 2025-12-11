@@ -78,7 +78,7 @@ const ModalAdd = ({
         { console.log(localStoreModalList) }
         <div>
           <h5 className='text-center'>Plataforma</h5>
-          <ul>
+          <ol>
             {
               localStoreModalList?.platforms?.map((item, idx) => (
                 <li key={_crudName.cod + "Item-" + idx}>
@@ -87,13 +87,13 @@ const ModalAdd = ({
               ))
             }
           
-          </ul>
+          </ol>
         </div>
 
         <div>
           <h5 className='text-center'>Data Merx</h5>
 
-          <ul>
+          <ol>
             {
               localStoreModalList?.dataMerx?.map((item, idx) => (
                 <li key={_crudName.cod + "Item-" + idx}>
@@ -102,7 +102,7 @@ const ModalAdd = ({
               ))
             }
           
-          </ul>
+          </ol>
         </div>
 
       </div>

@@ -9,7 +9,7 @@ import Account from "./auth/register/reducer"
 import ForgetPassword from "./auth/forgetpwd/reducer"
 import Profile from "./auth/profile/reducer"
 
-//Dashboard 
+//Dashboard
 import Dashboard from "./dashboard/reducer";
 
 //Dasboard saas
@@ -24,11 +24,13 @@ import Car from "./car/reducer"
 import Modem from "./modem/reducer"
 import Event from "./event/reducer"
 import Client from "./clients/reducer"
-import Watch from "./watch/reducer"
 import Tag from "./tags/reducer"
 import ReportDevice from "./report-device/reducer"
 import ReportDeviceSiguelo from "./report-device-siguelo/reducer"
 import PlatformCountReducer from "./platform-count/reducer"
+
+// RTK Slices
+import watchReducer from "../pages/Watch/slices/watchSlice"
 
 const rootReducer = combineReducers({
   // public
@@ -47,11 +49,12 @@ const rootReducer = combineReducers({
   Modem,
   Event,
   Client,
-  Watch,
   Tag,
   ReportDevice,
   ReportDeviceSiguelo,
-  PlatformCountReducer
+  PlatformCountReducer,
+  // RTK Slices
+  Watch: watchReducer,
 })
 
 export default rootReducer

@@ -70,9 +70,14 @@ class SigueloController extends Controller
         $response = [];
         foreach ($platforms as $platform) {
             try{
-                $obj = $httpSigueloService->sendPeticion($platform, '/api/aux/dataSiguelo', $data)["response"];
-                $obj["id"] = $platform->id;
-                $response[$platform->name] = $obj;
+                $result = $httpSigueloService->sendPeticion($platform, '/api/aux/dataSiguelo', $data);
+                
+                if(is_array($result["response"]) ){
+                    $obj = $result["response"];
+                    $obj["id"] = $platform->id;
+                    $response[$platform->name] = $obj;
+                }
+                
             }catch(Exception $e){
                 $response[$platform->name] = "Error";
             }
@@ -131,30 +136,31 @@ class SigueloController extends Controller
 
         
         $newListPlatform = $this->filterUniqueImei($listPlatform, $listDataMerx);
+        $newListDataMerx = $this->filterUniqueImei($listDataMerx, $listPlatform);
 
         return Res::responseSuccess([
             "platforms" => $newListPlatform,
-            "dataMerx" => $listDataMerx
+            "dataMerx" => $newListDataMerx
         ]);
     }
 
 
-    public function filterUniqueImei($listPlatform, $listDataMerx) {
-        $newListPlatform = array();
-        foreach ($listPlatform as $keyPt => $platform) {
+    public function filterUniqueImei($listA, $listB) {
+        $newList = array();
+        foreach ($listA as $platform) {
             $isUnique = true;
-            foreach ($listDataMerx as $keyDM => $merx) {
+            foreach ($listB as $keyDM => $merx) {
                 if($platform["imei"] == $merx["imei"]){
                     $isUnique = false;
-                    unset($listDataMerx[$keyDM]);                 
+                    unset($listB[$keyDM]);                 
                 }
             } 
             if($isUnique){
-                array_push($newListPlatform, $platform);
+                array_push($newList, $platform);
             }
         }
 
-        return $newListPlatform;
+        return $newList;
     }
 
 }

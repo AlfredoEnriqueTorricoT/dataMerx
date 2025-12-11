@@ -1,8 +1,0 @@
-export const GET_WATCH = "GET_WATCH";
-export const POST_WATCH = "POST_WATCH";
-export const PUT_WATCH = "PUT_WATCH";
-export const DELETE_WATCH = "DELETE_WATCH";
-export const POST_AND_GET_WATCH = "POST_AND_GET_WATCH";
-export const PUT_AND_GET_WATCH = "PUT_AND_GET_WATCH";
-export const DELETE_AND_GET_WATCH = "DELETE_AND_GET_WATCH";
-export const UPDATE_WATCH_STORAGE = "UPDATE_WATCH_STORAGE";

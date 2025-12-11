@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm uninstall:*)",
+      "Bash(npm install:*)",
+      "Bash(dir:*)",
+      "Bash(del:*)",
+      "Bash(cat:*)",
+      "Bash(npm ls:*)",
+      "Bash(npm start)",
+      "Bash(npx tsc:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

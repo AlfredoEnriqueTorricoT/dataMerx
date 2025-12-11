@@ -210,7 +210,7 @@ const Table = ({_crudName, listToShow, onGet, setSorter, setState, sorter, t}) =
                                         },
                                         {
                                             title: listItem.is_pending ? "Anular transferencia" : "Transferir",
-                                            hidden: listItem.user_responsability_id != userId && !( resAdmin && listItem.user_responsability_id == null),
+                                            hidden: !(listItem.user_responsability_id == userId || ( resAdmin && listItem.user_responsability_id == null)),
                                             onClick: ()=>{
                                                 setState({
                                                     modalOpen: true,

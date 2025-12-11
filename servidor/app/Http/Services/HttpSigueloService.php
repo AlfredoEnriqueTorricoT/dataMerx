@@ -4,7 +4,6 @@
 namespace App\Http\Services;
 
 use Exception;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class HttpSigueloService

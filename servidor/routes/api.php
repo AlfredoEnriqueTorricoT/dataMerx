@@ -123,6 +123,7 @@ Route::delete('client-car/{obj}', [ClientCarController::class,'destroy']);
 
 Route::post('images', [ImagesController::class,'upload']);
 
+Route::get('watch/all', [WatchController::class,'indexAll']);
 Route::get('watch/{platform_id}', [WatchController::class,'index']);
 Route::get('watch/{watch}/get_wifi', [WatchController::class,'get_wifi']);
 Route::get('watch/code/{code}', [WatchController::class,'getConfigByCode']);
@@ -148,11 +149,11 @@ Route::get('tag_user/assign/{tag_id}', [TagUserController::class, 'getUserIdAssi
 Route::post('tag_user/add', [TagUserController::class, 'addUser'])->middleware("auth:sanctum");
 Route::post('tag_user/delete', [TagUserController::class, 'deleteUser'])->middleware("auth:sanctum");
 
-
+Route::get('watch_log/create/{macAddress}', [WatchLogController::class, 'store']);
 Route::get('watch_log/{macAddress}', [WatchLogController::class, 'index']);
-Route::get('watch_log/create/{macAddress}', [WatchLogController::class, 'store']);    
 
 
-Route::post('siguelo/getByImei', [SigueloController::class, 'getDeviceByPlatforms']);
-Route::post('siguelo/getCountByDate', [SigueloController::class, 'getDevicesCountByPlatforms']);
-Route::post('siguelo/getImeiByDate', [SigueloController::class, 'getImeiByDate']);
+
+Route::post('siguelo/getByImei', [SigueloController::class, 'getDeviceByPlatforms'])->middleware("auth:sanctum");
+Route::post('siguelo/getCountByDate', [SigueloController::class, 'getDevicesCountByPlatforms'])->middleware("auth:sanctum");
+Route::post('siguelo/getImeiByDate', [SigueloController::class, 'getImeiByDate'])->middleware("auth:sanctum");
