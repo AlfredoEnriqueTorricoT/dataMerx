@@ -18,7 +18,7 @@ class WatchController extends Controller
 {
     public function getConfigByCode($code)
     {
-        $watch = Watch::where(Watch::COL_CODE, $code)->first();
+        $watch = Watch::where(Watch::COL_IMEI, $code)->first();
         if(!isEmpty($watch)){
             Res::responseError("No se encontro el reloj");
         }

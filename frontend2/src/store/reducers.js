@@ -16,21 +16,22 @@ import Dashboard from "./dashboard/reducer";
 import DashboardSaas from "./dashboard-saas/reducer";
 
 import ModemBrands from "./modem-brands/reducer"
-import Sims from "./sims/reducer"
 import Users from "./users/reducer"
-
-import Platform from "./platform/reducer"
-import Car from "./car/reducer"
-import Modem from "./modem/reducer"
 import Event from "./event/reducer"
 import Client from "./clients/reducer"
 import Tag from "./tags/reducer"
-import ReportDevice from "./report-device/reducer"
 import ReportDeviceSiguelo from "./report-device-siguelo/reducer"
-import PlatformCountReducer from "./platform-count/reducer"
 
 // RTK Slices
 import watchReducer from "../pages/Watch/slices/watchSlice"
+import platformCountReducer from "../pages/PlatformCount/slices/platformCountSlice"
+import modem2Reducer from "../pages/Modem2/slices/modemSlice"
+import platform2Reducer from "../pages/Platform2/slices/platformSlice"
+import modemBrandReducer from "../pages/ModemBrand/slices/modemBrandSlice"
+import watchLogReducer from "../pages/report/watch_log/slices/watchLogSlice"
+import sims2Reducer from "../pages/Sims2/slices/simSlice"
+import car2Reducer from "../pages/Car2/slices/carSlice"
+import user2Reducer from "../pages/User2/slices/userSlice"
 
 const rootReducer = combineReducers({
   // public
@@ -42,19 +43,21 @@ const rootReducer = combineReducers({
   Dashboard,
   DashboardSaas,
   ModemBrands,
-  Sims,
-  Platform,
-  Car,
   Users,
-  Modem,
   Event,
   Client,
   Tag,
-  ReportDevice,
   ReportDeviceSiguelo,
-  PlatformCountReducer,
   // RTK Slices
   Watch: watchReducer,
+  PlatformCount: platformCountReducer,
+  Modem2: modem2Reducer,
+  Platform2: platform2Reducer,
+  ModemBrand: modemBrandReducer,
+  WatchLog: watchLogReducer,
+  Sims2: sims2Reducer,
+  Car2: car2Reducer,
+  User2: user2Reducer,
 })
 
 export default rootReducer

@@ -150,7 +150,7 @@ Route::post('tag_user/add', [TagUserController::class, 'addUser'])->middleware("
 Route::post('tag_user/delete', [TagUserController::class, 'deleteUser'])->middleware("auth:sanctum");
 
 Route::get('watch_log/create/{macAddress}', [WatchLogController::class, 'store']);
-Route::get('watch_log/{macAddress}', [WatchLogController::class, 'index']);
+Route::get('watch_log', [WatchLogController::class, 'index']);
 
 
 

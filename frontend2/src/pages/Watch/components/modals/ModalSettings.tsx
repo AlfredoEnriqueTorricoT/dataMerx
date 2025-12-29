@@ -10,9 +10,13 @@ interface Platform {
   name: string
 }
 
+interface ConfigureWatchPayloadWithPlatformName extends ConfigureWatchPayload {
+  platform_name?: string
+}
+
 interface ModalSettingsProps {
   watch: WatchModel
-  onSubmit: (payload: ConfigureWatchPayload) => Promise<{ success: boolean; message: string }>
+  onSubmit: (payload: ConfigureWatchPayloadWithPlatformName) => Promise<{ success: boolean; message: string }>
   onClose: () => void
   isSubmitting: boolean
   t: (key: string) => string
@@ -39,10 +43,12 @@ const ModalSettings: React.FC<ModalSettingsProps> = ({
   }, [])
 
   const handleSubmit = async (values: { platform_id: string; device_imei: string }) => {
-    const payload: ConfigureWatchPayload = {
+    const selectedPlatform = platforms.find((p) => p.id === parseInt(values.platform_id, 10))
+    const payload: ConfigureWatchPayloadWithPlatformName = {
       id: watch.id,
       platform_id: parseInt(values.platform_id, 10),
       device_imei: values.device_imei,
+      platform_name: selectedPlatform?.name,
     }
     const result = await onSubmit(payload)
     if (result.success) {

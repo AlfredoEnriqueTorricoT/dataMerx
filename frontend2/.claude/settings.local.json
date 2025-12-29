@@ -8,7 +8,9 @@
       "Bash(cat:*)",
       "Bash(npm ls:*)",
       "Bash(npm start)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(timeout:*)",
+      "Bash(mkdir:*)"
     ],
     "deny": [],
     "ask": []

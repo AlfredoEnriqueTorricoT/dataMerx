@@ -14,19 +14,19 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 import Dashboard from "../pages/Dashboard/index";
 
 //newPages
-import MarkModem from "pages/Mark modem";
-import SimPage from "pages/Sims"
-import UserPage from "pages/User"
-import PlatformPage from "pages/Platform"
-import CarPage from "pages/Car"
-import ModemPage from "pages/Modem"
+import MarkModem from "pages/ModemBrand";
+import SimPage from "pages/Sims2"
+import UserPage from "pages/User2"
+import PlatformPage from "pages/Platform2"
+import CarPage from "pages/Car2"
+import ModemPage from "pages/Modem2"
 import EventPage from "pages/Events";
 import ClientPage from "pages/Client"
 import WatchPage from "pages/Watch";
 import TagsPage from "pages/Tags";
-import ReportDevicePage from "pages/ReportDevice";
 import ReportDeviceOfSiguelo from "pages/ReportDeviceOfSiguelo";
-import ConteoPlataformas from "pages/ConteoPlataformas";
+import PlatformCountPage from "pages/PlatformCount";
+import WatchLogPage from "pages/report/watch_log";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -39,9 +39,9 @@ const authProtectedRoutes = [
   { path: "/clients", component: ClientPage },
   { path: "/watch", component: WatchPage },
   { path: "/tags", component: TagsPage },
-  { path: "/report_device", component: ReportDevicePage },
+  { path: "/report_device", component: PlatformCountPage },
   { path: "/report_device_of_siguelo", component: ReportDeviceOfSiguelo },
-  { path: "/platform_count", component: ConteoPlataformas },
+  { path: "/report/watch_log", component: WatchLogPage },
   // { path: "/event", component: EventPage },
 
   //profile

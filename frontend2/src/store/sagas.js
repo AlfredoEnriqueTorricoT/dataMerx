@@ -9,17 +9,11 @@ import LayoutSaga from "./layout/saga"
 import dashboardSaga from "./dashboard/saga";
 import dashboardSaasSaga from "./dashboard-saas/saga";
 import mBrandSaga from "./modem-brands/saga"
-import simSaga from "./sims/saga"
 import userSaga from "./users/saga"
-import platformSaga from "./platform/saga"
-import carSaga from "./car/saga"
-import modemSaga from "./modem/saga"
 import eventSaga from "./event/saga"
 import clientSaga from "./clients/saga"
 import tagSaga from "./tags/saga"
-import reportDeviceSaga from "./report-device/saga"
 import ReportDeviceSigueloSaga from "./report-device-siguelo/saga"
-import PlatformCountSaga from "./platform-count/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -32,16 +26,10 @@ export default function* rootSaga() {
     fork(dashboardSaga),
     fork(dashboardSaasSaga),
     fork(mBrandSaga),
-    fork(simSaga),
-    fork(platformSaga),
-    fork(carSaga),
     fork(userSaga),
-    fork(modemSaga),
     fork(eventSaga),
     fork(clientSaga),
     fork(tagSaga),
-    fork(reportDeviceSaga),
     fork(ReportDeviceSigueloSaga),
-    fork(PlatformCountSaga)
   ])
 }

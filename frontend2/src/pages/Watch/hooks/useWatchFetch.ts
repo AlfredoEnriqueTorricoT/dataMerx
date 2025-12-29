@@ -34,7 +34,7 @@ export const useWatchFetch = () => {
   }
 
   const createWatch = async (payload: CreateWatchPayload): Promise<OperationResult> => {
-    const result = await service.createWatch(payload, setIsLoading)
+    const result = await service.createWatch(payload)
 
     if (result.data) {
       dispatch(addWatch(result.data))
@@ -48,7 +48,7 @@ export const useWatchFetch = () => {
   }
 
   const updateWatch = async (id: number, payload: UpdateWatchPayload): Promise<OperationResult> => {
-    const result = await service.updateWatch(id, payload, setIsLoading)
+    const result = await service.updateWatch(id, payload)
 
     if (result.data) {
       dispatch(updateWatchInList(result.data))
@@ -62,7 +62,7 @@ export const useWatchFetch = () => {
   }
 
   const deleteWatch = async (id: number): Promise<OperationResult> => {
-    const result = await service.deleteWatch(id, setIsLoading)
+    const result = await service.deleteWatch(id)
 
     if (result.status === 200) {
       dispatch(removeWatch(id))
@@ -74,11 +74,15 @@ export const useWatchFetch = () => {
     }
   }
 
-  const configureWatch = async (payload: ConfigureWatchPayload): Promise<OperationResult> => {
-    const result = await service.configureWatch(payload, setIsLoading)
+  const configureWatch = async (payload: ConfigureWatchPayload & { platform_name?: string }): Promise<OperationResult> => {
+    const result = await service.configureWatch(payload)
 
     if (result.data) {
-      dispatch(updateWatchInList(result.data))
+      const watchWithPlatformName = {
+        ...result.data,
+        platformName: payload.platform_name || null,
+      }
+      dispatch(updateWatchInList(watchWithPlatformName))
     }
 
     return {

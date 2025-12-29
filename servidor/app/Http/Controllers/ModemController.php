@@ -25,9 +25,11 @@ class ModemController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        $list = Modem::where(Modem::COL_USER_SUCCESSOR_ID, $user_id)
+        /*$list = Modem::where(Modem::COL_USER_SUCCESSOR_ID, $user_id)
             ->orWhere(Modem::COL_USER_RESPONSABILITY_ID, $user_id)
-            ->orderBy(Modem::COL_USER_SUCCESSOR_ID, 'ASC')->get();
+            ->orderBy(Modem::COL_USER_SUCCESSOR_ID, 'ASC')->get();*/
+
+        $list = Modem::all();
 
         $modemService = new ModemServices();
         $modemService->getWithFormt($list);
@@ -410,9 +412,6 @@ class ModemController extends Controller
                 if ($countImeiRepeat > 0) {
                     return Res::responseError432("El imei ya esta registrada.", null);
                 }
-            }
-            if (strlen($request->imei) != 15) {
-                return Res::responseError432("El imei debe tener 15 digitos.", null);
             }
 
             if ($obj == null) {

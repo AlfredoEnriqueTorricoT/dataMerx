@@ -181,16 +181,20 @@ class SidebarContent extends Component {
                 <ul className="sub-menu" aria-expanded="false">
                   <li className="dm-link">
                     <Link to="/report_device">
-                      <i className="fas fa-file dm-link-icon"></i>
+                      <i className="fas fa-hdd dm-link-icon"></i>
                       <span>Modems</span>
                     </Link>
                     <Link to="/report_device_of_siguelo">
-                      <i className="fas fa-file dm-link-icon"></i>
+                      <i className="fas fa-search dm-link-icon"></i>
                       <span>Buscar por imei</span>
                     </Link>
                     <Link to="/platform_count">
-                      <i className="fas fa-file dm-link-icon"></i>
+                      <i className="fas fa-chart-bar dm-link-icon"></i>
                       <span>Conteo de plataformas</span>
+                    </Link>
+                    <Link to="/report/watch_log">
+                      <i className="fas fa-clock dm-link-icon"></i>
+                      <span>Reloj Logs</span>
                     </Link>
                   </li>
                 </ul>

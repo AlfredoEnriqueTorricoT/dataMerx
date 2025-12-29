@@ -10,12 +10,12 @@ export const WatchValidationRules = {
   },
   imei: {
     pattern: /^\d+$/,
-    minLength: 15,
+    minLength: 1,
     maxLength: 20,
     messages: {
       required: 'Ingrese el IMEI del reloj',
       pattern: 'El IMEI debe contener solo números',
-      minLength: 'El IMEI debe tener al menos 15 dígitos',
+      minLength: 'El IMEI debe tener al menos 1 dígito',
       maxLength: 'El IMEI no puede exceder 20 dígitos',
     },
   },

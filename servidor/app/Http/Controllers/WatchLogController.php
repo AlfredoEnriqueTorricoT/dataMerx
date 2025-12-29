@@ -11,9 +11,15 @@ class WatchLogController extends Controller
 {
     //
 
-    public function index($macAddress){
-        $list = WatchLog::where(WatchLog::COL_MAC_ADDRESS, "like", "%".$macAddress."%")->get();
-        $list->pluck("name");
+    public function index() {
+        $list = WatchLog::limit(20)
+            ->addSelect(['watch_code' => Watch::select('code')
+                ->whereColumn('id', 'watch_logs.watch_id')
+                ->limit(1)
+            ])
+            ->orderBy('id', 'desc')
+            ->get();
+
         return Res::responseSuccess($list);
     }
 
@@ -22,8 +28,7 @@ class WatchLogController extends Controller
 
         $watchLog = WatchLog::create([
             WatchLog::COL_MAC_ADDRESS => $macAddress,
-            WatchLog::COL_WATCH_ID => null,
-            WatchLog::COL_WATCH_ID => $watch->id && null
+            WatchLog::COL_WATCH_ID => $watch?->id
         ]);
 
         return Res::responseSuccess($watchLog);
