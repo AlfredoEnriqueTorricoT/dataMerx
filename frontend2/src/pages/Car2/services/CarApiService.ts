@@ -30,7 +30,7 @@ export class CarApiService implements ICarService {
 
   async searchByPlaca(placa: string, setLoading?: SetStateFn): Promise<ApiResponse<CarModel[]>> {
     const res = await httpRequestWithAuth.get<{ data: CarApiResponse[] }>(
-      `car/search/${encodeURIComponent(placa)}`,
+      `car/${encodeURIComponent(placa)}`,
       setLoading
     )
     return transformApiData(res, (data) => adaptCarListResponseToModel(data.data || []))

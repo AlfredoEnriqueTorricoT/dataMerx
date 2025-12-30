@@ -5,17 +5,19 @@ import Header from './components/Header'
 import ContentTable from './components/ContentTable'
 import ModalIndex from './components/modals/ModalIndex'
 import { usePlatformCount, usePlatformCountFetch } from './hooks'
-import { CreatePlatformCountPayload, ModalType, ModalState } from './models/PlatformCountModel'
+import { CreatePlatformCountPayload, ModalType, ModalState, PlatformCountModel } from './models/PlatformCountModel'
 
 const PlatformCountPage: React.FC = () => {
   const { t } = useTranslation()
 
   // Hooks de PlatformCount
-  const { platformCounts } = usePlatformCount()
-  const { fetchPlatformCounts, createPlatformCount, isLoading } = usePlatformCountFetch()
+  const { platformCounts, modemImeiList } = usePlatformCount()
+  const { fetchPlatformCounts, createPlatformCount, fetchModemsByPlatform, isLoading } = usePlatformCountFetch()
 
   // Estado local UI
   const [searchTerm, setSearchTerm] = useState('')
+  const [selectedPlatform, setSelectedPlatform] = useState<PlatformCountModel | null>(null)
+  const [isLoadingModems, setIsLoadingModems] = useState(false)
   const [modalState, setModalState] = useState<ModalState>({
     open: false,
     type: 'Add',
@@ -57,6 +59,14 @@ const PlatformCountPage: React.FC = () => {
     openModal('Add')
   }, [openModal])
 
+  const handleViewModems = useCallback(async (platform: PlatformCountModel) => {
+    setSelectedPlatform(platform)
+    setIsLoadingModems(true)
+    openModal('ModemList')
+    await fetchModemsByPlatform(platform.id)
+    setIsLoadingModems(false)
+  }, [openModal, fetchModemsByPlatform])
+
   return (
     <React.Fragment>
       <div className="page-content mb-0 pb-0">
@@ -75,6 +85,7 @@ const PlatformCountPage: React.FC = () => {
               <ContentTable
                 platformCounts={filteredPlatformCounts}
                 isLoading={isLoading}
+                onViewModems={handleViewModems}
                 t={t}
               />
             </div>
@@ -86,6 +97,9 @@ const PlatformCountPage: React.FC = () => {
         modalState={modalState}
         onClose={closeModal}
         onCreate={handleCreate}
+        selectedPlatform={selectedPlatform}
+        modemImeiList={modemImeiList}
+        isLoadingModems={isLoadingModems}
         t={t}
       />
     </React.Fragment>

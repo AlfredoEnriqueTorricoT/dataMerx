@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { PlatformCountApiService } from '../services/PlatformCountApiService'
 import { PlatformCountModel, CreatePlatformCountPayload } from '../models/PlatformCountModel'
-import { setPlatformCountList, addPlatformCount } from '../slices/platformCountSlice'
+import { setPlatformCountList, addPlatformCount, setModemImeiList } from '../slices/platformCountSlice'
 
 interface FetchResult {
   success: boolean
@@ -14,6 +14,12 @@ interface OperationResult {
   success: boolean
   message: string
   data?: PlatformCountModel
+}
+
+interface ModemListResult {
+  success: boolean
+  message: string
+  data?: string[]
 }
 
 export const usePlatformCountFetch = () => {
@@ -47,9 +53,22 @@ export const usePlatformCountFetch = () => {
     }
   }
 
+  const fetchModemsByPlatform = async (platformId: number): Promise<ModemListResult> => {
+    const result = await service.getModemsByPlatform(platformId, setIsLoading)
+    if (result.data) {
+      dispatch(setModemImeiList(result.data))
+    }
+    return {
+      success: result.status === 200,
+      message: result.message,
+      data: result.data,
+    }
+  }
+
   return {
     isLoading,
     fetchPlatformCounts,
     createPlatformCount,
+    fetchModemsByPlatform,
   }
 }

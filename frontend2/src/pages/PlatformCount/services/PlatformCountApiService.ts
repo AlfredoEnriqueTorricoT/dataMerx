@@ -27,8 +27,20 @@ export class PlatformCountApiService implements IPlatformCountService {
       setLoading
     )
     return transformApiData(res, (data) => ({
+      id: data.data.id,
       name: data.data.name,
       count: data.data.count,
     }))
+  }
+
+  async getModemsByPlatform(
+    platformId: number,
+    setLoading?: SetStateFn
+  ): Promise<ApiResponse<string[]>> {
+    const res = await httpRequestWithAuth.get<{ status: number; message: string; data: string[] }>(
+      `modem/by-platform/${platformId}`,
+      setLoading
+    )
+    return transformApiData(res, (data) => data.data || [])
   }
 }

@@ -4,6 +4,7 @@ import { PlatformCountModel } from '../models/PlatformCountModel'
 interface RootState {
   PlatformCount: {
     platformCountList: PlatformCountModel[]
+    modemImeiList: string[]
     status: number
     message: string
   }
@@ -22,6 +23,7 @@ export const usePlatformCount = () => {
 
   return {
     platformCounts: state.platformCountList,
+    modemImeiList: state.modemImeiList,
     status: state.status,
     message: state.message,
     getTotalCount,

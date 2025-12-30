@@ -2,12 +2,16 @@ import React, { useState } from 'react'
 import { Modal } from 'reactstrap'
 import { showToast } from 'components/toast'
 import ModalAdd from './ModalAdd'
-import { CreatePlatformCountPayload, ModalState } from '../../models/PlatformCountModel'
+import ModalModemList from './ModalModemList'
+import { CreatePlatformCountPayload, ModalState, PlatformCountModel } from '../../models/PlatformCountModel'
 
 interface ModalIndexProps {
   modalState: ModalState
   onClose: () => void
   onCreate: (payload: CreatePlatformCountPayload) => Promise<{ success: boolean; message: string }>
+  selectedPlatform: PlatformCountModel | null
+  modemImeiList: string[]
+  isLoadingModems: boolean
   t: (key: string) => string
 }
 
@@ -15,6 +19,9 @@ const ModalIndex: React.FC<ModalIndexProps> = ({
   modalState,
   onClose,
   onCreate,
+  selectedPlatform,
+  modemImeiList,
+  isLoadingModems,
   t,
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -55,6 +62,16 @@ const ModalIndex: React.FC<ModalIndexProps> = ({
             onSubmit={handleCreate}
             onClose={onClose}
             isSubmitting={isSubmitting}
+            t={t}
+          />
+        )
+      case 'ModemList':
+        return (
+          <ModalModemList
+            platformName={selectedPlatform?.name || ''}
+            modemImeiList={modemImeiList}
+            isLoading={isLoadingModems}
+            onClose={onClose}
             t={t}
           />
         )

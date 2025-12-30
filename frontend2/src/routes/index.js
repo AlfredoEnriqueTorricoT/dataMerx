@@ -10,8 +10,8 @@ import Logout from "../pages/Authentication/Logout";
 import Register from "../pages/Authentication/Register";
 import ForgetPwd from "../pages/Authentication/ForgetPassword";
 
-// Dashboard
-import Dashboard from "../pages/Dashboard/index";
+// Home
+import HomePage from "../pages/Home";
 
 //newPages
 import MarkModem from "pages/ModemBrand";
@@ -29,7 +29,7 @@ import PlatformCountPage from "pages/PlatformCount";
 import WatchLogPage from "pages/report/watch_log";
 
 const authProtectedRoutes = [
-  { path: "/dashboard", component: Dashboard },
+  { path: "/home", component: HomePage },
   { path: "/mark-modem", component: MarkModem },
   { path: "/sims", component: SimPage },
   { path: "/users", component: UserPage },
@@ -49,7 +49,7 @@ const authProtectedRoutes = [
 
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
-  { path: "/", exact: true, component: () => <Redirect to="/dashboard" /> },
+  { path: "/", exact: true, component: () => <Redirect to="/home" /> },
 ];
 
 const publicRoutes = [

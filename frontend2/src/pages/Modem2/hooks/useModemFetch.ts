@@ -84,6 +84,19 @@ export const useModemFetch = () => {
     }
   }
 
+  // Buscar modems por IMEI
+  const searchByImei = async (imei: string): Promise<FetchResult<ModemModel[]>> => {
+    const result = await service.searchByImei(imei, setIsLoading)
+    if (result.data) {
+      dispatch(setModemList(result.data))
+    }
+    return {
+      success: result.status === 200,
+      message: result.message,
+      data: result.data,
+    }
+  }
+
   const createModem = async (payload: CreateModemPayload): Promise<FetchResult<ModemModel>> => {
     const result = await service.createModem(payload, setIsOperating)
     if (result.data) {
@@ -221,6 +234,7 @@ export const useModemFetch = () => {
     isOperating,
     fetchAllData,
     fetchModems,
+    searchByImei,
     createModem,
     updateModem,
     deleteModem,

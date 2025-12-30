@@ -62,8 +62,8 @@ const ModalSim: React.FC<ModalSimProps> = ({ modem, onClose }) => {
 
   const handleAssignSim = async (confirm = false) => {
     const result = await assignSim({
-      modemId: modem.id,
-      simId: simId,
+      id: modem.id,
+      sim_id: simId,
       confirm,
     })
 
@@ -181,7 +181,12 @@ const ModalSim: React.FC<ModalSimProps> = ({ modem, onClose }) => {
       }
 
       return simList.map((sim, idx) => (
-        <div className={`row py-1 ${idx % 2 === 0 ? '' : 'bg-secondary bg-soft'}`} key={idx}>
+        <div
+          className={`row py-1 ${idx % 2 === 0 ? 'bg-light' : 'bg-secondary bg-soft'}`}
+          key={idx}
+          onClick={() => setSimId(sim.id)}
+          style={{ cursor: 'pointer' }}
+        >
           <div className="col-2">
             <center>
               <i className="fas fa-sim-card mt-3"></i>

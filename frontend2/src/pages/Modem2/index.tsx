@@ -37,7 +37,7 @@ const ModemPage: React.FC<ModemPageProps> = ({ t }) => {
 
   // Hooks
   const { modemList, eventList, isLoaded } = useModem()
-  const { fetchAllData, fetchModems, fetchModemEvents, isLoading } = useModemFetch()
+  const { fetchAllData, fetchModems, searchByImei, fetchModemEvents, isLoading } = useModemFetch()
 
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 760px)' })
 
@@ -82,12 +82,6 @@ const ModemPage: React.FC<ModemPageProps> = ({ t }) => {
     setFilters(filters.filter((f) => f !== filter))
   }
 
-  // Filtrar modems localmente por IMEI
-  const filteredModems = modemList.filter((modem) => {
-    if (!searchTerm) return true
-    const term = searchTerm.toLowerCase()
-    return modem.imei?.toLowerCase().includes(term)
-  })
 
   // Search handlers
   const handleSearchTermChange = (term: string) => {
@@ -102,6 +96,13 @@ const ModemPage: React.FC<ModemPageProps> = ({ t }) => {
   const handleClearSearch = () => {
     setSearchTerm('')
     setLastSearch('my')
+  }
+
+  const handleSearch = async () => {
+    if (searchTerm) {
+      await searchByImei(searchTerm)
+      setLastSearch('imei')
+    }
   }
 
   // Events view handlers
@@ -160,6 +161,7 @@ const ModemPage: React.FC<ModemPageProps> = ({ t }) => {
                     isTabletOrMobile={isTabletOrMobile}
                     searchTerm={searchTerm}
                     onSearchTermChange={handleSearchTermChange}
+                    onSearch={handleSearch}
                     onClearSearch={handleClearSearch}
                     onOpenFilter={() => handleOpenModal('Filter')}
                     onAddClick={() => handleOpenModal('Add')}
@@ -168,7 +170,7 @@ const ModemPage: React.FC<ModemPageProps> = ({ t }) => {
                   />
 
                   <ContentTable
-                    modems={filteredModems}
+                    modems={modemList}
                     isLoading={isLoading}
                     onOpenModal={handleOpenModal}
                     t={t}

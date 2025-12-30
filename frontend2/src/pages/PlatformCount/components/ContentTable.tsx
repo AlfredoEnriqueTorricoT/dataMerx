@@ -5,12 +5,14 @@ import { PlatformCountModel } from '../models/PlatformCountModel'
 interface ContentTableProps {
   platformCounts: PlatformCountModel[]
   isLoading: boolean
+  onViewModems: (platform: PlatformCountModel) => void
   t: (key: string) => string
 }
 
 const ContentTable: React.FC<ContentTableProps> = ({
   platformCounts,
   isLoading,
+  onViewModems,
   t,
 }) => {
   const [sorter, setSorter] = useState(0)
@@ -35,12 +37,13 @@ const ContentTable: React.FC<ContentTableProps> = ({
           headerNames={[
             { name: 'Plataforma', arrow: true },
             { name: 'Cantidad', arrow: true },
+            { name: 'Acciones', arrow: false },
           ]}
         />
         <tbody>
           {platformCounts.length === 0 ? (
             <tr>
-              <td colSpan={2}>
+              <td colSpan={3}>
                 <h4 className="text-secondary">{t('No data found')}</h4>
               </td>
             </tr>
@@ -50,11 +53,22 @@ const ContentTable: React.FC<ContentTableProps> = ({
                 <tr key={`platform-count-${idx}`}>
                   <td>{item.name}</td>
                   <td>{item.count}</td>
+                  <td>
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-outline-primary"
+                      onClick={() => onViewModems(item)}
+                      title="Ver dispositivos"
+                    >
+                      <i className="fas fa-list"></i>
+                    </button>
+                  </td>
                 </tr>
               ))}
               <tr className="table-info fw-bold">
                 <td>Total</td>
                 <td>{totalCount}</td>
+                <td></td>
               </tr>
             </>
           )}

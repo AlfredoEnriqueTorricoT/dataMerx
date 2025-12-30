@@ -43,6 +43,14 @@ export class ModemApiService implements IModemService {
     return transformApiData(res, (data) => adaptModemResponseToModel(data.data))
   }
 
+  async searchByImei(imei: string, setLoading?: SetStateFn): Promise<ApiResponse<ModemModel[]>> {
+    const res = await httpRequestWithAuth.get<ApiListResponse<ModemApiResponse>>(
+      `modem/${encodeURIComponent(imei)}`,
+      setLoading
+    )
+    return transformApiData(res, (data) => adaptModemListResponseToModel(data.data || []))
+  }
+
   async createModem(payload: CreateModemPayload, setLoading?: SetStateFn): Promise<ApiResponse<ModemModel>> {
     const res = await httpRequestWithAuth.post<ApiSingleResponse<ModemApiResponse>>('modem', payload, setLoading)
     return transformApiData(res, (data) => adaptModemResponseToModel(data.data))
@@ -75,7 +83,7 @@ export class ModemApiService implements IModemService {
 
   // Operaciones especiales
   async assignSim(payload: AssignSimPayload, setLoading?: SetStateFn): Promise<ApiResponse<ModemModel>> {
-    const res = await httpRequestWithAuth.post<ApiSingleResponse<ModemApiResponse>>('modem/update-sim', payload, setLoading)
+    const res = await httpRequestWithAuth.put<ApiSingleResponse<ModemApiResponse>>('modem/update-sim', payload, setLoading)
     return transformApiData(res, (data) => adaptModemResponseToModel(data.data))
   }
 

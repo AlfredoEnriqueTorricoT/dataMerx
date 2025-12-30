@@ -8,6 +8,7 @@ interface HeaderProps {
   isTabletOrMobile: boolean
   searchTerm: string
   onSearchTermChange: (term: string) => void
+  onSearch: () => void
   onClearSearch: () => void
   onOpenFilter: () => void
   onAddClick: () => void
@@ -22,12 +23,18 @@ const Header: React.FC<HeaderProps> = ({
   isTabletOrMobile,
   searchTerm,
   onSearchTermChange,
+  onSearch,
   onClearSearch,
   onOpenFilter,
   onAddClick,
   onRemoveFilter,
   t,
 }) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && searchTerm) {
+      onSearch()
+    }
+  }
   const checkActive = (name: string) =>
     lastSearch === name ? ' text-light' : '-outline'
 
@@ -38,7 +45,7 @@ const Header: React.FC<HeaderProps> = ({
 
   return (
     <div className="d-flex col mb-3" style={{ maxHeight: '35px' }}>
-      {!isTabletOrMobile && (
+      {/*!isTabletOrMobile && (
         <button
           className={`btn dm-button${checkActive('my')}`}
           style={{ minWidth: '110px' }}
@@ -46,7 +53,7 @@ const Header: React.FC<HeaderProps> = ({
         >
           {t('My modems')}
         </button>
-      )}
+      )*/}
 
       <div className="input-group row-4 mx-2">
         <div
@@ -74,6 +81,7 @@ const Header: React.FC<HeaderProps> = ({
               type="text"
               className="invisible-input"
               onChange={(e) => onSearchTermChange(e.target.value)}
+              onKeyDown={handleKeyDown}
               placeholder="Buscar por imei..."
               value={searchTerm}
             />
@@ -82,19 +90,26 @@ const Header: React.FC<HeaderProps> = ({
         <div className="input-group-append">
           <button
             className={`btn dm-button${checkActive('imei')}`}
-            disabled={true}
-            title="Búsqueda en tiempo real"
+            disabled={isLoading || !searchTerm}
+            onClick={onSearch}
+            title="Buscar"
           >
-            <i className="fas fa-search"></i>
+            {isLoading ? (
+              <i className="fas fa-spinner fa-spin"></i>
+            ) : (
+              <i className="fas fa-search"></i>
+            )}
           </button>
-          <button
+          {/*
+            <button
             className={`btn dm-button${checkActiveFilter()}`}
             disabled={isLoading}
             title="Filtros"
             onClick={onOpenFilter}
           >
             <i className="fas fa-filter"></i>
-          </button>
+          </button>*/
+          }
         </div>
       </div>
 

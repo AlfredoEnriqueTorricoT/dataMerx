@@ -3,12 +3,14 @@ import { PlatformCountModel } from '../models/PlatformCountModel'
 
 interface PlatformCountState {
   platformCountList: PlatformCountModel[]
+  modemImeiList: string[]
   status: number
   message: string
 }
 
 const initialState: PlatformCountState = {
   platformCountList: [],
+  modemImeiList: [],
   status: 200,
   message: '',
 }
@@ -42,6 +44,12 @@ const platformCountSlice = createSlice({
       state.status = 200
       state.message = ''
     },
+    setModemImeiList: (state, action: PayloadAction<string[]>) => {
+      state.modemImeiList = action.payload
+    },
+    clearModemImeiList: (state) => {
+      state.modemImeiList = []
+    },
   },
 })
 
@@ -51,6 +59,8 @@ export const {
   updatePlatformCountInList,
   setStatus,
   resetStatus,
+  setModemImeiList,
+  clearModemImeiList,
 } = platformCountSlice.actions
 
 export default platformCountSlice.reducer

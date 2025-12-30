@@ -108,7 +108,7 @@ export interface ModemModel {
   userResponsabilityId: number | null
   userSuccessorId: number | null
   isPending: number
-  images: string[]
+  images: any[]
   sim: SimModel | null
   modemsMark: ModemMarkModel | null
   platform: PlatformModel | null
@@ -132,7 +132,7 @@ export interface ModemApiResponse {
   user_responsability_id: number | null
   user_successor_id: number | null
   is_pending: number
-  images: string[]
+  images: any[]
   sim: SimApiResponse | null
   modems_mark: ModemMarkApiResponse | null
   platform: PlatformApiResponse | null
@@ -177,8 +177,9 @@ export interface UpdateModemPayload {
  * Payload para asociar SIM
  */
 export interface AssignSimPayload {
-  modem_id: number
+  id: number
   sim_id: number
+  confirm?: boolean
 }
 
 /**

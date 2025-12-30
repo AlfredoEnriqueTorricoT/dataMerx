@@ -158,7 +158,12 @@ const ModalModem: React.FC<ModalModemProps> = ({ car, onClose, t }) => {
     return modemList
       .filter((modem) => modem.id !== car.modemId)
       .map((modem, idx) => (
-        <div className={`row py-1 ${idx % 2 === 0 ? '' : 'bg-secondary bg-soft'}`} key={modem.id}>
+        <div
+          className={`row py-1 ${idx % 2 === 0 ? 'bg-light' : 'bg-secondary bg-soft'}`}
+          key={modem.id}
+          onClick={() => setSelectedModemId(modem.id)}
+          style={{ cursor: 'pointer' }}
+        >
           <div className="col-2">
             <center>
               <i className="fas fa-hdd mt-3"></i>
@@ -199,18 +204,7 @@ const ModalModem: React.FC<ModalModemProps> = ({ car, onClose, t }) => {
 
         {detailsStatus === 'success' && (
           <>
-            <center>
-              <div className="d-inline-block mb-3">
-                <input
-                  className="form-control"
-                  onChange={(e) => setCarName(e.target.value)}
-                  type="text"
-                  placeholder="Nombre en plataforma"
-                  value={carName}
-                />
-              </div>
-            </center>
-
+        
             <center>
               <SearchBar
                 type="text"

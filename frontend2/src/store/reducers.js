@@ -32,6 +32,7 @@ import watchLogReducer from "../pages/report/watch_log/slices/watchLogSlice"
 import sims2Reducer from "../pages/Sims2/slices/simSlice"
 import car2Reducer from "../pages/Car2/slices/carSlice"
 import user2Reducer from "../pages/User2/slices/userSlice"
+import eventFeedReducer from "../pages/Home/slices/eventFeedSlice"
 
 const rootReducer = combineReducers({
   // public
@@ -58,6 +59,7 @@ const rootReducer = combineReducers({
   Sims2: sims2Reducer,
   Car2: car2Reducer,
   User2: user2Reducer,
+  EventFeed: eventFeedReducer,
 })
 
 export default rootReducer

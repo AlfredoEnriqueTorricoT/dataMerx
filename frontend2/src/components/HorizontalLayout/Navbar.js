@@ -77,7 +77,7 @@ class Navbar extends Component {
                         e.preventDefault();
                         this.setState({ isDashboard: !this.state.isDashboard });
                       }}
-                      to="/dashboard"
+                      to="/home"
                     >
                       <i className="bx bx-home-circle me-2" />
                       {this.props.t("Dashboard")} {this.props.menuOpen}
@@ -88,7 +88,7 @@ class Navbar extends Component {
                         show: this.state.isDashboard,
                       })}
                     >
-                      <Link to="/dashboard" className="dropdown-item">
+                      <Link to="/home" className="dropdown-item">
                         {this.props.t("Default")}
                       </Link>
                       <Link to="#" className="dropdown-item">
