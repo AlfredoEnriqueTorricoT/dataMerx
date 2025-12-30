@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { RootState } from '../../../store'
+import { RootState } from '../../../store/types'
 
 export const useEventFeed = () => {
   const state = useSelector((state: RootState) => state.EventFeed)

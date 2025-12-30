@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
+import { useHistory } from 'react-router-dom'
 import Avatar from 'react-avatar'
 import { DropdownButton, THeaderSorter, EmptyData } from 'components/tableElements'
 import { tableSorter } from 'components/tableFilter'
@@ -31,6 +32,7 @@ interface ModemDisplay {
 const keysToSort = ['code', 'imei', 'markModemName', 'platformName', 'responsability', 'active']
 
 const ContentTable: React.FC<ContentTableProps> = ({ modems, isLoading, onOpenModal, t }) => {
+  const history = useHistory()
   const [sorter, setSorter] = useState(1)
   const [tableFiltered, setTableFiltered] = useState<ModemDisplay[]>([])
 
@@ -172,7 +174,7 @@ const ContentTable: React.FC<ContentTableProps> = ({ modems, isLoading, onOpenMo
                     <button
                       className="btn button-sm mx-2 py-0"
                       title="Ver eventos"
-                      onClick={() => onOpenModal('Events', listItem.original)}
+                      onClick={() => history.push(`/modem/${listItem.id}/events`)}
                     >
                       <i className="fas fa-tasks"></i>
                     </button>

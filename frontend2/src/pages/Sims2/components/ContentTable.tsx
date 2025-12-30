@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
+import { useHistory } from 'react-router-dom'
 import { DropdownButton, THeaderSorter, EmptyData } from 'components/tableElements'
 import { tableSorter } from 'components/tableFilter'
 import { SimModel, ModalType } from '../models/SimModel'
@@ -21,6 +22,7 @@ interface SimDisplay {
 const keysToSort = ['number', 'imei', 'active']
 
 const ContentTable: React.FC<ContentTableProps> = ({ sims, isLoading, onOpenModal, t }) => {
+  const history = useHistory()
   const [sorter, setSorter] = useState(1)
   const [tableFiltered, setTableFiltered] = useState<SimDisplay[]>([])
 
@@ -105,7 +107,7 @@ const ContentTable: React.FC<ContentTableProps> = ({ sims, isLoading, onOpenModa
                     <button
                       className="btn button-sm mx-2 py-0"
                       title="Ver eventos"
-                      onClick={() => onOpenModal('Events', listItem.original)}
+                      onClick={() => history.push(`/sim/${listItem.id}/events`)}
                     >
                       <i className="fas fa-tasks"></i>
                     </button>

@@ -1,16 +1,26 @@
 import React, { useState } from 'react'
 import { Modal, UncontrolledTooltip } from 'reactstrap'
-import { EventModel, CommentModel } from '../models/EventFeedModel'
+import { EventModel, CommentModel, CreateCommentPayload } from '../models/EventFeedModel'
 import { useEventFeed, useEventFeedFetch } from '../hooks'
 import { showToast } from 'components/toast'
 import ImageGallery from './ImageGallery'
 
 const API_BASE_URL = 'http://localhost:8000/storage/'
 
+interface FetchResult {
+  success: boolean
+  message?: string
+}
+
 interface ModalCommentsProps {
   eventId: number | null
   isOpen: boolean
   onClose: () => void
+  // Props opcionales para uso externo (ModemEvents)
+  events?: EventModel[]
+  onCreateComment?: (payload: CreateCommentPayload) => Promise<FetchResult>
+  onDeleteComment?: (eventId: number, commentId: number) => Promise<FetchResult>
+  isCommenting?: boolean
 }
 
 interface CommentItemProps {
@@ -143,14 +153,34 @@ const CommentItem: React.FC<CommentItemProps> = ({
   )
 }
 
-const ModalComments: React.FC<ModalCommentsProps> = ({ eventId, isOpen, onClose }) => {
+const ModalComments: React.FC<ModalCommentsProps> = ({
+  eventId,
+  isOpen,
+  onClose,
+  events: externalEvents,
+  onCreateComment,
+  onDeleteComment,
+  isCommenting: externalIsCommenting,
+}) => {
   const [newComment, setNewComment] = useState('')
   const [replyingTo, setReplyingTo] = useState<number | null>(null)
-  const { events } = useEventFeed()
-  const { createComment, deleteComment, isCommenting } = useEventFeedFetch()
 
-  // Obtener el evento actualizado desde Redux
-  const event = eventId ? events.find((e) => e.id === eventId) : null
+  // Usar Redux si no se proveen props externos
+  const { events: reduxEvents } = useEventFeed()
+  const {
+    createComment: reduxCreateComment,
+    deleteComment: reduxDeleteComment,
+    isCommenting: reduxIsCommenting,
+  } = useEventFeedFetch()
+
+  // Usar props externos si están disponibles, sino usar Redux
+  const eventList = externalEvents ?? reduxEvents
+  const createComment = onCreateComment ?? reduxCreateComment
+  const deleteComment = onDeleteComment ?? reduxDeleteComment
+  const isCommenting = externalIsCommenting ?? reduxIsCommenting
+
+  // Obtener el evento actualizado desde la lista
+  const event = eventId ? eventList.find((e) => e.id === eventId) : null
 
   if (!event) return null
 

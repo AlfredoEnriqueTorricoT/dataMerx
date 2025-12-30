@@ -27,15 +27,21 @@ import TagsPage from "pages/Tags";
 import ReportDeviceOfSiguelo from "pages/ReportDeviceOfSiguelo";
 import PlatformCountPage from "pages/PlatformCount";
 import WatchLogPage from "pages/report/watch_log";
+import ModemEventsPage from "pages/ModemEvents";
+import SimEventsPage from "pages/SimEvents";
+import CarEventsPage from "pages/CarEvents";
 
 const authProtectedRoutes = [
   { path: "/home", component: HomePage },
   { path: "/mark-modem", component: MarkModem },
   { path: "/sims", component: SimPage },
+  { path: "/sim/:id/events", component: SimEventsPage },
   { path: "/users", component: UserPage },
   { path: "/platform", component: PlatformPage },
   { path: "/car", component: CarPage },
+  { path: "/car/:id/events", component: CarEventsPage },
   { path: "/modem", component: ModemPage },
+  { path: "/modem/:id/events", component: ModemEventsPage },
   { path: "/clients", component: ClientPage },
   { path: "/watch", component: WatchPage },
   { path: "/tags", component: TagsPage },

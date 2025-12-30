@@ -11,6 +11,13 @@ interface EventCardProps {
 }
 
 const EventCard: React.FC<EventCardProps> = ({ event, onOpenComments }) => {
+  const getInitials = (name: string | undefined): string => {
+    if (!name) return 'S'
+    const words = name.trim().split(/\s+/)
+    if (words.length === 1) return words[0].charAt(0).toUpperCase()
+    return (words[0].charAt(0) + words[words.length - 1].charAt(0)).toUpperCase()
+  }
+
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString)
     const now = new Date()
@@ -135,7 +142,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, onOpenComments }) => {
         <div className="d-flex align-items-start mb-3">
           <div className="avatar-sm me-3">
             <span className="avatar-title rounded-circle bg-primary bg-soft text-primary font-size-16">
-              {event.user?.name?.charAt(0).toUpperCase() || 'S'}
+              {getInitials(event.user?.name)}
             </span>
           </div>
           <div className="flex-grow-1">

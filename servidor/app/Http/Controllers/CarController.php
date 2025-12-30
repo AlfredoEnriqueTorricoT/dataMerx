@@ -31,7 +31,7 @@ class CarController extends Controller
     public function indexSearchPlaca($placa)
     {
         try {
-            $list = Car::where("placa", "like", '%' . $placa . '%')->get();
+            $list = Car::where(Car::COL_PLACA, "like", '%' . $placa . '%')->get();
 
             foreach ($list as $car) {
                 $car->images = Images::where([

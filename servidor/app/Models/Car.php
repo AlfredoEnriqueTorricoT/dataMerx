@@ -11,6 +11,15 @@ class Car extends Model
 
     protected $hidden = ["created_at", "updated_at"];
 
+    const COL_NAME = "name";
+    const COL_MARK = "mark";
+    const COL_MODEL = "model";
+    const COL_PLACA = "placa";
+    const COL_DATE_START = "date_start";
+    const COL_DATE_END = "date_end";
+    const COL_MODEM_ID = "modem_id";
+    const COL_PLATFORM_ID = "platform_id";
+
     protected $fillable = [
         "name",
         "mark",

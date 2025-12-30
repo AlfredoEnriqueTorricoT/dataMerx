@@ -1,0 +1,56 @@
+import { httpRequestWithAuth, transformApiData } from '../../../shared/utils/httpService'
+import { ApiResponse, SetStateFn } from '../../../shared/types'
+import {
+  EventModel,
+  EventApiResponse,
+  CreateCommentPayload,
+  CommentModel,
+  CommentApiResponse,
+} from '../../Home/models/EventFeedModel'
+import {
+  adaptEventListResponseToModel,
+  adaptCommentResponseToModel,
+} from '../../Home/adapters/eventFeedAdapter'
+
+interface CarEventsApiResponseWrapper {
+  status: number
+  message: string
+  data: EventApiResponse[]
+}
+
+interface CommentApiResponseWrapper {
+  status: number
+  message: string
+  data: CommentApiResponse
+}
+
+export class CarEventsApiService {
+  async getEventsByCarId(
+    carId: number,
+    setLoading?: SetStateFn
+  ): Promise<ApiResponse<EventModel[]>> {
+    const res = await httpRequestWithAuth.get<CarEventsApiResponseWrapper>(
+      `event/car/${carId}`,
+      setLoading
+    )
+
+    return transformApiData(res, (data) => adaptEventListResponseToModel(data.data || []))
+  }
+
+  async createComment(
+    payload: CreateCommentPayload,
+    setLoading?: SetStateFn
+  ): Promise<ApiResponse<CommentModel>> {
+    const res = await httpRequestWithAuth.post<CommentApiResponseWrapper>(
+      'comment',
+      payload,
+      setLoading
+    )
+
+    return transformApiData(res, (data) => adaptCommentResponseToModel(data.data))
+  }
+
+  async deleteComment(commentId: number, setLoading?: SetStateFn): Promise<ApiResponse<void>> {
+    return await httpRequestWithAuth.delete<void>(`comment/${commentId}`, setLoading)
+  }
+}

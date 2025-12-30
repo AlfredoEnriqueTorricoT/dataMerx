@@ -33,6 +33,9 @@ import sims2Reducer from "../pages/Sims2/slices/simSlice"
 import car2Reducer from "../pages/Car2/slices/carSlice"
 import user2Reducer from "../pages/User2/slices/userSlice"
 import eventFeedReducer from "../pages/Home/slices/eventFeedSlice"
+import modemEventsReducer from "../pages/ModemEvents/slices/modemEventsSlice"
+import simEventsReducer from "../pages/SimEvents/slices/simEventsSlice"
+import carEventsReducer from "../pages/CarEvents/slices/carEventsSlice"
 
 const rootReducer = combineReducers({
   // public
@@ -60,6 +63,9 @@ const rootReducer = combineReducers({
   Car2: car2Reducer,
   User2: user2Reducer,
   EventFeed: eventFeedReducer,
+  ModemEvents: modemEventsReducer,
+  SimEvents: simEventsReducer,
+  CarEvents: carEventsReducer,
 })
 
 export default rootReducer

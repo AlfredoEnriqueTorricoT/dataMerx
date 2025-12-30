@@ -45,18 +45,10 @@ class EventController extends Controller
     public function car($id)
     {
         try {
-            $list = Event::where("car_id", $id)->orderBy("id","desc")->orderBy("id","desc")->get();
-
-            foreach($list as $event){
-                $event["platform"] = $event->platform;
-                $event["car"] = $event->car;
-                $event["modem"] = $event->modem;
-                $event["sim"] = $event->sim;
-                $event["images"] = Images::where([
-                    ["table", "=", "e"],
-                    ["table_id", "=", $event->id]
-                ])->get("url");
-            }
+            $list = Event::where("car_id", $id)
+                ->with(['user', 'car', 'modem', 'sim', 'watch', 'platform', 'images', 'comments'])
+                ->orderBy("created_at", "desc")
+                ->get();
 
             return Res::responseSuccess($list);
         } catch (Exception $ex) {
@@ -67,18 +59,10 @@ class EventController extends Controller
     public function modem($id)
     {
         try {
-            $list = Event::where("modem_id", $id)->orderBy("id","desc")->get();
-
-            foreach($list as $event){
-                $event["platform"] = $event->platform;
-                $event["car"] = $event->car;
-                $event["modem"] = $event->modem;
-                $event["sim"] = $event->sim;
-                $event["images"] = Images::where([
-                    ["table", "=", "e"],
-                    ["table_id", "=", $event->id]
-                ])->get("url");
-            }
+            $list = Event::where("modem_id", $id)
+                ->with(['user', 'car', 'modem', 'sim', 'watch', 'platform', 'images', 'comments'])
+                ->orderBy("created_at", "desc")
+                ->get();
 
             return Res::responseSuccess($list);
         } catch (Exception $ex) {
@@ -89,18 +73,10 @@ class EventController extends Controller
     public function sim($id)
     {
         try {
-            $list = Event::where("sim_id", $id)->orderBy("id","desc")->get();
-
-            foreach($list as $event){
-                $event["platform"] = $event->platform;
-                $event["car"] = $event->car;
-                $event["modem"] = $event->modem;
-                $event["sim"] = $event->sim;
-                $event["images"] = Images::where([
-                    ["table", "=", "e"],
-                    ["table_id", "=", $event->id]
-                ])->get("url");
-            }
+            $list = Event::where("sim_id", $id)
+                ->with(['user', 'car', 'modem', 'sim', 'watch', 'platform', 'images', 'comments'])
+                ->orderBy("created_at", "desc")
+                ->get();
 
             return Res::responseSuccess($list);
         } catch (Exception $ex) {

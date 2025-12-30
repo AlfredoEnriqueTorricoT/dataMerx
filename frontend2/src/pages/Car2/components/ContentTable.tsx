@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { DropdownButton, EmptyData, THeaderSorter } from 'components/tableElements'
 import { SpinnerL } from 'components/components'
 import { CarModel, ModalType } from '../models/CarModel'
@@ -11,6 +12,7 @@ interface ContentTableProps {
 }
 
 const ContentTable: React.FC<ContentTableProps> = ({ cars, isLoading, onOpenModal, t }) => {
+  const history = useHistory()
   const [sorter, setSorter] = useState(0)
 
   // Sorting logic
@@ -87,7 +89,7 @@ const ContentTable: React.FC<ContentTableProps> = ({ cars, isLoading, onOpenModa
                     <button
                       className="btn button-sm mx-2 py-0"
                       title="Ver eventos"
-                      onClick={() => onOpenModal('Events', car)}
+                      onClick={() => history.push(`/car/${car.id}/events`)}
                     >
                       <i className="fas fa-tasks"></i>
                     </button>
