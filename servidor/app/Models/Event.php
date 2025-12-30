@@ -50,4 +50,24 @@ class Event extends Model
     {
         return $this->hasOne(Platform::class, "id", "platform_id");
     }
+
+    public function watch()
+    {
+        return $this->hasOne(Watch::class, "id", "watch_id");
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class)->select(['id', 'name', 'email']);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(Images::class, "table_id", "id")->where("table", "e");
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->whereNull(Comment::COL_PARENT_ID)->with(['user', 'replies'])->orderBy('created_at', 'desc');
+    }
 }

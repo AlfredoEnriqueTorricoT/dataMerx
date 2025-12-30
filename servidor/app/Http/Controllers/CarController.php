@@ -142,7 +142,7 @@ class CarController extends Controller
     public function remove_modem($modem_id)
     {
         $obj = Car::find($modem_id);
-        
+
         if ($obj->modem_id == null) {
             return Res::responseError432("No se ha encontrado modem en el auto", $obj);
         }
@@ -165,9 +165,9 @@ class CarController extends Controller
         $obj->modem_id = null;
         $obj->save();
 
-        
 
-        
+
+
 
         return Res::responseSuccess($obj);
     }
@@ -405,7 +405,7 @@ class CarController extends Controller
                 $sim_id = $modem->sim_id;
             }
         }
-        
+
         $element = [
             "sim_id" => $sim_id,
             "modem_id" => $modem_id,

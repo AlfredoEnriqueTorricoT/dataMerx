@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ClientCarController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventHomeController;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\ModemController;
 use App\Http\Controllers\ModemsMarkController;
@@ -44,10 +46,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', [AuthController::class, 'register'])->middleware("auth:sanctum");
 
-Route::get('modem', [ModemController::class,'index'])->middleware("auth:sanctum");
+Route::get('modem/', [ModemController::class,'index'])->middleware("auth:sanctum");
 Route::get('modem/details/{id}', [ModemController::class,'details'])->middleware("auth:sanctum");
 Route::get('modem/remove-sim/{id}', [ModemController::class,'remove_sim'])->middleware("auth:sanctum");
-Route::get('modem/{imei}', [ModemController::class,'indexSearch'])->middleware("auth:sanctum");;
+Route::get('modem/{imei}', [ModemController::class,'indexSearch'])->middleware("auth:sanctum");
+Route::get('modem/by-platform/{platformId}', [ModemController::class,'byPlatformId'])->middleware("auth:sanctum");
 Route::post('modem', [ModemController::class,'store'])->middleware("auth:sanctum");
 Route::post('modem/event', [ModemController::class,'event'])->middleware("auth:sanctum");;
 Route::post('modem/filter', [ModemController::class,'filterByPatformAndResponsabilityTags'])->middleware("auth:sanctum");
@@ -96,6 +99,8 @@ Route::post('car-upload', [CarController::class,'storeUpload'])->middleware("aut
 Route::post('car-upload-add', [CarController::class,'updloadImage'])->middleware("auth:sanctum");
 
 
+Route::get('event/feed', [EventHomeController::class,'feed'])->middleware("auth:sanctum");
+Route::post('event/feed-from-date', [EventHomeController::class,'feedFromDate'])->middleware("auth:sanctum");
 Route::get('event/car/{id}', [EventController::class,'car']);
 Route::get('event/modem/{id}', [EventController::class,'modem']);
 Route::get('event/sim/{id}', [EventController::class,'sim']);
@@ -157,3 +162,7 @@ Route::get('watch_log', [WatchLogController::class, 'index']);
 Route::post('siguelo/getByImei', [SigueloController::class, 'getDeviceByPlatforms'])->middleware("auth:sanctum");
 Route::post('siguelo/getCountByDate', [SigueloController::class, 'getDevicesCountByPlatforms'])->middleware("auth:sanctum");
 Route::post('siguelo/getImeiByDate', [SigueloController::class, 'getImeiByDate'])->middleware("auth:sanctum");
+
+Route::get('comment/event/{eventId}', [CommentController::class, 'getByEvent'])->middleware("auth:sanctum");
+Route::post('comment', [CommentController::class, 'store'])->middleware("auth:sanctum");
+Route::delete('comment/{id}', [CommentController::class, 'destroy'])->middleware("auth:sanctum");

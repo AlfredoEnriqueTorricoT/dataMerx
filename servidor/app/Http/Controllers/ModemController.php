@@ -47,6 +47,16 @@ class ModemController extends Controller
         return Res::responseSuccess($list);
     }
 
+    public function byPlatformId(int $platformId)
+    {
+        $list = Modem::where(Modem::COL_PLATFORM_ID, $platformId)
+            ->select([ Modem::COL_IMEI ])
+            ->get()
+            ->pluck("imei");
+
+        return Res::responseSuccess($list);
+    }
+
     public static function byId($id)
     {
         try {

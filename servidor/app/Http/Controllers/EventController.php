@@ -14,7 +14,6 @@ use PhpParser\Node\Expr\AssignOp\Mod;
 
 class EventController extends Controller
 {
-    //
     public function index($type, $id)
     {
         try {
@@ -39,6 +38,9 @@ class EventController extends Controller
             return Res::responseError($ex->getMessage());
         }
     }
+
+
+
 
     public function car($id)
     {
@@ -158,7 +160,7 @@ class EventController extends Controller
                 "sim_id" => $objId["sim_id"],
                 "watch_id" => $objId["watch_id"],
             ]);
-            
+
             ImagesController::upload($request, "e", $obj["id"]);
 
             return $obj;
@@ -218,14 +220,14 @@ class EventController extends Controller
 
     public function eventServerSiguelo(Request $request){
         $modem = Modem::where("imei", $request->imei)->first();
-        
+
         $path = explode("," ,$request->platform)[2];
         $platform = Platform::where("url", "like","%".$path)->first();
 
         if($platform){
             $modem[Modem::COL_PLATFORM_ID] = $platform->id;
             $modem->save();
-            
+
             Event::create([
                 Event::COL_MODEM_ID => $modem->id,
                 Event::COL_TITLE => "Modem reasignación de plataforma",

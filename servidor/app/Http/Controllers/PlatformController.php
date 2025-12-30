@@ -23,7 +23,7 @@ class PlatformController extends Controller
     }
 
     public function countDevice(){
-        $sql = "SELECT p.name, m_c.count from (SELECT platform_id, COUNT(platform_id) as count  FROM `modems` GROUP by platform_id) m_c
+        $sql = "SELECT p.id, p.name, m_c.count from (SELECT platform_id, COUNT(platform_id) as count  FROM `modems` GROUP by platform_id) m_c
         join platforms p on p.id = m_c.platform_id;";
         $count = DB::select($sql);
         return Res::responseSuccess($count);
@@ -49,7 +49,7 @@ class PlatformController extends Controller
             $request->merge([
                 "platform_id" => $platform->id
             ]);
-            
+
             $obj = Wifi::create($request->all());
             return Res::responseSuccess($obj);
         } catch (Exception $ex) {
