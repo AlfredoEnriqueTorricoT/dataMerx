@@ -9,16 +9,19 @@ import {
   setEventList,
   addEvent,
   setModemList,
+  setWatchList,
   setPlatformList,
   setIsLoaded,
 } from '../slices/carSlice'
 import {
   UpdateCarPayload,
   AssignModemPayload,
+  AssignWatchPayload,
   CarModel,
   CarDetailsModel,
   CarEventModel,
   ModemModel,
+  WatchModel,
   PlatformModel,
 } from '../models/CarModel'
 
@@ -208,6 +211,27 @@ export const useCarFetch = () => {
     return { success: result.status === 200, message: result.message }
   }
 
+  // Search watches by IMEI
+  const searchWatches = async (imei: string) => {
+    const result = await service.searchWatchesByImei(imei, setIsOperating)
+    if (result.data) {
+      dispatch(setWatchList(result.data))
+    }
+    return { success: result.status === 200, message: result.message, data: result.data }
+  }
+
+  // Assign watch to car
+  const assignWatch = async (payload: AssignWatchPayload) => {
+    const result = await service.assignWatch(payload, setIsOperating)
+    return { success: result.status === 200, message: result.message, status: result.status }
+  }
+
+  // Remove watch from car
+  const removeWatch = async (carId: number) => {
+    const result = await service.removeWatch(carId, setIsOperating)
+    return { success: result.status === 200, message: result.message }
+  }
+
   return {
     isLoading,
     isOperating,
@@ -220,6 +244,9 @@ export const useCarFetch = () => {
     searchModems,
     assignModem,
     removeModem,
+    searchWatches,
+    assignWatch,
+    removeWatch,
     fetchCarEvents,
     createCarEvent,
     uploadImages,

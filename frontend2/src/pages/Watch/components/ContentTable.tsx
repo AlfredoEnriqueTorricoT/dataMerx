@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { THeaderSorter } from 'components/tableElements'
 import { WatchModel } from '../models/WatchModel'
 
@@ -19,6 +20,7 @@ const ContentTable: React.FC<ContentTableProps> = ({
   onSettings,
   t,
 }) => {
+  const history = useHistory()
   const [sorter, setSorter] = useState(0)
 
   if (isLoading) {
@@ -68,6 +70,13 @@ const ContentTable: React.FC<ContentTableProps> = ({
                       onClick={() => onEdit(watch)}
                     >
                       <i className="fas fa-edit"></i>
+                    </button>
+                    <button
+                      className="btn button-sm py-0"
+                      title="Ver eventos"
+                      onClick={() => history.push(`/watch/${watch.id}/events`)}
+                    >
+                      <i className="fas fa-tasks"></i>
                     </button>
                     <button
                       className="btn button-sm py-0"

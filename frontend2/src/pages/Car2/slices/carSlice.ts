@@ -4,6 +4,7 @@ import {
   CarDetailsModel,
   CarEventModel,
   ModemModel,
+  WatchModel,
   PlatformModel,
 } from '../models/CarModel'
 
@@ -12,6 +13,7 @@ interface CarState {
   carDetails: CarDetailsModel | null
   eventList: CarEventModel[]
   modemList: ModemModel[]
+  watchList: WatchModel[]
   platformList: PlatformModel[]
   isLoaded: boolean
   status: number
@@ -23,6 +25,7 @@ const initialState: CarState = {
   carDetails: null,
   eventList: [],
   modemList: [],
+  watchList: [],
   platformList: [],
   isLoaded: false,
   status: 0,
@@ -60,6 +63,9 @@ const carSlice = createSlice({
     setModemList: (state, action: PayloadAction<ModemModel[]>) => {
       state.modemList = action.payload
     },
+    setWatchList: (state, action: PayloadAction<WatchModel[]>) => {
+      state.watchList = action.payload
+    },
     setPlatformList: (state, action: PayloadAction<PlatformModel[]>) => {
       state.platformList = action.payload
     },
@@ -82,6 +88,7 @@ export const {
   setEventList,
   addEvent,
   setModemList,
+  setWatchList,
   setPlatformList,
   setIsLoaded,
   setStatus,

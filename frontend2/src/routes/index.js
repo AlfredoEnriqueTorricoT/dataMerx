@@ -30,6 +30,7 @@ import WatchLogPage from "pages/report/watch_log";
 import ModemEventsPage from "pages/ModemEvents";
 import SimEventsPage from "pages/SimEvents";
 import CarEventsPage from "pages/CarEvents";
+import WatchEventsPage from "pages/WatchEvents";
 
 const authProtectedRoutes = [
   { path: "/home", component: HomePage },
@@ -40,6 +41,7 @@ const authProtectedRoutes = [
   { path: "/platform", component: PlatformPage },
   { path: "/car", component: CarPage },
   { path: "/car/:id/events", component: CarEventsPage },
+  { path: "/watch/:id/events", component: WatchEventsPage },
   { path: "/modem", component: ModemPage },
   { path: "/modem/:id/events", component: ModemEventsPage },
   { path: "/clients", component: ClientPage },

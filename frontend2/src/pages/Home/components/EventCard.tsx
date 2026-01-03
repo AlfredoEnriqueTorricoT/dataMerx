@@ -44,11 +44,12 @@ const EventCard: React.FC<EventCardProps> = ({ event, onOpenComments }) => {
   }
 
   const renderRelatedBadges = () => {
-    const badges: React.ReactNode[] = []
+    const deviceBadges: React.ReactNode[] = []
+    let platformBadge: React.ReactNode = null
 
     if (event.car) {
       const carId = `car-badge-${event.id}`
-      badges.push(
+      deviceBadges.push(
         <React.Fragment key="car">
           <span id={carId} className="badge bg-info me-1" style={{ cursor: 'pointer' }}>
             <i className="fas fa-car me-1"></i>
@@ -69,7 +70,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, onOpenComments }) => {
 
     if (event.modem) {
       const modemId = `modem-badge-${event.id}`
-      badges.push(
+      deviceBadges.push(
         <React.Fragment key="modem">
           <span id={modemId} className="badge bg-warning me-1" style={{ cursor: 'pointer' }}>
             <i className="fas fa-hdd me-1"></i>
@@ -89,7 +90,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, onOpenComments }) => {
 
     if (event.sim) {
       const simId = `sim-badge-${event.id}`
-      badges.push(
+      deviceBadges.push(
         <React.Fragment key="sim">
           <span id={simId} className="badge bg-success me-1" style={{ cursor: 'pointer' }}>
             <i className="fas fa-sim-card me-1"></i>
@@ -107,11 +108,31 @@ const EventCard: React.FC<EventCardProps> = ({ event, onOpenComments }) => {
       )
     }
 
+    if (event.watch) {
+      const watchId = `watch-badge-${event.id}`
+      deviceBadges.push(
+        <React.Fragment key="watch">
+          <span id={watchId} className="badge bg-secondary me-1" style={{ cursor: 'pointer' }}>
+            <i className="fas fa-clock me-1"></i>
+            {event.watch.imei.slice(-6)}
+          </span>
+          <UncontrolledTooltip placement="top" target={watchId}>
+            <div className="text-start">
+              <div className="fw-bold border-bottom mb-1 pb-1">Reloj</div>
+              <div><strong>IMEI:</strong> {event.watch.imei}</div>
+              <div><strong>Código:</strong> {event.watch.code}</div>
+              {event.watch.deviceName && <div><strong>Nombre:</strong> {event.watch.deviceName}</div>}
+            </div>
+          </UncontrolledTooltip>
+        </React.Fragment>
+      )
+    }
+
     if (event.platform) {
       const platformId = `platform-badge-${event.id}`
-      badges.push(
+      platformBadge = (
         <React.Fragment key="platform">
-          <span id={platformId} className="badge bg-primary me-1" style={{ cursor: 'pointer' }}>
+          <span id={platformId} className="badge bg-primary" style={{ cursor: 'pointer' }}>
             <i className="fas fa-globe me-1"></i>
             {event.platform.name}
           </span>
@@ -128,7 +149,18 @@ const EventCard: React.FC<EventCardProps> = ({ event, onOpenComments }) => {
       )
     }
 
-    return badges.length > 0 ? <div className="mt-2">{badges}</div> : null
+    const hasDevices = deviceBadges.length > 0
+    const hasPlatform = platformBadge !== null
+
+    if (!hasDevices && !hasPlatform) return null
+
+    return (
+      <div className="mt-2 d-flex flex-wrap align-items-center gap-1">
+        {deviceBadges}
+        {hasDevices && hasPlatform && <span className="mx-1 text-muted">|</span>}
+        {platformBadge}
+      </div>
+    )
   }
 
   const commentsCount = event.comments.reduce((acc, comment) => {

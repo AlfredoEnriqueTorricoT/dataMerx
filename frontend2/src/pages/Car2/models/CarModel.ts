@@ -4,6 +4,7 @@ export type ModalType =
   | 'Edit'
   | 'Details'
   | 'Modem'
+  | 'Watch'
   | 'AddEvent'
   | 'AddImages'
   | 'Events'
@@ -25,6 +26,7 @@ export interface CarModel {
   platformId: number | null
   platformName: string | null
   modemId: number | null
+  watchId: number | null
   active: number
   images: ImageModel[]
 }
@@ -38,6 +40,7 @@ export interface CarApiResponse {
   placa: string
   platform_id: number | null
   modem_id: number | null
+  watch_id: number | null
   active: number
   images?: ImageModel[]
   platform?: {
@@ -90,10 +93,19 @@ export interface SimModel {
   code?: string
 }
 
+// Modelo de reloj en detalles
+export interface CarDetailWatchModel {
+  id: number
+  code: string
+  imei: string
+  deviceName: string | null
+}
+
 // Modelo de detalles del carro
 export interface CarDetailsModel {
   car: CarDetailCarModel
   modem: CarDetailModemModel | null
+  watch: CarDetailWatchModel | null
   sim: SimModel | null
 }
 
@@ -145,6 +157,12 @@ export interface CarDetailsApiResponse {
       name: string
     }
   } | null
+  watch: {
+    id: number
+    code: string
+    imei: string
+    device_name: string | null
+  } | null
   sim: SimModel | null
 }
 
@@ -155,6 +173,10 @@ export interface CarEventModel {
   detail: string
   typeId: number
   carId: number
+  watchId: number | null
+  watchImei: string | null
+  modemId: number | null
+  modemImei: string | null
   createdAt: string
   images: ImageModel[]
 }
@@ -166,8 +188,20 @@ export interface CarEventApiResponse {
   detail: string
   type_id: number
   car_id: number
+  watch_id: number | null
+  modem_id: number | null
   created_at: string
   images: ImageModel[]
+  watch?: {
+    id: number
+    imei: string
+    code: string
+  } | null
+  modem?: {
+    id: number
+    imei: string
+    code: string
+  } | null
 }
 
 // Payloads para API
@@ -191,4 +225,31 @@ export interface AssignModemPayload {
   modem_id: number
   name: string
   confirm?: boolean
+}
+
+export interface AssignWatchPayload {
+  id: number
+  watch_id: number
+  name?: string
+  confirm?: boolean
+}
+
+// Modelo de reloj
+export interface WatchModel {
+  id: number
+  code: string
+  imei: string
+  deviceName: string | null
+  platformId: number | null
+  platformName: string | null
+}
+
+// Modelo de reloj API response
+export interface WatchApiResponse {
+  id: number
+  code: string
+  imei: string
+  device_name: string | null
+  platform_id: number | null
+  platform_name?: string | null
 }

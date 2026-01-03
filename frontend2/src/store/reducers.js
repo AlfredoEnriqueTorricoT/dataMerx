@@ -36,6 +36,7 @@ import eventFeedReducer from "../pages/Home/slices/eventFeedSlice"
 import modemEventsReducer from "../pages/ModemEvents/slices/modemEventsSlice"
 import simEventsReducer from "../pages/SimEvents/slices/simEventsSlice"
 import carEventsReducer from "../pages/CarEvents/slices/carEventsSlice"
+import watchEventsReducer from "../pages/WatchEvents/slices/watchEventsSlice"
 
 const rootReducer = combineReducers({
   // public
@@ -66,6 +67,7 @@ const rootReducer = combineReducers({
   ModemEvents: modemEventsReducer,
   SimEvents: simEventsReducer,
   CarEvents: carEventsReducer,
+  WatchEvents: watchEventsReducer,
 })
 
 export default rootReducer

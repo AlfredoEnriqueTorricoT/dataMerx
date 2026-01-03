@@ -27,6 +27,7 @@ const ModalEdit: React.FC<ModalEditProps> = ({ user, onClose, t }) => {
     id: number
     name: string
     email: string
+    active: number
     password: string
     repeat_password: string
   }) => {
@@ -58,6 +59,7 @@ const ModalEdit: React.FC<ModalEditProps> = ({ user, onClose, t }) => {
           id: user.id,
           name: user.name || '',
           email: user.email || '',
+          active: user.active,
           password: '',
           repeat_password: '',
         }}
@@ -105,6 +107,24 @@ const ModalEdit: React.FC<ModalEditProps> = ({ user, onClose, t }) => {
                       <ErrorMessage name="email">
                         {(msg) => <small className="text-danger">{msg}</small>}
                       </ErrorMessage>
+                    </div>
+                  </div>
+
+                  <div className="row mb-3">
+                    <label htmlFor="user_edit_active" className="col-3 col-form-label">
+                      Estado
+                    </label>
+                    <div className="col-9">
+                      <Field
+                        as="select"
+                        className="form-select"
+                        id="user_edit_active"
+                        name="active"
+                        disabled={loading}
+                      >
+                        <option value={1}>Activo</option>
+                        <option value={0}>Inactivo</option>
+                      </Field>
                     </div>
                   </div>
 

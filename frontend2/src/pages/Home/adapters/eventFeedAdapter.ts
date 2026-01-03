@@ -13,6 +13,8 @@ import {
   EventSimModel,
   EventPlatformApiResponse,
   EventPlatformModel,
+  EventWatchApiResponse,
+  EventWatchModel,
   PaginatedApiResponse,
   PaginationModel,
 } from '../models/EventFeedModel'
@@ -85,6 +87,17 @@ export const adaptPlatformResponseToModel = (data: EventPlatformApiResponse | nu
   }
 }
 
+export const adaptWatchResponseToModel = (data: EventWatchApiResponse | null): EventWatchModel | null => {
+  if (!data) return null
+  return {
+    id: data.id,
+    code: data.code,
+    imei: data.imei,
+    deviceName: data.device_name,
+    platformId: data.platform_id,
+  }
+}
+
 export const adaptEventResponseToModel = (data: EventApiResponse): EventModel => ({
   id: data.id,
   title: data.title,
@@ -101,7 +114,7 @@ export const adaptEventResponseToModel = (data: EventApiResponse): EventModel =>
   car: adaptCarResponseToModel(data.car),
   modem: adaptModemResponseToModel(data.modem),
   sim: adaptSimResponseToModel(data.sim),
-  watch: data.watch,
+  watch: adaptWatchResponseToModel(data.watch),
   platform: adaptPlatformResponseToModel(data.platform),
   images: data.images?.map(adaptImageResponseToModel) || [],
   comments: data.comments?.map(adaptCommentResponseToModel) || [],

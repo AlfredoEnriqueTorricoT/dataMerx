@@ -10,8 +10,11 @@ import {
   CarEventApiResponse,
   ModemModel,
   ModemApiResponse,
+  WatchModel,
+  WatchApiResponse,
   UpdateCarPayload,
   AssignModemPayload,
+  AssignWatchPayload,
   PlatformModel,
 } from '../models/CarModel'
 import {
@@ -20,6 +23,7 @@ import {
   adaptCarDetailsResponseToModel,
   adaptCarEventListResponseToModel,
   adaptModemListResponseToModel,
+  adaptWatchListResponseToModel,
 } from '../adapters/carAdapter'
 
 export class CarApiService implements ICarService {
@@ -101,11 +105,14 @@ export class CarApiService implements ICarService {
     carId: number,
     setLoading?: SetStateFn
   ): Promise<ApiResponse<CarEventModel[]>> {
-    const res = await httpRequestWithAuth.get<{ data: CarEventApiResponse[] }>(
-      `event/car/${carId}`,
-      setLoading
-    )
-    return transformApiData(res, (data) => adaptCarEventListResponseToModel(data.data || []))
+    const res = await httpRequestWithAuth.get<{
+      data: CarEventApiResponse[] | { data: CarEventApiResponse[] }
+    }>(`event/car/${carId}`, setLoading)
+    return transformApiData(res, (data) => {
+      // Handle both paginated and non-paginated responses
+      const events = Array.isArray(data.data) ? data.data : data.data?.data || []
+      return adaptCarEventListResponseToModel(events)
+    })
   }
 
   async createCarEvent(
@@ -145,5 +152,37 @@ export class CarApiService implements ICarService {
   async getPlatforms(setLoading?: SetStateFn): Promise<ApiResponse<PlatformModel[]>> {
     const res = await httpRequestWithAuth.get<{ data: PlatformModel[] }>('platform', setLoading)
     return transformApiData(res, (data) => data.data || [])
+  }
+
+  // Watch methods
+  async searchWatchesByImei(
+    imei: string,
+    setLoading?: SetStateFn
+  ): Promise<ApiResponse<WatchModel[]>> {
+    const res = await httpRequestWithAuth.get<{ data: WatchApiResponse[] }>(
+      `watch/${imei}`,
+      setLoading
+    )
+    return transformApiData(res, (data) => adaptWatchListResponseToModel(data.data || []))
+  }
+
+  async assignWatch(
+    payload: AssignWatchPayload,
+    setLoading?: SetStateFn
+  ): Promise<ApiResponse<any>> {
+    const res = await httpRequestWithAuth.put<{ data: any }>(
+      'car/update-watch',
+      payload,
+      setLoading
+    )
+    return res
+  }
+
+  async removeWatch(carId: number, setLoading?: SetStateFn): Promise<ApiResponse<any>> {
+    const res = await httpRequestWithAuth.get<{ data: any }>(
+      `car/remove-watch/${carId}`,
+      setLoading
+    )
+    return res
   }
 }

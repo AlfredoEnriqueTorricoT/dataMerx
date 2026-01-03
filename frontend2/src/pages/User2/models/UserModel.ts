@@ -6,6 +6,8 @@ export interface UserModel {
   id: number
   name: string
   email: string
+  privilege: number
+  active: number
   createdAt?: string
   updatedAt?: string
 }
@@ -15,6 +17,8 @@ export interface UserApiResponse {
   id: number
   name: string
   email: string
+  privilege: number
+  active: number
   created_at?: string
   updated_at?: string
 }
@@ -45,6 +49,7 @@ export interface UpdateUserPayload {
   id: number
   name: string
   email: string
+  active: number
   password?: string
 }
 

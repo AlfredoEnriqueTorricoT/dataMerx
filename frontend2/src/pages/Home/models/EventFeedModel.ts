@@ -137,6 +137,23 @@ export interface EventPlatformApiResponse {
   credencial: string | null
 }
 
+// Reloj relacionado
+export interface EventWatchModel {
+  id: number
+  code: string
+  imei: string
+  deviceName: string | null
+  platformId: number | null
+}
+
+export interface EventWatchApiResponse {
+  id: number
+  code: string
+  imei: string
+  device_name: string | null
+  platform_id: number | null
+}
+
 // Evento principal
 export interface EventModel {
   id: number
@@ -154,7 +171,7 @@ export interface EventModel {
   car: EventCarModel | null
   modem: EventModemModel | null
   sim: EventSimModel | null
-  watch: any | null
+  watch: EventWatchModel | null
   platform: EventPlatformModel | null
   images: ImageModel[]
   comments: CommentModel[]
@@ -177,7 +194,7 @@ export interface EventApiResponse {
   car: EventCarApiResponse | null
   modem: EventModemApiResponse | null
   sim: EventSimApiResponse | null
-  watch: any | null
+  watch: EventWatchApiResponse | null
   platform: EventPlatformApiResponse | null
   images: ImageApiResponse[]
   comments: CommentApiResponse[]

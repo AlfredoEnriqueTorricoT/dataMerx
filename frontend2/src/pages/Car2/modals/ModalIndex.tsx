@@ -3,6 +3,7 @@ import ModalAdd from './ModalAdd'
 import ModalEdit from './ModalEdit'
 import ModalDetails from './ModalDetails'
 import ModalModem from './ModalModem'
+import ModalWatch from './ModalWatch'
 import ModalAddEvent from './ModalAddEvent'
 import ModalAddImages from './ModalAddImages'
 import ModalEvents from './ModalEvents'
@@ -32,6 +33,10 @@ const ModalIndex: React.FC<ModalIndexProps> = ({ modalType, selectedCar, onClose
       case 'Modem':
         if (!selectedCar) return null
         return <ModalModem car={selectedCar} onClose={onClose} t={t} />
+
+      case 'Watch':
+        if (!selectedCar) return null
+        return <ModalWatch car={selectedCar} onClose={onClose} t={t} />
 
       case 'AddEvent':
         if (!selectedCar) return null

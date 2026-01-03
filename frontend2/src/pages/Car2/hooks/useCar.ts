@@ -4,6 +4,7 @@ import {
   CarDetailsModel,
   CarEventModel,
   ModemModel,
+  WatchModel,
   PlatformModel,
 } from '../models/CarModel'
 
@@ -13,6 +14,7 @@ interface RootState {
     carDetails: CarDetailsModel | null
     eventList: CarEventModel[]
     modemList: ModemModel[]
+    watchList: WatchModel[]
     platformList: PlatformModel[]
     isLoaded: boolean
     status: number
@@ -28,6 +30,7 @@ export const useCar = () => {
     carDetails: state.carDetails,
     eventList: state.eventList,
     modemList: state.modemList,
+    watchList: state.watchList,
     platformList: state.platformList,
     isLoaded: state.isLoaded,
     status: state.status,
@@ -40,5 +43,7 @@ export const useCar = () => {
       state.carList.filter((car) => car.platformId === platformId),
     getCarsWithModem: () => state.carList.filter((car) => car.modemId !== null),
     getCarsWithoutModem: () => state.carList.filter((car) => car.modemId === null),
+    getCarsWithWatch: () => state.carList.filter((car) => car.watchId !== null),
+    getCarsWithoutWatch: () => state.carList.filter((car) => car.watchId === null),
   }
 }

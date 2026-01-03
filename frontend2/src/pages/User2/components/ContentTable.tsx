@@ -42,29 +42,20 @@ const ContentTable: React.FC<ContentTableProps> = ({ users, isLoading, onOpenMod
   return (
     <div className="grayScroll table-responsive" style={{ maxHeight: '55vh', overflow: 'auto' }}>
       <table className="table table-striped">
-        <thead>
-          <tr>
-            <THeaderSorter
-              label={t('Name')}
-              columnId={1}
-              currentSorter={sorter}
-              onSort={handleSort}
-            />
-            <THeaderSorter
-              label="Email"
-              columnId={2}
-              currentSorter={sorter}
-              onSort={handleSort}
-            />
-            <th>
-              <b>Acciones</b>
-            </th>
-          </tr>
-        </thead>
+        <THeaderSorter
+          sorter={sorter}
+          setSorter={handleSort}
+          headerNames={[
+            { name: t('Name'), arrow: true },
+            { name: 'Email', arrow: true },
+            { name: 'Estado', arrow: false },
+            { name: 'Acciones', arrow: false },
+          ]}
+        />
         <tbody>
           {sortedUsers.length === 0 ? (
             <tr>
-              <td colSpan={3}>
+              <td colSpan={4}>
                 <h4 className="text-secondary">{t('No users found')}</h4>
               </td>
             </tr>
@@ -73,6 +64,13 @@ const ContentTable: React.FC<ContentTableProps> = ({ users, isLoading, onOpenMod
               <tr key={`user-${user.id}`}>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
+                <td>
+                  <span
+                    className={`badge badge-soft-${user.active ? 'success' : 'danger'}`}
+                  >
+                    {user.active ? 'ACTIVO' : 'INACTIVO'}
+                  </span>
+                </td>
                 <td>
                   <button
                     className="btn btn-sm"

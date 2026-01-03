@@ -81,7 +81,7 @@ const FeedFilters: React.FC<FeedFiltersProps> = ({
         <Col md={3}>
           <div className="d-flex gap-2">
             <button
-              className="btn btn-primary flex-grow-1"
+              className="btn btn-success flex-grow-1"
               onClick={handleSearch}
               disabled={isLoading}
             >

@@ -9,6 +9,8 @@ export const adaptUserResponseToModel = (data: UserApiResponse): UserModel => ({
   id: data.id,
   name: data.name,
   email: data.email,
+  privilege: data.privilege,
+  active: data.active,
   createdAt: data.created_at,
   updatedAt: data.updated_at,
 })

@@ -139,16 +139,19 @@ const ModalEvents: React.FC<ModalEventsProps> = ({ car, onClose, t }) => {
                 <table className="table mb-0">
                   <thead className="table-light sticky-top">
                     <tr>
-                      <th style={{ minWidth: '300px' }} className="text-start">
+                      <th style={{ minWidth: '250px' }} className="text-start">
                         Evento
                       </th>
-                      <th style={{ width: '120px' }} className="text-center">
+                      <th style={{ width: '150px' }} className="text-center">
+                        Dispositivos
+                      </th>
+                      <th style={{ width: '100px' }} className="text-center">
                         Fecha
                       </th>
-                      <th style={{ width: '140px' }} className="text-center">
+                      <th style={{ width: '120px' }} className="text-center">
                         Tipo
                       </th>
-                      <th style={{ width: '120px' }} className="text-center">
+                      <th style={{ width: '100px' }} className="text-center">
                         Imágenes
                       </th>
                     </tr>
@@ -173,6 +176,27 @@ const ModalEvents: React.FC<ModalEventsProps> = ({ car, onClose, t }) => {
                               >
                                 {event.detail}
                               </small>
+                            )}
+                          </td>
+                          <td className="text-center">
+                            {event.watchImei && (
+                              <div className="mb-1">
+                                <small className="text-muted">
+                                  <i className="fas fa-clock me-1"></i>
+                                  {event.watchImei}
+                                </small>
+                              </div>
+                            )}
+                            {event.modemImei && (
+                              <div>
+                                <small className="text-muted">
+                                  <i className="fas fa-hdd me-1"></i>
+                                  {event.modemImei}
+                                </small>
+                              </div>
+                            )}
+                            {!event.watchImei && !event.modemImei && (
+                              <small className="text-muted">-</small>
                             )}
                           </td>
                           <td className="text-nowrap text-center">

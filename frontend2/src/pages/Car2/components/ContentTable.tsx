@@ -106,6 +106,10 @@ const ContentTable: React.FC<ContentTableProps> = ({ cars, isLoading, onOpenModa
                           onClick: () => onOpenModal('Modem', car),
                         },
                         {
+                          title: 'Vincular reloj',
+                          onClick: () => onOpenModal('Watch', car),
+                        },
+                        {
                           title: 'Añadir evento',
                           onClick: () => onOpenModal('AddEvent', car),
                         },
