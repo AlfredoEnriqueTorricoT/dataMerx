@@ -7,6 +7,7 @@ use App\Models\Car;
 use App\Models\Images;
 use App\Models\Modem;
 use App\Models\Sim;
+use App\Models\Watch;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -118,6 +119,7 @@ class CarController extends Controller
             return Res::responseSuccess([
                 "sim" => null,
                 "modem" => null,
+                "watch" => null,
                 "car" => null
             ]);
         }
@@ -130,9 +132,15 @@ class CarController extends Controller
             $sim = SimController::byId($modem["sim_id"]);
         }
 
+        $watch = null;
+        if ($car->watch_id != null) {
+            $watch = Watch::find($car->watch_id);
+        }
+
         $obj = [
             "sim" => $sim,
             "modem" => $modem,
+            "watch" => $watch,
             "car" => $car
         ];
 
@@ -468,5 +476,150 @@ class CarController extends Controller
     {
         $patron = "/^[0-9]{3,4}-[A-Z]{3}$/";
         return preg_match($patron, $placa);
+    }
+
+    // ==========================================
+    // WATCH ASSIGNMENT METHODS
+    // ==========================================
+
+    static public function byWatchId($watchId)
+    {
+        try {
+            $car = Car::where("watch_id", $watchId)->first();
+
+            if ($car == null) {
+                return null;
+            }
+
+            $car->images = Images::where([
+                ["table", "=", "c"],
+                ["table_id", "=", $car["id"]],
+            ])->get("url");
+
+            return $car;
+        } catch (Exception $ex) {
+            return null;
+        }
+    }
+
+    public function update_watch(Request $request)
+    {
+        try {
+            if ($request->id == "") {
+                return Res::responseErrorNoId();
+            }
+
+            // Check if watch is already assigned to another car
+            $carWithWatchExist = Car::where("watch_id", $request->watch_id)->first();
+
+            if (!empty($carWithWatchExist)) {
+                $watch = Watch::find($request->watch_id);
+                $watchCode = $watch->code ?? $watch->imei;
+
+                if (!$request->confirm) {
+                    $platformName = $carWithWatchExist->platform->name ?? 'Sin plataforma';
+                    return Res::responseSuccessConfirm(
+                        "El reloj $watchCode ya se encuentra en el auto $carWithWatchExist->placa de la plataforma $platformName, ¿deseas quitar el reloj para agregarlo a este auto?",
+                        null
+                    );
+                } else {
+                    // Remove watch from previous car
+                    DB::update("update cars set watch_id = null where id = ?;", [$carWithWatchExist->id]);
+
+                    $event = [
+                        "title" => "Retiro del RELOJ (IMEI: $watch->imei)",
+                        "detail" => "Se retiró el reloj para añadirlo a otro auto",
+                        "type_id" => 1,
+                        "car_id" => $carWithWatchExist->id,
+                        "watch_id" => $request->watch_id,
+                        "platform_id" => $carWithWatchExist->platform_id,
+                        "user_id" => auth()->user()->id
+                    ];
+                    EventController::_store($event);
+                }
+            }
+
+            $obj = Car::find($request->id);
+            if ($obj == null) {
+                return Res::responseErrorNoData();
+            }
+
+            // If car already has a watch, create removal event
+            if ($obj->watch_id != null) {
+                $previousWatch = Watch::find($obj->watch_id);
+                $previousWatchImei = $previousWatch->imei ?? 'desconocido';
+                $event = [
+                    "title" => "Retiro del RELOJ (IMEI: $previousWatchImei)",
+                    "detail" => "Otro reloj será asignado a este auto",
+                    "type_id" => 1,
+                    "car_id" => $obj->id,
+                    "watch_id" => $obj->watch_id,
+                    "platform_id" => $obj->platform_id,
+                    "user_id" => auth()->user()->id
+                ];
+                EventController::_store($event);
+            }
+
+            // Assign new watch
+            $obj->watch_id = $request->watch_id;
+            if ($request->has('name')) {
+                $obj->name = $request->name;
+            }
+            $obj->save();
+
+            // Create assignment event
+            $watch = Watch::find($request->watch_id);
+            $watchImei = $watch->imei ?? 'desconocido';
+            $event = [
+                "title" => "RELOJ añadido (IMEI: $watchImei)",
+                "detail" => "Se añadió el reloj con IMEI $watchImei a este auto",
+                "type_id" => 1,
+                "car_id" => $obj->id,
+                "watch_id" => $request->watch_id,
+                "platform_id" => $watch->platform_id ?? $obj->platform_id,
+                "user_id" => auth()->user()->id
+            ];
+            EventController::_store($event);
+
+            return Res::responseSuccess($obj);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
+    }
+
+    public function remove_watch($car_id)
+    {
+        try {
+            $obj = Car::find($car_id);
+
+            if ($obj == null) {
+                return Res::responseError432("No se ha encontrado el auto", null);
+            }
+
+            if ($obj->watch_id == null) {
+                return Res::responseError432("No se ha encontrado reloj en el auto", null);
+            }
+
+            $watch = Watch::find($obj->watch_id);
+            $watchImei = $watch->imei ?? 'desconocido';
+
+            $event = [
+                "title" => "RELOJ retirado (IMEI: $watchImei)",
+                "detail" => "El reloj con IMEI $watchImei se ha retirado del auto $obj->placa",
+                "type_id" => 1,
+                "car_id" => $obj->id,
+                "watch_id" => $obj->watch_id,
+                "platform_id" => $obj->platform_id,
+                "user_id" => auth()->user()->id
+            ];
+            EventController::_store($event);
+
+            $obj->watch_id = null;
+            $obj->save();
+
+            return Res::responseSuccess($obj);
+        } catch (Exception $ex) {
+            return Res::responseError($ex->getMessage());
+        }
     }
 }

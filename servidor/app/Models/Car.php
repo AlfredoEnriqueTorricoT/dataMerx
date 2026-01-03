@@ -18,6 +18,7 @@ class Car extends Model
     const COL_DATE_START = "date_start";
     const COL_DATE_END = "date_end";
     const COL_MODEM_ID = "modem_id";
+    const COL_WATCH_ID = "watch_id";
     const COL_PLATFORM_ID = "platform_id";
 
     protected $fillable = [
@@ -28,6 +29,7 @@ class Car extends Model
         "date_start",
         "date_end",
         "modem_id",
+        "watch_id",
         "platform_id"
     ];
 
@@ -37,6 +39,10 @@ class Car extends Model
 
     public function modem(){
         return $this->hasOne(Modem::class, "id", "modem_id");
+    }
+
+    public function watch(){
+        return $this->hasOne(Watch::class, "id", "watch_id");
     }
 
     public function __toString()

@@ -88,18 +88,10 @@ class EventController extends Controller
     public function watch($id)
     {
         try {
-            $list = Event::where("watch_id", $id)->orderBy("id","desc")->get();
-
-            foreach($list as $event){
-                $event["platform"] = $event->platform;
-                $event["car"] = $event->car;
-                $event["modem"] = $event->modem;
-                $event["sim"] = $event->sim;
-                $event["images"] = Images::where([
-                    ["table", "=", "e"],
-                    ["table_id", "=", $event->id]
-                ])->get("url");
-            }
+            $list = Event::where("watch_id", $id)
+                ->with(['user', 'car', 'modem', 'sim', 'watch', 'platform', 'images', 'comments'])
+                ->orderBy("created_at", "desc")
+                ->get();
 
             return Res::responseSuccess($list);
         } catch (Exception $ex) {
